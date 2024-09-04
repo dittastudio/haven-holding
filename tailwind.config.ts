@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import typography from '@tailwindcss/typography'
 
 const pixelsToRemsUnit = (pixels: number): number => pixels / 16
 
@@ -223,4 +224,7 @@ export default {
       },
     },
   },
+  plugins: [
+    typography,
+  ],
 } satisfies Config

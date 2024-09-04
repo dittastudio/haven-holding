@@ -25,9 +25,9 @@ const isDev = import.meta.dev
         </div>
       </div> -->
 
-          <BlockImageText />
+          <!-- <BlockMediaText />
 
-          <BlockNewsletter />
+          <BlockNewsletter /> -->
         </main>
       </div>
     </div>

@@ -9,7 +9,7 @@ useStoryblokSetup<PageStoryblok>(story)
 
 <template>
   <div>
-    <BlockComponents
+    <ContentBlocks
       v-if="story"
       :content="story.content"
     />

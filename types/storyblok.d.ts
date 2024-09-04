@@ -1,30 +1,46 @@
 import {StoryblokStory} from 'storyblok-generate-ts'
 
-export interface FeatureStoryblok {
-  name?: string;
-  _uid: string;
-  component: "feature";
+export interface AssetStoryblok {
+  _uid?: string;
+  id: number;
+  alt?: string;
+  name: string;
+  focus?: string;
+  source?: string;
+  title?: string;
+  filename: string;
+  copyright?: string;
+  fieldtype?: string;
+  meta_data?: null | {
+    [k: string]: any;
+  };
+  is_external_url?: boolean;
   [k: string]: any;
 }
 
-export interface GridStoryblok {
-  columns?: (FeatureStoryblok | GridStoryblok | PageStoryblok | TeaserStoryblok)[];
+export interface RichtextStoryblok {
+  type: string;
+  content?: RichtextStoryblok[];
+  marks?: RichtextStoryblok[];
+  attrs?: any;
+  text?: string;
+  [k: string]: any;
+}
+
+export interface BlockMediaTextStoryblok {
+  media?: AssetStoryblok;
+  ratio?: number | string;
+  text?: RichtextStoryblok;
+  hidden?: boolean;
   _uid: string;
-  component: "grid";
+  component: "block_media_text";
   [k: string]: any;
 }
 
 export interface PageStoryblok {
-  body?: (FeatureStoryblok | GridStoryblok | PageStoryblok | TeaserStoryblok)[];
+  blocks?: BlockMediaTextStoryblok[];
   _uid: string;
   component: "page";
   uuid?: string;
-  [k: string]: any;
-}
-
-export interface TeaserStoryblok {
-  headline?: string;
-  _uid: string;
-  component: "teaser";
   [k: string]: any;
 }
