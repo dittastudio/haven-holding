@@ -1,16 +1,32 @@
 {
   "name": "nuxt-app",
-  "private": true,
   "type": "module",
+  "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "npm run sb:types && nuxt dev",
+    "dev:ssl": "local-ssl-proxy --source 3010 --target 3000 --cert localhost.pem --key localhost-key.pem",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "nuke": "del-cli '.output' 'dist' '.nuxt' 'node_modules' 'package-lock.json'",
+    "postinstall": "nuxt prepare",
+    "sb:pull-components": "storyblok pull-components --space 303510",
+    "sb:types": "npm run sb:pull-components && storyblok-generate-ts source=./components.303510.json target=./types/storyblok"
   },
-  "dependencies": {
-    "nuxt": "^3.13.0",
-    "vue": "latest"
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.23.2",
+    "@nuxt/eslint": "^0.5.5",
+    "@nuxtjs/tailwindcss": "^6.12.1",
+    "@storyblok/nuxt": "^6.0.10",
+    "del-cli": "^5.1.0",
+    "eslint": "^9.7.0",
+    "nuxt": "^3.12.4",
+    "storyblok-generate-ts": "^2.1.0",
+    "stylelint": "^16.7.0",
+    "stylelint-config-clean-order": "^6.1.0",
+    "stylelint-config-recommended-vue": "^1.5.0",
+    "stylelint-config-standard": "^36.0.1",
+    "typescript": "^5.5.4",
+    "vue": "^3.4.33"
   }
 }
