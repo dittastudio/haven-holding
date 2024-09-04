@@ -1,4 +1,5 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import svgLoader from 'vite-svg-loader'
+
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
 
@@ -44,5 +45,24 @@ export default defineNuxtConfig({
 
   typescript: {
     strict: true,
+  },
+
+  vite: {
+    resolve: {
+      dedupe: [
+        'vue',
+      ],
+    },
+    plugins: [
+      svgLoader({
+        svgo: false,
+      }),
+    ],
+    vue: {
+      script: {
+        defineModel: true,
+        propsDestructure: true,
+      },
+    },
   },
 })

@@ -57,8 +57,14 @@ export const colours = {
   current: 'currentColor',
   white: '#ffffff',
   black: '#000000',
-  offwhite: '#F5F4EA',
+  offwhite: '#E6E3E1',
   offblack: '#1c1c1c',
+  lavender: '#9F9BCC',
+  poppy: '#FC3232',
+  sage: '#7A8C52',
+  river: '#7BA6A1',
+  sky: '#97C8E8',
+  wheat: '#CEA683',
 }
 
 export default {
@@ -80,62 +86,27 @@ export default {
       ...colours,
     },
     fontFamily: {
-      body: ['Greycliff CF', 'system-ui', 'sans-serif'],
+      sans: ['Moderat', 'system-ui', 'sans-serif'],
+      mono: ['Moderat Mono', 'system-ui', 'sans-serif'],
     },
     fontSize: {
-      '12': ['0.75rem', { lineHeight: '1.2', letterSpacing: '-0.005em' }],
-      '16': ['1rem', { lineHeight: '1.5', letterSpacing: '-0.01em' }],
-      '18': ['1.125rem', { lineHeight: '1.4', letterSpacing: '-0.01em' }],
-      '20': ['1.25rem', { lineHeight: '1.5', letterSpacing: '-0.01em' }],
-      '24': ['1.5rem', { lineHeight: '1.5', letterSpacing: '-0.01em' }],
-      '34': ['2.125rem', { lineHeight: '1.3', letterSpacing: '-0.01em' }],
-      '40': ['2.5rem', { lineHeight: '1.3', letterSpacing: '-0.01em' }],
-      '50': ['3.125rem', { lineHeight: '1.1', letterSpacing: '-0.01em' }],
-      '65': ['4.0625rem', { lineHeight: '1.1', letterSpacing: '-0.01em' }],
-      'fluid-sm': [
+      '12': ['0.75rem', { lineHeight: '1.2', letterSpacing: '0em' }],
+      '16': ['1rem', { lineHeight: '1.2', letterSpacing: '0em' }],
+      '18': ['1.125rem', { lineHeight: '1.2', letterSpacing: '0em' }],
+      '20': ['1.25rem', { lineHeight: '1.2', letterSpacing: '0em' }],
+      '24': ['1.5rem', { lineHeight: '1.2', letterSpacing: '0em' }],
+      '34': ['2.125rem', { lineHeight: '1.3', letterSpacing: '0em' }],
+      '40': ['2.5rem', { lineHeight: '1.3', letterSpacing: '0em' }],
+      '50': ['3.125rem', { lineHeight: '1.3', letterSpacing: '0em' }],
+      '65': ['4.0625rem', { lineHeight: '1.3', letterSpacing: '0em' }],
+      'fluid-lead': [
         clamp({
-          minPixels: 40,
+          minPixels: 24,
           minViewportWidthPixels: screenSizes.xs,
-          maxPixels: 50,
+          maxPixels: 35,
           maxViewportWidthPixels: screenSizes['2xl'],
         }),
-        { lineHeight: '1.1', letterSpacing: '-0.01em', fontWeight: '500' },
-      ],
-      'fluid-md': [
-        clamp({
-          minPixels: 40,
-          minViewportWidthPixels: screenSizes.xs,
-          maxPixels: 65,
-          maxViewportWidthPixels: screenSizes['2xl'],
-        }),
-        { lineHeight: '1.1', letterSpacing: '-0.01em', fontWeight: '500' },
-      ],
-      'fluid-lg': [
-        clamp({
-          minPixels: 80,
-          minViewportWidthPixels: screenSizes.xs,
-          maxPixels: 120,
-          maxViewportWidthPixels: screenSizes['2xl'],
-        }),
-        { lineHeight: '1', letterSpacing: '-0.01em', fontWeight: '900' },
-      ],
-      'fluid-zero-sm': [
-        clamp({
-          minPixels: 20,
-          minViewportWidthPixels: screenSizes.zero,
-          maxPixels: 80,
-          maxViewportWidthPixels: screenSizes.sm,
-        }),
-        { lineHeight: '1.1', letterSpacing: '-0.01em', fontWeight: '900' },
-      ],
-      'fluid-sm-md': [
-        clamp({
-          minPixels: 40,
-          minViewportWidthPixels: screenSizes.sm,
-          maxPixels: 50,
-          maxViewportWidthPixels: screenSizes['2xl'],
-        }),
-        { lineHeight: '1.1', letterSpacing: '-0.01em', fontWeight: '900' },
+        { lineHeight: '1.3', letterSpacing: '0em' },
       ],
     },
     lineHeight: {
@@ -155,14 +126,13 @@ export default {
       '2': '2px',
       '4': '4px',
       '8': '8px',
-      '10': '10px',
+      '12': '12px',
       '16': '16px',
       '20': '20px',
       '24': '24px',
       '32': '32px',
       '40': '40px',
       '48': '48px',
-      '50': '50px',
       '56': '56px',
       '64': '64px',
       '72': '72px',
@@ -217,6 +187,9 @@ export default {
       inOutBack: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
     },
     extend: {
+      borderRadius: {
+        3: '3px',
+      },
       transitionDuration: {
         175: '175ms',
         250: '250ms',

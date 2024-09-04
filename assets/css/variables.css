@@ -2,11 +2,11 @@
   --app-max-width: 1400px;
   --app-inner-gutter: theme('spacing.16');
   --app-outer-gutter: theme('spacing.fluid-outer-gutter');
-  --app-header-height: 96px;
+  --app-header-height: 60px;
   --app-vertical-rhythm: theme('spacing.fluid-vertical-rhythm');
 
   @screen md {
     --app-inner-gutter: theme('spacing.20');
-    --app-header-height: 144px;
+    --app-header-height: 80px;
   }
 }

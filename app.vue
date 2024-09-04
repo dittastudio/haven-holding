@@ -7,13 +7,13 @@
     <CoreHeader />
 
     <main>
-      <div class="h-screen bg-offblack" />
+      <BlockHero />
+
+      <BlockImageText />
+
+      <BlockNewsletter />
     </main>
 
-    <footer>
-      Footer
-    </footer>
-    <!-- <NuxtRouteAnnouncer />
-    <NuxtWelcome /> -->
+    <CoreFooter />
   </div>
 </template>

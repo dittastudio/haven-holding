@@ -7,12 +7,12 @@
 }
 
 html {
-  color: theme('colors.offwhite');
-  background-color: theme('colors.offblack');
+  color: theme('colors.offblack');
+  background-color: theme('colors.offwhite');
 }
 
 body {
-  font-family: theme('fontFamily.body');
+  font-family: theme('fontFamily.sans');
   font-size: theme('fontSize.16');
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
