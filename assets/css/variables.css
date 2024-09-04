@@ -6,7 +6,7 @@
   --app-vertical-rhythm: theme('spacing.fluid-vertical-rhythm');
 
   @screen md {
-    --app-inner-gutter: theme('spacing.20');
+    --app-inner-gutter: theme('spacing.32');
     --app-header-height: 80px;
   }
 }

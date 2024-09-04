@@ -1,15 +1,27 @@
 <script lang="ts" setup>
-// import IconLogo from '@/assets/icons/logo.svg'
+import IconLogo from '@/assets/icons/logo.svg'
 </script>
 
 <template>
-  <div class="block-hero bg-gradient-to-br from-lavender to-poppy -mt-[var(--app-header-height)]">
+  <div class="block-hero bg-gradient-to-br from-sage to-wheat -mt-[var(--app-header-height)]">
     <!-- content -->
+    <IconLogo
+      width="330"
+      heigh="63"
+    />
   </div>
 </template>
 
 <style lang="postcss">
 .block-hero {
-  min-height: 200vh;
+  position: sticky;
+  z-index: -1;
+  top: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 100vh;
 }
 </style>

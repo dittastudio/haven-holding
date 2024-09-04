@@ -7,7 +7,7 @@
 }
 
 html {
-  color: theme('colors.offblack');
+  color: theme('colors.black');
   background-color: theme('colors.offwhite');
 }
 
@@ -20,8 +20,8 @@ body {
 }
 
 ::selection {
-  color: theme('colors.offblack');
-  background-color: theme('colors.offwhite');
+  color: theme('colors.offwhite');
+  background-color: theme('colors.offblack');
 }
 
 .wrapper {

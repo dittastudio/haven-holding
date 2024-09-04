@@ -144,9 +144,9 @@ export default {
       '200': '200px',
       '240': '240px',
       'fluid-outer-gutter': clamp({
-        minPixels: 32,
+        minPixels: 24,
         minViewportWidthPixels: screenSizes.xs,
-        maxPixels: 80,
+        maxPixels: 40,
         maxViewportWidthPixels: screenSizes['2xl'],
       }),
       'fluid-vertical-rhythm': clamp({

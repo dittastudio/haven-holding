@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+const isDev = import.meta.dev
 </script>
 
 <template>
@@ -15,5 +15,7 @@
     </main>
 
     <CoreFooter />
+
+    <ToolGrid v-if="isDev" />
   </div>
 </template>
