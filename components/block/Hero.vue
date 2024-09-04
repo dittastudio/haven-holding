@@ -3,8 +3,7 @@ import IconLogo from '@/assets/icons/logo.svg'
 </script>
 
 <template>
-  <div class="block-hero bg-gradient-to-br from-sage to-wheat -mt-[var(--app-header-height)]">
-    <!-- content -->
+  <div class="block-hero bg-gradient-to-br from-poppy to-sky">
     <IconLogo
       width="330"
       heigh="63"

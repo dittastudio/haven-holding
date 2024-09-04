@@ -3,11 +3,11 @@
 </script>
 
 <template>
-  <div class="block-newsletter bg-poppy">
+  <div class="block-newsletter bg-sage text-offwhite">
     <div class="section wrapper">
       <div class="grid grid-cols-1 md:grid-cols-12 gap-32 items-center justify-evenly">
         <div class="md:col-start-2 md:col-span-5">
-          <div class="w-full max-w-[900px] mx-auto aspect-[2/3] rounded-3 bg-sky mt-48" />
+          <div class="w-full max-w-[900px] mx-auto aspect-[2/3] rounded-3 bg-white/10 mt-48" />
         </div>
 
         <div class="md:col-span-4 md:col-start-8">
