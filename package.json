@@ -13,6 +13,10 @@
     "sb:pull-components": "storyblok pull-components --space 303510",
     "sb:types": "npm run sb:pull-components && storyblok-generate-ts source=./components.303510.json target=./types/storyblok"
   },
+  "dependencies": {
+    "@vueuse/core": "^11.0.3",
+    "gsap": "^3.12.5"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^2.23.2",
     "@nuxt/eslint": "^0.5.5",

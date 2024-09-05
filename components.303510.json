@@ -216,16 +216,14 @@
       "name": "settings",
       "display_name": null,
       "created_at": "2024-09-05T00:59:05.996Z",
-      "updated_at": "2024-09-05T01:05:32.738Z",
+      "updated_at": "2024-09-05T10:33:11.414Z",
       "id": 6254683,
       "schema": {
         "address": {
           "type": "richtext",
           "pos": 0,
           "customize_toolbar": true,
-          "toolbar": [
-            "paragraph"
-          ],
+          "toolbar": [],
           "key": "addree"
         },
         "socials": {
@@ -259,7 +257,7 @@
       "name": "social_item",
       "display_name": "Item",
       "created_at": "2024-09-05T01:02:12.455Z",
-      "updated_at": "2024-09-05T01:05:44.518Z",
+      "updated_at": "2024-09-05T10:33:49.875Z",
       "id": 6254685,
       "schema": {
         "title": {
@@ -281,8 +279,8 @@
       "preset_id": null,
       "real_name": "Item",
       "component_group_uuid": "ed662cc8-cd93-4cc9-8a46-b10a46ad7649",
-      "color": null,
-      "icon": null,
+      "color": "#ff6159",
+      "icon": "block-@",
       "internal_tags_list": [],
       "internal_tag_ids": [],
       "content_type_asset_preview": null,
