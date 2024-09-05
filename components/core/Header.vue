@@ -19,6 +19,7 @@ import IconLogo from '@/assets/icons/logo.svg'
 <style lang="postcss">
 .core-header {
   position: sticky;
+  z-index: 10;
   top: 0;
 
   display: flex;

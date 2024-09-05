@@ -1,13 +1,29 @@
 <script setup lang="ts">
-import IconLogo from '@/assets/icons/logo.svg'
+import { storyblokEditor } from '@/utilities/storyblok'
+import type { SettingsStoryblok } from '@/types/storyblok'
 
+const route = useRoute()
 const isDev = import.meta.dev
+const settings = await useStoryblokStory<SettingsStoryblok>('/settings')
+
+const globalClasses = computed(() => ({
+  'is-storyblok-editor': storyblokEditor(route.query),
+}))
+
+useHead({
+  htmlAttrs: {
+    class: globalClasses,
+  },
+})
+
+useSeoMeta({
+  titleTemplate: title => (title ? `${title} - Haven` : 'Haven'),
+  robots: 'index, follow',
+})
 </script>
 
 <template>
   <div>
-    <!-- <CoreHeader /> -->
-
     <div>
       <BlockHero />
 
@@ -16,23 +32,15 @@ const isDev = import.meta.dev
 
         <main>
           <NuxtPage />
-          <!-- <div class="absolute inset-0 top-[50vh]">
-        <div class="sticky top-0">
-          <IconLogo
-            width="330"
-            heigh="63"
-          />
-        </div>
-      </div> -->
-
-          <!-- <BlockMediaText />
-
-          <BlockNewsletter /> -->
         </main>
       </div>
     </div>
 
-    <CoreFooter />
+    <CoreFooter
+      v-if="settings"
+      :address="settings.content.address"
+      :socials="settings.content.socials"
+    />
 
     <ToolGrid v-if="isDev" />
   </div>

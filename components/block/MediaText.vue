@@ -16,20 +16,23 @@ const { block } = defineProps<Props>()
   >
     <div class="text-center">
       <p class="font-mono text-16">
-        Coming soon in 2025
+        {{ block.title }}
       </p>
     </div>
 
-    <img
-      v-if="block.media"
-      :src="block.media?.filename"
-      :alt="block.media?.alt"
-    >
+    <div class="relative aspect-3/2 rounded-3 overflow-hidden">
+      <img
+        v-if="block.media"
+        class="w-full h-full object-cover"
+        :src="block.media?.filename"
+        :alt="block.media?.alt"
+      >
+    </div>
 
     <StoryblokRichText
       v-if="storyblokRichTextContent(block.text)"
       :content="block.text"
-      class="block-media-text__richtext prose-p:text-fluid-lead "
+      class="block-media-text__richtext prose-p:text-fluid-lead"
     />
   </div>
 </template>

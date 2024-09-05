@@ -19,10 +19,10 @@ const { content } = defineProps<Props>()
         :block="block"
       />
 
-      <!-- <BlockNewsletter
+      <BlockNewsletter
         v-else-if="block.component === 'block_newsletter' && !block.hidden"
         :block="block"
-      /> -->
+      />
     </section>
   </div>
 </template>
