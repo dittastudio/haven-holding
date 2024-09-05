@@ -97,6 +97,7 @@ export default {
     fontSize: {
       '12': ['0.75rem', { lineHeight: '1.4', letterSpacing: '0em' }],
       '14': ['0.875rem', { lineHeight: '1.4', letterSpacing: '0em' }],
+      '15': ['0.9375rem', { lineHeight: '1.2', letterSpacing: '0em' }],
       '16': ['1rem', { lineHeight: '1.4', letterSpacing: '0em' }],
       '18': ['1.125rem', { lineHeight: '1.3', letterSpacing: '0em' }],
       '20': ['1.25rem', { lineHeight: '1.3', letterSpacing: '0em' }],

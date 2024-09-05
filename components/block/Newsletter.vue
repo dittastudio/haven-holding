@@ -10,9 +10,9 @@ const { block } = defineProps<Props>()
 </script>
 
 <template>
-  <div class="bg-sage text-offwhite">
+  <div class="bg-sage text-white">
     <div class="section wrapper">
-      <div class="text-center">
+      <div class="text-center mb-[calc(var(--app-vertical-rhythm)/2)]">
         <p class="font-mono text-16">
           {{ block.title }}
         </p>
@@ -30,12 +30,56 @@ const { block } = defineProps<Props>()
           </div>
         </div>
 
-        <div class="md:col-span-4 md:col-start-8">
+        <div class="md:col-span-4 md:col-start-8 flex flex-col gap-y-64">
           <StoryblokRichText
             v-if="storyblokRichTextContent(block.text)"
             :content="block.text"
             class="prose-p:text-20"
           />
+
+          <div>
+            <button type="button">
+              <UiButton
+                theme="white"
+                type="squared"
+              >
+                Submit
+              </UiButton>
+            </button>
+          </div>
+
+          <div>
+            <button type="button">
+              <UiButton
+                theme="white"
+                type="rounded"
+              >
+                Submit
+              </UiButton>
+            </button>
+          </div>
+
+          <div>
+            <button type="button">
+              <UiButton
+                theme="black"
+                type="squared"
+              >
+                Submit
+              </UiButton>
+            </button>
+          </div>
+
+          <div>
+            <button type="button">
+              <UiButton
+                theme="black"
+                type="rounded"
+              >
+                Submit
+              </UiButton>
+            </button>
+          </div>
         </div>
       </div>
     </div>

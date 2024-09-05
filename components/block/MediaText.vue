@@ -14,7 +14,7 @@ const { block } = defineProps<Props>()
     v-editable="block"
     class="section wrapper"
   >
-    <div class="text-center">
+    <div class="text-center mb-[calc(var(--app-vertical-rhythm)/2)]">
       <p class="font-mono text-16">
         {{ block.title }}
       </p>
@@ -33,7 +33,7 @@ const { block } = defineProps<Props>()
       <StoryblokRichText
         v-if="storyblokRichTextContent(block.text)"
         :content="block.text"
-        class=" block-media-text__richtext md:col-span-full prose-p:text-fluid-lead"
+        class=" block-media-text__richtext text-fluid-lead md:col-span-full prose-p:text-fluid-lead"
       />
     </div>
   </div>
@@ -41,6 +41,9 @@ const { block } = defineProps<Props>()
 
 <style lang="postcss">
 .block-media-text__richtext {
+  max-width: 65ch;
+  margin-inline: auto;
+
  & p + p {
     margin-block-start: 1em;
   }

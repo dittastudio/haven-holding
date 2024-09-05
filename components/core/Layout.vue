@@ -30,7 +30,7 @@ onMounted(() => {
       },
     },
     scale: 0.39,
-    ease: 'power1.out',
+    ease: 'power1.inOut',
   })
 })
 
