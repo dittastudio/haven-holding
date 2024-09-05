@@ -10,7 +10,7 @@ const { block } = defineProps<Props>()
 </script>
 
 <template>
-  <div class="block-newsletter bg-sage text-offwhite">
+  <div class="bg-sage text-offwhite">
     <div class="section wrapper">
       <div class="text-center">
         <p class="font-mono text-16">
@@ -18,9 +18,9 @@ const { block } = defineProps<Props>()
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-32 items-center justify-evenly">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-32 items-center">
         <div class="md:col-start-2 md:col-span-5">
-          <div class="relative aspect-3/4 rounded-3 overflow-hidden">
+          <div class="relative aspect-3/4 overflow-hidden">
             <img
               v-if="block.media"
               class="w-full h-full object-cover"
@@ -41,8 +41,3 @@ const { block } = defineProps<Props>()
     </div>
   </div>
 </template>
-
-<style lang="postcss">
-.block-newsletter {
-}
-</style>

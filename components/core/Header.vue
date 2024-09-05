@@ -3,30 +3,15 @@ import IconLogo from '@/assets/icons/logo.svg'
 </script>
 
 <template>
-  <header class="core-header">
+  <div class="core-header flex items-center justify-center h-[var(--app-header-height)] px-32">
     <NuxtLink
       to="/"
-      class="block"
+      class="core-header__link block pointer-events-auto"
     >
       <IconLogo
         width="136"
         height="25"
       />
     </NuxtLink>
-  </header>
+  </div>
 </template>
-
-<style lang="postcss">
-.core-header {
-  position: sticky;
-  z-index: 10;
-  top: 0;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  height: var(--app-header-height);
-  padding-inline: theme('spacing.32');
-}
-</style>

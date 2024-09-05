@@ -11,8 +11,7 @@ const { address, socials } = defineProps<Props>()
 </script>
 
 <template>
-  \
-  <footer class="core-footer wrapper font-mono py-32 grid gap-32 md:grid-cols-12">
+  <div class="core-footer wrapper font-mono pt-32 pb-80 grid gap-32 md:grid-cols-12 text-14">
     <div class="col-span-2">
       <NuxtLink
         to="/"
@@ -31,7 +30,7 @@ const { address, socials } = defineProps<Props>()
       <StoryblokRichText
         v-if="storyblokRichTextContent(address)"
         :content="address"
-        class="prose-p:text-16"
+        class="prose-p:text-14"
       />
     </div>
 
@@ -58,10 +57,5 @@ const { address, socials } = defineProps<Props>()
       <br>
       ©2024 All rights reserved
     </div>
-  </footer>
+  </div>
 </template>
-
-<style lang="postcss">
-.core-footer {
-}
-</style>

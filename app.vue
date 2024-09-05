@@ -23,25 +23,29 @@ useSeoMeta({
 </script>
 
 <template>
-  <div>
-    <div>
+  <CoreLayout>
+    <template #hero>
       <BlockHero />
+    </template>
 
-      <div class="bg-offwhite">
-        <CoreHeader />
+    <template #header>
+      <CoreHeader />
+    </template>
 
-        <main>
-          <NuxtPage />
-        </main>
-      </div>
-    </div>
+    <template #main>
+      <NuxtPage />
+    </template>
 
-    <CoreFooter
-      v-if="settings"
-      :address="settings.content.address"
-      :socials="settings.content.socials"
-    />
+    <template #footer>
+      <CoreFooter
+        v-if="settings"
+        :address="settings.content.address"
+        :socials="settings.content.socials"
+      />
+    </template>
 
-    <ToolGrid v-if="isDev" />
-  </div>
+    <template #dev>
+      <ToolGrid v-if="isDev" />
+    </template>
+  </CoreLayout>
 </template>
