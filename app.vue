@@ -25,7 +25,7 @@ useSeoMeta({
 <template>
   <CoreLayout>
     <template #hero>
-      <BlockHero />
+      <BlockHeroMedia :media="settings?.content.hero_media" />
     </template>
 
     <template #header>

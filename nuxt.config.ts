@@ -16,9 +16,28 @@ export default defineNuxtConfig({
     },
   },
 
+  image: {
+    provider: 'storyblok',
+    storyblok: {
+      baseURL: 'https://a.storyblok.com',
+    },
+    domains: ['storyblok.com', '...'],
+    quality: 80,
+    screens: {
+      'xs': 375,
+      'sm': 640,
+      'md': 768,
+      'lg': 1024,
+      'xl': 1200,
+      '2xl': 1440,
+      '3xl': 1920,
+    },
+  },
+
   modules: [
     '@nuxtjs/tailwindcss',
     '@storyblok/nuxt',
+    '@nuxt/image',
     '@nuxt/eslint',
   ],
 

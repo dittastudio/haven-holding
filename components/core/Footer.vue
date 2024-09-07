@@ -25,7 +25,9 @@ const { address, socials } = defineProps<Props>()
     </div>
 
     <div class="col-span-2">
-      <h4>Contact</h4>
+      <h4 class="mb-8">
+        Contact
+      </h4>
 
       <StoryblokRichText
         v-if="storyblokRichTextContent(address)"
@@ -35,14 +37,18 @@ const { address, socials } = defineProps<Props>()
     </div>
 
     <div class="col-span-2">
-      <h4>Social</h4>
+      <h4 class="mb-8">
+        Social
+      </h4>
 
-      <ul>
+      <ul class="core-footer__social-list flex flex-col">
         <li
           v-for="social in socials"
           :key="social._uid"
         >
           <StoryblokLink
+            v-if="social.link"
+            class="core-footer__social"
             :item="social.link"
             :title="social.title"
           >
@@ -59,3 +65,14 @@ const { address, socials } = defineProps<Props>()
     </div>
   </div>
 </template>
+
+<style lang="postcss">
+.core-footer__social {
+  display: block;
+  transition: opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
+
+  .core-footer__social-list:hover &:not(:hover) {
+    opacity: 0.4;
+  }
+}
+</style>

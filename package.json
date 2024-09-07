@@ -20,6 +20,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "^2.23.2",
     "@nuxt/eslint": "^0.5.5",
+    "@nuxt/image": "^1.8.0",
     "@nuxtjs/tailwindcss": "^6.12.1",
     "@storyblok/nuxt": "^6.0.10",
     "@tailwindcss/typography": "^0.5.15",

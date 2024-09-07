@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-// import { useIntersectionObserver } from '@vueuse/core'
+
 import IconLogo from '@/assets/icons/logo.svg'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -15,8 +15,8 @@ onMounted(() => {
     scrollTrigger: {
       trigger: tiggerContainer.value,
       markers: true,
-      start: '120px bottom',
-      end: '60px center',
+      start: 'top bottom',
+      end: '105px center',
       scrub: 0,
       onLeave: ({ progress, direction, isActive }) => {
         header.value?.classList.remove('opacity-0')
@@ -33,29 +33,6 @@ onMounted(() => {
     ease: 'power1.inOut',
   })
 })
-
-// const isVisible = ref(false)
-// const anchor = ref<HTMLElement | null>(null)
-
-// onMounted(() => {
-//   console.log('MOUNTED')
-//   if (!anchor.value) {
-//     return
-//   }
-
-//   useIntersectionObserver(
-//     anchor,
-//     ([{ isIntersecting }]) => {
-//       isVisible.value = isIntersecting
-//       console.log('isIntersecting', isIntersecting)
-//     },
-//     { rootMargin: '0% 0px -50% 0px', threshold: 0.5 },
-//   )
-// })
-
-// watch(isVisible, (value) => {
-//   console.log('isVisible', value)
-// })
 </script>
 
 <template>
@@ -70,9 +47,9 @@ onMounted(() => {
       </div>
 
       <div
-        class="absolute top-0 inset-x-0 h-[calc(150vh+60px)]"
+        class="absolute top-0 inset-x-0 h-[calc((90vh+50vh)+(var(--app-header-height)/2))] pointer-events-none"
       >
-        <div class="sticky top-0 h-screen flex items-center justify-center">
+        <div class="sticky top-0 h-[90vh] flex items-center justify-center mix-blend-difference text-white">
           <div
             ref="logo"
             class="core-layout__logo flex items-center justify-center h-[var(--app-header-height)]"
@@ -109,28 +86,3 @@ onMounted(() => {
     <slot name="dev" />
   </div>
 </template>
-
-<style lang="postcss">
-/* .core-layout__logo {
-  scale: 1;
-  opacity: 1;
-  transition:
-    scale 0.2s ease 0.2s,
-    opacity 0.2s ease 0.2s;
-
-  &.is-shrunk {
-    scale: 0.4;
-    opacity: 0;
-  }
-}
-
-.core-layout__header {
-  opacity: 1;
-  transition: opacity 0.2s ease 0.2s;
-
-  &.is-hidden {
-    opacity: 0;
-    transition: opacity 0.2s ease;
-  }
-} */
-</style>
