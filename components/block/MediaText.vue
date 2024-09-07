@@ -1,12 +1,14 @@
 <script lang="ts" setup>
 import type { BlockMediaTextStoryblok } from '@/types/storyblok'
-import { storyblokRichTextContent } from '@/utilities/storyblok'
+import { storyblokAssetType, storyblokRichTextContent } from '@/utilities/storyblok'
 
 interface Props {
   block: BlockMediaTextStoryblok
 }
 
 const { block } = defineProps<Props>()
+
+const assetType = computed(() => storyblokAssetType(block.media?.filename || ''))
 </script>
 
 <template>
@@ -21,13 +23,23 @@ const { block } = defineProps<Props>()
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-12 gap-y-[var(--app-vertical-rhythm)]">
-      <div class="md:col-span-6 md:col-start-4 relative aspect-3/2 overflow-hidden">
-        <img
-          v-if="block.media"
-          class="w-full h-full object-cover"
-          :src="block.media?.filename"
-          :alt="block.media?.alt"
-        >
+      <div class="md:col-span-6 md:col-start-4">
+        <MediaImage
+          v-if="block.media && assetType === 'image'"
+          :asset="block.media"
+          :ratio="block.ratio"
+          :lazy="true"
+          sizes="
+            100vw
+            sm:100vw
+          "
+        />
+
+        <MediaVideo
+          v-else-if="block.media && assetType === 'video'"
+          :asset="block.media"
+          :ratio="block.ratio"
+        />
       </div>
 
       <StoryblokRichText

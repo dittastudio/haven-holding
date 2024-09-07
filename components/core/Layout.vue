@@ -21,12 +21,12 @@ onMounted(() => {
       onLeave: ({ progress, direction, isActive }) => {
         header.value?.classList.remove('opacity-0')
         logo.value?.classList.add('opacity-0')
-        console.log(progress, direction, isActive)
+        // console.log(progress, direction, isActive)
       },
       onEnterBack: ({ progress, direction, isActive }) => {
         header.value?.classList.add('opacity-0')
         logo.value?.classList.remove('opacity-0')
-        console.log(progress, direction, isActive)
+        // console.log(progress, direction, isActive)
       },
     },
     scale: 0.39,
