@@ -23,7 +23,7 @@ const assetType = computed(() => storyblokAssetType(block.media?.filename || '')
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-12 gap-y-[var(--app-vertical-rhythm)]">
-      <div class="md:col-span-6 md:col-start-4">
+      <div class="md:col-span-8 md:col-start-3">
         <MediaImage
           v-if="block.media && assetType === 'image'"
           :asset="block.media"
