@@ -46,11 +46,8 @@ useIntersectionObserver(
   ([{ target, isIntersecting }], observerElement) => {
     if (!(target instanceof HTMLPictureElement))
       return
-    console.log('isIntersecting', isIntersecting)
-    console.log('ready', ready.value)
 
     if (isIntersecting && !ready.value) {
-      console.log('seen')
       ready.value = true
       observerElement.disconnect()
     }

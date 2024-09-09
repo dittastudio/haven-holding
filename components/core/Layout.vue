@@ -9,33 +9,22 @@ gsap.registerPlugin(ScrollTrigger)
 const header = ref<HTMLElement | null>(null)
 const logo = ref<HTMLElement | null>(null)
 const tiggerContainer = ref<HTMLElement | null>(null)
-// const screenHeight = ref<number>(null)
 
 onMounted(() => {
-  // addEventListener('resize', () => {
-  //   screenHeight.value = window.innerHeight
-  // })
-
-  // screenHeight.value = window.innerHeight
-
-  // const onePercent = screenHeight.value / 100
-
   gsap.to(logo.value, {
     scrollTrigger: {
       trigger: tiggerContainer.value,
-      markers: true,
+      // markers: true,
       start: `top bottom`,
       end: `120px center`,
       scrub: 0,
-      onLeave: ({ progress, direction, isActive }) => {
+      onLeave: () => {
         header.value?.classList.remove('opacity-0')
         logo.value?.classList.add('opacity-0')
-        // console.log(progress, direction, isActive)
       },
-      onEnterBack: ({ progress, direction, isActive }) => {
+      onEnterBack: () => {
         header.value?.classList.add('opacity-0')
         logo.value?.classList.remove('opacity-0')
-        // console.log(progress, direction, isActive)
       },
     },
     scale: (136 / 330),
