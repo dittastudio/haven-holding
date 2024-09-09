@@ -25,7 +25,7 @@ const { type = 'rounded', theme = 'black' } = defineProps<Props>()
 .ui-button {
   --button-padding-y: 0.8575em;
   --button-padding-x: 2.45em;
-  --button-color: theme('colors.offwhite');
+  --button-color: theme('colors.white');
   --button-hover-color: theme('colors.offblack');
   --button-hover-tint: theme('colors.black/10%');
   --button-duration: 0.2s;
@@ -71,7 +71,7 @@ const { type = 'rounded', theme = 'black' } = defineProps<Props>()
   }
 
   &--theme-white {
-    --button-color: theme('colors.offwhite');
+    --button-color: theme('colors.white');
     --button-hover-color: theme('colors.offblack');
     --button-hover-tint: theme('colors.black/10%');
   }

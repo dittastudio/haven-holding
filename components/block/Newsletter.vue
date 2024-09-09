@@ -49,48 +49,6 @@ const assetType = computed(() => storyblokAssetType(block.media?.filename || '')
 
           <div>
             <FormSignUp />
-
-            <button type="button">
-              <UiButton
-                theme="white"
-                type="squared"
-              >
-                Submit
-              </UiButton>
-            </button>
-          </div>
-
-          <div>
-            <button type="button">
-              <UiButton
-                theme="white"
-                type="rounded"
-              >
-                Submit
-              </UiButton>
-            </button>
-          </div>
-
-          <div>
-            <button type="button">
-              <UiButton
-                theme="black"
-                type="squared"
-              >
-                Submit
-              </UiButton>
-            </button>
-          </div>
-
-          <div>
-            <button type="button">
-              <UiButton
-                theme="black"
-                type="rounded"
-              >
-                Submit
-              </UiButton>
-            </button>
           </div>
         </div>
       </div>

@@ -37,7 +37,7 @@ const assetType = computed(() => storyblokAssetType(media?.filename || ''))
     position: absolute;
     inset: 0;
 
-    opacity: 0.2;
+    opacity: 0.1;
     background-color: theme('colors.white');
   }
 }

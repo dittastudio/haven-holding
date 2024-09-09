@@ -101,7 +101,7 @@ const onSubmit = async () => {
           id="fname"
           v-model="fname"
           placeholder="First name"
-          class="app-footer-form__input type-body"
+          class="app-footer-form__input type-16"
         />
       </FormField>
 
@@ -121,7 +121,7 @@ const onSubmit = async () => {
           id="lname"
           v-model="lname"
           placeholder="Last name"
-          class="app-footer-form__input type-body"
+          class="app-footer-form__input type-16"
         />
       </FormField>
 
@@ -153,6 +153,24 @@ const onSubmit = async () => {
       />
 
       <button
+        class="app-footer-form__submit"
+        type="submit"
+      >
+        <UiButton
+          theme="white"
+          type="rounded"
+        >
+          <template v-if="loading">
+            Please wait&hellip;
+          </template>
+
+          <template v-else>
+            Submit
+          </template>
+        </UiButton>
+      </button>
+
+      <!-- <button
         class="app-footer-form__submit type-h6"
         type="submit"
       >
@@ -163,7 +181,7 @@ const onSubmit = async () => {
         <template v-else>
           Submit
         </template>
-      </button>
+      </button> -->
 
       <p
         v-if="message"
@@ -192,7 +210,8 @@ const onSubmit = async () => {
 .app-footer-form__field {
   position: relative;
   width: 100%;
-  margin: 0 0 theme('spacing.4');
+
+  /* margin: 0 0 theme('spacing.4'); */
 
   &::after {
     content: '';
@@ -204,10 +223,14 @@ const onSubmit = async () => {
     width: 100%;
     height: 1px;
 
-    opacity: 0.2;
+    opacity: 0.3;
     background-color: currentcolor;
 
     transition: opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
+  }
+
+  & + & {
+    margin-top: theme('spacing.4');
   }
 
   &:has(input:focus-within) {
@@ -230,20 +253,13 @@ const onSubmit = async () => {
 }
 
 .app-footer-form__input {
-  --input-padding: 6px;
+  --input-padding-x: 8px;
+  --input-padding-y: 12px;
 
   flex-grow: 1;
-
   width: 100%;
-  padding: var(--input-padding) 0;
-
-  font-size: theme('fontSize.16');
-
+  padding: var(--input-padding-y) var(--input-padding-x);
   outline: none;
-
-  @screen md {
-    font-size: theme('fontSize.14');
-  }
 
   &::placeholder {
     color: currentcolor;
@@ -275,17 +291,16 @@ const onSubmit = async () => {
 }
 
 .app-footer-form__submit {
-  margin: 0 calc(-1 * theme('spacing.20')) calc(-1 * theme('spacing.20'));
-  padding: theme('spacing.20');
+  margin-top: theme('spacing.40');
   opacity: 1;
   transition: opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
 
-  &:hover {
+  /* &:hover {
     opacity: 0.5;
   }
 
   &:active {
     opacity: 0.75;
-  }
+  } */
 }
 </style>
