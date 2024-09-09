@@ -20,7 +20,7 @@ const assetType = computed(() => storyblokAssetType(block.media?.filename || '')
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-32 items-center">
+      <CoreGrid class="items-center">
         <div class="md:col-start-2 md:col-span-5">
           <MediaImage
             v-if="block.media && assetType === 'image'"
@@ -51,7 +51,7 @@ const assetType = computed(() => storyblokAssetType(block.media?.filename || '')
             <FormSignUp />
           </div>
         </div>
-      </div>
+      </CoreGrid>
     </div>
   </div>
 </template>

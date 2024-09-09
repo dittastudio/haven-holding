@@ -29,6 +29,7 @@
     "@nuxtjs/tailwindcss": "^6.12.1",
     "@storyblok/nuxt": "^6.0.10",
     "@tailwindcss/typography": "^0.5.15",
+    "@types/mailchimp__mailchimp_marketing": "^3.0.20",
     "del-cli": "^5.1.0",
     "eslint": "^9.7.0",
     "nuxt": "^3.12.4",

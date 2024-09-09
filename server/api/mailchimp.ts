@@ -96,7 +96,7 @@ export default defineEventHandler(async (event) => {
 
     const errorInfo = error?.response?.text ? JSON.parse(error.response.text) as ErrorInfo : null
 
-    if (errorInfo?.title === 'Member Exists') {
+    if (errorInfo?.title === 'Member Exists') { // Hack but it works
       return {
         statusCode: error.response.status,
         statusMessage: 'You are already subscribed to our newsletter.',
