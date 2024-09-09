@@ -56,9 +56,9 @@ onMounted(() => {
       </div>
 
       <div
-        class="absolute top-0 inset-x-0 h-[calc((100vh+50vh)+(var(--app-header-height)/2))] pointer-events-nonex"
+        class="absolute top-0 inset-x-0 h-[calc((100vh+50vh)+(var(--app-header-height)/2))] pointer-events-none"
       >
-        <div class="sticky top-0 h-[100vh] flex items-center justify-center mix-blend-difference text-white">
+        <div class="sticky top-0 h-[100vh] flex items-center justify-center text-offblack">
           <div
             ref="logo"
             class="core-layout__logo flex items-center justify-center h-[var(--app-header-height)]"

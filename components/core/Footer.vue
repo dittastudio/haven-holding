@@ -11,7 +11,7 @@ const { address, socials } = defineProps<Props>()
 </script>
 
 <template>
-  <div class="core-footer wrapper font-mono pt-32 pb-40 md:pb-80 grid gap-x-[var(--app-inner-gutter)] gap-48 grid-cols-2 sm:grid-cols-4 md:grid-cols-12 text-14">
+  <CoreGrid class="core-footer wrapper font-mono pt-32 pb-40 md:pb-80 text-14">
     <div class="col-span-2 sm:col-span-2 md:col-span-2">
       <NuxtLink
         to="/"
@@ -89,7 +89,7 @@ const { address, socials } = defineProps<Props>()
         ©2024 All rights reserved
       </div>
     </div>
-  </div>
+  </CoreGrid>
 </template>
 
 <style lang="postcss">
