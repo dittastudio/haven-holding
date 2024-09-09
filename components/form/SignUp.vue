@@ -157,7 +157,7 @@ const onSubmit = async () => {
         type="submit"
       >
         <UiButton
-          theme="black"
+          theme="white"
           type="rounded"
         >
           <template v-if="loading">
@@ -232,9 +232,12 @@ const onSubmit = async () => {
 
 .app-footer-form__error {
   margin-block-start: theme('spacing.4');
+  margin-inline-start: theme('spacing.8');
+
   font-size: theme('fontSize.12');
-  color: theme('colors.wheat');
   text-align: left;
+
+  opacity: 0.75;
 }
 
 .app-footer-form__input {
