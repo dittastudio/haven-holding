@@ -14,13 +14,18 @@
     "sb:types": "npm run sb:pull-components && storyblok-generate-ts source=./components.303510.json target=./types/storyblok"
   },
   "dependencies": {
+    "@vee-validate/zod": "^4.13.2",
     "@vueuse/core": "^11.0.3",
-    "gsap": "^3.12.5"
+    "gsap": "^3.12.5",
+    "vee-validate": "^4.13.2",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.23.2",
+    "@mailchimp/mailchimp_marketing": "^3.0.80",
     "@nuxt/eslint": "^0.5.5",
     "@nuxt/image": "^1.8.0",
+    "@nuxtjs/sitemap": "^6.0.1",
     "@nuxtjs/tailwindcss": "^6.12.1",
     "@storyblok/nuxt": "^6.0.10",
     "@tailwindcss/typography": "^0.5.15",

@@ -20,32 +20,41 @@ useSeoMeta({
   titleTemplate: title => (title ? `${title} - Haven` : 'Haven'),
   robots: 'index, follow',
 })
+
+const splashSeen = useState('splashSeen', () => false)
 </script>
 
 <template>
-  <CoreLayout>
-    <template #hero>
-      <BlockHeroMedia :media="settings?.content.hero_media" />
-    </template>
+  <div>
+    <CoreLayout>
+      <template #hero>
+        <BlockHeroMedia :media="settings?.content.hero_media" />
+      </template>
 
-    <template #header>
-      <CoreHeader />
-    </template>
+      <template #header>
+        <CoreHeader />
+      </template>
 
-    <template #main>
-      <NuxtPage />
-    </template>
+      <template #main>
+        <NuxtPage />
+      </template>
 
-    <template #footer>
-      <CoreFooter
-        v-if="settings"
-        :address="settings.content.address"
-        :socials="settings.content.socials"
-      />
-    </template>
+      <template #footer>
+        <CoreFooter
+          v-if="settings"
+          :address="settings.content.address"
+          :socials="settings.content.socials"
+        />
+      </template>
 
-    <template #dev>
-      <ToolGrid v-if="isDev" />
-    </template>
-  </CoreLayout>
+      <template #dev>
+        <ToolGrid v-if="isDev" />
+      </template>
+    </CoreLayout>
+
+    <CoreCover
+      v-if="!splashSeen"
+      message="WILCOMMEN"
+    />
+  </div>
 </template>

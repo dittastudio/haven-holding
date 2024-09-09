@@ -8,20 +8,6 @@ interface Props {
 }
 
 const { address, socials } = defineProps<Props>()
-
-const hover: any = ref(null)
-const hoverInner: any = ref(null)
-
-const animateMe = (event: any) => {
-  const { offsetX: x, offsetY: y } = event
-  const { offsetWidth: width, offsetHeight: height } = hover.value.$el
-  const move = 5
-  const xMove = x / width * (move * 2) - move
-  const yMove = y / height * (move * 2) - move
-
-  hoverInner.value.style.setProperty('--x', `${xMove}px`)
-  hoverInner.value.style.setProperty('--y', `${yMove}px`)
-}
 </script>
 
 <template>
@@ -29,7 +15,7 @@ const animateMe = (event: any) => {
     <div class="col-span-2 sm:col-span-2 md:col-span-2">
       <NuxtLink
         to="/"
-        class="inline-block"
+        class="inline-block transition-opacity duration-200 ease-smooth hover:opacity-60"
       >
         <IconLogoSymbol
           width="35"

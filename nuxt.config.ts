@@ -21,7 +21,7 @@ export default defineNuxtConfig({
     storyblok: {
       baseURL: 'https://a.storyblok.com',
     },
-    domains: ['storyblok.com', '...'],
+    domains: ['storyblok.com', 'havenhavelland.com'],
     quality: 80,
     screens: {
       'xs': 375,
@@ -35,10 +35,11 @@ export default defineNuxtConfig({
   },
 
   modules: [
+    '@nuxt/eslint',
+    '@nuxt/image',
+    '@nuxtjs/sitemap',
     '@nuxtjs/tailwindcss',
     '@storyblok/nuxt',
-    '@nuxt/image',
-    '@nuxt/eslint',
   ],
 
   postcss: {
@@ -51,12 +52,20 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    private: {},
+    MAILCHIMP_API_KEY: process.env.NUXT_MAILCHIMP_API_KEY,
+    MAILCHIMP_LIST_ID: process.env.NUXT_MAILCHIMP_LIST_ID,
+    MAILCHIMP_SERVER: process.env.NUXT_MAILCHIMP_SERVER,
     public: {
       STORYBLOK_TOKEN: process.env.NUXT_STORYBLOK_TOKEN,
       STORYBLOK_VERSION: process.env.NUXT_STORYBLOK_VERSION,
     },
   },
+
+  site: {
+    url: 'https://www.havenhavelland.com',
+  },
+
+  // ssr: true,
 
   storyblok: {
     accessToken: process.env.NUXT_STORYBLOK_TOKEN,

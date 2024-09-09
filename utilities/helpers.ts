@@ -31,6 +31,12 @@ const ratioDimensions = (
   }
 }
 
+const requestDelay = async <T>(promise: T, ms: number = 1000) => {
+  const [p] = await Promise.all([promise, wait(ms)])
+
+  return p
+}
+
 const wait = (ms: number = 0) => new Promise(resolve => setTimeout(resolve, ms))
 
 const validAspectRatio = (ratio: string | number = '') => {
@@ -57,5 +63,6 @@ export {
   objectToUrlParams,
   ratioDimensions,
   validAspectRatio,
+  requestDelay,
   wait,
 }

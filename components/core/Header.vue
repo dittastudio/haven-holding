@@ -12,7 +12,7 @@ import IconLogo from '@/assets/icons/logo.svg'
     >
       <IconLogo
         width="136"
-        height="25"
+        height="27"
       />
     </NuxtLink>
   </div>

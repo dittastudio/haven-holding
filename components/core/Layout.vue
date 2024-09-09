@@ -9,14 +9,23 @@ gsap.registerPlugin(ScrollTrigger)
 const header = ref<HTMLElement | null>(null)
 const logo = ref<HTMLElement | null>(null)
 const tiggerContainer = ref<HTMLElement | null>(null)
+// const screenHeight = ref<number>(null)
 
 onMounted(() => {
+  // addEventListener('resize', () => {
+  //   screenHeight.value = window.innerHeight
+  // })
+
+  // screenHeight.value = window.innerHeight
+
+  // const onePercent = screenHeight.value / 100
+
   gsap.to(logo.value, {
     scrollTrigger: {
       trigger: tiggerContainer.value,
       markers: true,
-      start: 'top bottom',
-      end: '105px center',
+      start: `top bottom`,
+      end: `120px center`,
       scrub: 0,
       onLeave: ({ progress, direction, isActive }) => {
         header.value?.classList.remove('opacity-0')
@@ -29,7 +38,7 @@ onMounted(() => {
         // console.log(progress, direction, isActive)
       },
     },
-    scale: 0.39,
+    scale: (136 / 330),
     ease: 'power1.inOut',
   })
 })
@@ -47,16 +56,16 @@ onMounted(() => {
       </div>
 
       <div
-        class="absolute top-0 inset-x-0 h-[calc((90vh+50vh)+(var(--app-header-height)/2))] pointer-events-none"
+        class="absolute top-0 inset-x-0 h-[calc((100vh+50vh)+(var(--app-header-height)/2))] pointer-events-nonex"
       >
-        <div class="sticky top-0 h-[90vh] flex items-center justify-center mix-blend-difference text-white">
+        <div class="sticky top-0 h-[100vh] flex items-center justify-center mix-blend-difference text-white">
           <div
             ref="logo"
             class="core-layout__logo flex items-center justify-center h-[var(--app-header-height)]"
           >
             <IconLogo
               width="330"
-              heigh="63"
+              heigh="65"
             />
           </div>
         </div>

@@ -10,7 +10,7 @@ const assetType = computed(() => storyblokAssetType(media?.filename || ''))
 </script>
 
 <template>
-  <div class="block-hero-media flex items-center justify-center h-[90vh] bg-lavender">
+  <div class="block-hero-media flex items-center justify-center h-[100vh] bg-lavender">
     <MediaImage
       v-if="media && assetType === 'image'"
       :asset="media"
@@ -37,7 +37,7 @@ const assetType = computed(() => storyblokAssetType(media?.filename || ''))
     position: absolute;
     inset: 0;
 
-    opacity: 0;
+    opacity: 0.2;
     background-color: theme('colors.white');
   }
 }

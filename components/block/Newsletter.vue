@@ -48,6 +48,8 @@ const assetType = computed(() => storyblokAssetType(block.media?.filename || '')
           />
 
           <div>
+            <FormSignUp />
+
             <button type="button">
               <UiButton
                 theme="white"
