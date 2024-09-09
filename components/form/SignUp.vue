@@ -157,7 +157,7 @@ const onSubmit = async () => {
         type="submit"
       >
         <UiButton
-          theme="white"
+          theme="black"
           type="rounded"
         >
           <template v-if="loading">
