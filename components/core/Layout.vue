@@ -11,7 +11,13 @@ const logo = ref<HTMLElement | null>(null)
 const tiggerContainer = ref<HTMLElement | null>(null)
 
 onMounted(() => {
-  gsap.to(logo.value, {
+  const logos = document.querySelectorAll('.core-layout__logo')
+  // logo.value.forEach((el) => {
+  //   console
+  // })
+  console.log('logo', logo.value)
+
+  gsap.to(logos, {
     scrollTrigger: {
       trigger: tiggerContainer.value,
       // markers: true,
@@ -56,6 +62,24 @@ onMounted(() => {
               width="330"
               heigh="65"
             />
+          </div>
+        </div>
+      </div>
+
+      <div class="absolute top-0 inset-x-0 h-[100vh] contain-paint">
+        <div
+          class="absolute top-0 inset-x-0 h-[calc((100vh+50vh)+(var(--app-header-height)/2))] pointer-events-nonex"
+        >
+          <div class="sticky top-0 h-[100vh] flex items-center justify-center text-white">
+            <div
+              ref="logo"
+              class="core-layout__logo flex items-center justify-center h-[var(--app-header-height)]"
+            >
+              <IconLogo
+                width="330"
+                heigh="65"
+              />
+            </div>
           </div>
         </div>
       </div>
