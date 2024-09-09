@@ -12,7 +12,10 @@ const assetType = computed(() => storyblokAssetType(block.media?.filename || '')
 </script>
 
 <template>
-  <div class="bg-sage text-white">
+  <div
+    v-editable="block"
+    class="bg-sage text-white"
+  >
     <div class="section wrapper">
       <div class="text-center mb-[calc(var(--app-vertical-rhythm)/2)]">
         <p class="font-mono text-16">
