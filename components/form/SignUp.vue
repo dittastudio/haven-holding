@@ -108,7 +108,7 @@ const onSubmit = async () => {
       <FormError
         v-if="errors.fname"
         :message="errors.fname"
-        class="app-footer-form__error"
+        class="app-footer-form__error font-mono type-12"
       />
 
       <FormField
@@ -128,7 +128,7 @@ const onSubmit = async () => {
       <FormError
         v-if="errors.lname"
         :message="errors.lname"
-        class="app-footer-form__error"
+        class="app-footer-form__error font-mono type-12"
       />
 
       <FormField
@@ -142,14 +142,14 @@ const onSubmit = async () => {
           v-model="email"
           field="email"
           placeholder="Email"
-          class="app-footer-form__input type-body"
+          class="app-footer-form__input type-16"
         />
       </FormField>
 
       <FormError
         v-if="errors.email"
         :message="errors.email"
-        class="app-footer-form__error"
+        class="app-footer-form__error font-mono type-12"
       />
 
       <button
@@ -169,19 +169,6 @@ const onSubmit = async () => {
           </template>
         </UiButton>
       </button>
-
-      <!-- <button
-        class="app-footer-form__submit type-h6"
-        type="submit"
-      >
-        <template v-if="loading">
-          Please wait&hellip;
-        </template>
-
-        <template v-else>
-          Submit
-        </template>
-      </button> -->
 
       <p
         v-if="message"
@@ -210,8 +197,6 @@ const onSubmit = async () => {
 .app-footer-form__field {
   position: relative;
   width: 100%;
-
-  /* margin: 0 0 theme('spacing.4'); */
 
   &::after {
     content: '';
@@ -246,9 +231,9 @@ const onSubmit = async () => {
 }
 
 .app-footer-form__error {
-  margin: 0 0 theme('spacing.12');
+  margin-block-start: theme('spacing.4');
   font-size: theme('fontSize.12');
-  font-style: italic;
+  color: theme('colors.wheat');
   text-align: left;
 }
 
@@ -263,12 +248,12 @@ const onSubmit = async () => {
 
   &::placeholder {
     color: currentcolor;
-    opacity: 0.5;
+    opacity: 1;
     transition: opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
   }
 
   &:hover::placeholder {
-    opacity: 0.2;
+    opacity: 0.5;
   }
 
   &:focus::placeholder {

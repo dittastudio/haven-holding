@@ -65,7 +65,7 @@ export default defineNuxtConfig({
     url: 'https://www.havenhavelland.com',
   },
 
-  // ssr: true,
+  ssr: true,
 
   storyblok: {
     accessToken: process.env.NUXT_STORYBLOK_TOKEN,
