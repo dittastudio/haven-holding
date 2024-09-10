@@ -5,14 +5,14 @@ interface Props {
   block: BlockTextStoryblok
 }
 
-const { block } = defineProps<Props>()
+const props = defineProps<Props>()
 </script>
 
 <template>
   <div
-    v-editable="block"
+    v-editable="props.block"
     class="section wrapper"
   >
-    <p>{{ block.text }}</p>
+    <p>{{ props.block.text }}</p>
   </div>
 </template>

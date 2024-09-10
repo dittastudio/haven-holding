@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { useField, useForm, useValidateForm } from 'vee-validate'
-import { toTypedSchema } from '@vee-validate/zod'
-import { z } from 'zod'
 import { requestDelay } from '@/utilities/helpers'
+import { toTypedSchema } from '@vee-validate/zod'
+import { useField, useForm, useValidateForm } from 'vee-validate'
+import { z } from 'zod'
 
 const loading = ref(false)
 const message = ref('')

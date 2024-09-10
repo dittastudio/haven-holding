@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { useIntersectionObserver } from '@vueuse/core'
 import { ratioMap } from '@/utilities/maps'
+import { useIntersectionObserver } from '@vueuse/core'
 import type { AssetStoryblok } from '@/types/storyblok'
 
 interface Props {
@@ -8,7 +8,9 @@ interface Props {
   ratio?: ditta.TAspectRatios | string | number
 }
 
-const { asset, ratio = 'auto' } = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  ratio: 'auto',
+})
 
 interface Emits {
   (event: 'seen' | 'playing', payload: boolean): void
@@ -18,7 +20,7 @@ const emit = defineEmits<Emits>()
 
 const video = ref<HTMLVideoElement | null>(null)
 const seen = ref(false)
-const src = computed(() => seen.value ? asset?.filename : '')
+const src = computed(() => seen.value ? props.asset?.filename : '')
 
 useIntersectionObserver(
   video,
@@ -54,7 +56,7 @@ onUnmounted(() => {
 
 <template>
   <video
-    v-if="asset"
+    v-if="props.asset"
     ref="video"
     :src="src"
     playsinline
@@ -62,6 +64,6 @@ onUnmounted(() => {
     muted
     loop
     class="w-full h-[inherit] object-cover"
-    :class="ratioMap[ratio]"
+    :class="ratioMap[props.ratio]"
   />
 </template>

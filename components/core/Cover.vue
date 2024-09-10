@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { wait } from '@/utilities/helpers'
 import IconLogoSymbol from '@/assets/icons/logo-symbol.svg'
+import { wait } from '@/utilities/helpers'
 
 const coverVisible = ref(true)
 const logoVisible = ref(false)

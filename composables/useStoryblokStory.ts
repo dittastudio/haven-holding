@@ -12,7 +12,7 @@ export const useStoryblokStory = async <T>(
 
   const runtimeConfig = useRuntimeConfig()
   const route = useRoute()
-  const storyblokApi = useStoryblokApi()
+
   const release = String(route.query?._storyblok_release) || undefined
   const storyBlokSlug = storyblokSlug(slug)
 
@@ -24,12 +24,13 @@ export const useStoryblokStory = async <T>(
 
   const config = { ...defaultOptions, ...options }
 
-  const { data, error } = await useAsyncData(
+  const story = await useAsyncStoryblok(
     storyBlokSlug,
-    async () => await storyblokApi.get(`cdn/stories${storyBlokSlug}`, config),
+    config, // API Options
+    { resolveLinks: 'url' },
   )
 
-  if (!data.value?.data?.story || error.value) {
+  if (!story.value) {
     throw createError({
       statusCode: 404,
       statusMessage: `Page not found`,
@@ -37,5 +38,5 @@ export const useStoryblokStory = async <T>(
     })
   }
 
-  return ref(data.value?.data?.story)
+  return story
 }

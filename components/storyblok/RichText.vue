@@ -11,8 +11,9 @@ interface Props {
   content?: StoryblokRichTextOptions<any>
 }
 
-const { content } = defineProps<Props>()
-const html = computed(() => (content ? render(content) : ''))
+const props = defineProps<Props>()
+
+const html = computed(() => (props.content ? render(props.content) : ''))
 </script>
 
 <template>

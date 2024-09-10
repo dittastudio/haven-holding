@@ -5,28 +5,28 @@ interface Props {
   content: PageStoryblok
 }
 
-const { content } = defineProps<Props>()
+const props = defineProps<Props>()
 </script>
 
 <template>
   <section
-    v-for="block in content.blocks"
+    v-for="block in props.content.blocks"
     :key="block._uid"
     class="content-blocks__item"
     :class="`content-blocks__item--${block.component}`"
   >
     <BlockMediaText
-      v-if="block.component === 'block_media_text' && !block.hidden"
+      v-if="block.component === 'block_media_text'"
       :block="block"
     />
 
     <BlockNewsletter
-      v-else-if="block.component === 'block_newsletter' && !block.hidden"
+      v-else-if="block.component === 'block_newsletter'"
       :block="block"
     />
 
     <BlockText
-      v-else-if="block.component === 'block_text' && !block.hidden"
+      v-else-if="block.component === 'block_text'"
       :block="block"
     />
   </section>

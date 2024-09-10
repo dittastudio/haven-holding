@@ -1,14 +1,12 @@
 <script lang="ts" setup>
+import IconLogo from '@/assets/icons/logo.svg'
+import { screenSizes } from '@/tailwind.config'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { screenSizes } from '@/tailwind.config'
-import IconLogo from '@/assets/icons/logo.svg'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// const isMd = useAtMedia(`(min-width: ${screenSizes.md}px)`)
 const header = ref<HTMLElement | null>(null)
-// const logo = ref<HTMLElement | null>(null)
 const tiggerContainer = ref<HTMLElement | null>(null)
 
 onMounted(() => {
@@ -17,7 +15,6 @@ onMounted(() => {
   const mm = gsap.matchMedia()
 
   mm.add({ isDesktop: `(min-width: ${screenSizes.md}px)`, isMobile: `(max-width: ${screenSizes.md - 1}px)` }, (context) => { // not sure why it has to have two arguments
-    console.log(context.conditions)
     const { isDesktop } = context.conditions as { isDesktop: boolean }
 
     gsap.to(logos, {
@@ -53,7 +50,7 @@ onMounted(() => {
       class="relative"
     >
       <div
-        class="sticky top-0 -z-1"
+        class="-z-1 sticky top-0"
       >
         <slot name="hero" />
       </div>
@@ -84,7 +81,7 @@ onMounted(() => {
       >
         <header
           ref="header"
-          class="core-layout__header sticky top-0 z-10 pointer-events-none opacity-0"
+          class="core-layout__header sticky top-0 z-10 opacity-0 pointer-events-none"
         >
           <slot name="header" />
         </header>

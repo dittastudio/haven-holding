@@ -1,24 +1,24 @@
 <script lang="ts" setup>
-import type { BlockMediaTextStoryblok } from '@/types/storyblok'
 import { storyblokAssetType, storyblokRichTextContent } from '@/utilities/storyblok'
+import type { BlockMediaTextStoryblok } from '@/types/storyblok'
 
 interface Props {
   block: BlockMediaTextStoryblok
 }
 
-const { block } = defineProps<Props>()
+const props = defineProps<Props>()
 
-const assetType = computed(() => storyblokAssetType(block.media?.filename || ''))
+const assetType = computed(() => storyblokAssetType(props.block.media?.filename || ''))
 </script>
 
 <template>
   <div
-    v-editable="block"
+    v-editable="props.block"
     class="section wrapper"
   >
     <div class="text-center mb-[calc(var(--app-vertical-rhythm)/2)]">
       <p class="font-mono text-16">
-        {{ block.title }}
+        {{ props.block.title }}
       </p>
     </div>
 
@@ -43,8 +43,8 @@ const assetType = computed(() => storyblokAssetType(block.media?.filename || '')
       </div>
 
       <StoryblokRichText
-        v-if="storyblokRichTextContent(block.text)"
-        :content="block.text"
+        v-if="storyblokRichTextContent(props.block.text)"
+        :content="props.block.text"
         class="col-span-full block-media-text__richtext text-fluid-lead md:col-span-full prose-p:text-fluid-lead"
       />
     </CoreGrid>

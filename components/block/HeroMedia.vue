@@ -1,19 +1,21 @@
 <script lang="ts" setup>
 import { storyblokAssetType } from '@/utilities/storyblok'
+import type { AssetStoryblok } from '@/types/storyblok'
 
 interface Props {
-  media: any
+  media: AssetStoryblok
 }
 
-const { media } = defineProps<Props>()
-const assetType = computed(() => storyblokAssetType(media?.filename || ''))
+const props = defineProps<Props>()
+
+const assetType = computed(() => storyblokAssetType(props.media?.filename || ''))
 </script>
 
 <template>
   <div class="block-hero-media flex items-center justify-center h-[100vh] bg-lavender">
     <MediaImage
-      v-if="media && assetType === 'image'"
-      :asset="media"
+      v-if="props.media && assetType === 'image'"
+      :asset="props.media"
       sizes="
         100vw
         sm:100vw
@@ -21,8 +23,8 @@ const assetType = computed(() => storyblokAssetType(media?.filename || ''))
     />
 
     <MediaVideo
-      v-else-if="media && assetType === 'video'"
-      :asset="media"
+      v-else-if="props.media && assetType === 'video'"
+      :asset="props.media"
     />
   </div>
 </template>

@@ -4,15 +4,15 @@ interface Props {
   theme?: 'white' | 'black'
 }
 
-const { type = 'rounded', theme = 'black' } = defineProps<Props>()
+const props = defineProps<Props>()
 </script>
 
 <template>
   <span
     class="ui-button text-14 font-mono"
     :class="[
-      { [`ui-button--type-${type}`]: type },
-      { [`ui-button--theme-${theme}`]: theme },
+      { [`ui-button--type-${props.type}`]: props.type },
+      { [`ui-button--theme-${props.theme}`]: props.theme },
     ]"
   >
     <span class="ui-button__text">

@@ -1,13 +1,14 @@
 <script lang="ts" setup>
 import IconLogoSymbol from '@/assets/icons/logo-symbol.svg'
 import { storyblokRichTextContent } from '@/utilities/storyblok'
+import type { RichtextStoryblok, SocialItemStoryblok } from '@/types/storyblok'
 
 interface Props {
-  address: any
-  socials: any
+  address: RichtextStoryblok
+  socials: SocialItemStoryblok[]
 }
 
-const { address, socials } = defineProps<Props>()
+const props = defineProps<Props>()
 </script>
 
 <template>
@@ -30,8 +31,8 @@ const { address, socials } = defineProps<Props>()
       </h4>
 
       <StoryblokRichText
-        v-if="storyblokRichTextContent(address)"
-        :content="address"
+        v-if="storyblokRichTextContent(props.address)"
+        :content="props.address"
         class="prose-p:text-14"
       />
     </div>
@@ -43,7 +44,7 @@ const { address, socials } = defineProps<Props>()
 
       <ul class="core-footer__social-list flex flex-col">
         <li
-          v-for="social in socials"
+          v-for="social in props.socials"
           :key="social._uid"
         >
           <StoryblokLink

@@ -6,28 +6,30 @@ interface Props {
   disabled?: boolean
 }
 
-const { item, disabled = false } = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  disabled: false,
+})
 
 const href
-  = item?.linktype === 'email'
-    ? `mailto:${item?.email}`
-    : item?.linktype === 'story'
-      ? `/${item?.cached_url?.replace('home', '')}`
-      : item?.cached_url
+  = props.item?.linktype === 'email'
+    ? `mailto:${props.item?.email}`
+    : props.item?.linktype === 'story'
+      ? `/${props.item?.cached_url?.replace('home', '')}`
+      : props.item?.cached_url
 
 const customAttributes = {
-  class: item?.class,
-  title: item?.title,
-  rel: item?.rel,
+  class: props.item?.class,
+  title: props.item?.title,
+  rel: props.item?.rel,
 }
 
 const attributes = {
   ...customAttributes,
   to: href?.trim().replace(/\/+$/, ''),
-  target: item?.target ?? item?.linktype === 'asset' ? '_blank' : null,
+  target: props.item?.target ?? props.item?.linktype === 'asset' ? '_blank' : null,
 }
 
-const element = !item || disabled ? 'div' : resolveComponent('NuxtLink')
+const element = !props.item || props.disabled ? 'div' : resolveComponent('NuxtLink')
 </script>
 
 <template>

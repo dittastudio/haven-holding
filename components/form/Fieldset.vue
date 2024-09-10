@@ -1,16 +1,17 @@
 <script lang="ts" setup>
 interface Props {
-  a11y?: boolean
   legend?: string
 }
 
-const { legend = '' } = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  legend: '',
+})
 </script>
 
 <template>
   <fieldset>
     <legend class="sr-only">
-      {{ legend }}
+      {{ props.legend }}
     </legend>
 
     <slot />

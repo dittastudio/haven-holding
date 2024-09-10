@@ -1,34 +1,34 @@
 <script lang="ts" setup>
-import type { BlockNewsletterStoryblok } from '@/types/storyblok'
 import { storyblokAssetType, storyblokRichTextContent } from '@/utilities/storyblok'
+import type { BlockNewsletterStoryblok } from '@/types/storyblok'
 
 interface Props {
   block: BlockNewsletterStoryblok
 }
 
-const { block } = defineProps<Props>()
+const props = defineProps<Props>()
 
-const assetType = computed(() => storyblokAssetType(block.media?.filename || ''))
+const assetType = computed(() => storyblokAssetType(props.block.media?.filename || ''))
 </script>
 
 <template>
   <div
-    v-editable="block"
+    v-editable="props.block"
     class="bg-lavender text-white"
   >
     <div class="section wrapper">
       <div class="text-center mb-[calc(var(--app-vertical-rhythm)/2)]">
         <p class="font-mono text-16">
-          {{ block.title }}
+          {{ props.block.title }}
         </p>
       </div>
 
       <CoreGrid class="items-center">
         <div class="col-span-full md:col-start-2 md:col-span-5">
           <MediaImage
-            v-if="block.media && assetType === 'image'"
-            :asset="block.media"
-            :ratio="block.ratio"
+            v-if="props.block.media && assetType === 'image'"
+            :asset="props.block.media"
+            :ratio="props.block.ratio"
             :lazy="true"
             sizes="
             100vw
@@ -37,16 +37,16 @@ const assetType = computed(() => storyblokAssetType(block.media?.filename || '')
           />
 
           <MediaVideo
-            v-else-if="block.media && assetType === 'video'"
-            :asset="block.media"
-            :ratio="block.ratio"
+            v-else-if="props.block.media && assetType === 'video'"
+            :asset="props.block.media"
+            :ratio="props.block.ratio"
           />
         </div>
 
         <div class="col-span-full md:col-span-4 md:col-start-8 flex flex-col gap-y-64">
           <StoryblokRichText
-            v-if="storyblokRichTextContent(block.text)"
-            :content="block.text"
+            v-if="storyblokRichTextContent(props.block.text)"
+            :content="props.block.text"
             class="prose-p:text-20"
           />
 

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { useIntersectionObserver } from '@vueuse/core'
 import { calculateAspectRatio, ratioDimensions, validAspectRatio } from '@/utilities/helpers'
 import { storyblokImageDimensions } from '@/utilities/storyblok'
+import { useIntersectionObserver } from '@vueuse/core'
 import type { AssetStoryblok } from '@/types/storyblok'
 
 defineOptions({
@@ -18,16 +18,18 @@ interface Props {
   lazy?: boolean
 }
 
-const { asset, ratio, sizes, lazy = true } = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  lazy: true,
+})
 
 const container = ref<HTMLPictureElement | null>(null)
-const ready = ref(!lazy)
-const loaded = ref(!lazy)
+const ready = ref(!props.lazy)
+const loaded = ref(!props.lazy)
 
-const { width, height } = storyblokImageDimensions(asset.filename)
+const { width, height } = storyblokImageDimensions(props.asset.filename)
 
-const ratioValid = validAspectRatio(ratio)
-const ratioFormat = ratio && ratioValid ? calculateAspectRatio(ratioDimensions(ratio).width, ratioDimensions(ratio).height) : calculateAspectRatio(width, height)
+const ratioValid = validAspectRatio(props.ratio)
+const ratioFormat = props.ratio && ratioValid ? calculateAspectRatio(ratioDimensions(props.ratio).width, ratioDimensions(props.ratio).height) : calculateAspectRatio(width, height)
 
 const size = {
   width: ratioDimensions(ratioFormat).width,
@@ -35,7 +37,7 @@ const size = {
 }
 
 const placeholderImg = useImage()
-const placeholder = placeholderImg(asset.filename, {
+const placeholder = placeholderImg(props.asset.filename, {
   width: size.width,
   height: size.height,
   quality: 10,
@@ -57,9 +59,9 @@ useIntersectionObserver(
 
 const imgMain = useImage()
 
-const imgInfo = computed(() => imgMain.getSizes(asset.filename, {
+const imgInfo = computed(() => imgMain.getSizes(props.asset.filename, {
   provider: 'storyblok',
-  sizes,
+  sizes: props.sizes,
   modifiers: {
     width: size.width,
     height: size.height,
@@ -73,10 +75,10 @@ const imgAttrs = computed(() => ({
   ...rest,
   width: size.width,
   height: size.height,
-  src: ready.value ? asset.filename : '',
+  src: ready.value ? props.asset.filename : '',
   sizes: ready.value ? imgInfo.value.sizes : '',
   srcset: ready.value ? imgInfo.value.srcset : '',
-  alt: attrs.value?.alt ?? asset.alt ?? '',
+  alt: attrs.value?.alt ?? props.asset.alt ?? '',
 }))
 </script>
 
@@ -89,13 +91,13 @@ const imgAttrs = computed(() => ({
     <img
       v-bind="imgAttrs"
       class="media-image__asset"
-      :class="[{ 'is-loaded': loaded, 'is-lazy': lazy }]"
-      :loading="lazy ? 'eager' : 'lazy'"
+      :class="[{ 'is-loaded': loaded, 'is-lazy': props.lazy }]"
+      :loading="props.lazy ? 'eager' : 'lazy'"
       @load="loaded = true"
     >
 
     <img
-      v-if="lazy"
+      v-if="props.lazy"
       class="media-image__placeholder"
       :src="placeholder"
       :width="size.width"
