@@ -17,12 +17,12 @@ const animateMe = (event: any) => {
 <template>
   <span
     ref="hover"
-    class="core-footer-credit"
+    class="ui-attractor"
     @mousemove="animateMe"
   >
     <span
       ref="hoverInner"
-      class="core-footer-credit__inner"
+      class="ui-attractor__inner"
     >
       <slot />
     </span>
@@ -50,23 +50,26 @@ const animateMe = (event: any) => {
   }
 }
 
-.core-footer-credit {
-  --link-padding-x: theme('spacing.4');
-  --link-padding-y: theme('spacing.16');
+.ui-attractor {
+  --padding-x: theme('spacing.4');
+  --padding-y: theme('spacing.16');
 
   pointer-events: none;
   display: block;
-  margin: calc(-1 * var(--link-padding-y)) calc(-1 * var(--link-padding-x));
-  padding: var(--link-padding-y) var(--link-padding-x);
 }
 
-.core-footer-credit__inner {
+.ui-attractor__inner {
   pointer-events: auto;
   will-change: translate;
-  display: inline-block;
+
+  display: block;
+
+  margin: calc(-1 * var(--padding-y)) calc(-1 * var(--padding-x));
+  padding: var(--padding-y) var(--padding-x);
+
   animation: exit theme('transitionDuration.300') theme('transitionTimingFunction.outBack') forwards;
 
-  .core-footer-credit:hover & {
+  .ui-attractor:hover & {
     animation: enter theme('transitionDuration.300') theme('transitionTimingFunction.outBack') forwards;
   }
 }

@@ -12,11 +12,11 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <CoreGrid class="core-footer wrapper font-mono pt-32 pb-40 md:pb-80 text-14">
-    <div class="col-span-2 sm:col-span-2 md:col-span-2">
+  <CoreGrid class="core-footer wrapper md:pb-80 text-14 pt-32 pb-40 font-mono">
+    <div class="sm:col-span-2 md:col-span-2 col-span-2">
       <NuxtLink
         to="/"
-        class="inline-block transition-opacity duration-200 ease-smooth hover:opacity-60"
+        class="ease-smooth hover:opacity-60 inline-block transition-opacity duration-200"
       >
         <IconLogoSymbol
           width="35"
@@ -25,7 +25,7 @@ const props = defineProps<Props>()
       </NuxtLink>
     </div>
 
-    <div class="col-span-1 md:col-span-2">
+    <div class="md:col-span-2 col-span-1">
       <h4 class="mb-8">
         Contact
       </h4>
@@ -37,7 +37,7 @@ const props = defineProps<Props>()
       />
     </div>
 
-    <div class="col-span-1 md:col-span-2">
+    <div class="md:col-span-2 col-span-1">
       <h4 class="mb-8">
         Social
       </h4>
@@ -60,16 +60,16 @@ const props = defineProps<Props>()
     </div>
 
     <div class="col-span-full md:col-span-6 flex flex-col items-end justify-start text-right">
-      <div class="core-footer__credit-list flex flex-wrap justify-end items-baseline gap-x-8">
+      <div class="core-footer__credit-list gap-x-8 flex flex-wrap items-baseline justify-end">
         <NuxtLink
           class="core-footer__link core-footer__link--credit"
           to="https://studioparallel.co.uk/"
           target="_blank"
           rel="noopener"
         >
-          <CoreFooterCredit>
+          <UiAttractor>
             Design by Studio Parallel
-          </CoreFooterCredit>
+          </UiAttractor>
         </NuxtLink>
 
         <span>/</span>
@@ -80,9 +80,9 @@ const props = defineProps<Props>()
           target="_blank"
           rel="noopener"
         >
-          <CoreFooterCredit>
+          <UiAttractor>
             Made by ditta
-          </CoreFooterCredit>
+          </UiAttractor>
         </NuxtLink>
       </div>
 

@@ -9,7 +9,7 @@ export default withNuxt(
       'types/storyblok.d.ts',
     ],
   },
-  antfu({
+  await antfu({
     rules: {
       'antfu/top-level-function': 'off',
       'toml/indent': ['error', 2, { subTables: 1, keyValuePairs: 1 }],
