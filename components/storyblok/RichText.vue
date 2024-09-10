@@ -1,12 +1,14 @@
 <script lang="ts" setup>
-import type { RichtextStoryblok } from '@/types/storyblok'
+import { richTextResolver, type StoryblokRichTextOptions } from '@storyblok/richtext'
+
+const { render } = richTextResolver()
 
 interface Props {
-  content?: RichtextStoryblok
+  content?: StoryblokRichTextOptions<any>
 }
 
 const { content } = defineProps<Props>()
-const html = computed(() => (content ? renderRichText(content) : ''))
+const html = computed(() => (content ? render(content) : ''))
 </script>
 
 <template>

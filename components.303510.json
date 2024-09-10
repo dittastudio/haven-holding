@@ -135,10 +135,38 @@
       "component_group_name": "Blocks"
     },
     {
+      "name": "block_text",
+      "display_name": null,
+      "created_at": "2024-09-10T14:50:37.001Z",
+      "updated_at": "2024-09-10T14:52:32.413Z",
+      "id": 6278302,
+      "schema": {
+        "text": {
+          "type": "textarea",
+          "pos": 0
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "block_text",
+      "component_group_uuid": "a2dd7bb8-b09b-4f23-9ba1-c0ad6aff5716",
+      "color": null,
+      "icon": null,
+      "internal_tags_list": [],
+      "internal_tag_ids": [],
+      "content_type_asset_preview": null,
+      "component_group_name": "Blocks"
+    },
+    {
       "name": "page",
       "display_name": null,
       "created_at": "2024-09-03T16:04:19.291Z",
-      "updated_at": "2024-09-04T22:50:25.421Z",
+      "updated_at": "2024-09-10T14:55:19.871Z",
       "id": 6247611,
       "schema": {
         "blocks": {
@@ -152,6 +180,26 @@
           ],
           "key": "body",
           "pos": 0
+        },
+        "tab-70b828c6-2607-456f-933d-5779ec78b231": {
+          "display_name": "SEO",
+          "keys": [
+            "seo"
+          ],
+          "pos": 0,
+          "type": "tab"
+        },
+        "seo": {
+          "type": "bloks",
+          "pos": 2,
+          "restrict_type": "",
+          "restrict_components": true,
+          "component_whitelist": [
+            "seo"
+          ],
+          "minimum": 1,
+          "maximum": 1,
+          "required": true
         }
       },
       "image": null,

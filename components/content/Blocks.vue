@@ -24,6 +24,11 @@ const { content } = defineProps<Props>()
       v-else-if="block.component === 'block_newsletter' && !block.hidden"
       :block="block"
     />
+
+    <BlockText
+      v-else-if="block.component === 'block_text' && !block.hidden"
+      :block="block"
+    />
   </section>
 </template>
 

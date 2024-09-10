@@ -59,7 +59,7 @@ const { address, socials } = defineProps<Props>()
     </div>
 
     <div class="col-span-full md:col-span-6 flex flex-col items-end justify-start text-right">
-      <div class="core-footer__credit-list flex items-baseline gap-8">
+      <div class="core-footer__credit-list flex flex-wrap justify-end items-baseline gap-x-8">
         <NuxtLink
           class="core-footer__link core-footer__link--credit"
           to="https://studioparallel.co.uk/"
@@ -71,7 +71,7 @@ const { address, socials } = defineProps<Props>()
           </CoreFooterCredit>
         </NuxtLink>
 
-        <span class="pointer-events-none">/</span>
+        <span>/</span>
 
         <NuxtLink
           class="core-footer__link core-footer__link--credit"

@@ -195,7 +195,7 @@ export default {
     },
     extend: {
       borderRadius: {
-        3: '3px',
+        sm: '3px',
       },
       transitionDuration: {
         175: '175ms',

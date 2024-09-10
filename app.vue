@@ -17,7 +17,7 @@ useHead({
 })
 
 useSeoMeta({
-  titleTemplate: title => (title ? `${title} - Haven` : 'Haven'),
+  titleTemplate: title => (title ? `${title} - Haven Havelland` : 'Haven Havelland'),
   robots: 'index, follow',
 })
 

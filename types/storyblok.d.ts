@@ -49,8 +49,16 @@ export interface BlockNewsletterStoryblok {
   [k: string]: any;
 }
 
+export interface BlockTextStoryblok {
+  text?: string;
+  _uid: string;
+  component: "block_text";
+  [k: string]: any;
+}
+
 export interface PageStoryblok {
-  blocks?: (BlockMediaTextStoryblok | BlockNewsletterStoryblok)[];
+  blocks?: (BlockMediaTextStoryblok | BlockNewsletterStoryblok | BlockTextStoryblok)[];
+  seo: SeoStoryblok[];
   _uid: string;
   component: "page";
   uuid?: string;

@@ -54,13 +54,14 @@ const animateMe = (event: any) => {
   --link-padding-x: theme('spacing.4');
   --link-padding-y: theme('spacing.16');
 
+  pointer-events: none;
   display: block;
   margin: calc(-1 * var(--link-padding-y)) calc(-1 * var(--link-padding-x));
   padding: var(--link-padding-y) var(--link-padding-x);
 }
 
 .core-footer-credit__inner {
-  pointer-events: none;
+  pointer-events: auto;
   will-change: translate;
   display: inline-block;
   animation: exit theme('transitionDuration.300') theme('transitionTimingFunction.outBack') forwards;

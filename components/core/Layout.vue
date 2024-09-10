@@ -1,44 +1,48 @@
 <script lang="ts" setup>
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
+import { screenSizes } from '@/tailwind.config'
 import IconLogo from '@/assets/icons/logo.svg'
 
 gsap.registerPlugin(ScrollTrigger)
 
+// const isMd = useAtMedia(`(min-width: ${screenSizes.md}px)`)
 const header = ref<HTMLElement | null>(null)
-const logo = ref<HTMLElement | null>(null)
+// const logo = ref<HTMLElement | null>(null)
 const tiggerContainer = ref<HTMLElement | null>(null)
 
 onMounted(() => {
   const logos = document.querySelectorAll('.core-layout__logo')
-  // logo.value.forEach((el) => {
-  //   console
-  // })
-  console.log('logo', logo.value)
 
-  gsap.to(logos, {
-    scrollTrigger: {
-      trigger: tiggerContainer.value,
-      // markers: true,
-      start: `top bottom`,
-      end: `120px center`,
-      scrub: 0,
-      onLeave: () => {
-        header.value?.classList.remove('opacity-0')
-        logos.forEach((el) => {
-          el.classList.add('opacity-0')
-        })
+  const mm = gsap.matchMedia()
+
+  mm.add({ isDesktop: `(min-width: ${screenSizes.md}px)`, isMobile: `(max-width: ${screenSizes.md - 1}px)` }, (context) => { // not sure why it has to have two arguments
+    console.log(context.conditions)
+    const { isDesktop } = context.conditions as { isDesktop: boolean }
+
+    gsap.to(logos, {
+      scrollTrigger: {
+        trigger: tiggerContainer.value,
+        // markers: true,
+        start: `top bottom`,
+        end: isDesktop ? `120px center` : `80px center`,
+        scrub: 0,
+        onLeave: () => {
+          header.value?.classList.remove('opacity-0')
+          logos.forEach((el) => {
+            el.classList.add('opacity-0')
+          })
+        },
+        onEnterBack: () => {
+          header.value?.classList.add('opacity-0')
+          logos.forEach((el) => {
+            el.classList.remove('opacity-0')
+          })
+        },
       },
-      onEnterBack: () => {
-        header.value?.classList.add('opacity-0')
-        logos.forEach((el) => {
-          el.classList.remove('opacity-0')
-        })
-      },
-    },
-    scale: (136 / 330),
-    ease: 'power1.inOut',
+      scale: isDesktop ? (136 / 330) : (136 / 200),
+      ease: 'power1.inOut',
+    })
   })
 })
 </script>
@@ -59,10 +63,7 @@ onMounted(() => {
       >
         <div class="sticky top-0 h-[100vh] flex items-center justify-center text-offblack">
           <div class="core-layout__logo flex items-center justify-center h-[var(--app-header-height)]">
-            <IconLogo
-              width="330"
-              heigh="65"
-            />
+            <IconLogo class="w-[200px] md:w-[330px] h-auto" />
           </div>
         </div>
       </div>
@@ -70,13 +71,8 @@ onMounted(() => {
       <div class="absolute top-0 inset-x-0 h-[100vh] contain-paint">
         <div class="absolute top-0 inset-x-0 h-[calc((100vh+50vh)+(var(--app-header-height)/2))] pointer-events-nonex">
           <div class="sticky top-0 h-[100vh] flex items-center justify-center text-white">
-            <div
-              class="core-layout__logo flex items-center justify-center h-[var(--app-header-height)]"
-            >
-              <IconLogo
-                width="330"
-                heigh="65"
-              />
+            <div class="core-layout__logo flex items-center justify-center h-[var(--app-header-height)]">
+              <IconLogo class="w-[200px] md:w-[330px] h-auto" />
             </div>
           </div>
         </div>

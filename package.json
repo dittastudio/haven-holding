@@ -21,25 +21,26 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.23.2",
+    "@antfu/eslint-config": "^3.5.0",
     "@mailchimp/mailchimp_marketing": "^3.0.80",
-    "@nuxt/eslint": "^0.5.5",
+    "@nuxt/eslint": "^0.5.6",
     "@nuxt/image": "^1.8.0",
     "@nuxtjs/sitemap": "^6.0.1",
     "@nuxtjs/tailwindcss": "^6.12.1",
     "@storyblok/nuxt": "^6.0.10",
+    "@storyblok/richtext": "^2.0.0",
     "@tailwindcss/typography": "^0.5.15",
     "@types/mailchimp__mailchimp_marketing": "^3.0.20",
     "del-cli": "^5.1.0",
-    "eslint": "^9.7.0",
-    "nuxt": "^3.12.4",
+    "eslint": "^9.10.0",
+    "nuxt": "^3.13.1",
     "storyblok-generate-ts": "^2.1.0",
-    "stylelint": "^16.7.0",
+    "stylelint": "^16.9.0",
     "stylelint-config-clean-order": "^6.1.0",
     "stylelint-config-recommended-vue": "^1.5.0",
     "stylelint-config-standard": "^36.0.1",
-    "typescript": "^5.5.4",
+    "typescript": "^5.6.2",
     "vite-svg-loader": "^5.1.0",
-    "vue": "^3.4.33"
+    "vue": "^3.5.4"
   }
 }
