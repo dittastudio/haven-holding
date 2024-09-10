@@ -1,6 +1,37 @@
 import svgLoader from 'vite-svg-loader'
 
 export default defineNuxtConfig({
+  app: {
+    head: {
+      htmlAttrs: {
+        lang: 'en-GB',
+      },
+      charset: 'utf-8',
+      viewport: 'width=device-width, initial-scale=1',
+      meta: [
+        { name: 'author', content: 'Haven Havelland' },
+        { name: 'revisit-after', content: '1 day' },
+        { name: 'msapplication-TileColor', content: '#9F9BCC' },
+        { name: 'theme-color', content: '#9F9BCC' },
+        { name: 'google', content: 'notranslate' },
+        { 'http-equiv': 'content-language', 'content': 'en-GB' },
+      ],
+      link: [
+        // https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs#the-ultimate-favicon-setup
+        // { rel: 'icon', href: '/favicon.ico', sizes: '32x32' },
+        // { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
+        // { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+        { rel: 'preconnect', href: 'https://a.storyblok.com' },
+        // { rel: 'manifest', href: '/site.webmanifest' },
+        // { rel: 'preload', type: 'font/woff2', href: '/fonts/Magister-Regular.woff2', as: 'font', crossorigin: '' },
+        // { rel: 'preload', type: 'font/woff2', href: '/fonts/Magister-Italic.woff2', as: 'font', crossorigin: '' },
+        // { rel: 'preload', type: 'font/woff2', href: '/fonts/Sebenta-Medium.woff2', as: 'font', crossorigin: '' },
+      ],
+    },
+    pageTransition: { name: 'fade', mode: 'out-in' },
+    layoutTransition: false,
+  },
+
   build: {
     transpile: ['gsap'],
   },
@@ -39,7 +70,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxtjs/sitemap',
     '@nuxtjs/tailwindcss',
-    '@storyblok/nuxt',
+    ['@storyblok/nuxt', { accessToken: process.env.NUXT_STORYBLOK_TOKEN }],
   ],
 
   postcss: {
@@ -66,10 +97,6 @@ export default defineNuxtConfig({
   },
 
   ssr: true,
-
-  storyblok: {
-    accessToken: process.env.NUXT_STORYBLOK_TOKEN,
-  },
 
   tailwindcss: {
     cssPath: '@/assets/css/app.css',
