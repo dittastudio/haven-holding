@@ -24,7 +24,7 @@ const assetType = computed(() => storyblokAssetType(block.media?.filename || '')
       </div>
 
       <CoreGrid class="items-center">
-        <div class="md:col-start-2 md:col-span-5">
+        <div class="col-span-full md:col-start-2 md:col-span-5">
           <MediaImage
             v-if="block.media && assetType === 'image'"
             :asset="block.media"
@@ -43,7 +43,7 @@ const assetType = computed(() => storyblokAssetType(block.media?.filename || '')
           />
         </div>
 
-        <div class="md:col-span-4 md:col-start-8 flex flex-col gap-y-64">
+        <div class="col-span-full md:col-span-4 md:col-start-8 flex flex-col gap-y-64">
           <StoryblokRichText
             v-if="storyblokRichTextContent(block.text)"
             :content="block.text"

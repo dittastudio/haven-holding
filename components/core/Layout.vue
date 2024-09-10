@@ -26,11 +26,15 @@ onMounted(() => {
       scrub: 0,
       onLeave: () => {
         header.value?.classList.remove('opacity-0')
-        logo.value?.classList.add('opacity-0')
+        logos.forEach((el) => {
+          el.classList.add('opacity-0')
+        })
       },
       onEnterBack: () => {
         header.value?.classList.add('opacity-0')
-        logo.value?.classList.remove('opacity-0')
+        logos.forEach((el) => {
+          el.classList.remove('opacity-0')
+        })
       },
     },
     scale: (136 / 330),
@@ -54,10 +58,7 @@ onMounted(() => {
         class="absolute top-0 inset-x-0 h-[calc((100vh+50vh)+(var(--app-header-height)/2))] pointer-events-none"
       >
         <div class="sticky top-0 h-[100vh] flex items-center justify-center text-offblack">
-          <div
-            ref="logo"
-            class="core-layout__logo flex items-center justify-center h-[var(--app-header-height)]"
-          >
+          <div class="core-layout__logo flex items-center justify-center h-[var(--app-header-height)]">
             <IconLogo
               width="330"
               heigh="65"
@@ -67,12 +68,9 @@ onMounted(() => {
       </div>
 
       <div class="absolute top-0 inset-x-0 h-[100vh] contain-paint">
-        <div
-          class="absolute top-0 inset-x-0 h-[calc((100vh+50vh)+(var(--app-header-height)/2))] pointer-events-nonex"
-        >
+        <div class="absolute top-0 inset-x-0 h-[calc((100vh+50vh)+(var(--app-header-height)/2))] pointer-events-nonex">
           <div class="sticky top-0 h-[100vh] flex items-center justify-center text-white">
             <div
-              ref="logo"
               class="core-layout__logo flex items-center justify-center h-[var(--app-header-height)]"
             >
               <IconLogo
