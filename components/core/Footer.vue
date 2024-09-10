@@ -29,6 +29,8 @@ const { address, socials } = defineProps<Props>()
         Contact
       </h4>
 
+      <pre>{{ address }}</pre>
+
       <StoryblokRichText
         v-if="storyblokRichTextContent(address)"
         :content="address"

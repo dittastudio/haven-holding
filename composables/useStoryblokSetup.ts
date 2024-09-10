@@ -1,7 +1,7 @@
-import type { Ref } from 'vue'
-import type { ISbStoryData } from 'storyblok-js-client'
-import type { SeoStoryblok } from '@/types/storyblok'
 import { storyblokImage } from '@/utilities/storyblok'
+import type { SeoStoryblok } from '@/types/storyblok'
+import type { ISbStoryData } from 'storyblok-js-client'
+import type { Ref } from 'vue'
 
 interface Seo {
   seo: SeoStoryblok[]
@@ -17,7 +17,7 @@ export const useStoryblokSetup = async <T extends Seo>(story: Ref<ISbStoryData<T
   }
 
   const seo = story.value.content?.seo?.[0]
-  const { seo_title: title, seo_description: description, seo_image: image } = seo || {}
+  const { title, description, image } = seo || {}
 
   useSeoMeta({
     title: title ?? story.value.name,

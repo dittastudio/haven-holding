@@ -1,7 +1,11 @@
 <script lang="ts" setup>
-import { richTextResolver, type StoryblokRichTextOptions } from '@storyblok/richtext'
+import { BlockTypes, richTextResolver, type StoryblokRichTextOptions } from '@storyblok/richtext'
 
-const { render } = richTextResolver()
+const { render } = richTextResolver({
+  resolvers: {
+    [BlockTypes.BR]: _node => '<br>',
+  },
+})
 
 interface Props {
   content?: StoryblokRichTextOptions<any>

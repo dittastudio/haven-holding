@@ -52,9 +52,6 @@ const splashSeen = useState('splashSeen', () => false)
       </template>
     </CoreLayout>
 
-    <CoreCover
-      v-if="!splashSeen"
-      message="WILCOMMEN"
-    />
+    <CoreCover v-if="!splashSeen && !isDev" />
   </div>
 </template>

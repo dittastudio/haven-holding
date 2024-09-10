@@ -1,5 +1,5 @@
-import type { LocationQuery } from 'vue-router'
 import type { RichtextStoryblok } from '@/types/storyblok'
+import type { LocationQuery } from 'vue-router'
 
 const storyblokEditor = (search: LocationQuery) => '_storyblok' in search
 
@@ -79,10 +79,10 @@ const storyblokImageDimensions = (
 }
 
 export {
-  storyblokRichTextContent,
-  storyblokEditor,
   storyblokAssetType,
+  storyblokEditor,
   storyblokImage,
   storyblokImageDimensions,
+  storyblokRichTextContent,
   storyblokSlug,
 }
