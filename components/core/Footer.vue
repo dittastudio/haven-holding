@@ -13,20 +13,17 @@ const props = defineProps<Props>()
 
 <template>
   <div class="bg-white">
-    <CoreGrid class="core-footer wrapper md:pb-80 text-14 pt-32 pb-40 font-mono">
-      <div class="sm:col-span-2 md:col-span-2 col-span-2">
+    <div class="core-footer wrapper md:pb-80 text-14 gap-y-48 pt-32 pb-40 font-mono">
+      <div class="md:col-span-2 col-span-1">
         <NuxtLink
           to="/"
           class="ease-smooth hover:opacity-60 inline-block transition-opacity duration-200"
         >
-          <IconLogoSymbol
-            width="35"
-            height="61"
-          />
+          <IconLogoSymbol class="w-[46px] md:w-[35px] h-auto" />
         </NuxtLink>
       </div>
 
-      <div class="md:col-span-2 col-span-1">
+      <div class="md:col-span-2 col-span-2">
         <h4 class="mb-8">
           Contact
         </h4>
@@ -38,7 +35,7 @@ const props = defineProps<Props>()
         />
       </div>
 
-      <div class="md:col-span-2 col-span-1">
+      <div class="md:col-span-2 col-span-2">
         <h4 class="mb-8">
           Social
         </h4>
@@ -60,8 +57,8 @@ const props = defineProps<Props>()
         </ul>
       </div>
 
-      <div class="col-span-full md:col-span-6 flex flex-col items-end justify-start text-right">
-        <div class="core-footer__credit-list gap-x-8 flex flex-wrap items-baseline justify-end">
+      <div class="md:col-span-6 md:col-start-auto md:text-right col-span-4 col-start-2">
+        <div class="core-footer__credit-list gap-x-8 inline-flex flex-wrap items-baseline">
           <NuxtLink
             class="core-footer__link core-footer__link--credit"
             to="https://studioparallel.co.uk/"
@@ -91,28 +88,22 @@ const props = defineProps<Props>()
           ©2024 All rights reserved
         </div>
       </div>
-    </CoreGrid>
+    </div>
   </div>
 </template>
 
 <style lang="postcss">
-@keyframes enter {
-  from {
-    translate: 0 0 0;
+.core-footer {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--app-inner-gutter);
+
+  @screen xs {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
-  to {
-    translate: var(--x) var(--y) 0;
-  }
-}
-
-@keyframes exit {
-  from {
-    translate: var(--x) var(--y) 0;
-  }
-
-  to {
-    translate: 0 0 0;
+  @screen md {
+    grid-template-columns: var(--app-grid);
   }
 }
 
@@ -128,7 +119,6 @@ const props = defineProps<Props>()
 
 .core-footer__credit {
   pointer-events: none;
-  will-change: translate;
   display: inline-block;
   animation: exit theme('transitionDuration.300') theme('transitionTimingFunction.outBack') forwards;
 
