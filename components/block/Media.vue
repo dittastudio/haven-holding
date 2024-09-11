@@ -16,7 +16,7 @@ const columnSpan = computed(() => Number(props.block.column_end) - Number(props.
 <template>
   <div
     v-editable="block"
-    class="block-media section wrapper"
+    class="block-media wrapper"
   >
     <div
       :class="[
@@ -46,7 +46,7 @@ const columnSpan = computed(() => Number(props.block.column_end) - Number(props.
 
       <p
         v-if="props.block.caption"
-        class="block-media__caption text-12 font-mono opacity-50"
+        class="block-media__caption text-14 font-mono"
       >
         {{ props.block.caption }}
       </p>
@@ -67,8 +67,41 @@ const columnSpan = computed(() => Number(props.block.column_end) - Number(props.
   border-radius: theme('borderRadius.sm');
 }
 
+@keyframes caption-scroll-effect {
+  0% {
+    translate: calc(-1 * theme('spacing.12')) 0 0;
+    opacity: 0;
+  }
+}
+
 .block-media__caption {
-  margin-block-start: theme('spacing.8');
-  font-style: italic;
+  position: relative;
+
+  margin-block-start: theme('spacing.12');
+  padding-inline-start: 1em;
+
+  animation-name: caption-scroll-effect;
+  animation-timing-function: theme('transitionTimingFunction.smooth');
+  animation-fill-mode: both;
+  animation-timeline: --caption-timeline;
+  view-timeline-name: --caption-timeline;
+
+  animation-range: entry 25% cover 25%;
+
+  &::before {
+    content: '';
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+
+    width: 0.4em;
+    height: 0.4em;
+    margin: auto;
+
+    border:thin solid currentColor;
+    border-radius: 50%;
+  }
 }
 </style>

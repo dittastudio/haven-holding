@@ -7,17 +7,24 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+
+const checkBackgroundMatchesPrevBackground = (index: number) => {
+  if (index === 0)
+    return false
+  return props.content?.blocks[index].background === props.content.blocks[index - 1].background
+}
 </script>
 
 <template>
   <section
-    v-for="block in props.content.blocks"
+    v-for="(block, index) in props.content.blocks"
     :key="block._uid"
     class="content-blocks__item"
     :class="[
       `content-blocks__item--${block.component}`,
       colourText[block.colour],
       colourBackground[block.background],
+      checkBackgroundMatchesPrevBackground(index) ? 'content-blocks__item--same-background' : '',
     ]"
   >
     <BlockMedia
@@ -40,8 +47,22 @@ const props = defineProps<Props>()
 <style lang="postcss">
 /* DO RECIPES FOR SPACING WITH THEMES */
 .content-blocks__item {
-  &:first-child > * {
+  padding-block: var(--app-vertical-rhythm);
+
+  &:first-child {
     padding-block-start: calc(var(--app-vertical-rhythm) / 2);
   }
+}
+
+.content-blocks__item:not([class*="bg-"]) + .content-blocks__item.bg-offwhite {
+  padding-block-start: 0;
+}
+
+/* .content-blocks__item:not([class^="bg-"]) + .content-blocks__item.bg-offwhite {
+  padding-block-start: 0;
+} */
+
+.content-blocks__item--same-background {
+  padding-block-start: 0;
 }
 </style>
