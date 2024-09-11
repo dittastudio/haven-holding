@@ -55,19 +55,17 @@ onMounted(() => {
         <slot name="hero" />
       </div>
 
-      <div
-        class="absolute top-0 inset-x-0 h-[calc((100vh+50vh)+(var(--app-header-height)/2))] pointer-events-none"
-      >
-        <div class="sticky top-0 h-[100vh] flex items-center justify-center text-offblack">
+      <div class="core-layout__mask absolute inset-x-0 top-0 pointer-events-none">
+        <div class="core-layout__mask__inner text-offblack sticky top-0 flex items-center justify-center">
           <div class="core-layout__logo flex items-center justify-center h-[var(--app-header-height)]">
             <IconLogo class="w-[200px] md:w-[330px] h-auto" />
           </div>
         </div>
       </div>
 
-      <div class="absolute top-0 inset-x-0 h-[100vh] contain-paint">
-        <div class="absolute top-0 inset-x-0 h-[calc((100vh+50vh)+(var(--app-header-height)/2))] pointer-events-nonex">
-          <div class="sticky top-0 h-[100vh] flex items-center justify-center text-white">
+      <div class="core-layout__mask__outer contain-paint absolute inset-x-0 top-0">
+        <div class="core-layout__mask pointer-events-nonex absolute inset-x-0 top-0">
+          <div class="core-layout__mask__inner sticky top-0 flex items-center justify-center text-white">
             <div class="core-layout__logo flex items-center justify-center h-[var(--app-header-height)]">
               <IconLogo class="w-[200px] md:w-[330px] h-auto" />
             </div>
@@ -99,3 +97,16 @@ onMounted(() => {
     <slot name="dev" />
   </div>
 </template>
+
+<style lang="postcss">
+.core-layout__mask {
+  height: calc((100vh + 50vh) + (var(--app-header-height) / 2));
+  height: calc((100svh + 50svh) + (var(--app-header-height) / 2));
+}
+
+.core-layout__mask__outer,
+.core-layout__mask__inner {
+  height: 100vh;
+  height: 100svh;
+}
+</style>
