@@ -20,7 +20,7 @@ onMounted(() => {
     gsap.to(logos, {
       scrollTrigger: {
         trigger: tiggerContainer.value,
-        markers: true,
+        // markers: true,
         start: `top bottom`,
         end: isDesktop ? `${headerHeight.desktop / 2} center` : `${headerHeight.mobile / 2} center`,
         scrub: 0,
