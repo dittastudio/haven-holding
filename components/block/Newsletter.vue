@@ -22,7 +22,7 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
       </p>
     </div>
 
-    <CoreGrid class="items-center">
+    <CoreGrid class="gap-y-[calc(var(--app-vertical-rhythm)/2)] items-center">
       <div class="col-span-full md:col-start-2 md:col-span-5">
         <MediaImage
           v-if="props.block.media && assetType === 'image'"
