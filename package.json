@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "npm run sb:types && nuxt dev",
+    "dev": "npm run sb:types && nuxt dev --host",
     "dev:ssl": "local-ssl-proxy --source 3010 --target 3000 --cert localhost.pem --key localhost-key.pem",
     "generate": "nuxt generate",
     "preview": "nuxt preview",

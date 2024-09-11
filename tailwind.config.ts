@@ -200,7 +200,7 @@ export default {
     },
     extend: {
       borderRadius: {
-        sm: '3px',
+        sm: '6px',
       },
       transitionDuration: {
         175: '175ms',

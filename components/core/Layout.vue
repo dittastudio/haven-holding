@@ -20,7 +20,7 @@ onMounted(() => {
     gsap.to(logos, {
       scrollTrigger: {
         trigger: tiggerContainer.value,
-        // markers: true,
+        markers: true,
         start: `top bottom`,
         end: isDesktop ? `${headerHeight.desktop / 2} center` : `${headerHeight.mobile / 2} center`,
         scrub: 0,
@@ -45,7 +45,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="core-layout">
+  <div
+    class="core-layout"
+  >
     <div
       class="relative"
     >
@@ -101,12 +103,18 @@ onMounted(() => {
 <style lang="postcss">
 .core-layout__mask {
   height: calc((100vh + 50vh) + (var(--app-header-height) / 2));
-  height: calc((100svh + 50svh) + (var(--app-header-height) / 2));
+
+  /* height: calc((100svh + 50svh) + (var(--app-header-height) / 2)); */
 }
 
 .core-layout__mask__outer,
 .core-layout__mask__inner {
   height: 100vh;
-  height: 100svh;
+
+  /* height: 100svh; */
+}
+
+.core-layout__logo {
+  will-change: transform;
 }
 </style>

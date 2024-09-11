@@ -33,7 +33,8 @@ const assetType = computed(() => storyblokAssetType(props.media?.filename || '')
 .block-hero-media {
   position: relative;
   height: 100vh;
-  height: 100svh;
+
+  /* height: 100svh; */
 
   &::after {
     content: '';
