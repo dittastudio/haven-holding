@@ -14,11 +14,11 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
 <template>
   <div
     v-editable="props.block"
-    class="bg-lavender text-white"
+    class="bg-poppy text-offblack"
   >
     <div class="section wrapper">
       <div class="text-center mb-[calc(var(--app-vertical-rhythm)/2)]">
-        <p class="font-mono text-16">
+        <p class="text-16 font-mono">
           {{ props.block.title }}
         </p>
       </div>
@@ -31,9 +31,9 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
             :ratio="props.block.ratio"
             :lazy="true"
             sizes="
-            100vw
-            sm:100vw
-          "
+              100vw
+              sm:100vw
+            "
           />
 
           <MediaVideo
@@ -43,7 +43,7 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
           />
         </div>
 
-        <div class="col-span-full md:col-span-4 md:col-start-8 flex flex-col gap-y-64">
+        <div class="col-span-full md:col-span-4 md:col-start-8 gap-y-64 flex flex-col">
           <StoryblokRichText
             v-if="storyblokRichTextContent(props.block.text)"
             :content="props.block.text"

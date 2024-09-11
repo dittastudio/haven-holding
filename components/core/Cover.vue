@@ -8,7 +8,7 @@ const logoVisible = ref(false)
 onMounted(async () => {
   await wait(1000)
   logoVisible.value = true
-  await wait(2000)
+  await wait(2800)
   coverVisible.value = false
 })
 </script>
@@ -19,18 +19,12 @@ onMounted(async () => {
     :class="[{ 'is-active': coverVisible }]"
   >
     <div class="wrapper flex items-center justify-center h-full">
-      <IconLogoSymbol
-        class="core-cover__logo"
-        :class="[{ 'is-active': logoVisible }]"
-        width="35"
-        height="61"
-      />
-      <!-- <div
+      <div
         class="core-cover__logo"
         :class="[{ 'is-active': logoVisible }]"
       >
         <CoreCoverLogo />
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
@@ -59,7 +53,7 @@ html {
   opacity: 0;
   background-color: theme('colors.lavender');
 
-  transition: opacity theme('transitionDuration.1500') theme('transitionTimingFunction.smooth');
+  transition: opacity theme('transitionDuration.1000') theme('transitionTimingFunction.smooth');
 
   &.is-active {
     pointer-events: auto;
@@ -75,11 +69,11 @@ html {
     }
   }
 
-  &__logo {
+  /* &__logo {
     --logo-responsive-width: 15vw;
 
     width: var(--logo-responsive-width);
     height: auto;
-  }
+  } */
 }
 </style>

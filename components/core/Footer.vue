@@ -4,93 +4,95 @@ import { storyblokRichTextContent } from '@/utilities/storyblok'
 import type { RichtextStoryblok, SocialItemStoryblok } from '@/types/storyblok'
 
 interface Props {
-  address: RichtextStoryblok
-  socials: SocialItemStoryblok[]
+  address: RichtextStoryblok | undefined
+  socials: SocialItemStoryblok[] | undefined
 }
 
 const props = defineProps<Props>()
 </script>
 
 <template>
-  <CoreGrid class="core-footer wrapper md:pb-80 text-14 pt-32 pb-40 font-mono">
-    <div class="sm:col-span-2 md:col-span-2 col-span-2">
-      <NuxtLink
-        to="/"
-        class="ease-smooth hover:opacity-60 inline-block transition-opacity duration-200"
-      >
-        <IconLogoSymbol
-          width="35"
-          height="61"
+  <div class="bg-white">
+    <CoreGrid class="core-footer wrapper md:pb-80 text-14 pt-32 pb-40 font-mono">
+      <div class="sm:col-span-2 md:col-span-2 col-span-2">
+        <NuxtLink
+          to="/"
+          class="ease-smooth hover:opacity-60 inline-block transition-opacity duration-200"
+        >
+          <IconLogoSymbol
+            width="35"
+            height="61"
+          />
+        </NuxtLink>
+      </div>
+
+      <div class="md:col-span-2 col-span-1">
+        <h4 class="mb-8">
+          Contact
+        </h4>
+
+        <StoryblokRichText
+          v-if="storyblokRichTextContent(props.address)"
+          :content="props.address"
+          class="prose-p:text-14"
         />
-      </NuxtLink>
-    </div>
+      </div>
 
-    <div class="md:col-span-2 col-span-1">
-      <h4 class="mb-8">
-        Contact
-      </h4>
+      <div class="md:col-span-2 col-span-1">
+        <h4 class="mb-8">
+          Social
+        </h4>
 
-      <StoryblokRichText
-        v-if="storyblokRichTextContent(props.address)"
-        :content="props.address"
-        class="prose-p:text-14"
-      />
-    </div>
-
-    <div class="md:col-span-2 col-span-1">
-      <h4 class="mb-8">
-        Social
-      </h4>
-
-      <ul class="core-footer__social-list flex flex-col">
-        <li
-          v-for="social in props.socials"
-          :key="social._uid"
-        >
-          <StoryblokLink
-            v-if="social.link"
-            class="core-footer__link"
-            :item="social.link"
-            :title="social.title"
+        <ul class="core-footer__social-list flex flex-col">
+          <li
+            v-for="social in props.socials"
+            :key="social._uid"
           >
-            {{ social.title }}
-          </StoryblokLink>
-        </li>
-      </ul>
-    </div>
-
-    <div class="col-span-full md:col-span-6 flex flex-col items-end justify-start text-right">
-      <div class="core-footer__credit-list gap-x-8 flex flex-wrap items-baseline justify-end">
-        <NuxtLink
-          class="core-footer__link core-footer__link--credit"
-          to="https://studioparallel.co.uk/"
-          target="_blank"
-          rel="noopener"
-        >
-          <UiAttractor>
-            Design by Studio Parallel
-          </UiAttractor>
-        </NuxtLink>
-
-        <span>/</span>
-
-        <NuxtLink
-          class="core-footer__link core-footer__link--credit"
-          to="https://ditta.studio"
-          target="_blank"
-          rel="noopener"
-        >
-          <UiAttractor>
-            Made by ditta
-          </UiAttractor>
-        </NuxtLink>
+            <StoryblokLink
+              v-if="social.link"
+              class="core-footer__link"
+              :item="social.link"
+              :title="social.title"
+            >
+              {{ social.title }}
+            </StoryblokLink>
+          </li>
+        </ul>
       </div>
 
-      <div class="pointer-events-none">
-        ©2024 All rights reserved
+      <div class="col-span-full md:col-span-6 flex flex-col items-end justify-start text-right">
+        <div class="core-footer__credit-list gap-x-8 flex flex-wrap items-baseline justify-end">
+          <NuxtLink
+            class="core-footer__link core-footer__link--credit"
+            to="https://studioparallel.co.uk/"
+            target="_blank"
+            rel="noopener"
+          >
+            <UiAttractor>
+              Design by Studio Parallel
+            </UiAttractor>
+          </NuxtLink>
+
+          <span>/</span>
+
+          <NuxtLink
+            class="core-footer__link core-footer__link--credit"
+            to="https://ditta.studio"
+            target="_blank"
+            rel="noopener"
+          >
+            <UiAttractor>
+              Made by ditta
+            </UiAttractor>
+          </NuxtLink>
+        </div>
+
+        <div class="pointer-events-none">
+          ©2024 All rights reserved
+        </div>
       </div>
-    </div>
-  </CoreGrid>
+    </CoreGrid>
+  </div>
 </template>
 
 <style lang="postcss">

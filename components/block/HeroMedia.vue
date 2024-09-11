@@ -3,7 +3,7 @@ import { storyblokAssetType } from '@/utilities/storyblok'
 import type { AssetStoryblok } from '@/types/storyblok'
 
 interface Props {
-  media: AssetStoryblok
+  media: AssetStoryblok | undefined
 }
 
 const props = defineProps<Props>()

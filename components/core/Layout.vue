@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import IconLogo from '@/assets/icons/logo.svg'
-import { screenSizes } from '@/tailwind.config'
+import { headerHeight, screenSizes } from '@/tailwind.config'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -22,7 +22,7 @@ onMounted(() => {
         trigger: tiggerContainer.value,
         // markers: true,
         start: `top bottom`,
-        end: isDesktop ? `120px center` : `80px center`,
+        end: isDesktop ? `${headerHeight.desktop / 2} center` : `${headerHeight.mobile / 2} center`,
         scrub: 0,
         onLeave: () => {
           header.value?.classList.remove('opacity-0')

@@ -1,5 +1,5 @@
-import type { Config } from 'tailwindcss'
 import typography from '@tailwindcss/typography'
+import type { Config } from 'tailwindcss'
 
 const pixelsToRemsUnit = (pixels: number): number => pixels / 16
 
@@ -24,6 +24,11 @@ const clamp = ({
   const intercept = minValueRems - slope * minViewportWidthRems
 
   return `clamp(${minValueRems}rem, ${intercept}rem + ${slope * 100}vi, ${maxValueRems}rem)`
+}
+
+export const headerHeight = {
+  mobile: 80,
+  desktop: 120,
 }
 
 export const screenSizes = {

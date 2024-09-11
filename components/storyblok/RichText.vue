@@ -8,7 +8,7 @@ const { render } = richTextResolver({
 })
 
 interface Props {
-  content?: StoryblokRichTextOptions<any>
+  content?: any
 }
 
 const props = defineProps<Props>()

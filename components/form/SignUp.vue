@@ -101,15 +101,15 @@ const onSubmit = async () => {
           id="fname"
           v-model="fname"
           placeholder="First name"
-          class="app-footer-form__input type-16"
+          class="app-footer-form__input text-16"
+        />
+
+        <FormError
+          v-if="errors.fname"
+          :message="errors.fname"
+          class="app-footer-form__error type-12 font-mono"
         />
       </FormField>
-
-      <FormError
-        v-if="errors.fname"
-        :message="errors.fname"
-        class="app-footer-form__error font-mono type-12"
-      />
 
       <FormField
         id="lname"
@@ -121,15 +121,15 @@ const onSubmit = async () => {
           id="lname"
           v-model="lname"
           placeholder="Last name"
-          class="app-footer-form__input type-16"
+          class="app-footer-form__input text-16"
+        />
+
+        <FormError
+          v-if="errors.lname"
+          :message="errors.lname"
+          class="app-footer-form__error type-12 font-mono"
         />
       </FormField>
-
-      <FormError
-        v-if="errors.lname"
-        :message="errors.lname"
-        class="app-footer-form__error font-mono type-12"
-      />
 
       <FormField
         id="email"
@@ -142,22 +142,22 @@ const onSubmit = async () => {
           v-model="email"
           field="email"
           placeholder="Email"
-          class="app-footer-form__input type-16"
+          class="app-footer-form__input text-16"
+        />
+
+        <FormError
+          v-if="errors.email"
+          :message="errors.email"
+          class="app-footer-form__error text-12 font-mono"
         />
       </FormField>
-
-      <FormError
-        v-if="errors.email"
-        :message="errors.email"
-        class="app-footer-form__error font-mono type-12"
-      />
 
       <button
         class="app-footer-form__submit"
         type="submit"
       >
         <UiButton
-          theme="white"
+          theme="black"
           type="rounded"
         >
           <template v-if="loading">
@@ -183,14 +183,14 @@ const onSubmit = async () => {
 <style lang="postcss" scoped>
 .app-footer-form {
   position: relative;
-
-  display: flex;
-  gap: theme('spacing.12');
-  align-items: baseline;
-  justify-content: space-between;
 }
 
 .app-footer-form__fieldset {
+  display: flex;
+  flex-direction: column;
+  row-gap: theme('spacing.4');
+  align-items: flex-start;
+
   width: 100%;
 }
 
@@ -198,7 +198,7 @@ const onSubmit = async () => {
   position: relative;
   width: 100%;
 
-  &::after {
+  /* &::after {
     content: '';
 
     position: absolute;
@@ -214,15 +214,27 @@ const onSubmit = async () => {
     transition: opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
   }
 
-  & + & {
-    margin-top: theme('spacing.4');
-  }
+  &:first-of-type::before {
+    content: '';
 
-  &:has(input:focus-within) {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 1px;
+
+    opacity: 0.3;
+    background-color: currentcolor;
+
+    transition: opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
+  } */
+
+  /* &:has(input:focus-within) {
     &::after {
       opacity: 1;
     }
-  }
+  } */
 }
 
 .app-footer-form__error-list {
@@ -245,8 +257,11 @@ const onSubmit = async () => {
   --input-padding-y: 12px;
 
   flex-grow: 1;
+
   width: 100%;
   padding: var(--input-padding-y) var(--input-padding-x);
+
+  border-bottom: 1px solid currentcolor;
   outline: none;
 
   &::placeholder {
@@ -279,16 +294,6 @@ const onSubmit = async () => {
 }
 
 .app-footer-form__submit {
-  margin-top: theme('spacing.40');
-  opacity: 1;
-  transition: opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
-
-  /* &:hover {
-    opacity: 0.5;
-  }
-
-  &:active {
-    opacity: 0.75;
-  } */
+  margin-top: calc(var(--app-vertical-rhythm) / 2);
 }
 </style>
