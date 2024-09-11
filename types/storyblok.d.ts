@@ -19,12 +19,13 @@ export interface AssetStoryblok {
 }
 
 export interface BlockMediaStoryblok {
+  background?: number | string;
+  colour?: number | string;
   media: AssetStoryblok;
   caption?: string;
-  ratio: number | string;
+  ratio?: number | string;
   column_start: number | string;
   column_end: number | string;
-  connecting_line?: boolean;
   _uid: string;
   component: "block_media";
   [k: string]: any;
@@ -40,6 +41,8 @@ export interface RichtextStoryblok {
 }
 
 export interface BlockMediaTextStoryblok {
+  background?: number | string;
+  colour?: number | string;
   title?: string;
   media?: AssetStoryblok;
   ratio?: number | string;
@@ -51,6 +54,8 @@ export interface BlockMediaTextStoryblok {
 }
 
 export interface BlockNewsletterStoryblok {
+  background?: number | string;
+  colour?: number | string;
   title?: string;
   media?: AssetStoryblok;
   ratio?: number | string;

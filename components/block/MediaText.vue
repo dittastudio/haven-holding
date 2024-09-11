@@ -45,7 +45,7 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
       <StoryblokRichText
         v-if="storyblokRichTextContent(props.block.text)"
         :content="props.block.text"
-        class="col-span-full block-media-text__richtext text-fluid-lead md:col-span-full prose-p:text-fluid-lead"
+        class="col-span-full block-media-text__richtext text-fluid-lead md:col-span-full prose-p:text-fluid-lead prose-p:text-pretty"
       />
     </CoreGrid>
   </div>

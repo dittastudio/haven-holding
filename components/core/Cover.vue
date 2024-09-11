@@ -60,6 +60,10 @@ html {
     opacity: 1;
   }
 
+  html:has(&.is-active) {
+    overflow: hidden;
+  }
+
   &__logo {
     opacity: 0;
     transition: opacity theme('transitionDuration.500') theme('transitionTimingFunction.smooth');

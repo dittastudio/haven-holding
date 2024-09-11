@@ -46,7 +46,6 @@ const onInput = (event: Event) => {
   <template v-else>
     <input
       :id="props.id"
-      :class="[]"
       :type="props.field"
       :value="modelValue"
       autocomplete="off"

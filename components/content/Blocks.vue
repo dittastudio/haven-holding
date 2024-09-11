@@ -22,8 +22,8 @@ const checkBackgroundMatchesPrevBackground = (index: number) => {
     class="content-blocks__item"
     :class="[
       `content-blocks__item--${block.component}`,
-      colourText[block.colour],
-      colourBackground[block.background],
+      block.colour ? colourText[block.colour] : '',
+      block.background ? colourBackground[block.background] : '',
       checkBackgroundMatchesPrevBackground(index) ? 'content-blocks__item--same-background' : '',
     ]"
   >
@@ -45,7 +45,6 @@ const checkBackgroundMatchesPrevBackground = (index: number) => {
 </template>
 
 <style lang="postcss">
-/* DO RECIPES FOR SPACING WITH THEMES */
 .content-blocks__item {
   padding-block: var(--app-vertical-rhythm);
 
@@ -54,13 +53,10 @@ const checkBackgroundMatchesPrevBackground = (index: number) => {
   }
 }
 
-.content-blocks__item:not([class*="bg-"]) + .content-blocks__item.bg-offwhite {
+.content-blocks__item:not([class*="bg-"]) + .content-blocks__item.bg-offwhite,
+.content-blocks__item.bg-offwhite + .content-blocks__item:not([class*="bg-"])  {
   padding-block-start: 0;
 }
-
-/* .content-blocks__item:not([class^="bg-"]) + .content-blocks__item.bg-offwhite {
-  padding-block-start: 0;
-} */
 
 .content-blocks__item--same-background {
   padding-block-start: 0;

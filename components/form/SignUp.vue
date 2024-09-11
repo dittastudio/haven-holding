@@ -97,12 +97,14 @@ const onSubmit = async () => {
         a11y
         class="app-footer-form__field"
       >
-        <FormInput
-          id="fname"
-          v-model="fname"
-          placeholder="First name"
-          class="app-footer-form__input text-16"
-        />
+        <div class="app-footer-form__input-wrapper">
+          <FormInput
+            id="fname"
+            v-model="fname"
+            placeholder="First name"
+            class="app-footer-form__input text-16"
+          />
+        </div>
 
         <FormError
           v-if="errors.fname"
@@ -117,12 +119,14 @@ const onSubmit = async () => {
         a11y
         class="app-footer-form__field"
       >
-        <FormInput
-          id="lname"
-          v-model="lname"
-          placeholder="Last name"
-          class="app-footer-form__input text-16"
-        />
+        <div class="app-footer-form__input-wrapper">
+          <FormInput
+            id="lname"
+            v-model="lname"
+            placeholder="Last name"
+            class="app-footer-form__input text-16"
+          />
+        </div>
 
         <FormError
           v-if="errors.lname"
@@ -137,13 +141,15 @@ const onSubmit = async () => {
         a11y
         class="app-footer-form__field"
       >
-        <FormInput
-          id="email"
-          v-model="email"
-          field="email"
-          placeholder="Email"
-          class="app-footer-form__input text-16"
-        />
+        <div class="app-footer-form__input-wrapper">
+          <FormInput
+            id="email"
+            v-model="email"
+            field="email"
+            placeholder="Email"
+            class="app-footer-form__input text-16"
+          />
+        </div>
 
         <FormError
           v-if="errors.email"
@@ -190,15 +196,17 @@ const onSubmit = async () => {
   flex-direction: column;
   row-gap: theme('spacing.4');
   align-items: flex-start;
-
-  width: 100%;
 }
 
 .app-footer-form__field {
+  width: 100%;
+}
+
+.app-footer-form__input-wrapper {
   position: relative;
   width: 100%;
 
-  /* &::after {
+  &::after {
     content: '';
 
     position: absolute;
@@ -214,36 +222,15 @@ const onSubmit = async () => {
     transition: opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
   }
 
-  &:first-of-type::before {
-    content: '';
-
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 1px;
-
-    opacity: 0.3;
-    background-color: currentcolor;
-
-    transition: opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
-  } */
-
-  /* &:has(input:focus-within) {
+  &:has(input:focus-within) {
     &::after {
       opacity: 1;
     }
-  } */
-}
-
-.app-footer-form__error-list {
-  margin: theme('spacing.12') 0 0;
-  text-align: left;
+  }
 }
 
 .app-footer-form__error {
-  margin-block-start: theme('spacing.4');
+  margin-block: theme('spacing.4') theme('spacing.8');
   margin-inline-start: theme('spacing.8');
 
   font-size: theme('fontSize.12');
@@ -257,11 +244,8 @@ const onSubmit = async () => {
   --input-padding-y: 12px;
 
   flex-grow: 1;
-
   width: 100%;
   padding: var(--input-padding-y) var(--input-padding-x);
-
-  border-bottom: 1px solid currentcolor;
   outline: none;
 
   &::placeholder {

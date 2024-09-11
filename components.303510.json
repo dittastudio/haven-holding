@@ -4,12 +4,28 @@
       "name": "block_media",
       "display_name": "Media",
       "created_at": "2024-09-11T15:18:32.933Z",
-      "updated_at": "2024-09-11T15:19:00.523Z",
+      "updated_at": "2024-09-11T21:20:47.972Z",
       "id": 6282516,
       "schema": {
+        "background": {
+          "type": "option",
+          "pos": 0,
+          "use_uuid": true,
+          "source": "internal",
+          "datasource_slug": "colours",
+          "default_value": "offwhite"
+        },
+        "colour": {
+          "type": "option",
+          "pos": 1,
+          "use_uuid": true,
+          "source": "internal",
+          "datasource_slug": "colours",
+          "default_value": "offblack"
+        },
         "media": {
           "type": "asset",
-          "pos": 0,
+          "pos": 2,
           "required": true,
           "filetypes": [
             "images",
@@ -20,16 +36,16 @@
         },
         "caption": {
           "type": "text",
-          "pos": 1
+          "pos": 3
         },
         "ratio": {
           "type": "option",
-          "pos": 2,
+          "pos": 4,
           "use_uuid": true,
           "source": "internal",
           "datasource_slug": "ratio-list",
-          "exclude_empty_option": true,
-          "required": true,
+          "exclude_empty_option": false,
+          "required": false,
           "key": "ratio"
         },
         "column_start": {
@@ -40,7 +56,7 @@
           "source": "internal",
           "datasource_slug": "column-start",
           "exclude_empty_option": true,
-          "pos": 3,
+          "pos": 5,
           "key": "column_start",
           "default_value": "1"
         },
@@ -51,15 +67,9 @@
           "source": "internal",
           "datasource_slug": "column-end",
           "exclude_empty_option": true,
-          "pos": 4,
+          "pos": 6,
           "key": "column_span",
           "default_value": "13"
-        },
-        "connecting_line": {
-          "type": "boolean",
-          "inline_label": true,
-          "pos": 5,
-          "key": "connecting_line"
         }
       },
       "image": null,
@@ -82,16 +92,31 @@
       "name": "block_media_text",
       "display_name": "Media Text",
       "created_at": "2024-09-04T22:36:32.729Z",
-      "updated_at": "2024-09-07T01:46:59.661Z",
+      "updated_at": "2024-09-11T16:45:08.500Z",
       "id": 6254582,
       "schema": {
+        "background": {
+          "type": "option",
+          "pos": 0,
+          "use_uuid": true,
+          "source": "internal",
+          "datasource_slug": "colours",
+          "default_value": "offwhite"
+        },
+        "colour": {
+          "type": "option",
+          "pos": 1,
+          "use_uuid": true,
+          "source": "internal",
+          "default_value": "offblack"
+        },
         "title": {
           "type": "text",
-          "pos": 0
+          "pos": 2
         },
         "media": {
           "type": "asset",
-          "pos": 1,
+          "pos": 3,
           "filetypes": [
             "images",
             "videos"
@@ -99,7 +124,7 @@
         },
         "ratio": {
           "type": "option",
-          "pos": 2,
+          "pos": 4,
           "use_uuid": true,
           "source": "internal",
           "datasource_slug": "ratio-list",
@@ -107,7 +132,7 @@
         },
         "text": {
           "type": "richtext",
-          "pos": 3,
+          "pos": 5,
           "customize_toolbar": true,
           "toolbar": [
             "ai-complete",
@@ -126,7 +151,7 @@
         },
         "hidden": {
           "type": "boolean",
-          "pos": 4
+          "pos": 6
         }
       },
       "image": null,
@@ -149,16 +174,32 @@
       "name": "block_newsletter",
       "display_name": "Newsletter",
       "created_at": "2024-09-05T00:36:22.346Z",
-      "updated_at": "2024-09-07T02:04:27.415Z",
+      "updated_at": "2024-09-11T16:46:40.855Z",
       "id": 6254680,
       "schema": {
+        "background": {
+          "type": "option",
+          "pos": 0,
+          "use_uuid": true,
+          "source": "internal",
+          "datasource_slug": "colours",
+          "default_value": "offwhite"
+        },
+        "colour": {
+          "type": "option",
+          "pos": 1,
+          "use_uuid": true,
+          "source": "internal",
+          "datasource_slug": "colours",
+          "default_value": "offwhite"
+        },
         "title": {
           "type": "text",
-          "pos": 0
+          "pos": 2
         },
         "media": {
           "type": "asset",
-          "pos": 1,
+          "pos": 3,
           "filetypes": [
             "images",
             "videos"
@@ -166,7 +207,7 @@
         },
         "ratio": {
           "type": "option",
-          "pos": 2,
+          "pos": 4,
           "use_uuid": true,
           "source": "internal",
           "datasource_slug": "ratio-list",
@@ -174,7 +215,7 @@
         },
         "text": {
           "type": "richtext",
-          "pos": 3,
+          "pos": 5,
           "customize_toolbar": true,
           "toolbar": [
             "ai-complete",
@@ -193,7 +234,7 @@
         },
         "hidden": {
           "type": "boolean",
-          "pos": 4
+          "pos": 6
         }
       },
       "image": null,
