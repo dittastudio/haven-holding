@@ -14,47 +14,45 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
 <template>
   <div
     v-editable="props.block"
-    class="bg-poppy text-offblack"
+    class="section wrapper"
   >
-    <div class="section wrapper">
-      <div class="text-center mb-[calc(var(--app-vertical-rhythm)/2)]">
-        <p class="text-16 font-mono">
-          {{ props.block.title }}
-        </p>
-      </div>
+    <div class="text-center mb-[calc(var(--app-vertical-rhythm)/2)]">
+      <p class="text-16 font-mono">
+        {{ props.block.title }}
+      </p>
+    </div>
 
-      <CoreGrid class="items-center">
-        <div class="col-span-full md:col-start-2 md:col-span-5">
-          <MediaImage
-            v-if="props.block.media && assetType === 'image'"
-            :asset="props.block.media"
-            :ratio="props.block.ratio"
-            :lazy="true"
-            sizes="
+    <CoreGrid class="items-center">
+      <div class="col-span-full md:col-start-2 md:col-span-5">
+        <MediaImage
+          v-if="props.block.media && assetType === 'image'"
+          :asset="props.block.media"
+          :ratio="props.block.ratio"
+          :lazy="true"
+          sizes="
               100vw
               sm:100vw
             "
-          />
+        />
 
-          <MediaVideo
-            v-else-if="props.block.media && assetType === 'video'"
-            :asset="props.block.media"
-            :ratio="props.block.ratio"
-          />
+        <MediaVideo
+          v-else-if="props.block.media && assetType === 'video'"
+          :asset="props.block.media"
+          :ratio="props.block.ratio"
+        />
+      </div>
+
+      <div class="col-span-full md:col-span-4 md:col-start-8 gap-y-64 flex flex-col">
+        <StoryblokRichText
+          v-if="storyblokRichTextContent(props.block.text)"
+          :content="props.block.text"
+          class="prose-p:text-20"
+        />
+
+        <div>
+          <FormSignUp />
         </div>
-
-        <div class="col-span-full md:col-span-4 md:col-start-8 gap-y-64 flex flex-col">
-          <StoryblokRichText
-            v-if="storyblokRichTextContent(props.block.text)"
-            :content="props.block.text"
-            class="prose-p:text-20"
-          />
-
-          <div>
-            <FormSignUp />
-          </div>
-        </div>
-      </CoreGrid>
-    </div>
+      </div>
+    </CoreGrid>
   </div>
 </template>

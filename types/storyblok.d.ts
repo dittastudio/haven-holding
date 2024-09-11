@@ -18,6 +18,18 @@ export interface AssetStoryblok {
   [k: string]: any;
 }
 
+export interface BlockMediaStoryblok {
+  media: AssetStoryblok;
+  caption?: string;
+  ratio: number | string;
+  column_start: number | string;
+  column_end: number | string;
+  connecting_line?: boolean;
+  _uid: string;
+  component: "block_media";
+  [k: string]: any;
+}
+
 export interface RichtextStoryblok {
   type: string;
   content?: RichtextStoryblok[];
@@ -49,15 +61,8 @@ export interface BlockNewsletterStoryblok {
   [k: string]: any;
 }
 
-export interface BlockTextStoryblok {
-  text?: string;
-  _uid: string;
-  component: "block_text";
-  [k: string]: any;
-}
-
 export interface PageStoryblok {
-  blocks?: (BlockMediaTextStoryblok | BlockNewsletterStoryblok | BlockTextStoryblok)[];
+  blocks?: (BlockMediaStoryblok | BlockMediaTextStoryblok | BlockNewsletterStoryblok)[];
   seo: SeoStoryblok[];
   _uid: string;
   component: "page";

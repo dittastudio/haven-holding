@@ -14,10 +14,10 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
 <template>
   <div
     v-editable="props.block"
-    class="section wrapper"
+    class="block-media-text section wrapper"
   >
     <div class="text-center mb-[calc(var(--app-vertical-rhythm)/2)]">
-      <p class="font-mono text-16">
+      <p class="text-16 font-mono">
         {{ props.block.title }}
       </p>
     </div>

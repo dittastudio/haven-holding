@@ -1,11 +1,3 @@
-.is-storyblok-editor {
-  a,
-  button {
-    pointer-events: none;
-    user-select: none;
-  }
-}
-
 html {
   color: theme('colors.black');
   background-color: theme('colors.offwhite');
@@ -33,6 +25,11 @@ body {
 
 .section {
   padding-block: var(--app-vertical-rhythm);
+}
+
+.is-storyblok-editor a {
+  pointer-events: none;
+  user-select: none;
 }
 
 .scroll-x {

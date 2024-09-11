@@ -48,7 +48,7 @@ const splashSeen = useState('splashSeen', () => false)
       </template>
 
       <template #dev>
-        <ToolGrid v-if="isDev" />
+        <ToolGrid v-if="isDev || storyblokEditor(route.query)" />
       </template>
     </CoreLayout>
 

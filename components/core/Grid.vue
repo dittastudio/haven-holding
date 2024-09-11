@@ -1,5 +1,13 @@
 <template>
-  <div class="grid gap-x-[var(--app-inner-gutter)] gap-48 grid-cols-2 sm:grid-cols-4 md:grid-cols-12">
+  <div class="core-grid">
     <slot />
   </div>
 </template>
+
+<style lang="postcss">
+.core-grid {
+  display: grid;
+  grid-template-columns: var(--app-grid);
+  column-gap: var(--app-inner-gutter);
+}
+</style>

@@ -39,4 +39,32 @@ const ratioMap: Record<string, string> = {
   '1/1': 'aspect-1/1',
 } as const
 
-export { colEndMap, colStartMap, ratioMap }
+const colourText: Record<string, string> = {
+  current: 'text-current',
+  white: 'text-white',
+  black: 'text-black',
+  offwhite: 'text-offwhite',
+  offblack: 'text-offblack',
+  lavender: 'text-lavender',
+  poppy: 'text-poppy',
+  sage: 'text-sage',
+  river: 'text-river',
+  sky: 'text-sky',
+  wheat: 'text-wheat',
+} as const
+
+const colourBackground: Record<string, string> = {
+  current: 'bg-current',
+  white: 'bg-white',
+  black: 'bg-black',
+  offwhite: 'bg-offwhite',
+  offblack: 'bg-offblack',
+  lavender: 'bg-lavender',
+  poppy: 'bg-poppy',
+  sage: 'bg-sage',
+  river: 'bg-river',
+  sky: 'bg-sky',
+  wheat: 'bg-wheat',
+} as const
+
+export { colEndMap, colourBackground, colourText, colStartMap, ratioMap }
