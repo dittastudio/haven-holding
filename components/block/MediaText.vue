@@ -51,7 +51,7 @@ const columnSpan = computed(() => Number(props.block.column_end) - Number(props.
       <StoryblokRichText
         v-if="storyblokRichTextContent(props.block.text)"
         :content="props.block.text"
-        class="block-media-text__richtext text-fluid-lead prose-p:text-fluid-lead prose-p:text-pretty"
+        class="block-media-text__richtext prose-p:text-fluid-lead prose-p:text-pretty"
       />
     </div>
   </div>
@@ -76,10 +76,13 @@ const columnSpan = computed(() => Number(props.block.column_end) - Number(props.
 
 .block-media-text__richtext {
   grid-column: 1 / -1;
-  max-width: 65ch;
-  margin-inline: auto;
 
- & p + p {
+  & p {
+    max-width: 55ch;
+    margin-inline: auto;
+  }
+
+  & p + p {
     margin-block-start: 1em;
   }
 }

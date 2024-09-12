@@ -20,8 +20,8 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
       {{ props.block.title }}
     </p>
 
-    <div class="block-newsletter__grid gap-y-[calc(var(--app-vertical-rhythm)/2)] items-center">
-      <div class="col-span-full md:col-start-2 md:col-span-5">
+    <div class="block-newsletter__grid">
+      <div class="block-newsletter__media">
         <MediaImage
           v-if="props.block.media && assetType === 'image'"
           :asset="props.block.media"
@@ -41,11 +41,11 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
         />
       </div>
 
-      <div class="col-span-full md:col-span-4 md:col-start-8 gap-y-64 flex flex-col">
+      <div class="block-newsletter__text">
         <StoryblokRichText
           v-if="storyblokRichTextContent(props.block.text)"
           :content="props.block.text"
-          class="prose-p:text-20"
+          class="prose-p:text-20 prose-p:text-pretty"
         />
 
         <div>
@@ -65,6 +65,26 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
 .block-newsletter__grid {
   display: grid;
   grid-template-columns: var(--app-grid);
-  gap: var(--app-inner-gutter);
+  gap: calc(var(--app-vertical-rhythm) / 2) var(--app-inner-gutter);
+  align-items: center;
+}
+
+.block-newsletter__media {
+  grid-column: span 12;
+
+  @screen md {
+    grid-column: 2 / span 5;
+  }
+}
+
+.block-newsletter__text {
+  display: flex;
+  grid-column: span 12;
+  flex-direction: column;
+  gap: calc(var(--app-vertical-rhythm) / 2);
+
+  @screen md {
+    grid-column: 8 / span 4;
+  }
 }
 </style>

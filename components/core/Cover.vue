@@ -18,7 +18,7 @@ onMounted(async () => {
     class="core-cover"
     :class="[{ 'is-active': coverVisible }]"
   >
-    <div class="wrapper flex items-center justify-center h-full">
+    <div class="core-cover__wrapper wrapper">
       <div
         class="core-cover__logo"
         :class="[{ 'is-active': logoVisible }]"
@@ -30,14 +30,6 @@ onMounted(async () => {
 </template>
 
 <style lang="postcss">
-html {
-  &.is-storyblok-editor {
-    .core-cover {
-      display: none;
-    }
-  }
-}
-
 .core-cover {
   pointer-events: none;
 
@@ -64,20 +56,24 @@ html {
     overflow: hidden;
   }
 
-  &__logo {
-    opacity: 0;
-    transition: opacity theme('transitionDuration.500') theme('transitionTimingFunction.smooth');
-
-    &.is-active {
-      opacity: 1;
-    }
+  html.is-storyblok-editor &{
+    display: none;
   }
+}
 
-  /* &__logo {
-    --logo-responsive-width: 15vw;
+.core-cover__logo {
+  opacity: 0;
+  transition: opacity theme('transitionDuration.500') theme('transitionTimingFunction.smooth');
 
-    width: var(--logo-responsive-width);
-    height: auto;
-  } */
+  &.is-active {
+    opacity: 1;
+  }
+}
+
+.core-cover__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 </style>
