@@ -60,20 +60,20 @@ onMounted(() => {
       <div class="core-layout__mask absolute inset-x-0 top-0 pointer-events-none">
         <div class="core-layout__mask__inner text-offblack sticky top-0 flex items-center justify-center">
           <div class="core-layout__logo flex items-center justify-center h-[var(--app-header-height)]">
-            <IconLogo class="w-[200px] md:w-[330px] h-auto" />
+            <IconLogo class="relative left-[-1.5%] w-[200px] md:w-[330px] h-auto" />
           </div>
         </div>
       </div>
 
-      <div class="core-layout__mask__outer contain-paint absolute inset-x-0 top-0">
+      <!-- <div class="core-layout__mask__outer contain-paint absolute inset-x-0 top-0">
         <div class="core-layout__mask pointer-events-nonex absolute inset-x-0 top-0">
-          <div class="core-layout__mask__inner sticky top-0 flex items-center justify-center text-white">
+          <div class="core-layout__mask__inner core-layout__mask__inner--cycle text-sky sticky top-0 flex items-center justify-center">
             <div class="core-layout__logo flex items-center justify-center h-[var(--app-header-height)]">
               <IconLogo class="w-[200px] md:w-[330px] h-auto" />
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div
         ref="tiggerContainer"
@@ -116,5 +116,9 @@ onMounted(() => {
 
 .core-layout__logo {
   will-change: transform;
+}
+
+.core-layout__mask__inner--cycle {
+  animation: color-cycle 20s theme('transitionTimingFunction.smooth') infinite;
 }
 </style>

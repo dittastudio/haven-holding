@@ -115,8 +115,8 @@ export default {
         clamp({
           minPixels: 24,
           minViewportWidthPixels: screenSizes.xs,
-          maxPixels: 35,
-          maxViewportWidthPixels: screenSizes['2xl'],
+          maxPixels: 40, // 35 at 1440px
+          maxViewportWidthPixels: screenSizes['3xl'],
         }),
         { lineHeight: '1.3', letterSpacing: '0em' },
       ],

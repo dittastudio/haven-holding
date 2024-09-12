@@ -77,11 +77,6 @@ const columnSpan = computed(() => Number(props.block.column_end) - Number(props.
 .block-media-text__richtext {
   grid-column: 1 / -1;
 
-  & p {
-    max-width: 55ch;
-    margin-inline: auto;
-  }
-
   & p + p {
     margin-block-start: 1em;
   }
