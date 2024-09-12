@@ -28,7 +28,7 @@ const splashSeen = useState('splashSeen', () => false)
   <div>
     <CoreLayout>
       <template #hero>
-        <BlockHeroMedia :media="settings?.content.hero_media" />
+        <CoreHero :media="settings?.content.hero_media" />
       </template>
 
       <template #header>

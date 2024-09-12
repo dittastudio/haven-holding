@@ -84,32 +84,32 @@ const onSubmit = async () => {
   <FormBase
     :loading="loading"
     method="post"
-    class="app-footer-form"
+    class="form-signup"
     @submit.prevent="onSubmit"
   >
     <FormFieldset
       legend="Newsletter"
-      class="app-footer-form__fieldset"
+      class="form-signup__fieldset"
     >
       <FormField
         id="fname"
         label="First name"
         a11y
-        class="app-footer-form__field"
+        class="form-signup__field"
       >
-        <div class="app-footer-form__input-wrapper">
+        <div class="form-signup__box">
           <FormInput
             id="fname"
             v-model="fname"
             placeholder="First name"
-            class="app-footer-form__input text-16"
+            class="form-signup__input text-16"
           />
         </div>
 
         <FormError
           v-if="errors.fname"
           :message="errors.fname"
-          class="app-footer-form__error type-12 font-mono"
+          class="form-signup__error type-12 font-mono"
         />
       </FormField>
 
@@ -117,21 +117,21 @@ const onSubmit = async () => {
         id="lname"
         label="Last name"
         a11y
-        class="app-footer-form__field"
+        class="form-signup__field"
       >
-        <div class="app-footer-form__input-wrapper">
+        <div class="form-signup__box">
           <FormInput
             id="lname"
             v-model="lname"
             placeholder="Last name"
-            class="app-footer-form__input text-16"
+            class="form-signup__input text-16"
           />
         </div>
 
         <FormError
           v-if="errors.lname"
           :message="errors.lname"
-          class="app-footer-form__error type-12 font-mono"
+          class="form-signup__error type-12 font-mono"
         />
       </FormField>
 
@@ -139,27 +139,27 @@ const onSubmit = async () => {
         id="email"
         label="Email"
         a11y
-        class="app-footer-form__field"
+        class="form-signup__field"
       >
-        <div class="app-footer-form__input-wrapper">
+        <div class="form-signup__box">
           <FormInput
             id="email"
             v-model="email"
             field="email"
             placeholder="Email"
-            class="app-footer-form__input text-16"
+            class="form-signup__input text-16"
           />
         </div>
 
         <FormError
           v-if="errors.email"
           :message="errors.email"
-          class="app-footer-form__error text-12 font-mono"
+          class="form-signup__error text-12 font-mono"
         />
       </FormField>
 
       <button
-        class="app-footer-form__submit"
+        class="form-signup__submit"
         type="submit"
       >
         <UiButton
@@ -178,7 +178,7 @@ const onSubmit = async () => {
 
       <p
         v-if="message"
-        class="app-footer-form__fieldset__message"
+        class="form-signup__fieldset__message"
       >
         {{ message }}
       </p>
@@ -187,22 +187,22 @@ const onSubmit = async () => {
 </template>
 
 <style lang="postcss" scoped>
-.app-footer-form {
+.form-signup {
   position: relative;
 }
 
-.app-footer-form__fieldset {
+.form-signup__fieldset {
   display: flex;
   flex-direction: column;
   row-gap: theme('spacing.4');
   align-items: flex-start;
 }
 
-.app-footer-form__field {
+.form-signup__field {
   width: 100%;
 }
 
-.app-footer-form__input-wrapper {
+.form-signup__box {
   position: relative;
   width: 100%;
 
@@ -229,17 +229,7 @@ const onSubmit = async () => {
   }
 }
 
-.app-footer-form__error {
-  margin-block: theme('spacing.4') theme('spacing.8');
-  margin-inline-start: theme('spacing.8');
-
-  font-size: theme('fontSize.12');
-  text-align: left;
-
-  opacity: 0.75;
-}
-
-.app-footer-form__input {
+.form-signup__input {
   --input-padding-x: 8px;
   --input-padding-y: 12px;
 
@@ -277,7 +267,17 @@ const onSubmit = async () => {
   }
 }
 
-.app-footer-form__submit {
+.form-signup__error {
+  margin-block: theme('spacing.4') theme('spacing.8');
+  margin-inline-start: theme('spacing.8');
+
+  font-size: theme('fontSize.12');
+  text-align: left;
+
+  opacity: 0.75;
+}
+
+.form-signup__submit {
   margin-top: calc(var(--app-vertical-rhythm) / 2);
 }
 </style>

@@ -12,7 +12,7 @@ const assetType = computed(() => storyblokAssetType(props.media?.filename || '')
 </script>
 
 <template>
-  <div class="block-hero-media bg-lavender flex items-center justify-center">
+  <div class="core-hero bg-lavender">
     <MediaImage
       v-if="props.media && assetType === 'image'"
       :asset="props.media"
@@ -30,11 +30,14 @@ const assetType = computed(() => storyblokAssetType(props.media?.filename || '')
 </template>
 
 <style lang="postcss">
-.block-hero-media {
+.core-hero {
   position: relative;
-  height: 100vh;
 
-  /* height: 100svh; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 100vh;
 
   &::after {
     content: '';
@@ -42,7 +45,7 @@ const assetType = computed(() => storyblokAssetType(props.media?.filename || '')
     position: absolute;
     inset: 0;
 
-    opacity: 0.2;
+    opacity: 0.15;
     background-color: theme('colors.white');
   }
 }

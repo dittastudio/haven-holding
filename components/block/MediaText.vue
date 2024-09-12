@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { colEndMap, colStartMap } from '@/utilities/maps'
 import { storyblokAssetType, storyblokRichTextContent } from '@/utilities/storyblok'
 import type { BlockMediaTextStoryblok } from '@/types/storyblok'
 
@@ -9,6 +10,7 @@ interface Props {
 const props = defineProps<Props>()
 
 const assetType = computed(() => storyblokAssetType(props.block.media?.filename || ''))
+const columnSpan = computed(() => Number(props.block.column_end) - Number(props.block.column_start))
 </script>
 
 <template>
@@ -16,14 +18,17 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
     v-editable="props.block"
     class="block-media-text wrapper"
   >
-    <div class="text-center mb-[calc(var(--app-vertical-rhythm)/2)]">
-      <p class="text-16 font-mono">
-        {{ props.block.title }}
-      </p>
-    </div>
+    <p class="block-media-text__title text-16 font-mono">
+      {{ props.block.title }}
+    </p>
 
-    <CoreGrid class="gap-y-[var(--app-vertical-rhythm)]">
-      <div class="col-span-full md:col-span-8 md:col-start-3">
+    <div class="block-media-text__grid">
+      <div
+        :class="[
+          colStartMap[props.block.column_start],
+          colEndMap[props.block.column_end],
+        ]"
+      >
         <MediaImage
           v-if="block.media && assetType === 'image'"
           :asset="block.media"
@@ -45,14 +50,31 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
       <StoryblokRichText
         v-if="storyblokRichTextContent(props.block.text)"
         :content="props.block.text"
-        class="col-span-full block-media-text__richtext text-fluid-lead md:col-span-full prose-p:text-fluid-lead prose-p:text-pretty"
+        class="block-media-text__richtext text-fluid-lead prose-p:text-fluid-lead prose-p:text-pretty"
       />
-    </CoreGrid>
+    </div>
   </div>
 </template>
 
 <style lang="postcss">
+.block-media-text__title {
+  margin-block-end: var(--app-vertical-rhythm);
+  text-align: center;
+}
+
+.block-media-text__grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--app-vertical-rhythm) var(--app-inner-gutter);
+
+  @screen md {
+    display: grid;
+    grid-template-columns: var(--app-grid);
+  }
+}
+
 .block-media-text__richtext {
+  grid-column: 1 / -1;
   max-width: 65ch;
   margin-inline: auto;
 
