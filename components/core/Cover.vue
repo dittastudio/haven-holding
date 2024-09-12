@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import IconLogoSymbol from '@/assets/icons/logo-symbol.svg'
 import { wait } from '@/utilities/helpers'
 
 const coverVisible = ref(true)
@@ -15,7 +14,7 @@ onMounted(async () => {
 
 <template>
   <div
-    class="core-cover"
+    class="core-cover bg-lavender"
     :class="[{ 'is-active': coverVisible }]"
   >
     <div class="core-cover__wrapper wrapper">
@@ -40,10 +39,7 @@ onMounted(async () => {
   height: 100vh;
   height: 100dvh;
 
-  color: theme('colors.black');
-
   opacity: 0;
-  background-color: theme('colors.lavender');
 
   transition: opacity theme('transitionDuration.1000') theme('transitionTimingFunction.smooth');
 
@@ -74,6 +70,6 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  height: inherit;
 }
 </style>

@@ -4,11 +4,11 @@ import IconLogo from '@/assets/icons/logo.svg'
 
 <template>
   <div
-    class="flex items-center justify-center h-[var(--app-header-height)] px-32"
+    class="core-header wrapper"
   >
     <NuxtLink
       to="/"
-      class="block pointer-events-auto"
+      class="core-header__link"
     >
       <IconLogo
         width="136"
@@ -17,3 +17,17 @@ import IconLogo from '@/assets/icons/logo.svg'
     </NuxtLink>
   </div>
 </template>
+
+<style lang="postcss">
+.core-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--app-header-height);
+}
+
+.core-header__link {
+  pointer-events: auto;
+  display: block;
+}
+</style>

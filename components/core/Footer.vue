@@ -12,8 +12,8 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <div class="bg-white">
-    <div class="core-footer wrapper md:pb-80 text-14 gap-y-48 pt-32 pb-40 font-mono">
+  <div class="core-footer bg-white">
+    <div class="core-footer__grid wrapper text-14 font-mono">
       <div class="md:col-span-2 col-span-1">
         <NuxtLink
           to="/"
@@ -93,10 +93,11 @@ const props = defineProps<Props>()
 </template>
 
 <style lang="postcss">
-.core-footer {
+.core-footer__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: var(--app-inner-gutter);
+  gap: theme('spacing.48') var(--app-inner-gutter);
+  padding-block: theme('spacing.32') theme('spacing.40');
 
   @screen xs {
     grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -104,6 +105,7 @@ const props = defineProps<Props>()
 
   @screen md {
     grid-template-columns: var(--app-grid);
+    padding-block-end: theme('spacing.80');
   }
 }
 
