@@ -22,17 +22,18 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
       </p>
     </div>
 
-    <CoreGrid class="gap-y-[calc(var(--app-vertical-rhythm)/2)] items-center">
+    <div class="block-newsletter__grid gap-y-[calc(var(--app-vertical-rhythm)/2)] items-center">
       <div class="col-span-full md:col-start-2 md:col-span-5">
         <MediaImage
           v-if="props.block.media && assetType === 'image'"
           :asset="props.block.media"
           :ratio="props.block.ratio"
-          :lazy="true"
-          sizes="
-              100vw
-              sm:100vw
-            "
+          :sizes="`
+            100vw
+            sm:100vw
+            md:${5 / 12 * 100}vw
+            3xl:${5 / 12 * 1800}px
+          `"
         />
 
         <MediaVideo
@@ -53,6 +54,14 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
           <FormSignUp />
         </div>
       </div>
-    </CoreGrid>
+    </div>
   </div>
 </template>
+
+<style lang="postcss">
+.block-newsletter__grid {
+  display: grid;
+  grid-template-columns: var(--app-grid);
+  gap: var(--app-inner-gutter);
+}
+</style>

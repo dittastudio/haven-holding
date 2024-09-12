@@ -30,20 +30,21 @@ const columnSpan = computed(() => Number(props.block.column_end) - Number(props.
         ]"
       >
         <MediaImage
-          v-if="block.media && assetType === 'image'"
-          :asset="block.media"
-          :ratio="block.ratio"
-          :lazy="true"
-          sizes="
+          v-if="props.block.media && assetType === 'image'"
+          :asset="props.block.media"
+          :ratio="props.block.ratio"
+          :sizes="`
             100vw
             sm:100vw
-          "
+            md:${columnSpan / 12 * 100}vw
+            3xl:${columnSpan / 12 * 1800}px
+          `"
         />
 
         <MediaVideo
-          v-else-if="block.media && assetType === 'video'"
-          :asset="block.media"
-          :ratio="block.ratio"
+          v-else-if="props.block.media && assetType === 'video'"
+          :asset="props.block.media"
+          :ratio="props.block.ratio"
         />
       </div>
 
