@@ -14,13 +14,11 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
 <template>
   <div
     v-editable="props.block"
-    class="wrapper"
+    class="block-newsletter wrapper"
   >
-    <div class="text-center mb-[calc(var(--app-vertical-rhythm)/2)]">
-      <p class="text-16 font-mono">
-        {{ props.block.title }}
-      </p>
-    </div>
+    <p class="block-newsletter__title text-16 font-mono">
+      {{ props.block.title }}
+    </p>
 
     <div class="block-newsletter__grid gap-y-[calc(var(--app-vertical-rhythm)/2)] items-center">
       <div class="col-span-full md:col-start-2 md:col-span-5">
@@ -59,6 +57,11 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
 </template>
 
 <style lang="postcss">
+.block-newsletter__title {
+  margin-block-end: calc(var(--app-vertical-rhythm) / 2);
+  text-align: center;
+}
+
 .block-newsletter__grid {
   display: grid;
   grid-template-columns: var(--app-grid);

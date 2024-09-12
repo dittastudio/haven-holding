@@ -59,7 +59,7 @@ const columnSpan = computed(() => Number(props.block.column_end) - Number(props.
 
 <style lang="postcss">
 .block-media-text__title {
-  margin-block-end: var(--app-vertical-rhythm);
+  margin-block-end: calc(var(--app-vertical-rhythm) / 2);
   text-align: center;
 }
 
