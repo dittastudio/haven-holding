@@ -111,11 +111,20 @@ export default {
       '40': ['2.5rem', { lineHeight: '1.2', letterSpacing: '0em' }],
       '50': ['3.125rem', { lineHeight: '1.2', letterSpacing: '0em' }],
       '65': ['4.0625rem', { lineHeight: '1.2', letterSpacing: '0em' }],
-      'fluid-lead': [
+      'fluid-lead-xs-xl': [
         clamp({
           minPixels: 24,
           minViewportWidthPixels: screenSizes.xs,
-          maxPixels: 40, // 35 at 1440px
+          maxPixels: 35, // 35 at 1440px
+          maxViewportWidthPixels: screenSizes.xl,
+        }),
+        { lineHeight: '1.3', letterSpacing: '0em' },
+      ],
+      'fluid-lead-xl-3xl': [
+        clamp({
+          minPixels: 35,
+          minViewportWidthPixels: screenSizes.xl,
+          maxPixels: 50, // 35 at 1440px
           maxViewportWidthPixels: screenSizes['3xl'],
         }),
         { lineHeight: '1.3', letterSpacing: '0em' },

@@ -158,6 +158,13 @@ const onSubmit = async () => {
         />
       </FormField>
 
+      <p
+        v-if="message"
+        class="form-signup__fieldset__message font-16"
+      >
+        {{ message }}
+      </p>
+
       <button
         class="form-signup__submit"
         type="submit"
@@ -175,13 +182,6 @@ const onSubmit = async () => {
           </template>
         </UiButton>
       </button>
-
-      <p
-        v-if="message"
-        class="form-signup__fieldset__message"
-      >
-        {{ message }}
-      </p>
     </FormFieldset>
   </FormBase>
 </template>
@@ -270,14 +270,17 @@ const onSubmit = async () => {
 .form-signup__error {
   margin-block: theme('spacing.4') theme('spacing.8');
   margin-inline-start: theme('spacing.8');
-
-  font-size: theme('fontSize.12');
   text-align: left;
-
   opacity: 0.75;
 }
 
 .form-signup__submit {
   margin-top: calc(var(--app-vertical-rhythm) / 2);
+}
+
+.form-signup__fieldset__message {
+  margin-block-start: theme('spacing.16');
+  margin-inline-start: theme('spacing.8');
+  text-align: left;
 }
 </style>

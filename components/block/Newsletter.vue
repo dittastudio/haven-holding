@@ -84,6 +84,10 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
   gap: calc(var(--app-vertical-rhythm) / 2);
 
   @screen md {
+    grid-column: 7 / span 5;
+  }
+
+  @screen lg {
     grid-column: 8 / span 4;
   }
 }
