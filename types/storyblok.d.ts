@@ -46,8 +46,9 @@ export interface BlockMediaTextStoryblok {
   title?: string;
   media?: AssetStoryblok;
   ratio?: number | string;
+  column_start?: number | string;
+  column_end?: number | string;
   text?: RichtextStoryblok;
-  hidden?: boolean;
   _uid: string;
   component: "block_media_text";
   [k: string]: any;

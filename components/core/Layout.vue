@@ -57,10 +57,10 @@ onMounted(() => {
         <slot name="hero" />
       </div>
 
-      <div class="core-layout__mask absolute inset-x-0 top-0 pointer-events-none">
+      <div class="core-layout__mask z-1 absolute inset-x-0 top-0 pointer-events-none">
         <div class="core-layout__mask__inner text-offblack sticky top-0 flex items-center justify-center">
           <div class="core-layout__logo flex items-center justify-center h-[var(--app-header-height)]">
-            <IconLogo class="relative left-[-1.5%] w-[200px] md:w-[330px] h-auto" />
+            <IconLogo class="w-[200px] md:w-[330px] h-auto" />
           </div>
         </div>
       </div>
@@ -77,7 +77,7 @@ onMounted(() => {
 
       <div
         ref="tiggerContainer"
-        class="bg-offwhite"
+        class="bg-offwhite isolate"
       >
         <header
           ref="header"
