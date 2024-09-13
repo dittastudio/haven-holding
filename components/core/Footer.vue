@@ -44,6 +44,7 @@ const props = defineProps<Props>()
           <li
             v-for="social in props.socials"
             :key="social._uid"
+            class="core-footer__social-item"
           >
             <StoryblokLink
               v-if="social.link"
@@ -58,28 +59,30 @@ const props = defineProps<Props>()
       </div>
 
       <div class="core-footer__item core-footer__item--credit">
-        <div class="core-footer__credit-list">
-          <NuxtLink
-            class="core-footer__link core-footer__link--credit"
-            to="https://studioparallel.co.uk/"
-            target="_blank"
-            rel="noopener"
-          >
-            Design by Studio Parallel
-          </NuxtLink>
+        <div class="core-footer__credits">
+          <ul class="core-footer__credit-list">
+            <li class="core-footer__credit-item">
+              <NuxtLink
+                class="core-footer__link core-footer__link--credit"
+                to="https://studioparallel.co.uk/"
+                target="_blank"
+                rel="noopener"
+              >
+                Design by Studio Parallel
+              </NuxtLink>
+            </li>
 
-          <span>/</span>
-
-          <NuxtLink
-            class="core-footer__link core-footer__link--credit"
-            to="https://ditta.studio"
-            target="_blank"
-            rel="noopener"
-          >
-            <UiAttractor>
-              Made by ditta
-            </UiAttractor>
-          </NuxtLink>
+            <li class="core-footer__credit-item">
+              <NuxtLink
+                class="core-footer__link core-footer__link--credit"
+                to="https://ditta.studio"
+                target="_blank"
+                rel="noopener"
+              >
+                Made by ditta
+              </NuxtLink>
+            </li>
+          </ul>
         </div>
 
         <div>
@@ -191,18 +194,56 @@ const props = defineProps<Props>()
 }
 
 .core-footer__social-list {
-  display: flex;
-  flex-direction: column;
+  display: inline-block;
+}
+
+.core-footer__social-item {
+  display: block;
+}
+
+.core-footer__credits {
+  --credit-padding: theme('spacing.12');
+
+  overflow: hidden;
 }
 
 .core-footer__credit-list {
-  display: inline-flex;
-  flex-wrap: wrap;
-  column-gap: theme('spacing.8');
-  align-items: baseline;
+  display: flex;
+  flex-flow: row wrap;
+  margin-inline: calc(-1 * var(--credit-padding));
 
   @screen md {
     justify-content: flex-end;
+  }
+}
+
+.core-footer__credit-item {
+  display: flex;
+
+  @screen mdMax {
+    &:not(:first-child)::before {
+      pointer-events: none;
+      content: '/';
+
+      display: inline-block;
+
+      margin-inline: -0.5ch;
+
+      opacity: 0.5;
+    }
+  }
+
+  @screen md {
+    &:not(:last-child)::after {
+      pointer-events: none;
+      content: '/';
+
+      display: inline-block;
+
+      margin-inline: -0.5ch;
+
+      opacity: 0.5;
+    }
   }
 }
 
@@ -214,15 +255,10 @@ const props = defineProps<Props>()
   .core-footer__credit-list:hover &:not(:hover) {
     opacity: 0.4;
   }
-}
 
-.core-footer__credit {
-  pointer-events: none;
-  display: inline-block;
-  animation: exit theme('transitionDuration.300') theme('transitionTimingFunction.outBack') forwards;
-
-  .core-footer__link--credit:hover & {
-    animation: enter theme('transitionDuration.300') theme('transitionTimingFunction.outBack') forwards;
+  .core-footer__credit-item & {
+    /* margin-block: calc(-1 * var(--credit-padding)); */
+    padding-inline: var(--credit-padding);
   }
 }
 </style>
