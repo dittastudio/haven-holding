@@ -14,17 +14,17 @@ const props = defineProps<Props>()
 <template>
   <div class="core-footer bg-white">
     <div class="core-footer__grid wrapper text-14 font-mono">
-      <div class="md:col-span-2 col-span-1">
+      <div class="core-footer__item core-footer__item--logo">
         <NuxtLink
           to="/"
-          class="ease-smooth hover:opacity-60 inline-block transition-opacity duration-200"
+          class="core-footer__logo"
         >
-          <IconLogoSymbol class="w-[46px] md:w-[35px] h-auto" />
+          <IconLogoSymbol class="core-footer__symbol" />
         </NuxtLink>
       </div>
 
-      <div class="md:col-span-2 col-span-2">
-        <h4 class="mb-8">
+      <div class="core-footer__item core-footer__item--contact">
+        <h4 class="core-footer__title">
           Contact
         </h4>
 
@@ -35,12 +35,12 @@ const props = defineProps<Props>()
         />
       </div>
 
-      <div class="md:col-span-2 col-span-2">
-        <h4 class="mb-8">
+      <div class="core-footer__item core-footer__item--social">
+        <h4 class="core-footer__title">
           Social
         </h4>
 
-        <ul class="core-footer__social-list flex flex-col">
+        <ul class="core-footer__social-list">
           <li
             v-for="social in props.socials"
             :key="social._uid"
@@ -57,17 +57,15 @@ const props = defineProps<Props>()
         </ul>
       </div>
 
-      <div class="md:col-span-6 md:col-start-auto md:text-right col-span-4 col-start-2">
-        <div class="core-footer__credit-list gap-x-8 inline-flex flex-wrap items-baseline">
+      <div class="core-footer__item core-footer__item--credit">
+        <div class="core-footer__credit-list">
           <NuxtLink
             class="core-footer__link core-footer__link--credit"
             to="https://studioparallel.co.uk/"
             target="_blank"
             rel="noopener"
           >
-            <UiAttractor>
-              Design by Studio Parallel
-            </UiAttractor>
+            Design by Studio Parallel
           </NuxtLink>
 
           <span>/</span>
@@ -100,12 +98,107 @@ const props = defineProps<Props>()
   padding-block: theme('spacing.32') theme('spacing.40');
 
   @screen xs {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   @screen md {
     grid-template-columns: var(--app-grid);
     padding-block-end: theme('spacing.80');
+  }
+}
+
+.core-footer__item--logo {
+  grid-column: span 1;
+
+  @screen xs {
+    grid-column: span 1;
+  }
+}
+
+.core-footer__item--contact {
+  grid-column: span 1;
+
+  @screen xs {
+    grid-column: span 2;
+  }
+
+  @screen md {
+    grid-column: span 3;
+  }
+
+  @screen xl {
+    grid-column: span 2;
+  }
+}
+
+.core-footer__item--social {
+  grid-column: 2 / span 1;
+
+  @screen xs {
+    grid-column: span 1;
+  }
+
+  @screen md {
+    grid-column: span 2;
+  }
+
+  @screen xl {
+    grid-column: span 2;
+  }
+}
+
+.core-footer__item--credit {
+  grid-column: span 2;
+
+  @screen xs {
+    grid-column: 2 / span 3;
+  }
+
+  @screen md {
+    grid-column: span 5;
+    text-align: right;
+  }
+
+  @screen xl {
+    grid-column: span 6;
+  }
+}
+
+.core-footer__logo {
+  display: inline-block;
+  transition: opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
+
+  &:hover {
+    opacity: 0.6;
+  }
+}
+
+.core-footer__symbol {
+  width: 46px;
+  height: auto;
+
+  @screen md {
+    width: 35px;
+  }
+}
+
+.core-footer__title {
+  margin-block-end: theme('spacing.8');
+}
+
+.core-footer__social-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.core-footer__credit-list {
+  display: inline-flex;
+  flex-wrap: wrap;
+  column-gap: theme('spacing.8');
+  align-items: baseline;
+
+  @screen md {
+    justify-content: flex-end;
   }
 }
 
