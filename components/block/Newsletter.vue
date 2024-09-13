@@ -85,10 +85,12 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
 
   @screen md {
     grid-column: 7 / span 5;
+    padding-inline-start: var(--app-inner-gutter);
   }
 
   @screen lg {
     grid-column: 8 / span 4;
+    padding-inline-start: 0;
   }
 }
 </style>

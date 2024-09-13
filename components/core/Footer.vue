@@ -82,7 +82,7 @@ const props = defineProps<Props>()
           </NuxtLink>
         </div>
 
-        <div class="pointer-events-none">
+        <div>
           ©2024 All rights reserved
         </div>
       </div>
@@ -110,8 +110,12 @@ const props = defineProps<Props>()
 .core-footer__item--logo {
   grid-column: span 1;
 
-  @screen xs {
-    grid-column: span 1;
+  @screen md {
+    grid-column: span 2;
+  }
+
+  @screen xl {
+    grid-column: span 2;
   }
 }
 

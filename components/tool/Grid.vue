@@ -12,7 +12,7 @@ const toggleGrid = () => {
   <button
     data-grid-toggle
     type="button"
-    class="fixed z-50 bottom-20 right-20 font-[monospace] text-14 text-white pt-[7px] pb-[9px] px-8 shadow-lg backdrop-blur-sm rounded-md transition-all duration-200 ease-smooth"
+    class="fixed z-50 bottom-20 right-20 font-[monospace] text-14 text-white p-8 shadow-lg backdrop-blur-sm rounded-md transition-all duration-200 ease-smooth"
     :class="[
       { 'bg-black/20 hover:bg-black/60 active:shadow-sm': !isOpen },
       { 'bg-black/60 active:shadow-sm': isOpen },
@@ -33,7 +33,7 @@ const toggleGrid = () => {
       <div
         v-for="i in 12"
         :key="i"
-        class="flex items-end justify-center bg-[red]/10"
+        class="flex items-end justify-center bg-[blue]/10"
         :class="[{ 'smMax:hidden': i > 2, 'mdMax:hidden': i > 4 }]"
       >
         <span class="text-white font-[monospace] opacity-50 text-32 pb-20">{{ i }}</span>
@@ -62,7 +62,7 @@ const toggleGrid = () => {
 
 .screensize {
   &::before {
-    content: counter(w) ' x ' counter(h);
+    content: counter(w)'px' ' × ' counter(h)'px';
     counter-reset: h var(--h) w var(--w);
   }
 }
