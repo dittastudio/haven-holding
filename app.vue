@@ -22,6 +22,7 @@ useSeoMeta({
 })
 
 const splashSeen = useState('splashSeen', () => false)
+useState('isCoverFinished', () => false)
 </script>
 
 <template>

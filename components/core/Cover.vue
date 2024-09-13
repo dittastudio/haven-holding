@@ -4,10 +4,13 @@ import { wait } from '@/utilities/helpers'
 const coverVisible = ref(true)
 const logoVisible = ref(false)
 
+const isCoverFinished = useState('isCoverFinished')
+
 onMounted(async () => {
   await wait(1000)
   logoVisible.value = true
   await wait(2800)
+  isCoverFinished.value = true
   coverVisible.value = false
 })
 </script>

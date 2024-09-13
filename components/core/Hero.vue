@@ -8,7 +8,16 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const isCoverFinished = useState('isCoverFinished')
+const video = ref<HTMLVideoElement | null>(null)
+
 const assetType = computed(() => storyblokAssetType(props.media?.filename || ''))
+
+watch(isCoverFinished, async () => {
+  if (video.value) {
+    await video.value.play()
+  }
+})
 </script>
 
 <template>
@@ -22,10 +31,21 @@ const assetType = computed(() => storyblokAssetType(props.media?.filename || '')
       "
     />
 
-    <MediaVideo
+    <video
+      v-else-if="props.media && assetType === 'video'"
+      ref="video"
+      class="object-cover w-full h-full"
+      :src="props.media?.filename"
+      loop
+      muted
+      playsinline
+    >
+
+    <!-- <MediaVideo
       v-else-if="props.media && assetType === 'video'"
       :asset="props.media"
-    />
+    /> -->
+    </video>
   </div>
 </template>
 
