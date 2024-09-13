@@ -109,7 +109,7 @@ const onSubmit = async () => {
         <FormError
           v-if="errors.fname"
           :message="errors.fname"
-          class="form-signup__error type-12 font-mono"
+          class="form-signup__error text-12 font-mono"
         />
       </FormField>
 
@@ -131,7 +131,7 @@ const onSubmit = async () => {
         <FormError
           v-if="errors.lname"
           :message="errors.lname"
-          class="form-signup__error type-12 font-mono"
+          class="form-signup__error text-12 font-mono"
         />
       </FormField>
 
@@ -160,7 +160,7 @@ const onSubmit = async () => {
 
       <p
         v-if="message"
-        class="form-signup__fieldset__message font-16"
+        class="form-signup__fieldset__message text-16"
       >
         {{ message }}
       </p>
@@ -268,7 +268,7 @@ const onSubmit = async () => {
 }
 
 .form-signup__error {
-  margin-block: theme('spacing.4') theme('spacing.8');
+  margin-block: theme('spacing.8');
   margin-inline-start: theme('spacing.8');
   text-align: left;
   opacity: 0.75;

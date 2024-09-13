@@ -181,11 +181,11 @@ const props = defineProps<Props>()
 }
 
 .core-footer__symbol {
-  width: 46px;
+  width: 48px;
   height: auto;
 
   @screen md {
-    width: 35px;
+    width: 37px;
   }
 }
 
