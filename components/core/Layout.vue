@@ -110,7 +110,7 @@ onMounted(() => {
   z-index: theme('zIndex.10');
   top: 0;
 
-  color: white;
+  color: theme('colors.offwhite');
 
   mix-blend-mode: difference;
 }

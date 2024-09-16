@@ -63,10 +63,6 @@ const columnSpan = computed(() => Number(props.block.column_end) - Number(props.
   }
 }
 
-.block-media__media {
-  border-radius: theme('borderRadius.sm');
-}
-
 @keyframes caption-scroll-effect {
   0% {
     translate: calc(-1 * theme('spacing.12')) 0 0;

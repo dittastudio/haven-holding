@@ -120,8 +120,6 @@ const imgAttrs = computed(() => ({
 
   width: 100%;
   height: inherit;
-
-  border-radius: theme('borderRadius.sm');
 }
 
 .media-image__asset {

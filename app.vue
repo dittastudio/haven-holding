@@ -5,6 +5,7 @@ import type { SettingsStoryblok } from '@/types/storyblok'
 const route = useRoute()
 const isDev = import.meta.dev
 const settings = await useStoryblokStory<SettingsStoryblok>('/settings')
+const url = useRequestURL()
 
 const globalClasses = computed(() => ({
   'is-storyblok-editor': storyblokEditor(route.query),
@@ -18,7 +19,7 @@ useHead({
 
 useSeoMeta({
   titleTemplate: title => (title ? `${title} - Haven Havelland` : 'Haven Havelland'),
-  // robots: 'index, follow',
+  robots: url.host === 'havenhavelland.com' ? 'index, follow' : 'noindex, nofollow',
 })
 
 const splashSeen = useState('splashSeen', () => false)
