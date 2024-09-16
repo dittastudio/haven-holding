@@ -4,8 +4,8 @@ import { ratioMap } from '@/utilities/maps'
 import type { AssetStoryblok } from '@/types/storyblok'
 
 interface Props {
-  srcSmall?: AssetStoryblok
   srcLarge: AssetStoryblok
+  srcSmall?: AssetStoryblok
   ratio?: ditta.TAspectRatios | string | number
 }
 
@@ -18,13 +18,10 @@ const video = ref<HTMLVideoElement | null>(null)
 const isScreenMd = useAtMedia(`(min-width: ${config.theme.screens.md})`)
 
 const src = computed<string>(() => {
-  const sm = props.srcSmall?.filename.trim() || ''
   const lg = props.srcLarge?.filename.trim() || ''
+  const sm = props.srcSmall?.filename.trim() || ''
 
-  console.log('isScreenMd', isScreenMd.value, config.theme.screens.md)
   const src = isScreenMd.value ? lg || sm : sm
-
-  console.log('src', src)
 
   return src || ''
 })

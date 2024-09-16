@@ -3,8 +3,8 @@ import { storyblokAssetType } from '@/utilities/storyblok'
 import type { AssetStoryblok } from '@/types/storyblok'
 
 interface Props {
-  mediaLarge: AssetStoryblok | undefined
-  mediaSmall: AssetStoryblok | undefined
+  mediaDesktop: AssetStoryblok | undefined
+  mediaMobile: AssetStoryblok | undefined
 }
 
 const props = defineProps<Props>()
@@ -12,11 +12,7 @@ const props = defineProps<Props>()
 const isCoverFinished = useState('isCoverFinished')
 const video = ref<any | null>(null)
 
-const assetType = computed(() => storyblokAssetType(props.mediaLarge?.filename || ''))
-
-onMounted(() => {
-  console.log('video', video.value?.$el)
-})
+const assetType = computed(() => storyblokAssetType(props.mediaDesktop?.filename || ''))
 
 watch(isCoverFinished, async () => {
   if (video.value)
@@ -27,8 +23,8 @@ watch(isCoverFinished, async () => {
 <template>
   <div class="core-hero bg-lavender">
     <MediaImage
-      v-if="props.mediaLarge && assetType === 'image'"
-      :asset="props.mediaLarge"
+      v-if="props.mediaDesktop && assetType === 'image'"
+      :asset="props.mediaDesktop"
       sizes="
         100vw
         sm:100vw
@@ -36,10 +32,10 @@ watch(isCoverFinished, async () => {
     />
 
     <MediaVideoSelector
-      v-else-if="props.mediaLarge && assetType === 'video'"
+      v-else-if="props.mediaDesktop && assetType === 'video'"
       ref="video"
-      :src-small="props.mediaSmall"
-      :src-large="props.mediaLarge"
+      :src-small="props.mediaMobile"
+      :src-large="props.mediaDesktop"
       loop
       muted
       playsinline

@@ -12,7 +12,7 @@ import IconLogo from '@/assets/icons/logo.svg'
     >
       <IconLogo
         width="136"
-        height="27"
+        height="26"
       />
     </NuxtLink>
   </div>
@@ -24,6 +24,7 @@ import IconLogo from '@/assets/icons/logo.svg'
   align-items: center;
   justify-content: center;
   height: var(--app-header-height);
+
 }
 
 .core-header__link {

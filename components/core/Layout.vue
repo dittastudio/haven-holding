@@ -23,7 +23,7 @@ onMounted(() => {
         // markers: true,
         start: `top bottom`,
         end: isDesktop ? `${headerHeight.desktop / 2} center` : `${headerHeight.mobile / 2} center`,
-        scrub: 0,
+        scrub: 0.25,
         onLeave: () => {
           header.value?.classList.remove('opacity-0')
           logos.forEach((el) => {
@@ -37,7 +37,7 @@ onMounted(() => {
           })
         },
       },
-      scale: isDesktop ? (136 / 330) : (136 / 200),
+      scale: 1,
       ease: 'power1.inOut',
     })
   })
@@ -57,10 +57,12 @@ onMounted(() => {
         <slot name="hero" />
       </div>
 
-      <div class="core-layout__mask z-1 absolute inset-x-0 top-0 pointer-events-none">
+      <div class="core-layout__mask z-1 pointer-events-nonex absolute inset-x-0 top-0">
         <div class="core-layout__mask__inner text-offblack sticky top-0 flex items-center justify-center">
-          <div class="core-layout__logo flex items-center justify-center h-[var(--app-header-height)]">
-            <IconLogo class="w-[200px] md:w-[330px] h-auto" />
+          <div class="flex items-center justify-center h-[var(--app-header-height)]">
+            <div class="core-layout__logo scale-[calc(200/136)] md:scale-[calc(337/136)]">
+              <IconLogo class="w-[136px] h-[26px]" />
+            </div>
           </div>
         </div>
       </div>
@@ -81,7 +83,7 @@ onMounted(() => {
       >
         <header
           ref="header"
-          class="core-layout__header sticky top-0 z-10 opacity-0 pointer-events-none"
+          class="core-layout__header opacity-0"
         >
           <slot name="header" />
         </header>
@@ -101,24 +103,28 @@ onMounted(() => {
 </template>
 
 <style lang="postcss">
+.core-layout__header {
+  pointer-events: none;
+
+  position: sticky;
+  z-index: theme('zIndex.10');
+  top: 0;
+
+  color: white;
+
+  mix-blend-mode: difference;
+}
+
 .core-layout__mask {
   height: calc((100vh + 50vh) + (var(--app-header-height) / 2));
-
-  /* height: calc((100svh + 50svh) + (var(--app-header-height) / 2)); */
 }
 
 .core-layout__mask__outer,
 .core-layout__mask__inner {
   height: 100vh;
-
-  /* height: 100svh; */
 }
 
 .core-layout__logo {
-  will-change: transform;
-}
-
-.core-layout__mask__inner--cycle {
-  animation: color-cycle 20s theme('transitionTimingFunction.smooth') infinite;
+  outline: 1px solid transparent;
 }
 </style>

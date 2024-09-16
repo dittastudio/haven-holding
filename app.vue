@@ -18,7 +18,7 @@ useHead({
 
 useSeoMeta({
   titleTemplate: title => (title ? `${title} - Haven Havelland` : 'Haven Havelland'),
-  robots: 'index, follow',
+  // robots: 'index, follow',
 })
 
 const splashSeen = useState('splashSeen', () => false)
@@ -30,8 +30,8 @@ useState('isCoverFinished', () => false)
     <CoreLayout>
       <template #hero>
         <CoreHero
-          :media-large="settings?.content.hero_media_desktop"
-          :media-small="settings?.content.hero_media_mobile"
+          :media-desktop="settings?.content.hero_media_desktop"
+          :media-mobile="settings?.content.hero_media_mobile"
         />
       </template>
 
@@ -56,8 +56,8 @@ useState('isCoverFinished', () => false)
       </template>
     </CoreLayout>
 
-    <!-- <CoreCover v-if="!splashSeen && !isDev" /> -->
+    <CoreCover v-if="!splashSeen && !isDev" />
 
-    <CoreCover v-if="!splashSeen" />
+    <!-- <CoreCover v-if="!splashSeen" /> -->
   </div>
 </template>
