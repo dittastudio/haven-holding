@@ -24,8 +24,6 @@ useSeoMeta({
 
 const splashSeen = useState('splashSeen', () => false)
 useState('isCoverFinished', () => false)
-
-console.log('storyblokEditor(route.query)', storyblokEditor(route.query))
 </script>
 
 <template>

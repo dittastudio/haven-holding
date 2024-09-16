@@ -54,10 +54,6 @@ onMounted(async () => {
   html:has(&.is-active) {
     overflow: hidden;
   }
-
-  html.is-storyblok-editor & {
-    display: none;
-  }
 }
 
 .core-cover__logo {
