@@ -53,15 +53,5 @@ watch(isCoverFinished, async () => {
   justify-content: center;
 
   height: 100vh;
-
-  &::after {
-    content: '';
-
-    position: absolute;
-    inset: 0;
-
-    opacity: 0.15;
-    background-color: theme('colors.white');
-  }
 }
 </style>
