@@ -42,7 +42,6 @@ onMounted(async () => {
           >
             <path
               d="M39.35 5.57001C37.26 10.74 32.54 10.75 30.45 5.57001C29.02 2.03001 26.84 0 24.49 0C22.14 0 19.97 2.03 18.53 5.58C16.45 10.75 11.72 10.76 9.63 5.58C8.2 2.04 6.03 0.0100098 3.67 0.0100098C2.36 0.0100098 1.1 0.659996 0 1.84V8.16C1 6.54 2.28 5.62001 3.67 5.62001C5.45 5.62001 7.07 7.1 8.12 9.67C9.55 13.22 11.73 15.26 14.09 15.26C16.45 15.26 18.62 13.22 20.05 9.67C21.09 7.09 22.72 5.61 24.5 5.61C26.28 5.61 27.9 7.09 28.94 9.66C30.38 13.21 32.55 15.25 34.91 15.25C37.27 15.25 39.44 13.21 40.87 9.66C41.92 7.08 43.54 5.60001 45.32 5.60001C47.03 5.60001 48.58 7.00001 49.63 9.40001V2.62001C48.37 0.95001 46.87 0.02 45.32 0C42.97 0 40.79 2.03 39.35 5.58"
-              fill="black"
             />
           </svg>
 
@@ -56,7 +55,6 @@ onMounted(async () => {
           >
             <path
               d="M39.35 5.57001C37.26 10.74 32.54 10.75 30.45 5.57001C29.02 2.03001 26.84 0 24.49 0C22.14 0 19.97 2.03 18.53 5.58C16.45 10.75 11.72 10.76 9.63 5.58C8.2 2.04 6.03 0.0100098 3.67 0.0100098C2.36 0.0100098 1.1 0.659996 0 1.84V8.16C1 6.54 2.28 5.62001 3.67 5.62001C5.45 5.62001 7.07 7.1 8.12 9.67C9.55 13.22 11.73 15.26 14.09 15.26C16.45 15.26 18.62 13.22 20.05 9.67C21.09 7.09 22.72 5.61 24.5 5.61C26.28 5.61 27.9 7.09 28.94 9.66C30.38 13.21 32.55 15.25 34.91 15.25C37.27 15.25 39.44 13.21 40.87 9.66C41.92 7.08 43.54 5.60001 45.32 5.60001C47.03 5.60001 48.58 7.00001 49.63 9.40001V2.62001C48.37 0.95001 46.87 0.02 45.32 0C42.97 0 40.79 2.03 39.35 5.58"
-              fill="black"
             />
           </svg>
 
@@ -70,7 +68,6 @@ onMounted(async () => {
           >
             <path
               d="M39.35 5.57001C37.26 10.74 32.54 10.75 30.45 5.57001C29.02 2.03001 26.84 0 24.49 0C22.14 0 19.97 2.03 18.53 5.58C16.45 10.75 11.72 10.76 9.63 5.58C8.2 2.04 6.03 0.0100098 3.67 0.0100098C2.36 0.0100098 1.1 0.659996 0 1.84V8.16C1 6.54 2.28 5.62001 3.67 5.62001C5.45 5.62001 7.07 7.1 8.12 9.67C9.55 13.22 11.73 15.26 14.09 15.26C16.45 15.26 18.62 13.22 20.05 9.67C21.09 7.09 22.72 5.61 24.5 5.61C26.28 5.61 27.9 7.09 28.94 9.66C30.38 13.21 32.55 15.25 34.91 15.25C37.27 15.25 39.44 13.21 40.87 9.66C41.92 7.08 43.54 5.60001 45.32 5.60001C47.03 5.60001 48.58 7.00001 49.63 9.40001V2.62001C48.37 0.95001 46.87 0.02 45.32 0C42.97 0 40.79 2.03 39.35 5.58"
-              fill="black"
             />
           </svg>
         </div>
@@ -81,7 +78,7 @@ onMounted(async () => {
 
 <style lang="postcss" scoped>
 .logo {
-  --nudge: calc(20/170 * 1em);
+  --nudge: calc(20 / 170 * 1em);
   --easeSmooth: cubic-bezier(0.4, 0.0, 0.2, 1);
   --easeIn: cubic-bezier(0.4, 0.0, 1, 1);
   --easeOut: cubic-bezier(0.0, 0.0, 0.2, 1);
@@ -92,12 +89,8 @@ onMounted(async () => {
   --sharp: 0.8s var(--easeInOutSharp);
   --page-delay: 1.5s;
 
-  padding: 80px;
-  font-size: clamp(7.5rem, 5.3571rem + 10.7143vw, 15rem);;
-
-  /* @screen md {
-    font-size: 15vw;
-  } */
+  font-size: clamp(7.5rem, 5.3571rem + 10.7143vw, 15rem);
+  color: theme('colors.offblack');
 }
 
 @keyframes rotate-logo {
@@ -127,14 +120,6 @@ onMounted(async () => {
   .logo.has-ended & {
     animation: rotate-logo-reverse 0.5s var(--easeSmooth) 0s forwards;
   }
-
-  /* rotate: 180deg;
-  transition: rotate 0.5s var(--easeSmooth);
-
-  .logo:hover & {
-    rotate: 0deg;
-    transition: rotate 0.5s var(--easeOut);
-  } */
 }
 
 .box {
@@ -149,18 +134,16 @@ onMounted(async () => {
 }
 
 .box--top {
-  margin-bottom: calc(40/170 * -1em);
+  margin-bottom: calc(40 / 170 * -1em);
 }
 
 .circle {
   position: absolute;
   inset: 0;
 
-  border: calc(2/170 * 1em) solid black;
+  border: calc(2 / 170 * 1em) solid currentColor;
   border-radius: 50%;
   outline: 1px solid transparent;
-
-  /* transition: translate var(--sharp); */
 }
 
 @keyframes circle-top {
@@ -191,12 +174,6 @@ onMounted(async () => {
   .logo.has-ended & {
     animation: circle-top-reverse 0.8s var(--easeInOutSharp) 0s forwards;
   }
-
-  /* translate: 0 calc(50% - var(--nudge)) 0;
-
-  .logo:hover & {
-    translate: 0 0 0;
-  } */
 }
 
 @keyframes circle-bottom {
@@ -227,12 +204,6 @@ onMounted(async () => {
   .logo.has-ended & {
     animation: circle-bottom-reverse 0.8s var(--easeInOutSharp) 0s forwards;
   }
-
-  /* translate: 0 calc(-50% + var(--nudge)) 0;
-
-  .logo:hover & {
-    translate: 0 0 0;
-  } */
 }
 
 @keyframes letter-opacity {
@@ -256,7 +227,7 @@ onMounted(async () => {
 }
 
 .letter {
-  --_letter-length: calc(50/170 * 1em);
+  --_letter-length: calc(50 / 170 * 1em);
 
   display: flex;
   align-items: center;
@@ -272,15 +243,6 @@ onMounted(async () => {
   .logo.has-ended & {
     animation: letter-opacity-reverse 0.2s var(--easeSmooth) 0s forwards;
   }
-
-  /* opacity: 0;
-
-  transition: opacity 0.2s 0s;
-
-  .logo:hover & {
-    opacity: 1;
-    transition: opacity 0.5s var(--easeOutExpo) 0.5s;
-  } */
 }
 
 @keyframes pillar-left {
@@ -304,30 +266,15 @@ onMounted(async () => {
 }
 
 .pillar {
-  --_pillar-length: calc(12/170 * 1em);
+  --_pillar-length: calc(8 / 170 * 1em);
   --_pillar-center: calc(
     (var(--_letter-length) / 2) - (var(--_pillar-length) / 2)
   );
 
-  display: block;
+  flex-shrink: 0;
   width: var(--_pillar-length);
   height: 100%;
-  background-color: black;
-
-  /* transition: translate 0s 0.2s;
-
-  .logo:hover & {
-    translate: 0 0 0;
-    transition: translate 0.3s var(--easeInOutSharp) 0.45s;
-  }
-
-  &:first-child {
-    translate: var(--_pillar-center) 0 0;
-  }
-
-  &:last-child {
-    translate: calc(var(--_pillar-center) * -1) 0 0;
-  } */
+  background-color: currentColor;
 
   &:first-child {
     translate: var(--_pillar-center) 0 0;
@@ -351,33 +298,23 @@ onMounted(async () => {
 }
 
 .bridge {
-  /* scale: 0 1;
-  transition: scale 0s 0.2s;
-
-  .logo:hover & {
-    scale: 1 1;
-    transition: scale 0.3s var(--easeInOutExpo) 0.55s;
-  } */
-
   scale: 0 1;
 
-  display: block;
-
   width: 100%;
-  height: calc(2/170 * 1em);
+  height: calc(2 / 170 * 1em);
 
-  background-color: black;
+  background-color: currentColor;
 
   animation: bridge-open 0.3s var(--easeInOutExpo) calc(var(--page-delay) + 0.55s) forwards;
 }
 
 .waves {
   position: relative;
-  top: calc(3/170 * 1em);
+  top: calc(3 / 170 * 1em);
 
   display: flex;
   flex-direction: column;
-  gap: calc(2/170 * 1em);
+  gap: calc(2 / 170 * 1em);
 }
 
 @keyframes wave-down {
@@ -409,8 +346,8 @@ onMounted(async () => {
 }
 
 .wave {
-  --_wave-width: calc(50/170 * 1em);
-  --_wave-height: calc(16/170 * 1em);
+  --_wave-width: calc(50 / 170 * 1em);
+  --_wave-height: calc(16 / 170 * 1em);
 
   translate: 0 -20% 0;
   scale: 0.6;
@@ -420,44 +357,20 @@ onMounted(async () => {
 
   opacity: 0;
 
-  /* transition:
-    opacity 0.2s var(--easeSmooth) 0s,
-    translate 0s 0.2s,
-    scale 0s 0.2s;
-
-  .logo:hover & {
-    translate: 0 0 0;
-    scale: 1;
-    opacity: 1;
-    transition:
-      opacity 0.5s var(--easeOutExpo),
-      translate 0.5s var(--easeOutExpo),
-      scale 0.5s var(--easeOutExpo);
-  } */
-
   .logo.has-ended & {
     animation: wave-down-reverse 0.2s var(--easeSmooth) 0s forwards;
   }
 
   &:nth-child(1) {
-    /* .logo:hover & { */
-      animation: wave-down 0.5s var(--easeOutExpo) calc(var(--page-delay) + 0.5s) forwards;
-
-    /* } */
+    animation: wave-down 0.5s var(--easeOutExpo) calc(var(--page-delay) + 0.5s) forwards;
   }
 
   &:nth-child(2) {
-    /* .logo:hover & { */
-      animation: wave-down 0.5s var(--easeOutExpo) calc(var(--page-delay) + 0.525s) forwards;
-
-    /* } */
+    animation: wave-down 0.5s var(--easeOutExpo) calc(var(--page-delay) + 0.525s) forwards;
   }
 
   &:nth-child(3) {
-    /* .logo:hover & { */
-      animation: wave-down 0.5s var(--easeOutExpo) calc(var(--page-delay) + 0.55s) forwards;
-
-    /* } */
+    animation: wave-down 0.5s var(--easeOutExpo) calc(var(--page-delay) + 0.55s) forwards;
   }
 }
 </style>

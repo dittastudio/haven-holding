@@ -55,7 +55,7 @@ onMounted(async () => {
     overflow: hidden;
   }
 
-  html.is-storyblok-editor &{
+  html.is-storyblok-editor & {
     display: none;
   }
 }

@@ -75,6 +75,10 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
   @screen md {
     grid-column: 2 / span 5;
   }
+
+  @screen mdMax {
+    padding-inline: var(--app-outer-gutter);
+  }
 }
 
 .block-newsletter__text {

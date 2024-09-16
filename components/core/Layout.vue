@@ -57,7 +57,7 @@ onMounted(() => {
         <slot name="hero" />
       </div>
 
-      <div class="core-layout__mask z-1 pointer-events-nonex absolute inset-x-0 top-0">
+      <div class="core-layout__mask z-1 absolute inset-x-0 top-0 pointer-events-none">
         <div class="core-layout__mask__inner text-offblack sticky top-0 flex items-center justify-center">
           <div class="flex items-center justify-center h-[var(--app-header-height)]">
             <div class="core-layout__logo scale-[calc(200/136)] md:scale-[calc(337/136)]">

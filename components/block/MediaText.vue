@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { colEndMap, colStartMap } from '@/utilities/maps'
 import { storyblokAssetType, storyblokRichTextContent } from '@/utilities/storyblok'
 import type { BlockMediaTextStoryblok } from '@/types/storyblok'
 
@@ -23,12 +22,7 @@ const columnSpan = computed(() => Number(props.block.column_end) - Number(props.
     </p>
 
     <div class="block-media-text__grid">
-      <div
-        :class="[
-          colStartMap[props.block.column_start],
-          colEndMap[props.block.column_end],
-        ]"
-      >
+      <div class="block-media-text__media">
         <MediaImage
           v-if="props.block.media && assetType === 'image'"
           :asset="props.block.media"
@@ -71,6 +65,20 @@ const columnSpan = computed(() => Number(props.block.column_end) - Number(props.
   @screen md {
     display: grid;
     grid-template-columns: var(--app-grid);
+  }
+}
+
+.block-media-text__media {
+  @screen md {
+    grid-column: 3 / span 8;
+  }
+
+  @screen xl {
+    grid-column: 4 / span 6;
+  }
+
+  @screen mdMax {
+    padding-inline: var(--app-outer-gutter);
   }
 }
 
