@@ -41,20 +41,37 @@ const props = defineProps<Props>()
         </h4>
 
         <ul class="core-footer__social-list">
-          <li
+          <template
             v-for="social in props.socials"
             :key="social._uid"
-            class="core-footer__social-item"
           >
-            <StoryblokLink
-              v-if="social.link"
-              class="core-footer__link"
-              :item="social.link"
-              :title="social.title"
+            <li
+              v-if="social.title"
+              class="core-footer__social-item"
             >
-              {{ social.title }}
-            </StoryblokLink>
-          </li>
+              <StoryblokLink
+                v-if="social.link?.url"
+                class="core-footer__link"
+                :item="social.link"
+                :title="social.title"
+              >
+                {{ social.title }}
+              </StoryblokLink>
+
+              <span
+                v-else
+                class="core-footer__link core-footer__link--preview"
+              >
+                <span class="core-footer__preview-title">
+                  {{ social.title }}
+                </span>
+
+                <span class="core-footer__preview-soon">
+                  Coming Soon
+                </span>
+              </span>
+            </li>
+          </template>
         </ul>
       </div>
 
@@ -257,8 +274,39 @@ const props = defineProps<Props>()
   }
 
   .core-footer__credit-item & {
-    /* margin-block: calc(-1 * var(--credit-padding)); */
     padding-inline: var(--credit-padding);
+  }
+}
+
+.core-footer__link--preview {
+  cursor: default;
+  display: grid;
+}
+
+.core-footer__preview-title,
+.core-footer__preview-soon {
+  grid-area: 1 / 1;
+}
+
+.core-footer__preview-title {
+  display: block;
+  opacity: 1;
+  transition: opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
+
+  .core-footer__link--preview:hover & {
+    opacity: 0;
+    transition: opacity theme('transitionDuration.150') theme('transitionTimingFunction.smooth');
+  }
+}
+
+.core-footer__preview-soon {
+  display: block;
+  opacity: 0;
+  transition: opacity theme('transitionDuration.150') theme('transitionTimingFunction.smooth');
+
+  .core-footer__link--preview:hover & {
+    opacity: 1;
+    transition: opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
   }
 }
 </style>
