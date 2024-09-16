@@ -10,9 +10,8 @@ const props = defineProps<Props>()
 
 const checkBackgroundMatchesPrevBackground = (index: number) => {
   if (index === 0)
-    return ''
-
-  return props.content.blocks?.[index].background === props.content.block?.[index - 1].background
+    return false
+  return props.content?.blocks?.[index].background === props.content.blocks?.[index - 1].background
 }
 </script>
 
@@ -25,7 +24,7 @@ const checkBackgroundMatchesPrevBackground = (index: number) => {
       `content-blocks__item--${block.component}`,
       block.colour ? colourText[block.colour] : '',
       block.background ? colourBackground[block.background] : '',
-      checkBackgroundMatchesPrevBackground(index),
+      checkBackgroundMatchesPrevBackground(index) ? 'content-blocks__item--same-background' : '',
     ]"
   >
     <BlockMedia
@@ -55,7 +54,7 @@ const checkBackgroundMatchesPrevBackground = (index: number) => {
 }
 
 .content-blocks__item:not([class*="bg-"]) + .content-blocks__item.bg-offwhite,
-.content-blocks__item.bg-offwhite + .content-blocks__item:not([class*="bg-"])  {
+.content-blocks__item.bg-offwhite + .content-blocks__item:not([class*="bg-"]) {
   padding-block-start: 0;
 }
 

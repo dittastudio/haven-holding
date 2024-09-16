@@ -24,6 +24,8 @@ useSeoMeta({
 
 const splashSeen = useState('splashSeen', () => false)
 useState('isCoverFinished', () => false)
+
+console.log('storyblokEditor(route.query)', storyblokEditor(route.query))
 </script>
 
 <template>
@@ -58,7 +60,6 @@ useState('isCoverFinished', () => false)
     </CoreLayout>
 
     <!-- <CoreCover v-if="!splashSeen && !isDev" /> -->
-
-    <CoreCover v-if="!splashSeen && !isDev" />
+    <CoreCover v-if="!splashSeen && !isDev && !storyblokEditor(route.query)" />
   </div>
 </template>
