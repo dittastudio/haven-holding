@@ -3,49 +3,48 @@ import { storyblokAssetType } from '@/utilities/storyblok'
 import type { AssetStoryblok } from '@/types/storyblok'
 
 interface Props {
-  media: AssetStoryblok | undefined
+  mediaLarge: AssetStoryblok | undefined
+  mediaSmall: AssetStoryblok | undefined
 }
 
 const props = defineProps<Props>()
 
 const isCoverFinished = useState('isCoverFinished')
-const video = ref<HTMLVideoElement | null>(null)
+const video = ref<any | null>(null)
 
-const assetType = computed(() => storyblokAssetType(props.media?.filename || ''))
+const assetType = computed(() => storyblokAssetType(props.mediaLarge?.filename || ''))
+
+onMounted(() => {
+  console.log('video', video.value?.$el)
+})
 
 watch(isCoverFinished, async () => {
-  if (video.value) {
-    await video.value.play()
-  }
+  if (video.value)
+    await video.value.$el.play()
 })
 </script>
 
 <template>
   <div class="core-hero bg-lavender">
     <MediaImage
-      v-if="props.media && assetType === 'image'"
-      :asset="props.media"
+      v-if="props.mediaLarge && assetType === 'image'"
+      :asset="props.mediaLarge"
       sizes="
         100vw
         sm:100vw
       "
     />
 
-    <video
-      v-else-if="props.media && assetType === 'video'"
+    <MediaVideoSelector
+      v-else-if="props.mediaLarge && assetType === 'video'"
       ref="video"
-      class="object-cover w-full h-full"
-      :src="props.media?.filename"
+      :src-small="props.mediaSmall"
+      :src-large="props.mediaLarge"
       loop
       muted
       playsinline
-    >
-
-    <!-- <MediaVideo
-      v-else-if="props.media && assetType === 'video'"
-      :asset="props.media"
-    /> -->
-    </video>
+      :autoplay="isCoverFinished ? true : false"
+    />
   </div>
 </template>
 

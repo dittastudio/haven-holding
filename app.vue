@@ -29,7 +29,10 @@ useState('isCoverFinished', () => false)
   <div>
     <CoreLayout>
       <template #hero>
-        <CoreHero :media="settings?.content.hero_media" />
+        <CoreHero
+          :media-large="settings?.content.hero_media_desktop"
+          :media-small="settings?.content.hero_media_mobile"
+        />
       </template>
 
       <template #header>

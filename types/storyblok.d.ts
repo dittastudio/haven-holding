@@ -86,7 +86,8 @@ export interface SeoStoryblok {
 }
 
 export interface SettingsStoryblok {
-  hero_media: AssetStoryblok;
+  hero_media_mobile?: AssetStoryblok;
+  hero_media_desktop: AssetStoryblok;
   address?: RichtextStoryblok;
   socials?: SocialItemStoryblok[];
   _uid: string;
