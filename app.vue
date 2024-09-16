@@ -57,8 +57,8 @@ useState('isCoverFinished', () => false)
       </template>
     </CoreLayout>
 
-    <CoreCover v-if="!splashSeen && !isDev" />
+    <!-- <CoreCover v-if="!splashSeen && !isDev" /> -->
 
-    <!-- <CoreCover v-if="!splashSeen" /> -->
+    <CoreCover v-if="!splashSeen" />
   </div>
 </template>
