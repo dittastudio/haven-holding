@@ -125,6 +125,7 @@ onMounted(() => {
 }
 
 .core-layout__logo {
+  backface-visibility: hidden;
   outline: 1px solid transparent;
 }
 </style>
