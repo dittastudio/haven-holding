@@ -9,6 +9,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const isDev = import.meta.dev
 const isCoverFinished = useState('isCoverFinished')
 const video = ref<any | null>(null)
 
@@ -39,7 +40,7 @@ watch(isCoverFinished, async () => {
       loop
       muted
       playsinline
-      :autoplay="isCoverFinished ? true : false"
+      :autoplay="isCoverFinished || isDev ? true : false"
     />
   </div>
 </template>

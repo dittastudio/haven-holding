@@ -33,7 +33,7 @@ export const headerHeight = {
 
 export const screenSizes = {
   'zero': 0,
-  'xs': 375,
+  'xs': 400,
   'sm': 640,
   'md': 768,
   'lg': 1024,

@@ -38,7 +38,7 @@ const onInput = (event: Event) => {
       class="min-h-[110px]"
       :value="modelValue"
       autocomplete="off"
-      spellcheck="false"
+      spellcheck="true"
       @input="onInput"
     />
   </template>
@@ -48,7 +48,6 @@ const onInput = (event: Event) => {
       :id="props.id"
       :type="props.field"
       :value="modelValue"
-      autocomplete="off"
       spellcheck="false"
       @input="onInput"
     >

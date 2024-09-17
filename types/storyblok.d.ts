@@ -46,8 +46,6 @@ export interface BlockMediaTextStoryblok {
   title?: string;
   media?: AssetStoryblok;
   ratio?: number | string;
-  column_start?: number | string;
-  column_end?: number | string;
   text?: RichtextStoryblok;
   _uid: string;
   component: "block_media_text";
@@ -120,7 +118,7 @@ export type MultilinkStoryblok =
     };
 
 export interface SocialItemStoryblok {
-  title?: string;
+  title: string;
   link?: Exclude<MultilinkStoryblok, {linktype?: "email"} | {linktype?: "asset"}>;
   _uid: string;
   component: "social_item";

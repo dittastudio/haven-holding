@@ -103,6 +103,7 @@ const onSubmit = async () => {
             v-model="fname"
             placeholder="First name"
             class="form-signup__input text-16"
+            autocomplete="given-name"
           />
         </div>
 
@@ -125,6 +126,7 @@ const onSubmit = async () => {
             v-model="lname"
             placeholder="Last name"
             class="form-signup__input text-16"
+            autocomplete="family-name"
           />
         </div>
 
@@ -148,6 +150,7 @@ const onSubmit = async () => {
             field="email"
             placeholder="Email"
             class="form-signup__input text-16"
+            autocomplete="on"
           />
         </div>
 
