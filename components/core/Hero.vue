@@ -11,6 +11,7 @@ const props = defineProps<Props>()
 
 const isDev = import.meta.dev
 const isCoverFinished = useState('isCoverFinished')
+const splashSeen = useState('splashSeen')
 const video = ref<any | null>(null)
 
 const assetType = computed(() => storyblokAssetType(props.mediaDesktop?.filename || ''))
@@ -40,7 +41,7 @@ watch(isCoverFinished, async () => {
       loop
       muted
       playsinline
-      :autoplay="isCoverFinished || isDev ? true : false"
+      :autoplay="isCoverFinished || isDev || splashSeen ? true : false"
     />
   </div>
 </template>
