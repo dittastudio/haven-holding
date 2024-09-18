@@ -53,8 +53,12 @@ const columnSpan = computed(() => Number(props.block.column_end) - Number(props.
 
 <style lang="postcss">
 .block-media-text__title {
-  margin-block-end: calc(var(--app-vertical-rhythm) / 2);
+  margin-block-end: calc(var(--app-vertical-rhythm) / 1.25);
   text-align: center;
+
+  @screen md {
+    margin-block-end: calc(var(--app-vertical-rhythm) / 1.5);
+  }
 }
 
 .block-media-text__grid {

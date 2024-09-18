@@ -58,8 +58,12 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
 
 <style lang="postcss">
 .block-newsletter__title {
-  margin-block-end: calc(var(--app-vertical-rhythm) / 2);
+  margin-block-end: calc(var(--app-vertical-rhythm) / 1.25);
   text-align: center;
+
+  @screen md {
+    margin-block-end: calc(var(--app-vertical-rhythm) / 1.5);
+  }
 }
 
 .block-newsletter__grid {
@@ -74,6 +78,7 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
 
   @screen md {
     grid-column: 2 / span 5;
+    margin-inline-end: calc(var(--app-inner-gutter) / -2);
   }
 
   @screen mdMax {

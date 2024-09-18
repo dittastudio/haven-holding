@@ -7,9 +7,9 @@
   },
   "tailwindCSS.includeLanguages": {
     "vue": "html",
-    "vue-html": "html",
+    "vue-html": "html"
   },
   "editor.quickSuggestions": {
     "strings": "on"
-  },
+  }
 }
