@@ -17,6 +17,7 @@
     "@vee-validate/zod": "^4.13.2",
     "@vueuse/core": "^11.0.3",
     "gsap": "^3.12.5",
+    "lenis": "^1.1.13",
     "vee-validate": "^4.13.2",
     "zod": "^3.23.8"
   },

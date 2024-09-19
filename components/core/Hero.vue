@@ -5,7 +5,7 @@ import type { AssetStoryblok } from '@/types/storyblok'
 interface Props {
   mediaDesktop: AssetStoryblok | undefined
   mediaMobile: AssetStoryblok | undefined
-  poster: AssetStoryblok
+  poster: AssetStoryblok | undefined
 }
 
 const props = defineProps<Props>()
@@ -18,7 +18,8 @@ const video = ref<any | null>(null)
 const assetType = computed(() => storyblokAssetType(props.mediaDesktop?.filename || ''))
 
 const posterImg = useImage()
-const poster = posterImg(props.poster?.filename, {
+const posterUrl = props.poster?.filename ? props.poster.filename : ''
+const poster = posterImg(posterUrl, {
   width: 1920,
   quality: 80,
 })

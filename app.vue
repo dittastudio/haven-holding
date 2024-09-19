@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { storyblokEditor } from '@/utilities/storyblok'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Lenis from 'lenis'
 import type { SettingsStoryblok } from '@/types/storyblok'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const route = useRoute()
 const isDev = import.meta.dev
@@ -24,6 +29,36 @@ useSeoMeta({
 
 const splashSeen = useState('splashSeen', () => false)
 useState('isCoverFinished', () => false)
+
+onMounted(() => {
+  const lenis = new Lenis({
+    lerp: 0.3,
+    touchMultiplier: 0, // disables for touch devices
+  })
+
+  lenis.on('scroll', (e) => {
+    console.log(e)
+  })
+
+  function raf(time) {
+    lenis.raf(time)
+    requestAnimationFrame(raf)
+  }
+
+  requestAnimationFrame(raf)
+
+  // lenis.on('scroll', (event) => {
+  //   console.log(event)
+  // })
+
+  // lenis.on('scroll', ScrollTrigger.update)
+
+  // gsap.ticker.add((time) => {
+  //   lenis.raf(time * 1000)
+  // })
+
+  // gsap.ticker.lagSmoothing(0)
+})
 </script>
 
 <template>
