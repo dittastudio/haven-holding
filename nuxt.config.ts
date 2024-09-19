@@ -18,11 +18,11 @@ export default defineNuxtConfig({
       ],
       link: [
         // https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs#the-ultimate-favicon-setup
-        // { rel: 'icon', href: '/favicon.ico', sizes: '32x32' },
-        // { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
-        // { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+        { rel: 'icon', href: '/favicon.ico', sizes: '32x32' },
+        { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
+        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
         { rel: 'preconnect', href: 'https://a.storyblok.com' },
-        // { rel: 'manifest', href: '/site.webmanifest' },
+        { rel: 'manifest', href: '/site.webmanifest' },
         // { rel: 'preload', type: 'font/woff2', href: '/fonts/Magister-Regular.woff2', as: 'font', crossorigin: '' },
         // { rel: 'preload', type: 'font/woff2', href: '/fonts/Magister-Italic.woff2', as: 'font', crossorigin: '' },
         // { rel: 'preload', type: 'font/woff2', href: '/fonts/Sebenta-Medium.woff2', as: 'font', crossorigin: '' },
