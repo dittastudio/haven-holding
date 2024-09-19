@@ -5,6 +5,7 @@ import type { AssetStoryblok } from '@/types/storyblok'
 interface Props {
   mediaDesktop: AssetStoryblok | undefined
   mediaMobile: AssetStoryblok | undefined
+  poster: AssetStoryblok
 }
 
 const props = defineProps<Props>()
@@ -15,6 +16,12 @@ const splashSeen = useState('splashSeen')
 const video = ref<any | null>(null)
 
 const assetType = computed(() => storyblokAssetType(props.mediaDesktop?.filename || ''))
+
+const posterImg = useImage()
+const poster = posterImg(props.poster?.filename, {
+  width: 1920,
+  quality: 80,
+})
 
 watch(isCoverFinished, async () => {
   if (video.value)
@@ -42,6 +49,7 @@ watch(isCoverFinished, async () => {
       muted
       playsinline
       :autoplay="isCoverFinished || isDev || splashSeen ? true : false"
+      :poster="poster"
     />
   </div>
 </template>

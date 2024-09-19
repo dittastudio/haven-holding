@@ -33,6 +33,7 @@ useState('isCoverFinished', () => false)
         <CoreHero
           :media-desktop="settings?.content.hero_media_desktop"
           :media-mobile="settings?.content.hero_media_mobile"
+          :poster="settings?.content.hero_poster_image"
         />
       </template>
 
