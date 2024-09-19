@@ -1,70 +1,34 @@
 <script lang="ts" setup>
-// import { wait } from '@/utilities/helpers'
+import { wait } from '@/utilities/helpers'
 
-// const coverVisible = ref(true)
-// const logoVisible = ref(false)
+const coverVisible = ref(true)
+const logoVisible = ref(false)
+const isCoverFinished = useState('isCoverFinished')
+const backgroundIndex = useCookie<number>('backgroundIndex')
+const backgroundClass = useCookie<string>('backgroundClass')
+const backgroundClasses = ['bg-lavender', 'bg-sky', 'bg-river']
+const currentIndex = backgroundIndex.value
 
-// const isCoverFinished = useState('isCoverFinished')
+if (import.meta.server) {
+  backgroundIndex.value = currentIndex != null && currentIndex < 2 ? currentIndex + 1 : 0
+  backgroundClass.value = backgroundClasses[currentIndex] || backgroundClasses[0]
+}
 
-// const currentBackgroundClass = ref<string>('')
-// if (import.meta.server) {
-
-// const randomiseBackgroundClass = () => {
-
-//   return newClass
-// }
-
-// const newClass = randomiseBackgroundClass()
-
-// lastBackgroundClass.value = newClass
-// }
-
-// const backgroundClasses = ['bg-lavender', 'bg-sky', 'bg-river']
-// const setCookie = useCookie('1')
-// // const availableClasses = backgroundClasses.filter(bgClass => bgClass !== lastBackgroundClass.value)
-// const randomIndex = String(Math.floor(Math.random() * 100))
-// setCookie.value = randomIndex
-// // const newClass = availableClasses[randomIndex]
-// // currentBackgroundClass.value = newClass
-
-// // currentBackgroundClass.value = lastBackgroundClass.value
-// console.log('Cookie is', setCookie.value)
-
-// onMounted(async () => {
-//   await wait(1000)
-//   logoVisible.value = true
-//   await wait(2800)
-//   isCoverFinished.value = true
-//   coverVisible.value = false
-// })
-const counter: any = useCookie('counter')
-
-counter.value = counter.value || Math.round(Math.random() * 1000)
-console.log('Counter is', counter.value)
+onMounted(async () => {
+  await wait(1000)
+  logoVisible.value = true
+  await wait(2800)
+  isCoverFinished.value = true
+  coverVisible.value = false
+})
 </script>
 
 <template>
   <div
-    class="fixed inset-0 h-screen p-80"
-  >
-    <h1>Counter: {{ counter || '-' }}</h1>
-
-    <button @click="counter = null">
-      reset
-    </button>
-
-    <button @click="counter--">
-      -
-    </button>
-
-    <button @click="counter++">
-      +
-    </button>
-  </div>
-  <!-- <div
     class="core-cover"
     :class="[
       { 'is-active': coverVisible },
+      backgroundClass,
     ]"
   >
     <div class="core-cover__wrapper wrapper">
@@ -75,7 +39,7 @@ console.log('Counter is', counter.value)
         <CoreCoverLogo />
       </div>
     </div>
-  </div> -->
+  </div>
 </template>
 
 <style lang="postcss">
