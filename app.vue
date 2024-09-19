@@ -57,7 +57,7 @@ useState('isCoverFinished', () => false)
       </template>
     </CoreLayout>
 
-    <!-- <CoreCover v-if="!splashSeen && !isDev" /> -->
-    <CoreCover v-if="!splashSeen && !isDev && !storyblokEditor(route.query)" />
+    <CoreCover />
+    <!-- <CoreCover v-if="!splashSeen && !isDev && !storyblokEditor(route.query)" /> -->
   </div>
 </template>

@@ -3,8 +3,16 @@ import { wait } from '@/utilities/helpers'
 
 const coverVisible = ref(true)
 const logoVisible = ref(false)
-
 const isCoverFinished = useState('isCoverFinished')
+const backgroundIndex = useCookie<number>('backgroundIndex')
+const backgroundClass = useCookie<string>('backgroundClass')
+const backgroundClasses = ['bg-lavender', 'bg-sky', 'bg-river']
+const currentIndex = backgroundIndex.value
+
+if (import.meta.server) {
+  backgroundIndex.value = currentIndex != null && currentIndex < 2 ? currentIndex + 1 : 0
+  backgroundClass.value = backgroundClasses[currentIndex] || backgroundClasses[0]
+}
 
 onMounted(async () => {
   await wait(1000)
@@ -17,8 +25,11 @@ onMounted(async () => {
 
 <template>
   <div
-    class="core-cover bg-lavender"
-    :class="[{ 'is-active': coverVisible }]"
+    class="core-cover"
+    :class="[
+      { 'is-active': coverVisible },
+      backgroundClass,
+    ]"
   >
     <div class="core-cover__wrapper wrapper">
       <div
