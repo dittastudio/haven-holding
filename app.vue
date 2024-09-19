@@ -32,7 +32,7 @@ useState('isCoverFinished', () => false)
 
 onMounted(() => {
   const lenis = new Lenis({
-    lerp: 0.3,
+    lerp: 0.1,
     touchMultiplier: 0, // disables for touch devices
   })
 
