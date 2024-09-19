@@ -15,13 +15,13 @@ const props = withDefaults(defineProps<Props>(), {
 
 const video = ref<HTMLVideoElement | null>(null)
 
-const isScreenMd = useAtMedia(`(min-width: ${config.theme.screens.md})`)
+const isScreenMdMax = useAtMedia(`(max-width: ${config.theme.screens.mdMax.max})`)
 
 const src = computed<string>(() => {
   const lg = props.srcLarge?.filename.trim() || ''
   const sm = props.srcSmall?.filename.trim() || ''
 
-  const src = isScreenMd.value ? lg || sm : sm
+  const src = isScreenMdMax.value ? sm || lg : lg || sm
 
   return src || ''
 })
