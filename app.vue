@@ -31,33 +31,21 @@ const splashSeen = useState('splashSeen', () => false)
 useState('isCoverFinished', () => false)
 
 onMounted(() => {
-  const lenis = new Lenis({
-    lerp: 0.1,
-    touchMultiplier: 0, // disables for touch devices
-  })
+  const userAgent = window.navigator.userAgent.toLowerCase()
 
-  lenis.on('scroll', (e) => {
-    console.log(e)
-  })
+  if (userAgent.includes('win')) {
+    const lenis = new Lenis({
+      lerp: 0.1,
+      touchMultiplier: 0, // disables for touch devices
+    })
 
-  function raf(time) {
-    lenis.raf(time)
+    function raf(time: number) {
+      lenis.raf(time)
+      requestAnimationFrame(raf)
+    }
+
     requestAnimationFrame(raf)
   }
-
-  requestAnimationFrame(raf)
-
-  // lenis.on('scroll', (event) => {
-  //   console.log(event)
-  // })
-
-  // lenis.on('scroll', ScrollTrigger.update)
-
-  // gsap.ticker.add((time) => {
-  //   lenis.raf(time * 1000)
-  // })
-
-  // gsap.ticker.lagSmoothing(0)
 })
 </script>
 

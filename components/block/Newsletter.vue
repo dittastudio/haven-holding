@@ -30,7 +30,7 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
             100vw
             sm:100vw
             md:${5 / 12 * 100}vw
-            3xl:${5 / 12 * 1800}px
+            3xl:${5 / 12 * 1920}px
           `"
         />
 

@@ -33,7 +33,7 @@ const columnSpan = computed(() => Number(props.block.column_end) - Number(props.
           100vw
           sm:100vw
           md:${columnSpan / 12 * 100}vw
-          3xl:${columnSpan / 12 * 1800}px
+          3xl:${columnSpan / 12 * 1920}px
         `"
       />
 
