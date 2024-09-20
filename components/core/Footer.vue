@@ -28,11 +28,20 @@ const props = defineProps<Props>()
           Contact
         </h4>
 
-        <StoryblokRichText
-          v-if="storyblokRichTextContent(props.address)"
-          :content="props.address"
-          class="prose-p:text-14"
-        />
+        <NuxtLink
+          class="core-footer__link core-footer__link--contact"
+          to="https://maps.app.goo.gl/B3Q1V4Dq1TvktM9q6"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          <address class="not-italic">
+            <StoryblokRichText
+              v-if="storyblokRichTextContent(props.address)"
+              :content="props.address"
+              class="prose-p:text-14"
+            />
+          </address>
+        </NuxtLink>
       </div>
 
       <div class="core-footer__item core-footer__item--social">
@@ -251,12 +260,13 @@ const props = defineProps<Props>()
 }
 
 .core-footer__link {
-  display: block;
+  display: inline-block;
   transition: opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
 
   .core-footer__social-list:hover &:not(:hover),
   .core-footer__social-item:only-child &:hover,
-  .core-footer__credit-list:hover &:not(:hover) {
+  .core-footer__credit-list:hover &:not(:hover),
+  &.core-footer__link--contact:hover {
     opacity: 0.4;
   }
 
