@@ -15,26 +15,26 @@
   },
   "dependencies": {
     "@vee-validate/zod": "^4.13.2",
-    "@vueuse/core": "^11.0.3",
+    "@vueuse/core": "^11.1.0",
     "gsap": "^3.12.5",
     "lenis": "^1.1.13",
     "vee-validate": "^4.13.2",
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^3.5.0",
+    "@antfu/eslint-config": "^3.6.2",
     "@mailchimp/mailchimp_marketing": "^3.0.80",
-    "@nuxt/eslint": "^0.5.6",
+    "@nuxt/eslint": "^0.5.7",
     "@nuxt/image": "^1.8.0",
-    "@nuxtjs/sitemap": "^6.0.1",
+    "@nuxtjs/sitemap": "^6.1.0",
     "@nuxtjs/tailwindcss": "^6.12.1",
-    "@storyblok/nuxt": "^6.0.10",
+    "@storyblok/nuxt": "^6.0.12",
     "@storyblok/richtext": "^2.0.0",
     "@tailwindcss/typography": "^0.5.15",
     "@types/mailchimp__mailchimp_marketing": "^3.0.20",
     "del-cli": "^5.1.0",
     "eslint": "^9.10.0",
-    "nuxt": "^3.13.1",
+    "nuxt": "^3.13.2",
     "storyblok-generate-ts": "^2.1.0",
     "stylelint": "^16.9.0",
     "stylelint-config-clean-order": "^6.1.0",
@@ -42,6 +42,6 @@
     "stylelint-config-standard": "^36.0.1",
     "typescript": "^5.6.2",
     "vite-svg-loader": "^5.1.0",
-    "vue": "^3.5.4"
+    "vue": "^3.5.6"
   }
 }
