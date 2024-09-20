@@ -30,7 +30,7 @@ const props = defineProps<Props>()
 
         <NuxtLink
           class="core-footer__link core-footer__link--contact"
-          to="https://maps.app.goo.gl/B3Q1V4Dq1TvktM9q6"
+          to="https://maps.app.goo.gl/ApJj1ueiw8gLGFy5A"
           target="_blank"
           rel="noreferrer noopener"
         >
