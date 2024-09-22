@@ -1,7 +1,7 @@
 <script lang="ts" setup>
+import type { RichtextStoryblok, SocialItemStoryblok } from '@/types/storyblok'
 import IconLogoSymbol from '@/assets/icons/logo-symbol.svg'
 import { storyblokRichTextContent } from '@/utilities/storyblok'
-import type { RichtextStoryblok, SocialItemStoryblok } from '@/types/storyblok'
 
 interface Props {
   address: RichtextStoryblok | undefined
@@ -17,7 +17,7 @@ const props = defineProps<Props>()
       <div class="core-footer__item core-footer__item--logo">
         <NuxtLink
           to="/"
-          class="core-footer__logo"
+          class="core-footer__link core-footer__link--logo"
         >
           <IconLogoSymbol class="core-footer__symbol" />
         </NuxtLink>
@@ -183,15 +183,6 @@ const props = defineProps<Props>()
   }
 }
 
-.core-footer__logo {
-  display: inline-block;
-  transition: opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
-
-  &:hover {
-    opacity: 0.6;
-  }
-}
-
 .core-footer__symbol {
   width: 48px;
   height: auto;
@@ -263,15 +254,12 @@ const props = defineProps<Props>()
   display: inline-block;
   transition: opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
 
-  .core-footer__social-list:hover &:not(:hover),
-  .core-footer__social-item:only-child &:hover,
-  .core-footer__credit-list:hover &:not(:hover),
-  &.core-footer__link--contact:hover {
+  &:hover {
     opacity: 0.4;
   }
+}
 
-  .core-footer__credit-item & {
-    padding-inline: var(--credit-padding);
-  }
+.core-footer__link--credit {
+  padding-inline: var(--credit-padding);
 }
 </style>

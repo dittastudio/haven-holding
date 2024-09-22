@@ -220,7 +220,7 @@ const onSubmit = async () => {
     height: 1px;
 
     opacity: 0.3;
-    background-color: currentcolor;
+    border-block-end: 1px solid currentcolor;
 
     transition: opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
   }
