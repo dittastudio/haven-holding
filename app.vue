@@ -81,8 +81,6 @@ onMounted(() => {
       </template>
     </CoreLayout>
 
-    <CoreCover />
-
-    <!-- <CoreCover v-if="!splashSeen && !isDev && !storyblokEditor(route.query)" /> -->
+    <CoreCover v-if="!splashSeen && !isDev && !storyblokEditor(route.query)" />
   </div>
 </template>
