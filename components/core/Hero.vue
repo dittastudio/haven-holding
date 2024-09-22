@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { storyblokAssetType } from '@/utilities/storyblok'
 import type { AssetStoryblok } from '@/types/storyblok'
+import { storyblokAssetType } from '@/utilities/storyblok'
 
 interface Props {
   mediaDesktop: AssetStoryblok | undefined
@@ -31,7 +31,7 @@ watch(isCoverFinished, async () => {
 </script>
 
 <template>
-  <div class="core-hero bg-lavender">
+  <div class="core-hero bg-sky">
     <MediaImage
       v-if="props.mediaDesktop && assetType === 'image'"
       :asset="props.mediaDesktop"

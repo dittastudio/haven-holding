@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import type { SettingsStoryblok } from '@/types/storyblok'
 import { storyblokEditor } from '@/utilities/storyblok'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lenis from 'lenis'
-import type { SettingsStoryblok } from '@/types/storyblok'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -81,6 +81,8 @@ onMounted(() => {
       </template>
     </CoreLayout>
 
-    <CoreCover v-if="!splashSeen && !isDev && !storyblokEditor(route.query)" />
+    <CoreCover />
+
+    <!-- <CoreCover v-if="!splashSeen && !isDev && !storyblokEditor(route.query)" /> -->
   </div>
 </template>

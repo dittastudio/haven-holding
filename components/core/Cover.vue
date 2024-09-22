@@ -6,7 +6,7 @@ const logoVisible = ref(false)
 const isCoverFinished = useState('isCoverFinished')
 const backgroundIndex = useCookie<number>('backgroundIndex')
 const backgroundClass = useCookie<string>('backgroundClass')
-const backgroundClasses = ['bg-lavender', 'bg-sky', 'bg-river']
+const backgroundClasses = ['bg-sky', 'bg-lavender', 'bg-river']
 const currentIndex = backgroundIndex.value
 
 if (import.meta.server) {
