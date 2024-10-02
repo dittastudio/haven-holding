@@ -11,8 +11,8 @@ export default defineNuxtConfig({
       meta: [
         { name: 'author', content: 'Haven Havelland' },
         { name: 'revisit-after', content: '1 day' },
-        { name: 'msapplication-TileColor', content: '#9F9BCC' },
-        { name: 'theme-color', content: '#9F9BCC' },
+        { name: 'msapplication-TileColor', content: '#E6E3E1' },
+        { name: 'theme-color', content: '#E6E3E1' },
         { name: 'google', content: 'notranslate' },
         { 'http-equiv': 'content-language', 'content': 'en-GB' },
       ],
