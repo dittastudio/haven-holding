@@ -84,7 +84,6 @@ export interface SeoStoryblok {
 }
 
 export interface SettingsStoryblok {
-  hero_poster_image?: AssetStoryblok;
   hero_media_mobile?: AssetStoryblok;
   hero_media_desktop: AssetStoryblok;
   address?: RichtextStoryblok;

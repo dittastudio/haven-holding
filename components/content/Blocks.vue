@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { colourBackground, colourText } from '@/utilities/maps'
 import type { PageStoryblok } from '@/types/storyblok'
+import { colourBackground, colourText } from '@/utilities/maps'
 
 interface Props {
   content: PageStoryblok

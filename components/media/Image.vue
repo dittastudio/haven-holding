@@ -1,8 +1,8 @@
 <script lang="ts" setup>
+import type { AssetStoryblok } from '@/types/storyblok'
 import { calculateAspectRatio, ratioDimensions, validAspectRatio } from '@/utilities/helpers'
 import { storyblokImageDimensions } from '@/utilities/storyblok'
 import { useIntersectionObserver } from '@vueuse/core'
-import type { AssetStoryblok } from '@/types/storyblok'
 
 defineOptions({
   inheritAttrs: false,

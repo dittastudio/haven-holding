@@ -1,7 +1,7 @@
 <script lang="ts" setup>
+import type { AssetStoryblok } from '@/types/storyblok'
 import { ratioMap } from '@/utilities/maps'
 import { useIntersectionObserver } from '@vueuse/core'
-import type { AssetStoryblok } from '@/types/storyblok'
 
 interface Props {
   asset: AssetStoryblok

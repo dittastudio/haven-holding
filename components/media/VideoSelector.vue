@@ -1,7 +1,7 @@
 <script lang="ts" setup>
+import type { AssetStoryblok } from '@/types/storyblok'
 import config from '@/tailwind.config'
 import { ratioMap } from '@/utilities/maps'
-import type { AssetStoryblok } from '@/types/storyblok'
 
 interface Props {
   srcLarge: AssetStoryblok

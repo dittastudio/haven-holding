@@ -1,7 +1,7 @@
 <script lang="ts" setup>
+import type { BlockMediaStoryblok } from '@/types/storyblok'
 import { colEndMap, colStartMap } from '@/utilities/maps'
 import { storyblokAssetType } from '@/utilities/storyblok'
-import type { BlockMediaStoryblok } from '@/types/storyblok'
 
 interface Props {
   block: BlockMediaStoryblok

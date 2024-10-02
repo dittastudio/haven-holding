@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { storyblokAssetType, storyblokRichTextContent } from '@/utilities/storyblok'
 import type { BlockNewsletterStoryblok } from '@/types/storyblok'
+import { storyblokAssetType, storyblokRichTextContent } from '@/utilities/storyblok'
 
 interface Props {
   block: BlockNewsletterStoryblok
