@@ -48,6 +48,7 @@ const posterSrc = computed<string>(() => {
     ref="video"
     class="w-full h-[inherit] object-cover"
     :class="ratioMap[props.ratio]"
+    :src="src"
     :poster="posterSrc"
   />
 </template>

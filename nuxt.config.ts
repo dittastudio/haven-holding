@@ -46,10 +46,10 @@ export default defineNuxtConfig({
     },
   },
 
-  gtag: {
-    enabled: process.env.NODE_ENV === 'production',
-    id: 'G-4LBQFXWPY6',
-  },
+  // gtag: {
+  //   enabled: process.env.NODE_ENV === 'production',
+  //   id: 'G-4LBQFXWPY6',
+  // },
 
   image: {
     provider: 'storyblok',
@@ -75,7 +75,7 @@ export default defineNuxtConfig({
     '@nuxtjs/sitemap',
     '@nuxtjs/tailwindcss',
     ['@storyblok/nuxt', { accessToken: process.env.NUXT_STORYBLOK_TOKEN }],
-    'nuxt-gtag',
+    // 'nuxt-gtag',
   ],
 
   postcss: {

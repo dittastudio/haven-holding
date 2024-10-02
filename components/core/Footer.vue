@@ -221,30 +221,24 @@ const props = defineProps<Props>()
 }
 
 .core-footer__credit-item {
+  --_char-inset: -0.26ch;
+
   display: flex;
 
   @screen mdMax {
     &:not(:first-child)::before {
-      pointer-events: none;
       content: '/';
-
       display: inline-block;
-
-      margin-inline: -0.5ch;
-
+      margin-inline: var(--_char-inset);
       opacity: 0.5;
     }
   }
 
   @screen md {
     &:not(:last-child)::after {
-      pointer-events: none;
       content: '/';
-
       display: inline-block;
-
-      margin-inline: -0.5ch;
-
+      margin-inline: var(--_char-inset);
       opacity: 0.5;
     }
   }
