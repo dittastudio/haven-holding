@@ -4,8 +4,10 @@ import config from '@/tailwind.config'
 import { ratioMap } from '@/utilities/maps'
 
 interface Props {
-  srcLarge: AssetStoryblok
   srcSmall?: AssetStoryblok
+  srcSmallPoster?: AssetStoryblok
+  srcLarge: AssetStoryblok
+  srcLargePoster?: AssetStoryblok
   ratio?: ditta.TAspectRatios | string | number
 }
 
@@ -18,12 +20,25 @@ const video = ref<HTMLVideoElement | null>(null)
 const isScreenMdMax = useAtMedia(`(max-width: ${config.theme.screens.mdMax.max})`)
 
 const src = computed<string>(() => {
-  const lg = props.srcLarge?.filename.trim() || ''
   const sm = props.srcSmall?.filename.trim() || ''
+  const lg = props.srcLarge?.filename.trim() || ''
 
   const src = isScreenMdMax.value ? sm || lg : lg || sm
 
   return src || ''
+})
+
+const posterSrc = computed<string>(() => {
+  const usePosterImage = useImage()
+  const sm = props.srcSmallPoster?.filename.trim() || ''
+  const lg = props.srcLargePoster?.filename.trim() || ''
+
+  const src = isScreenMdMax.value ? sm || lg : lg || sm
+
+  return usePosterImage(src, {
+    width: isScreenMdMax.value ? 1280 : 1920,
+    quality: 80,
+  }) || ''
 })
 </script>
 
@@ -31,8 +46,8 @@ const src = computed<string>(() => {
   <video
     v-if="src"
     ref="video"
-    :src="src"
     class="w-full h-[inherit] object-cover"
     :class="ratioMap[props.ratio]"
+    :poster="posterSrc"
   />
 </template>

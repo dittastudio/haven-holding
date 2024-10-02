@@ -3,8 +3,10 @@ import type { AssetStoryblok } from '@/types/storyblok'
 import { storyblokAssetType } from '@/utilities/storyblok'
 
 interface Props {
-  mediaDesktop: AssetStoryblok | undefined
   mediaMobile: AssetStoryblok | undefined
+  mediaMobilePoster: AssetStoryblok | undefined
+  mediaDesktop: AssetStoryblok | undefined
+  mediaDesktopPoster: AssetStoryblok | undefined
 }
 
 const props = defineProps<Props>()
@@ -37,7 +39,9 @@ watch(isCoverFinished, async () => {
       v-else-if="props.mediaDesktop && assetType === 'video'"
       ref="video"
       :src-small="props.mediaMobile"
+      :src-small-poster="props.mediaMobilePoster"
       :src-large="props.mediaDesktop"
+      :src-large-poster="props.mediaDesktopPoster"
       loop
       muted
       playsinline

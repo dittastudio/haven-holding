@@ -54,8 +54,10 @@ onMounted(() => {
     <CoreLayout>
       <template #hero>
         <CoreHero
-          :media-desktop="settings?.content.hero_media_desktop"
+          :media-mobile-poster="settings?.content.hero_media_mobile_poster"
           :media-mobile="settings?.content.hero_media_mobile"
+          :media-desktop-poster="settings?.content.hero_media_desktop_poster"
+          :media-desktop="settings?.content.hero_media_desktop"
         />
       </template>
 

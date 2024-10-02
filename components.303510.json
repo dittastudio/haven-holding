@@ -352,9 +352,16 @@
       "name": "settings",
       "display_name": null,
       "created_at": "2024-09-05T00:59:05.996Z",
-      "updated_at": "2024-10-01T23:46:52.378Z",
+      "updated_at": "2024-10-02T13:50:30.565Z",
       "id": 6254683,
       "schema": {
+        "hero_media_mobile_poster": {
+          "type": "asset",
+          "pos": 0,
+          "filetypes": [
+            "images"
+          ]
+        },
         "hero_media_mobile": {
           "type": "asset",
           "pos": 1,
@@ -362,9 +369,16 @@
           "description": "Optional, Video only",
           "tooltip": true
         },
-        "hero_media_desktop": {
+        "hero_media_desktop_poster": {
           "type": "asset",
           "pos": 2,
+          "filetypes": [
+            "images"
+          ]
+        },
+        "hero_media_desktop": {
+          "type": "asset",
+          "pos": 3,
           "filetypes": [
             "images",
             "videos"
@@ -375,14 +389,14 @@
         },
         "address": {
           "type": "richtext",
-          "pos": 3,
+          "pos": 4,
           "customize_toolbar": true,
           "toolbar": [],
           "key": "address"
         },
         "socials": {
           "type": "bloks",
-          "pos": 4,
+          "pos": 5,
           "restrict_type": "",
           "restrict_components": true,
           "component_whitelist": [
