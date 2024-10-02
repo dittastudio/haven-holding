@@ -41,8 +41,9 @@ watch(isCoverFinished, async () => {
       loop
       muted
       playsinline
-      :autoplay="isCoverFinished || isDev || splashSeen ? true : false"
+      autoplay
     />
+    <!-- :autoplay="isCoverFinished || isDev || splashSeen ? true : false" -->
   </div>
 </template>
 
