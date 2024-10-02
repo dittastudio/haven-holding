@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { AssetStoryblok } from '@/types/storyblok'
-import { storyblokAssetType } from '@/utilities/storyblok'
+import { storyblokAssetType, storyblokEditor } from '@/utilities/storyblok'
 
 interface Props {
   mediaMobile: AssetStoryblok | undefined
@@ -11,7 +11,9 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const route = useRoute()
 const isDev = import.meta.dev
+
 const isCoverFinished = useState('isCoverFinished')
 const splashSeen = useState('splashSeen')
 const video = ref<any | null>(null)
@@ -45,7 +47,7 @@ watch(isCoverFinished, async () => {
       loop
       muted
       playsinline
-      :autoplay="isCoverFinished || isDev || splashSeen ? true : false"
+      :autoplay="isCoverFinished || splashSeen || isDev || storyblokEditor(route.query) ? true : false"
     />
   </div>
 </template>
