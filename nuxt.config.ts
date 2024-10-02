@@ -23,8 +23,8 @@ export default defineNuxtConfig({
         { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
         { rel: 'preconnect', href: 'https://a.storyblok.com' },
         { rel: 'manifest', href: '/site.webmanifest' },
-        { rel: 'preload', type: 'font/woff2', href: '/fonts/Moderat-Regular.woff2', as: 'font', crossorigin: '' },
-        { rel: 'preload', type: 'font/woff2', href: '/fonts/Moderat-Mono-Regular.woff2', as: 'font', crossorigin: '' },
+        // { rel: 'preload', type: 'font/woff2', href: '/fonts/Moderat-Regular.woff2', as: 'font', crossorigin: '' },
+        // { rel: 'preload', type: 'font/woff2', href: '/fonts/Moderat-Mono-Regular.woff2', as: 'font', crossorigin: '' },
       ],
     },
     pageTransition: { name: 'fade', mode: 'out-in' },
@@ -44,6 +44,11 @@ export default defineNuxtConfig({
       standalone: false,
       stylistic: true,
     },
+  },
+
+  gtag: {
+    enabled: process.env.NODE_ENV === 'production',
+    id: 'G-4LBQFXWPY6',
   },
 
   image: {
@@ -70,6 +75,7 @@ export default defineNuxtConfig({
     '@nuxtjs/sitemap',
     '@nuxtjs/tailwindcss',
     ['@storyblok/nuxt', { accessToken: process.env.NUXT_STORYBLOK_TOKEN }],
+    'nuxt-gtag',
   ],
 
   postcss: {

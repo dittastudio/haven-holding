@@ -100,6 +100,5 @@ const props = defineProps<Props>()
 .ui-button__text {
   position: relative;
   z-index: 1;
-  top: calc(1 / 14 * -1em);
 }
 </style>
