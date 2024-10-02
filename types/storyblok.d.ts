@@ -75,7 +75,7 @@ export interface PageStoryblok {
 }
 
 export interface SeoStoryblok {
-  seo_title: string;
+  seo_title?: string;
   seo_description: string;
   seo_image: AssetStoryblok;
   _uid: string;

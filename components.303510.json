@@ -310,12 +310,12 @@
       "name": "seo",
       "display_name": null,
       "created_at": "2024-09-05T00:55:21.910Z",
-      "updated_at": "2024-09-05T00:55:21.910Z",
+      "updated_at": "2024-10-02T00:41:59.114Z",
       "id": 6254682,
       "schema": {
         "seo_title": {
           "type": "text",
-          "required": true,
+          "required": false,
           "display_name": "Title"
         },
         "seo_description": {
