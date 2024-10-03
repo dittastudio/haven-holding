@@ -5,9 +5,8 @@
   font-display: swap;
 
   /* src: url('/fonts/Moderat-Regular.otf') format('opentype'); */
-  src: url('/fonts/Moderat-Trial-Book.otf') format('opentype');
 
-  /* src: url('/fonts/Moderat-Regular.woff2') format('woff2'); */
+  src: url('/fonts/Moderat-Book.woff2') format('woff2');
 }
 
 @font-face {
@@ -17,7 +16,6 @@
   font-display: swap;
 
   /* src: url('/fonts/Moderat-Mono-Regular.otf') format('opentype'); */
-  src: url('/fonts/Moderat-Mono-Trial-Book.otf') format('opentype');
 
-  /* src: url('/fonts/Moderat-Mono-Regular.woff2') format('woff2'); */
+  src: url('/fonts/Moderat-Mono-Book.woff2') format('woff2');
 }

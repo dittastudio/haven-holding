@@ -1,5 +1,5 @@
-import typography from '@tailwindcss/typography'
 import type { Config } from 'tailwindcss'
+import typography from '@tailwindcss/typography'
 
 const pixelsToRemsUnit = (pixels: number): number => pixels / 16
 
@@ -113,7 +113,7 @@ export default {
       '65': ['4.0625rem', { lineHeight: '1.2', letterSpacing: '0em' }],
       'fluid-lead-xs-xl': [
         clamp({
-          minPixels: 24,
+          minPixels: 20,
           minViewportWidthPixels: screenSizes.xs,
           maxPixels: 35, // 35 at 1440px
           maxViewportWidthPixels: screenSizes.xl,
