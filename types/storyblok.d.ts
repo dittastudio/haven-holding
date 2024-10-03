@@ -83,18 +83,6 @@ export interface SeoStoryblok {
   [k: string]: any;
 }
 
-export interface SettingsStoryblok {
-  hero_media_mobile_poster?: AssetStoryblok;
-  hero_media_mobile?: AssetStoryblok;
-  hero_media_desktop_poster?: AssetStoryblok;
-  hero_media_desktop: AssetStoryblok;
-  address?: RichtextStoryblok;
-  socials?: SocialItemStoryblok[];
-  _uid: string;
-  component: "settings";
-  [k: string]: any;
-}
-
 export type MultilinkStoryblok =
   | {
       id?: string;
@@ -118,6 +106,19 @@ export type MultilinkStoryblok =
       target?: "_self" | "_blank";
       [k: string]: any;
     };
+
+export interface SettingsStoryblok {
+  hero_media_mobile_poster?: AssetStoryblok;
+  hero_media_mobile?: AssetStoryblok;
+  hero_media_desktop_poster?: AssetStoryblok;
+  hero_media_desktop: AssetStoryblok;
+  address?: RichtextStoryblok;
+  address_link?: Exclude<MultilinkStoryblok, {linktype?: "email"} | {linktype?: "asset"}>;
+  socials?: SocialItemStoryblok[];
+  _uid: string;
+  component: "settings";
+  [k: string]: any;
+}
 
 export interface SocialItemStoryblok {
   title: string;

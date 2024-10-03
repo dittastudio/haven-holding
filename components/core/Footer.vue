@@ -5,6 +5,7 @@ import { storyblokRichTextContent } from '@/utilities/storyblok'
 
 interface Props {
   address: RichtextStoryblok | undefined
+  addressLink: string | undefined
   socials: SocialItemStoryblok[] | undefined
 }
 
@@ -28,20 +29,25 @@ const props = defineProps<Props>()
           Contact
         </h4>
 
-        <NuxtLink
+        <!-- <NuxtLink
           class="core-footer__link core-footer__link--contact"
           to="https://maps.app.goo.gl/ApJj1ueiw8gLGFy5A"
           target="_blank"
           rel="noreferrer noopener"
+        > -->
+        <StoryblokLink
+          v-if="storyblokRichTextContent(props.address)"
+          class="core-footer__link"
+          :item="props.addressLink"
         >
           <address class="not-italic">
             <StoryblokRichText
-              v-if="storyblokRichTextContent(props.address)"
               :content="props.address"
               class="prose-p:text-14"
             />
           </address>
-        </NuxtLink>
+        </StoryblokLink>
+        <!-- </storybloklink> -->
       </div>
 
       <div class="core-footer__item core-footer__item--social">

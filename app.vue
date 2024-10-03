@@ -73,6 +73,7 @@ onMounted(() => {
         <CoreFooter
           v-if="settings"
           :address="settings.content.address"
+          :address-link="settings.content.address_link"
           :socials="settings.content.socials"
         />
       </template>

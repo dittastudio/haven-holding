@@ -352,7 +352,7 @@
       "name": "settings",
       "display_name": null,
       "created_at": "2024-09-05T00:59:05.996Z",
-      "updated_at": "2024-10-02T13:50:30.565Z",
+      "updated_at": "2024-10-03T21:54:40.159Z",
       "id": 6254683,
       "schema": {
         "hero_media_mobile_poster": {
@@ -394,9 +394,14 @@
           "toolbar": [],
           "key": "address"
         },
+        "address_link": {
+          "type": "multilink",
+          "pos": 5,
+          "allow_target_blank": true
+        },
         "socials": {
           "type": "bloks",
-          "pos": 5,
+          "pos": 6,
           "restrict_type": "",
           "restrict_components": true,
           "component_whitelist": [
