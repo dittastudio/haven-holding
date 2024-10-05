@@ -66,17 +66,17 @@ export default defineEventHandler(async (event) => {
   try {
     const response = await mailchimp.lists.addListMember(listId, {
       email_address: email,
-      status: 'subscribed',
+      status: 'pending',
       merge_fields: {
         FNAME: fname,
         LNAME: lname,
       },
     })
 
-    if (response?.status === 'subscribed') {
+    if (response?.status === 'pending') {
       return {
         statusCode: 200,
-        statusMessage: 'Thank you! Your subscription to our list has been confirmed.',
+        statusMessage: 'Thank you! Please check your email to confirm your subscription.',
       }
     }
     else {

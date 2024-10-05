@@ -185,6 +185,10 @@ const onSubmit = async () => {
           </template>
         </UiButton>
       </button>
+
+      <p class="text-12 opacity-80 mt-16">
+        By submitting, you agree to receive news regarding Haven and accept our privacy policy.
+      </p>
     </FormFieldset>
   </FormBase>
 </template>
