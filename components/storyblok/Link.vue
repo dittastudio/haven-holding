@@ -2,7 +2,7 @@
 import type { MultilinkStoryblok } from '@/types/storyblok'
 
 interface Props {
-  item: MultilinkStoryblok | undefined
+  item: MultilinkStoryblok | string | undefined
   disabled?: boolean
 }
 

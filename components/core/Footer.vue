@@ -29,12 +29,6 @@ const props = defineProps<Props>()
           Contact
         </h4>
 
-        <!-- <NuxtLink
-          class="core-footer__link core-footer__link--contact"
-          to="https://maps.app.goo.gl/ApJj1ueiw8gLGFy5A"
-          target="_blank"
-          rel="noreferrer noopener"
-        > -->
         <StoryblokLink
           v-if="storyblokRichTextContent(props.address)"
           class="core-footer__link"
@@ -47,7 +41,6 @@ const props = defineProps<Props>()
             />
           </address>
         </StoryblokLink>
-        <!-- </storybloklink> -->
       </div>
 
       <div class="core-footer__item core-footer__item--social">
@@ -227,7 +220,7 @@ const props = defineProps<Props>()
 }
 
 .core-footer__credit-item {
-  --_char-inset: -0.26ch;
+  --_char-inset: -0.5ch;
 
   display: flex;
 
