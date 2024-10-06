@@ -65,8 +65,15 @@ export interface BlockNewsletterStoryblok {
   [k: string]: any;
 }
 
+export interface BlockTextStoryblok {
+  text?: RichtextStoryblok;
+  _uid: string;
+  component: "block_text";
+  [k: string]: any;
+}
+
 export interface PageStoryblok {
-  blocks?: (BlockMediaStoryblok | BlockMediaTextStoryblok | BlockNewsletterStoryblok)[];
+  blocks?: (BlockMediaStoryblok | BlockMediaTextStoryblok | BlockNewsletterStoryblok | BlockTextStoryblok)[];
   seo: SeoStoryblok[];
   _uid: string;
   component: "page";

@@ -41,6 +41,11 @@ const checkBackgroundMatchesPrevBackground = (index: number) => {
       v-else-if="block.component === 'block_newsletter'"
       :block="block"
     />
+
+    <BlockText
+      v-else-if="block.component === 'block_text'"
+      :block="block"
+    />
   </section>
 </template>
 
