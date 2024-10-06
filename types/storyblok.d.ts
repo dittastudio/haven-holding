@@ -18,6 +18,16 @@ export interface AssetStoryblok {
   [k: string]: any;
 }
 
+export interface BlockHeroStoryblok {
+  media_mobile_poster?: AssetStoryblok;
+  media_mobile?: AssetStoryblok;
+  media_desktop_poster?: AssetStoryblok;
+  media_desktop?: AssetStoryblok;
+  _uid: string;
+  component: "block_hero";
+  [k: string]: any;
+}
+
 export interface BlockMediaStoryblok {
   background?: number | string;
   colour?: number | string;
@@ -73,7 +83,14 @@ export interface BlockTextStoryblok {
 }
 
 export interface PageStoryblok {
-  blocks?: (BlockMediaStoryblok | BlockMediaTextStoryblok | BlockNewsletterStoryblok | BlockTextStoryblok)[];
+  hero?: BlockHeroStoryblok[];
+  blocks?: (
+    | BlockHeroStoryblok
+    | BlockMediaStoryblok
+    | BlockMediaTextStoryblok
+    | BlockNewsletterStoryblok
+    | BlockTextStoryblok
+  )[];
   seo: SeoStoryblok[];
   _uid: string;
   component: "page";

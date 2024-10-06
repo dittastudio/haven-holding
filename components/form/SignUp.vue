@@ -186,8 +186,15 @@ const onSubmit = async () => {
         </UiButton>
       </button>
 
-      <p class="text-12 opacity-80 mt-16">
-        By submitting, you agree to receive news regarding Haven and accept our privacy policy.
+      <p class="text-12 opacity-80 mt-16 text-pretty">
+        By submitting, you agree to receive news regarding Haven and accept our
+
+        <NuxtLink
+          to="/privacy-policy"
+          class="inline-block underline hover:opacity-40 transition-opacity duration-200 ease-smooth"
+        >
+          privacy policy
+        </NuxtLink>.
       </p>
     </FormFieldset>
   </FormBase>

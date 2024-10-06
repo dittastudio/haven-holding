@@ -1,8 +1,8 @@
 
-@import '~/assets/css/variables.css' layer(base);
-@import '~/assets/css/resets.css' layer(base);
-@import '~/assets/css/fonts.css' layer(base);
-@import '~/assets/css/page.css' layer(base);
+@import '@/assets/css/variables.css';
+@import '@/assets/css/resets.css';
+@import '@/assets/css/fonts.css';
+@import '@/assets/css/page.css';
 
 @tailwind base;
 @tailwind components;

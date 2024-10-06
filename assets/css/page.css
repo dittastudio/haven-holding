@@ -79,3 +79,13 @@ html.lenis, html.lenis body {
 .lenis.lenis-smooth iframe {
   pointer-events: none;
 }
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity theme('transitionDuration.500') theme('transitionTimingFunction.smooth');
+}
+
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+}

@@ -1,13 +1,23 @@
 <script lang="ts" setup>
+// import type { PageStoryblok } from '@/types/storyblok'
 import IconLogo from '@/assets/icons/logo.svg'
 import { headerHeight, screenSizes } from '@/tailwind.config'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
+// const route = useRoute()
+
+// const story = await useStoryblokStory<PageStoryblok>(route.path)
+
+// console.log('story', story.content)
+const heroCheck = true
+
 gsap.registerPlugin(ScrollTrigger)
 
 const header = ref<HTMLElement | null>(null)
 const tiggerContainer = ref<HTMLElement | null>(null)
+
+// const doesHeroExist = useState('doesHeroExist')
 
 onMounted(() => {
   const logos = document.querySelectorAll('.core-layout__logo')
@@ -52,12 +62,17 @@ onMounted(() => {
       class="relative"
     >
       <div
-        class="-z-1 sticky top-0"
+        id="hero"
+        class="-z-1 sticky top-0 min-h-screen"
+        :class="{ hidden: heroCheck }"
       >
         <slot name="hero" />
       </div>
 
-      <div class="core-layout__mask z-1 absolute inset-x-0 top-0 pointer-events-none">
+      <div
+        v-if="heroCheck"
+        class="core-layout__mask z-1 absolute inset-x-0 top-0 pointer-events-none"
+      >
         <div class="core-layout__mask__inner text-offblack sticky top-0 flex items-center justify-center">
           <div class="flex items-center justify-center h-[var(--app-header-height)]">
             <div class="core-layout__logo scale-[calc(200/136)] md:scale-[calc(337/136)]">
@@ -83,7 +98,8 @@ onMounted(() => {
       >
         <header
           ref="header"
-          class="core-layout__header opacity-0"
+          class="core-layout__header"
+          :class="{ 'opacity-0': heroCheck }"
         >
           <slot name="header" />
         </header>

@@ -27,7 +27,7 @@ export default defineNuxtConfig({
         { rel: 'preload', type: 'font/woff2', href: '/fonts/Moderat-Mono-Book.woff2', as: 'font', crossorigin: '' },
       ],
     },
-    pageTransition: { name: 'fade', mode: 'out-in' },
+    pageTransition: { name: 'page', mode: 'out-in' },
     layoutTransition: false,
   },
 

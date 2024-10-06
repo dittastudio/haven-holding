@@ -29,6 +29,7 @@ useSeoMeta({
 
 const splashSeen = useState('splashSeen', () => false)
 useState('isCoverFinished', () => false)
+// useState('doesHeroExist', () => false)
 
 onMounted(() => {
   const userAgent = window.navigator.userAgent.toLowerCase()
@@ -53,12 +54,12 @@ onMounted(() => {
   <div>
     <CoreLayout>
       <template #hero>
-        <CoreHero
+        <!-- <CoreHero
           :media-mobile-poster="settings?.content.hero_media_mobile_poster"
           :media-mobile="settings?.content.hero_media_mobile"
           :media-desktop-poster="settings?.content.hero_media_desktop_poster"
           :media-desktop="settings?.content.hero_media_desktop"
-        />
+        /> -->
       </template>
 
       <template #header>
