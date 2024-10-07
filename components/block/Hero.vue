@@ -79,15 +79,18 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="block-hero__mask z-1 absolute inset-x-0 top-0 pointer-events-none"
+    class="block-hero__mask"
   >
-    <div class="block-hero__mask__inner text-offblack sticky top-0 flex items-center justify-center">
-      <div class="flex items-center justify-center h-[var(--app-header-height)]">
+    <div class="block-hero__mask__outer">
+      <div class="block-hero__mask__inner">
         <div
           ref="logo"
-          class="block-hero__logo scale-[calc(200/136)] md:scale-[calc(337/136)]"
+          class="block-hero__logo"
         >
-          <IconLogo class="w-[136px] h-[26px]" />
+          <IconLogo
+            width="136"
+            height="26"
+          />
         </div>
       </div>
     </div>
@@ -139,17 +142,46 @@ onUnmounted(() => {
 }
 
 .block-hero__mask {
+  pointer-events: none;
+
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  left: 0;
+
   height: calc((100vh + 50vh) + (var(--app-header-height) / 2));
 }
 
-.block-hero__mask__outer,
-.block-hero__mask__inner {
+.block-hero__mask__outer {
+  position: sticky;
+  top: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   height: 100vh;
 }
 
+.block-hero__mask__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--app-header-height);
+}
+
 .block-hero__logo {
+  --_logo-zoomed-size: 200;
+  --_logo-normal-size: 136;
+
+  scale: calc(var(--_logo-zoomed-size) / var(--_logo-normal-size));
   backface-visibility: hidden;
   outline: 1px solid transparent;
+
+  @screen md {
+    --_logo-zoomed-size: 337;
+  }
 }
 
 .block-hero__container {

@@ -49,14 +49,14 @@ const props = defineProps<Props>()
           Social
         </h4>
 
-        <ul class="core-footer__social-list">
+        <ul class="core-footer__list">
           <template
             v-for="social in props.socials"
             :key="social._uid"
           >
             <li
               v-if="social.title && social.link?.url"
-              class="core-footer__social-item"
+              class="core-footer__list-item"
             >
               <StoryblokLink
                 class="core-footer__link"
@@ -70,12 +70,12 @@ const props = defineProps<Props>()
         </ul>
       </div>
 
-      <div class="core-footer__item core-footer__item--credit">
-        <div class="core-footer__credits">
-          <ul class="core-footer__credit-list">
-            <li class="core-footer__credit-item">
+      <div class="core-footer__item core-footer__item--info">
+        <div class="core-footer__bottom">
+          <ul class="core-footer__link-list">
+            <li class="core-footer__link-list__item">
               <NuxtLink
-                class="core-footer__link core-footer__link--credit"
+                class="core-footer__link core-footer__link--meta"
                 to="https://studioparallel.co.uk/"
                 target="_blank"
                 rel="noopener"
@@ -84,9 +84,9 @@ const props = defineProps<Props>()
               </NuxtLink>
             </li>
 
-            <li class="core-footer__credit-item">
+            <li class="core-footer__link-list__item">
               <NuxtLink
-                class="core-footer__link core-footer__link--credit"
+                class="core-footer__link core-footer__link--meta"
                 to="https://ditta.studio"
                 target="_blank"
                 rel="noopener"
@@ -97,14 +97,10 @@ const props = defineProps<Props>()
           </ul>
         </div>
 
-        <!-- <div>
-          ©2024 All rights reserved
-        </div> -->
-
-        <div class="core-footer__credits">
-          <ul class="core-footer__credit-list">
-            <li class="core-footer__credit-item">
-              <span class="core-footer__link core-footer__link--credit">
+        <div class="core-footer__bottom">
+          <ul class="core-footer__link-list">
+            <li class="core-footer__link-list__item">
+              <span class="core-footer__link core-footer__link--meta">
                 ©2024 All rights reserved
               </span>
             </li>
@@ -112,12 +108,12 @@ const props = defineProps<Props>()
             <li
               v-for="item in props.linkItems"
               :key="item._uid"
-              class="core-footer__credit-item"
+              class="core-footer__link-list__item"
             >
               <StoryblokLink
                 :item="item.link"
                 :title="item.title"
-                class="core-footer__link core-footer__link--credit"
+                class="core-footer__link core-footer__link--meta"
               >
                 {{ item.title }}
               </StoryblokLink>
@@ -190,7 +186,7 @@ const props = defineProps<Props>()
   }
 }
 
-.core-footer__item--credit {
+.core-footer__item--info {
   grid-column: span 2;
 
   @screen xs {
@@ -220,21 +216,21 @@ const props = defineProps<Props>()
   margin-block-end: theme('spacing.8');
 }
 
-.core-footer__social-list {
+.core-footer__list {
   display: inline-block;
 }
 
-.core-footer__social-item {
+.core-footer__list-item {
   display: block;
 }
 
-.core-footer__credits {
+.core-footer__bottom {
   --credit-padding: theme('spacing.12');
 
   overflow: hidden;
 }
 
-.core-footer__credit-list {
+.core-footer__link-list {
   display: flex;
   flex-flow: row wrap;
   margin-inline: calc(-1 * var(--credit-padding));
@@ -244,7 +240,7 @@ const props = defineProps<Props>()
   }
 }
 
-.core-footer__credit-item {
+.core-footer__link-list__item {
   --_char-inset: -0.5ch;
 
   display: flex;
@@ -277,7 +273,7 @@ a.core-footer__link {
   }
 }
 
-.core-footer__link--credit {
+.core-footer__link--meta {
   padding-inline: var(--credit-padding);
 }
 </style>
