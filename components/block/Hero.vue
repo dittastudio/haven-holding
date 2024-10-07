@@ -33,8 +33,10 @@ const logo = ref<HTMLElement | null>(null)
 
 onMounted(() => {
   const header = document.querySelector('.core-header')
+  const hide = { opacity: 0, visibility: 'hidden' }
+  const show = { opacity: 1, visibility: 'visible' }
 
-  header?.classList.add('opacity-0')
+  gsap.set(header, hide)
 
   const tl = gsap.timeline({
     scrollTrigger: {
@@ -44,13 +46,13 @@ onMounted(() => {
       scrub: true,
       // markers: true,
       onLeave: () => {
-        header?.classList.remove('opacity-0')
-        logo.value?.classList.add('opacity-0')
+        gsap.set(header, show)
+        gsap.set(logo.value, hide)
       },
 
       onEnterBack: () => {
-        header?.classList.add('opacity-0')
-        logo.value?.classList.remove('opacity-0')
+        gsap.set(header, hide)
+        gsap.set(logo.value, show)
       },
     },
   })
@@ -74,6 +76,11 @@ onUnmounted(() => {
   ScrollTrigger.getAll().forEach((trigger) => {
     trigger.kill()
   })
+
+  const header = document.querySelector('.core-header')
+
+  gsap.set(header, { clearProps: 'all' })
+  gsap.set(logo.value, { clearProps: 'all' })
 })
 </script>
 
