@@ -76,7 +76,7 @@ export default defineEventHandler(async (event) => {
     if (response?.status === 'pending') {
       return {
         statusCode: 200,
-        statusMessage: 'Thank you! Please check your email to confirm your subscription.',
+        statusMessage: 'Danke sehr! Please check your email to confirm your subscription.',
       }
     }
     else {
@@ -99,7 +99,7 @@ export default defineEventHandler(async (event) => {
     if (errorInfo?.title === 'Member Exists') { // Hack but it works
       return {
         statusCode: error.response.status,
-        statusMessage: 'You are already subscribed to our newsletter.',
+        statusMessage: 'Looks like you’re already subscribed to our newsletter 😎. If not, check your inbox for our confirmation email or ask for help at info@havenhavelland.com.',
       }
     }
 

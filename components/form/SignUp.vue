@@ -273,11 +273,11 @@ const onSubmit = async () => {
       font: inherit;
 
       box-shadow: none;
-      caret-color: theme('colors.white');
+      caret-color: theme('colors.offblack');
 
       transition: background-color 5000s ease-in-out 0s;
 
-      -webkit-text-fill-color: theme('colors.white');
+      -webkit-text-fill-color: theme('colors.offblack');
   }
 }
 
