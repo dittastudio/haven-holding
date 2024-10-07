@@ -1,7 +1,3 @@
-<script lang="ts" setup>
-// import IconLogo from '@/assets/icons/logo.svg'
-</script>
-
 <template>
   <div
     class="core-layout"

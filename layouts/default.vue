@@ -29,6 +29,7 @@ useState('isCoverFinished', () => false)
           :address="settings.content.address"
           :address-link="settings.content.address_link"
           :socials="settings.content.socials"
+          :link-items="settings.content.footer_links?.[0].items"
         />
       </template>
 

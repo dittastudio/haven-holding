@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { RichtextStoryblok, SocialItemStoryblok } from '@/types/storyblok'
+import type { LinkListStoryblok, RichtextStoryblok, SocialItemStoryblok } from '@/types/storyblok'
 import IconLogoSymbol from '@/assets/icons/logo-symbol.svg'
 import { storyblokRichTextContent } from '@/utilities/storyblok'
 
@@ -7,6 +7,7 @@ interface Props {
   address: RichtextStoryblok | undefined
   addressLink: string | undefined
   socials: SocialItemStoryblok[] | undefined
+  linkItems: LinkListStoryblok
 }
 
 const props = defineProps<Props>()
@@ -96,8 +97,32 @@ const props = defineProps<Props>()
           </ul>
         </div>
 
-        <div>
+        <!-- <div>
           ©2024 All rights reserved
+        </div> -->
+
+        <div class="core-footer__credits">
+          <ul class="core-footer__credit-list">
+            <li class="core-footer__credit-item">
+              <span class="core-footer__link core-footer__link--credit">
+                ©2024 All rights reserved
+              </span>
+            </li>
+
+            <li
+              v-for="item in props.linkItems"
+              :key="item._uid"
+              class="core-footer__credit-item"
+            >
+              <StoryblokLink
+                :item="item.link"
+                :title="item.title"
+                class="core-footer__link core-footer__link--credit"
+              >
+                {{ item.title }}
+              </StoryblokLink>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -243,7 +268,7 @@ const props = defineProps<Props>()
   }
 }
 
-.core-footer__link {
+a.core-footer__link {
   display: inline-block;
   transition: opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
 

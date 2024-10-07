@@ -82,6 +82,45 @@ export interface BlockTextStoryblok {
   [k: string]: any;
 }
 
+export type MultilinkStoryblok =
+  | {
+      id?: string;
+      cached_url?: string;
+      anchor?: string;
+      linktype?: "story";
+      target?: "_self" | "_blank";
+      [k: string]: any;
+    }
+  | {
+      url?: string;
+      cached_url?: string;
+      anchor?: string;
+      linktype?: "asset" | "url";
+      target?: "_self" | "_blank";
+      [k: string]: any;
+    }
+  | {
+      email?: string;
+      linktype?: "email";
+      target?: "_self" | "_blank";
+      [k: string]: any;
+    };
+
+export interface LinkStoryblok {
+  title: string;
+  link: Exclude<MultilinkStoryblok, {linktype?: "asset"}>;
+  _uid: string;
+  component: "link";
+  [k: string]: any;
+}
+
+export interface LinkListStoryblok {
+  items: LinkStoryblok[];
+  _uid: string;
+  component: "link_list";
+  [k: string]: any;
+}
+
 export interface PageStoryblok {
   hero?: BlockHeroStoryblok[];
   blocks?: (
@@ -107,30 +146,6 @@ export interface SeoStoryblok {
   [k: string]: any;
 }
 
-export type MultilinkStoryblok =
-  | {
-      id?: string;
-      cached_url?: string;
-      anchor?: string;
-      linktype?: "story";
-      target?: "_self" | "_blank";
-      [k: string]: any;
-    }
-  | {
-      url?: string;
-      cached_url?: string;
-      anchor?: string;
-      linktype?: "asset" | "url";
-      target?: "_self" | "_blank";
-      [k: string]: any;
-    }
-  | {
-      email?: string;
-      linktype?: "email";
-      target?: "_self" | "_blank";
-      [k: string]: any;
-    };
-
 export interface SettingsStoryblok {
   hero_media_desktop_poster?: AssetStoryblok;
   hero_media_desktop: AssetStoryblok;
@@ -139,6 +154,7 @@ export interface SettingsStoryblok {
   address?: RichtextStoryblok;
   address_link?: Exclude<MultilinkStoryblok, {linktype?: "email"} | {linktype?: "asset"}>;
   socials?: SocialItemStoryblok[];
+  footer_links?: LinkListStoryblok[];
   _uid: string;
   component: "settings";
   [k: string]: any;

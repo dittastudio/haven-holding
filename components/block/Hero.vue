@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { BlockHeroStoryblok } from '@/types/storyblok'
 import IconLogo from '@/assets/icons/logo.svg'
-// import { headerHeight, screenSizes } from '@/tailwind.config'
 import { storyblokAssetType, storyblokEditor } from '@/utilities/storyblok'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -28,9 +27,10 @@ watch(isCoverFinished, async () => {
     await video.value.$el.play()
 })
 
+// Animation
 const triggerRef = ref<HTMLElement | null>(null)
 const logo = ref<HTMLElement | null>(null)
-// Animation
+
 onMounted(() => {
   const header = document.querySelector('.core-header')
 
@@ -42,7 +42,7 @@ onMounted(() => {
       start: 'top bottom',
       end: 'top top',
       scrub: true,
-      markers: true,
+      // markers: true,
       onLeave: () => {
         header?.classList.remove('opacity-0')
         logo.value?.classList.add('opacity-0')
