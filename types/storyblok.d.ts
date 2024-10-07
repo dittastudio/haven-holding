@@ -132,10 +132,10 @@ export type MultilinkStoryblok =
     };
 
 export interface SettingsStoryblok {
-  hero_media_mobile_poster?: AssetStoryblok;
-  hero_media_mobile?: AssetStoryblok;
   hero_media_desktop_poster?: AssetStoryblok;
   hero_media_desktop: AssetStoryblok;
+  hero_media_mobile_poster?: AssetStoryblok;
+  hero_media_mobile?: AssetStoryblok;
   address?: RichtextStoryblok;
   address_link?: Exclude<MultilinkStoryblok, {linktype?: "email"} | {linktype?: "asset"}>;
   socials?: SocialItemStoryblok[];

@@ -1,15 +1,8 @@
 <script setup lang="ts">
-import type { SettingsStoryblok } from '@/types/storyblok'
 import { storyblokEditor } from '@/utilities/storyblok'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lenis from 'lenis'
 
-gsap.registerPlugin(ScrollTrigger)
-
 const route = useRoute()
-const isDev = import.meta.dev
-const settings = await useStoryblokStory<SettingsStoryblok>('/settings')
 const url = useRequestURL()
 
 const globalClasses = computed(() => ({
@@ -26,10 +19,6 @@ useSeoMeta({
   titleTemplate: title => (title ? `${title} - Haven Havelland` : 'Haven Havelland'),
   robots: url.host === 'havenhavelland.com' ? 'index, follow' : 'noindex, nofollow',
 })
-
-const splashSeen = useState('splashSeen', () => false)
-useState('isCoverFinished', () => false)
-// useState('doesHeroExist', () => false)
 
 onMounted(() => {
   const userAgent = window.navigator.userAgent.toLowerCase()
@@ -51,39 +40,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <CoreLayout>
-      <template #hero>
-        <!-- <CoreHero
-          :media-mobile-poster="settings?.content.hero_media_mobile_poster"
-          :media-mobile="settings?.content.hero_media_mobile"
-          :media-desktop-poster="settings?.content.hero_media_desktop_poster"
-          :media-desktop="settings?.content.hero_media_desktop"
-        /> -->
-      </template>
-
-      <template #header>
-        <CoreHeader />
-      </template>
-
-      <template #main>
-        <NuxtPage />
-      </template>
-
-      <template #footer>
-        <CoreFooter
-          v-if="settings"
-          :address="settings.content.address"
-          :address-link="settings.content.address_link"
-          :socials="settings.content.socials"
-        />
-      </template>
-
-      <template #dev>
-        <ToolGrid v-if="isDev || storyblokEditor(route.query)" />
-      </template>
-    </CoreLayout>
-
-    <CoreCover v-if="!splashSeen && !isDev && !storyblokEditor(route.query)" />
-  </div>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>

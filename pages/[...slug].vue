@@ -9,9 +9,16 @@ useStoryblokSetup<PageStoryblok>(story)
 
 <template>
   <div>
-    <ContentBlocks
-      v-if="story"
-      :content="story.content"
+    <BlockHero
+      v-if="story?.content.hero?.[0]"
+      :block="story.content.hero[0]"
     />
+
+    <div class="bg-offwhite">
+      <ContentBlocks
+        v-if="story"
+        :content="story.content"
+      />
+    </div>
   </div>
 </template>

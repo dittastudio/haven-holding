@@ -463,33 +463,19 @@
       "name": "settings",
       "display_name": null,
       "created_at": "2024-09-05T00:59:05.996Z",
-      "updated_at": "2024-10-03T21:54:40.159Z",
+      "updated_at": "2024-10-06T19:48:14.303Z",
       "id": 6254683,
       "schema": {
-        "hero_media_mobile_poster": {
+        "hero_media_desktop_poster": {
           "type": "asset",
           "pos": 0,
           "filetypes": [
             "images"
           ]
         },
-        "hero_media_mobile": {
-          "type": "asset",
-          "pos": 1,
-          "key": "hero_media_mobile",
-          "description": "Optional, Video only",
-          "tooltip": true
-        },
-        "hero_media_desktop_poster": {
-          "type": "asset",
-          "pos": 2,
-          "filetypes": [
-            "images"
-          ]
-        },
         "hero_media_desktop": {
           "type": "asset",
-          "pos": 3,
+          "pos": 1,
           "filetypes": [
             "images",
             "videos"
@@ -497,6 +483,20 @@
           "required": true,
           "display_name": "Hero Media Desktop",
           "key": "hero_media"
+        },
+        "hero_media_mobile_poster": {
+          "type": "asset",
+          "pos": 2,
+          "filetypes": [
+            "images"
+          ]
+        },
+        "hero_media_mobile": {
+          "type": "asset",
+          "pos": 3,
+          "key": "hero_media_mobile",
+          "description": "Optional, Video only",
+          "tooltip": true
         },
         "address": {
           "type": "richtext",
@@ -519,6 +519,17 @@
             "social_item"
           ],
           "key": "socials"
+        },
+        "tab-b5d09acc-387f-4727-882e-525b3eedc0d0": {
+          "display_name": "OLD Hero fields",
+          "keys": [
+            "hero_media_mobile_poster",
+            "hero_media_mobile",
+            "hero_media_desktop_poster",
+            "hero_media_desktop"
+          ],
+          "pos": 7,
+          "type": "tab"
         }
       },
       "image": null,
