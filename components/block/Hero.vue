@@ -35,16 +35,21 @@ const logo = ref<HTMLElement | null>(null)
 const logoWidthUnits = { small: 136, medium: 200, large: 337 }
 
 onMounted(() => {
-  const header = document.querySelector('.core-header')
-  const hide = { opacity: 0, visibility: 'hidden' }
-  const show = { opacity: 1, visibility: 'visible' }
-
-  gsap.set(header, hide)
-
   const mm = gsap.matchMedia()
 
   mm.add({ isDesktop: `(min-width: ${screenSizes.md}px)`, isMobile: `(max-width: ${screenSizes.md - 1}px)` }, (context) => { // not sure why it has to have two arguments
     const { isDesktop } = context.conditions as { isDesktop: boolean }
+
+    const header = document.querySelector('.core-header')
+    const hide = { opacity: 0, visibility: 'hidden' }
+    const show = { opacity: 1, visibility: 'visible' }
+
+    if (!header || !logo.value)
+      return
+
+    gsap.set(header, hide)
+
+    // const mm = gsap.matchMedia()
 
     const tl = gsap.timeline({
       scrollTrigger: {
