@@ -24,7 +24,6 @@ useState('isCoverFinished', () => false)
       </template>
 
       <template #footer>
-        {{ settings.content.footer_links }}
         <CoreFooter
           v-if="settings"
           :address="settings.content.address"
