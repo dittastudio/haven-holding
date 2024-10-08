@@ -49,8 +49,6 @@ onMounted(() => {
 
     gsap.set(header, hide)
 
-    // const mm = gsap.matchMedia()
-
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: triggerRef.value,
