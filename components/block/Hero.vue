@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { BlockHeroStoryblok } from '@/types/storyblok'
-import IconLogo from '@/assets/icons/logo.svg'
-import { headerHeight, screenSizes } from '@/tailwind.config'
+import IconLogo from '@/assets/icons/haven-logo-final.svg'
+import { screenSizes } from '@/tailwind.config'
 import { storyblokAssetType, storyblokEditor } from '@/utilities/storyblok'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -32,7 +32,7 @@ watch(isCoverFinished, async () => {
 const triggerRef = ref<HTMLElement | null>(null)
 const logo = ref<HTMLElement | null>(null)
 
-const logoWidthUnits = { small: 136, medium: 200, large: 337 }
+const logoWidthUnits = { small: 138, medium: 205, large: 341 }
 
 onMounted(() => {
   const mm = gsap.matchMedia()
@@ -119,8 +119,7 @@ onUnmounted(() => {
           class="block-hero__logo"
         >
           <IconLogo
-            width="136"
-            height="26"
+            class="block-hero__svg"
           />
         </div>
       </div>
@@ -213,6 +212,11 @@ onUnmounted(() => {
   @screen md {
     scale: calc(v-bind(logoWidthUnits.large) / v-bind(logoWidthUnits.small));
   }
+}
+
+.block-hero__svg {
+  width: 138px;
+  height: 28px;
 }
 
 .block-hero__container {

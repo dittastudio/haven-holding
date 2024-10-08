@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import IconLogoSymbol from '@/assets/icons/logo-symbol.svg'
+import IconLogoSymbol from '@/assets/icons/haven-logo-symbol-final.svg'
 
 definePageMeta({
   layout: false,
@@ -30,7 +30,11 @@ useHead({
           href="/"
           class="block"
         >
-          <IconLogoSymbol class="block w-full max-w-[100px] h-auto" />
+          <IconLogoSymbol
+            width="48"
+            height="82"
+            class="block"
+          />
         </a>
       </h1>
 

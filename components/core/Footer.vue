@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { LinkListStoryblok, RichtextStoryblok, SocialItemStoryblok } from '@/types/storyblok'
-import IconLogoSymbol from '@/assets/icons/logo-symbol.svg'
+import IconLogoSymbol from '@/assets/icons/haven-logo-symbol-final.svg'
 import { storyblokRichTextContent } from '@/utilities/storyblok'
 
 interface Props {
@@ -207,10 +207,11 @@ const props = defineProps<Props>()
 
 .core-footer__symbol {
   width: 48px;
-  height: auto;
+  height: 82px;
 
   @screen md {
     width: 37px;
+    height: 63px;
   }
 }
 

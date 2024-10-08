@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import IconLogo from '@/assets/icons/logo.svg'
+import IconLogo from '@/assets/icons/haven-logo-final.svg'
 </script>
 
 <template>
@@ -11,8 +11,8 @@ import IconLogo from '@/assets/icons/logo.svg'
       class="core-header__link"
     >
       <IconLogo
-        width="136"
-        height="26"
+        width="138"
+        height="28"
       />
     </NuxtLink>
   </div>
