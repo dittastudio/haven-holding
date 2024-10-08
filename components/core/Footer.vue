@@ -71,54 +71,56 @@ const props = defineProps<Props>()
       </div>
 
       <div class="core-footer__item core-footer__item--info">
-        <div class="core-footer__bottom">
-          <ul class="core-footer__link-list">
-            <li class="core-footer__link-list__item">
-              <NuxtLink
-                class="core-footer__link core-footer__link--meta"
-                to="https://studioparallel.co.uk/"
-                target="_blank"
-                rel="noopener"
-              >
-                Design by Studio Parallel
-              </NuxtLink>
-            </li>
+        <div class="core-footer__info-wrapper">
+          <div class="core-footer__info">
+            <ul class="core-footer__link-list">
+              <li class="core-footer__link-list__item">
+                <NuxtLink
+                  class="core-footer__link core-footer__link--meta"
+                  to="https://studioparallel.co.uk/"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  Design by Studio Parallel
+                </NuxtLink>
+              </li>
 
-            <li class="core-footer__link-list__item">
-              <NuxtLink
-                class="core-footer__link core-footer__link--meta"
-                to="https://ditta.studio"
-                target="_blank"
-                rel="noopener"
-              >
-                Made by ditta
-              </NuxtLink>
-            </li>
-          </ul>
-        </div>
+              <li class="core-footer__link-list__item">
+                <NuxtLink
+                  class="core-footer__link core-footer__link--meta"
+                  to="https://ditta.studio"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  Made by ditta
+                </NuxtLink>
+              </li>
+            </ul>
+          </div>
 
-        <div class="core-footer__bottom">
-          <ul class="core-footer__link-list">
-            <li class="core-footer__link-list__item">
-              <span class="core-footer__link core-footer__link--meta">
-                ©2024 All rights reserved
-              </span>
-            </li>
+          <div class="core-footer__info">
+            <ul class="core-footer__link-list">
+              <li class="core-footer__link-list__item">
+                <span class="core-footer__link core-footer__link--meta">
+                  ©2024 All rights reserved
+                </span>
+              </li>
 
-            <li
-              v-for="item in props.linkItems"
-              :key="item._uid"
-              class="core-footer__link-list__item"
-            >
-              <StoryblokLink
-                :item="item.link"
-                :title="item.title"
-                class="core-footer__link core-footer__link--meta"
+              <li
+                v-for="item in props.linkItems"
+                :key="item._uid"
+                class="core-footer__link-list__item"
               >
-                {{ item.title }}
-              </StoryblokLink>
-            </li>
-          </ul>
+                <StoryblokLink
+                  :item="item.link"
+                  :title="item.title"
+                  class="core-footer__link core-footer__link--meta"
+                >
+                  {{ item.title }}
+                </StoryblokLink>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -130,7 +132,7 @@ const props = defineProps<Props>()
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: theme('spacing.48') var(--app-inner-gutter);
-  padding-block: theme('spacing.32') theme('spacing.40');
+  padding-block: theme('spacing.48') theme('spacing.40');
 
   @screen xs {
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -224,7 +226,11 @@ const props = defineProps<Props>()
   display: block;
 }
 
-.core-footer__bottom {
+.core-footer__info-wrapper {
+  display: inline-block;
+}
+
+.core-footer__info {
   --credit-padding: theme('spacing.12');
 
   overflow: hidden;
@@ -232,12 +238,8 @@ const props = defineProps<Props>()
 
 .core-footer__link-list {
   display: flex;
-  flex-flow: row wrap;
+  flex-wrap: wrap;
   margin-inline: calc(-1 * var(--credit-padding));
-
-  @screen md {
-    justify-content: flex-end;
-  }
 }
 
 .core-footer__link-list__item {
@@ -245,22 +247,10 @@ const props = defineProps<Props>()
 
   display: flex;
 
-  @screen mdMax {
-    &:not(:first-child)::before {
-      content: '/';
-      display: inline-block;
-      margin-inline: var(--_char-inset);
-      opacity: 0.5;
-    }
-  }
-
-  @screen md {
-    &:not(:last-child)::after {
-      content: '/';
-      display: inline-block;
-      margin-inline: var(--_char-inset);
-      opacity: 0.5;
-    }
+  &:not(:first-child)::before {
+    content: '/';
+    display: inline-block;
+    margin-inline: var(--_char-inset);
   }
 }
 
