@@ -54,13 +54,17 @@ onMounted(() => {
         scrub: true,
         // markers: true,
         onLeave: () => {
-          gsap.set(header, show)
-          gsap.set(logo.value, hide)
+          if (header && logo.value) {
+            gsap.set(header, show)
+            gsap.set(logo.value, hide)
+          }
         },
 
         onEnterBack: () => {
-          gsap.set(header, hide)
-          gsap.set(logo.value, show)
+          if (header && logo.value) {
+            gsap.set(header, hide)
+            gsap.set(logo.value, show)
+          }
         },
       },
     })
@@ -91,8 +95,10 @@ onUnmounted(() => {
 
   const header = document.querySelector('.core-header')
 
-  gsap.set(header, { clearProps: 'all' })
-  gsap.set(logo.value, { clearProps: 'all' })
+  if (header)
+    gsap.set(header, { clearProps: 'all' })
+  if (logo.value)
+    gsap.set(logo.value, { clearProps: 'all' })
 })
 </script>
 

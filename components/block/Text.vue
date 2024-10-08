@@ -35,7 +35,8 @@ const { block } = defineProps<Props>()
 
   h2, h3 {
     margin-block-end: calc(var(--app-vertical-rhythm) * 0.5);
-    text-align: center
+    padding-inline: var(--app-outer-gutter);
+    text-align: center;
   }
 
   p + h2,
