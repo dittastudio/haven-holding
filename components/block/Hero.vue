@@ -32,7 +32,7 @@ watch(isCoverFinished, async () => {
 const triggerRef = ref<HTMLElement | null>(null)
 const logo = ref<HTMLElement | null>(null)
 
-const logoUnits = { small: 136, medium: 200, large: 337 }
+const logoWidthUnits = { small: 136, medium: 200, large: 337 }
 
 onMounted(() => {
   const header = document.querySelector('.core-header')
@@ -72,7 +72,7 @@ onMounted(() => {
     tl.fromTo(
       logo.value,
       {
-        scale: isDesktop ? (logoUnits.large / logoUnits.small) : (logoUnits.medium / logoUnits.small),
+        scale: isDesktop ? (logoWidthUnits.large / logoWidthUnits.small) : (logoWidthUnits.medium / logoWidthUnits.small),
       },
       {
         scale: 1,
@@ -95,8 +95,7 @@ onUnmounted(() => {
 
   const header = document.querySelector('.core-header')
 
-  if (header)
-    gsap.set(header, { clearProps: 'all' })
+  gsap.set(header, { clearProps: 'all' })
   if (logo.value)
     gsap.set(logo.value, { clearProps: 'all' })
 })
@@ -163,6 +162,7 @@ onUnmounted(() => {
   top: 0;
 
   height: 100vh;
+  height: 100svh;
   margin-block-start: calc(var(--app-header-height) * -1);
 }
 
@@ -176,6 +176,7 @@ onUnmounted(() => {
   left: 0;
 
   height: calc((100vh + 50vh) + (var(--app-header-height) / 2));
+  height: calc((100svh + 50svh) + (var(--app-header-height) / 2));
 }
 
 .block-hero__mask__outer {
@@ -187,6 +188,7 @@ onUnmounted(() => {
   justify-content: center;
 
   height: 100vh;
+  height: 100svh;
 }
 
 .block-hero__mask__inner {
@@ -197,12 +199,12 @@ onUnmounted(() => {
 }
 
 .block-hero__logo {
-  scale: calc(v-bind(logoUnits.medium) / v-bind(logoUnits.small));
+  scale: calc(v-bind(logoWidthUnits.medium) / v-bind(logoWidthUnits.small));
   backface-visibility: hidden;
   outline: 1px solid transparent;
 
   @screen md {
-    scale: calc(v-bind(logoUnits.large) / v-bind(logoUnits.small));
+    scale: calc(v-bind(logoWidthUnits.large) / v-bind(logoWidthUnits.small));
   }
 }
 
