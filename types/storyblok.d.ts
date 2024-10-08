@@ -147,14 +147,10 @@ export interface SeoStoryblok {
 }
 
 export interface SettingsStoryblok {
-  hero_media_desktop_poster?: AssetStoryblok;
-  hero_media_desktop: AssetStoryblok;
-  hero_media_mobile_poster?: AssetStoryblok;
-  hero_media_mobile?: AssetStoryblok;
   address?: RichtextStoryblok;
   address_link?: Exclude<MultilinkStoryblok, {linktype?: "email"} | {linktype?: "asset"}>;
   socials?: SocialItemStoryblok[];
-  footer_links?: LinkListStoryblok[];
+  footer_links?: LinkStoryblok[];
   _uid: string;
   component: "settings";
   [k: string]: any;
