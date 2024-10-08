@@ -206,6 +206,8 @@ const props = defineProps<Props>()
 }
 
 .core-footer__symbol {
+  position: relative;
+  left: -1px;
   width: 48px;
   height: 82px;
 
