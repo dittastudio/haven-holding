@@ -101,6 +101,10 @@ export default defineNuxtConfig({
     url: 'https://www.havenhavelland.com',
   },
 
+  sitemap: {
+    sources: ['/api/sitemap'],
+  },
+
   ssr: true,
 
   tailwindcss: {
