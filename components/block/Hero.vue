@@ -169,7 +169,7 @@ onUnmounted(() => {
 
   height: 100vh;
   height: 100svh;
-  margin-block-start: calc(var(--app-header-height) * -1);
+  margin-block-start: calc(var(--app-header-height) * -1); /* negative causes lighthouse issues. wtf */
 }
 
 .block-hero__mask {

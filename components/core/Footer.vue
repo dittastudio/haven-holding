@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import type { LinkListStoryblok, RichtextStoryblok, SocialItemStoryblok } from '@/types/storyblok'
+import type { LinkStoryblok, MultilinkStoryblok, RichtextStoryblok, SocialItemStoryblok } from '@/types/storyblok'
 import IconLogoSymbol from '@/assets/icons/haven-logo-symbol-final.svg'
 import { storyblokRichTextContent } from '@/utilities/storyblok'
 
 interface Props {
   address: RichtextStoryblok | undefined
-  addressLink: string | undefined
+  addressLink: MultilinkStoryblok | string | undefined
   socials: SocialItemStoryblok[] | undefined
-  linkItems: LinkListStoryblok
+  linkItems: LinkStoryblok[] | undefined
 }
 
 const props = defineProps<Props>()
@@ -22,6 +22,8 @@ const props = defineProps<Props>()
           class="core-footer__link core-footer__link--logo"
         >
           <IconLogoSymbol class="core-footer__symbol" />
+
+          <span class="sr-only">Home</span>
         </NuxtLink>
       </div>
 
