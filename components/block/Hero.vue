@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { BlockHeroStoryblok } from '@/types/storyblok'
 import IconLogo from '@/assets/icons/logo.svg'
+import { headerHeight, screenSizes } from '@/tailwind.config'
 import { storyblokAssetType, storyblokEditor } from '@/utilities/storyblok'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -31,6 +32,8 @@ watch(isCoverFinished, async () => {
 const triggerRef = ref<HTMLElement | null>(null)
 const logo = ref<HTMLElement | null>(null)
 
+const logoUnits = { small: 136, medium: 200, large: 337 }
+
 onMounted(() => {
   const header = document.querySelector('.core-header')
   const hide = { opacity: 0, visibility: 'hidden' }
@@ -38,38 +41,47 @@ onMounted(() => {
 
   gsap.set(header, hide)
 
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: triggerRef.value,
-      start: 'top bottom',
-      end: 'top top',
-      scrub: true,
-      // markers: true,
-      onLeave: () => {
-        gsap.set(header, show)
-        gsap.set(logo.value, hide)
-      },
+  const mm = gsap.matchMedia()
 
-      onEnterBack: () => {
-        gsap.set(header, hide)
-        gsap.set(logo.value, show)
+  mm.add({ isDesktop: `(min-width: ${screenSizes.md}px)`, isMobile: `(max-width: ${screenSizes.md - 1}px)` }, (context) => { // not sure why it has to have two arguments
+    const { isDesktop } = context.conditions as { isDesktop: boolean }
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: triggerRef.value,
+        start: 'top bottom',
+        end: 'top top',
+        scrub: true,
+        // markers: true,
+        onLeave: () => {
+          gsap.set(header, show)
+          gsap.set(logo.value, hide)
+        },
+
+        onEnterBack: () => {
+          gsap.set(header, hide)
+          gsap.set(logo.value, show)
+        },
       },
-    },
+    })
+
+    tl.fromTo(
+      logo.value,
+      {
+        scale: isDesktop ? (logoUnits.large / logoUnits.small) : (logoUnits.medium / logoUnits.small),
+      },
+      {
+        scale: 1,
+        ease: 'power1.inOut',
+      },
+    ).to(
+      logo.value,
+      {
+        scale: 1,
+        ease: 'power1.inOut',
+      },
+    )
   })
-
-  tl.to(
-    logo.value,
-    {
-      scale: 1,
-      ease: 'power1.inOut',
-    },
-  ).to(
-    logo.value,
-    {
-      scale: 1,
-      ease: 'power1.inOut',
-    },
-  )
 })
 
 onUnmounted(() => {
@@ -179,15 +191,12 @@ onUnmounted(() => {
 }
 
 .block-hero__logo {
-  --_logo-zoomed-size: 200;
-  --_logo-normal-size: 136;
-
-  scale: calc(var(--_logo-zoomed-size) / var(--_logo-normal-size));
+  scale: calc(v-bind(logoUnits.medium) / v-bind(logoUnits.small));
   backface-visibility: hidden;
   outline: 1px solid transparent;
 
   @screen md {
-    --_logo-zoomed-size: 337;
+    scale: calc(v-bind(logoUnits.large) / v-bind(logoUnits.small));
   }
 }
 
