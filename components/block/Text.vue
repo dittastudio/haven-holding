@@ -16,7 +16,7 @@ const { block } = defineProps<Props>()
   >
     <StoryblokRichText
       v-if="storyblokRichTextContent(block.text)"
-      class="block-text__richtext prose-headings:font-normal prose-headings:text-balance prose-h1:text-40 prose-h1:md:text-65 prose-h2:font-mono prose-h3:font-mono prose-h2:text-16 prose-h3:text-16 prose-p:text-fluid-lead-xs-xl prose-p:xl:text-fluid-lead-xl-3xl prose-p:text-pretty"
+      class="block-text__richtext prose-headings:font-normal prose-headings:text-balance prose-h1:text-fluid-h1-sm-3xl prose-h2:font-mono prose-h3:font-mono prose-h2:text-16 prose-h3:text-16 prose-p:text-fluid-lead-xs-xl prose-p:xl:text-fluid-lead-xl-3xl prose-p:text-pretty"
       :content="block.text"
     />
   </div>

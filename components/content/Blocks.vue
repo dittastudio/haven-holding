@@ -68,14 +68,6 @@ const checkBackgroundMatchesPrevBackground = (index: number) => {
 }
 
 .content-blocks__item--block_text:first-child {
-  --_offset: calc(var(--app-header-height) + 0.8em);
-
-  padding-block-start: 0;
-
-  & h1 {
-    padding-block-start: calc(50vh - var(--_offset));
-    padding-block-start: calc(50svh - var(--_offset));
-  }
-
+  padding-block-start: calc(var(--app-vertical-rhythm) * 0.75);
 }
 </style>

@@ -129,6 +129,15 @@ export default {
         }),
         { lineHeight: '1.3', letterSpacing: '0em' },
       ],
+      'fluid-h1-sm-3xl': [
+        clamp({
+          minPixels: 40,
+          minViewportWidthPixels: screenSizes.xs,
+          maxPixels: 65, // 35 at 1440px
+          maxViewportWidthPixels: screenSizes['3xl'],
+        }),
+        { lineHeight: '1.3', letterSpacing: '0em' },
+      ],
     },
     lineHeight: {
       none: '1',
