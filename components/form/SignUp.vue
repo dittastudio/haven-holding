@@ -164,9 +164,8 @@ const onSubmit = async () => {
       <p
         v-if="message"
         class="form-signup__fieldset__message text-16"
-      >
-        {{ message }}
-      </p>
+        v-html="message"
+      />
 
       <button
         class="form-signup__submit"
@@ -200,7 +199,7 @@ const onSubmit = async () => {
   </FormBase>
 </template>
 
-<style lang="postcss" scoped>
+<style lang="postcss">
 .form-signup {
   position: relative;
 }
@@ -270,14 +269,14 @@ const onSubmit = async () => {
   &:-webkit-autofill:hover,
   &:-webkit-autofill:focus,
   &:-webkit-autofill:active {
-      font: inherit;
+    font: inherit;
 
-      box-shadow: none;
-      caret-color: theme('colors.offblack');
+    box-shadow: none;
+    caret-color: theme('colors.offblack');
 
-      transition: background-color 5000s ease-in-out 0s;
+    transition: background-color 5000s ease-in-out 0s;
 
-      -webkit-text-fill-color: theme('colors.offblack');
+    -webkit-text-fill-color: theme('colors.offblack');
   }
 }
 
@@ -296,5 +295,14 @@ const onSubmit = async () => {
   margin-block-start: theme('spacing.16');
   margin-inline-start: theme('spacing.8');
   text-align: left;
+
+  & a {
+    text-decoration: underline;
+    transition: opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
+
+    &:hover {
+      opacity: 0.4;
+    }
+  }
 }
 </style>

@@ -99,7 +99,7 @@ export default defineEventHandler(async (event) => {
     if (errorInfo?.title === 'Member Exists') { // Hack but it works
       return {
         statusCode: error.response.status,
-        statusMessage: 'You’re already subscribed! If you didn’t get a confirmation email, check your inbox or reach out to us at info@havenhavelland.com.',
+        statusMessage: 'You’re already subscribed! If you didn’t get a confirmation email, check your inbox or reach out to us at <a href="mailto:info@havenhavelland.com">info@havenhavelland.com</a>.',
       }
     }
 
