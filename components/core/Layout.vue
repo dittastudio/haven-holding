@@ -27,9 +27,11 @@
   position: sticky;
   z-index: theme('zIndex.10');
   top: 0;
+  transform: translate3d(0,0,0);
 
   color: theme('colors.offwhite');
 
+  backface-visibility: hidden;
   mix-blend-mode: difference;
 }
 

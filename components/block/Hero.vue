@@ -52,7 +52,7 @@ onMounted(() => {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: triggerRef.value,
-        start: 'top bottom',
+        start: 'bottom bottom',
         end: 'top top',
         scrub: true,
         // markers: true,
@@ -72,10 +72,14 @@ onMounted(() => {
       },
     })
 
+    const initialScale = isDesktop
+      ? logoWidthUnits.large / logoWidthUnits.small
+      : logoWidthUnits.medium / logoWidthUnits.small
+
     tl.fromTo(
       logo.value,
       {
-        scale: isDesktop ? (logoWidthUnits.large / logoWidthUnits.small) : (logoWidthUnits.medium / logoWidthUnits.small),
+        scale: initialScale,
       },
       {
         scale: 1,
