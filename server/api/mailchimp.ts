@@ -76,13 +76,13 @@ export default defineEventHandler(async (event) => {
     if (response?.status === 'pending') {
       return {
         statusCode: 200,
-        statusMessage: 'Danke sehr! Please check your email to confirm your subscription.',
+        statusMessage: 'Thank you! Please check your email to confirm your subscription (and don’t forget to check your updates and spam folder too!)',
       }
     }
     else {
       throw createError({
         statusCode: 500,
-        statusMessage: 'An unexpected error occurred. Please try again.',
+        statusMessage: 'Oops! Something went wrong. Please try again.',
       })
     }
   }
@@ -99,13 +99,13 @@ export default defineEventHandler(async (event) => {
     if (errorInfo?.title === 'Member Exists') { // Hack but it works
       return {
         statusCode: error.response.status,
-        statusMessage: 'Looks like you’re already subscribed to our newsletter 😎. If not, check your inbox for our confirmation email or ask for help at info@havenhavelland.com.',
+        statusMessage: 'You’re already subscribed! If you didn’t get a confirmation email, check your inbox or reach out to us at info@havenhavelland.com.',
       }
     }
 
     return {
       statusCode: error.response.status,
-      statusMessage: 'Unable to subscribe you to our newsletter. Please try again.',
+      statusMessage: 'Oops! We couldn’t subscribe you to our newsletter. Please give it another try!',
     }
   }
 })
