@@ -20,10 +20,10 @@ useSeoMeta({
   robots: url.host === 'havenhavelland.com' ? 'index, follow' : 'noindex, nofollow',
 })
 
-onMounted(() => {
-  const userAgent = window.navigator.userAgent.toLowerCase()
+const { isWindows } = useDevice()
 
-  if (userAgent.includes('win')) {
+onMounted(() => {
+  if (isWindows) {
     const lenis = new Lenis({
       lerp: 0.1,
       touchMultiplier: 0, // disables for touch devices

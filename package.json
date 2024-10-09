@@ -26,6 +26,7 @@
     "@mailchimp/mailchimp_marketing": "^3.0.80",
     "@nuxt/eslint": "^0.5.7",
     "@nuxt/image": "^1.8.1",
+    "@nuxtjs/device": "^3.2.4",
     "@nuxtjs/sitemap": "^6.1.1",
     "@nuxtjs/tailwindcss": "^6.12.1",
     "@storyblok/nuxt": "^6.0.13",

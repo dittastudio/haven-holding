@@ -73,9 +73,9 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     '@nuxt/image',
     '@nuxtjs/sitemap',
-    '@nuxtjs/tailwindcss',
+    '@nuxtjs/tailwindcss', // 'nuxt-gtag',
     ['@storyblok/nuxt', { accessToken: process.env.NUXT_STORYBLOK_TOKEN }],
-    // 'nuxt-gtag',
+    '@nuxtjs/device',
   ],
 
   postcss: {
