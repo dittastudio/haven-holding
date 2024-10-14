@@ -23,12 +23,7 @@ import IconLogo from '@/assets/icons/haven-logo-final.svg'
   display: flex;
   align-items: center;
   justify-content: center;
-
   height: var(--app-header-height);
-
-  transition:
-    opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth'),
-    visibility theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
 }
 
 .core-header__link {
