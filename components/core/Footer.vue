@@ -132,13 +132,9 @@ const props = defineProps<Props>()
 <style lang="postcss">
 .core-footer__grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: theme('spacing.48') var(--app-inner-gutter);
   padding-block: theme('spacing.48') theme('spacing.40');
-
-  @screen xs {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
 
   @screen md {
     grid-template-columns: var(--app-grid);
@@ -159,14 +155,10 @@ const props = defineProps<Props>()
 }
 
 .core-footer__item--contact {
-  grid-column: span 1;
-
-  @screen xs {
-    grid-column: span 2;
-  }
+  grid-column: span 3;
 
   @screen md {
-    grid-column: span 3;
+    grid-column: span 5;
   }
 
   @screen xl {
@@ -175,14 +167,10 @@ const props = defineProps<Props>()
 }
 
 .core-footer__item--social {
-  grid-column: 2 / span 1;
-
-  @screen xs {
-    grid-column: span 1;
-  }
+  grid-column: 2 / span 3;
 
   @screen md {
-    grid-column: span 2;
+    grid-column: span 4;
   }
 
   @screen xl {
@@ -191,19 +179,19 @@ const props = defineProps<Props>()
 }
 
 .core-footer__item--info {
-  grid-column: span 2;
+  grid-column: -1 / 1;
 
   @screen xs {
     grid-column: 2 / span 3;
   }
 
   @screen md {
-    grid-column: span 5;
-    text-align: right;
+    grid-column: 3 /span 9;
   }
 
   @screen xl {
     grid-column: span 6;
+    text-align: right;
   }
 }
 
