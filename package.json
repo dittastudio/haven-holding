@@ -3,15 +3,15 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "sb:components": "storyblok pull-components --space 303510",
+    "sb:types": "npm run sb:components && storyblok generate-typescript-typedefs --sourceFilePaths ./components.303510.json --destinationFilePath ./types/storyblok.d.ts",
     "build": "nuxt build",
     "dev": "npm run sb:types && nuxt dev --host",
     "dev:ssl": "local-ssl-proxy --source 3010 --target 3000 --cert localhost.pem --key localhost-key.pem",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "nuke": "del-cli '.output' 'dist' '.nuxt' 'node_modules' 'package-lock.json'",
     "postinstall": "nuxt prepare",
-    "sb:pull-components": "storyblok pull-components --space 303510",
-    "sb:types": "npm run sb:pull-components && storyblok-generate-ts source=./components.303510.json target=./types/storyblok"
+    "nuke": "del-cli '.output' 'dist' '.nuxt' 'node_modules' 'package-lock.json'"
   },
   "dependencies": {
     "@vee-validate/zod": "^4.13.2",

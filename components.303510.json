@@ -3,6 +3,7 @@
     {
       "name": "block_hero",
       "display_name": null,
+      "description": null,
       "created_at": "2024-10-06T17:02:53.728Z",
       "updated_at": "2024-10-06T17:09:05.521Z",
       "id": 6381285,
@@ -52,11 +53,13 @@
       "internal_tags_list": [],
       "internal_tag_ids": [],
       "content_type_asset_preview": null,
+      "metadata": {},
       "component_group_name": "Blocks"
     },
     {
       "name": "block_media",
       "display_name": "Media",
+      "description": null,
       "created_at": "2024-09-11T15:18:32.933Z",
       "updated_at": "2024-09-11T21:20:47.972Z",
       "id": 6282516,
@@ -140,11 +143,13 @@
       "internal_tags_list": [],
       "internal_tag_ids": [],
       "content_type_asset_preview": null,
+      "metadata": {},
       "component_group_name": "Blocks"
     },
     {
       "name": "block_media_text",
       "display_name": "Media Text",
+      "description": null,
       "created_at": "2024-09-04T22:36:32.729Z",
       "updated_at": "2024-09-16T19:35:23.490Z",
       "id": 6254582,
@@ -219,11 +224,13 @@
       "internal_tags_list": [],
       "internal_tag_ids": [],
       "content_type_asset_preview": null,
+      "metadata": {},
       "component_group_name": "Blocks"
     },
     {
       "name": "block_newsletter",
       "display_name": "Newsletter",
+      "description": null,
       "created_at": "2024-09-05T00:36:22.346Z",
       "updated_at": "2024-09-11T16:46:40.855Z",
       "id": 6254680,
@@ -302,11 +309,13 @@
       "internal_tags_list": [],
       "internal_tag_ids": [],
       "content_type_asset_preview": null,
+      "metadata": {},
       "component_group_name": "Blocks"
     },
     {
       "name": "block_text",
       "display_name": null,
+      "description": null,
       "created_at": "2024-10-05T22:57:36.384Z",
       "updated_at": "2024-10-06T17:03:10.062Z",
       "id": 6379762,
@@ -348,11 +357,13 @@
       "internal_tags_list": [],
       "internal_tag_ids": [],
       "content_type_asset_preview": null,
+      "metadata": {},
       "component_group_name": "Blocks"
     },
     {
       "name": "link",
       "display_name": null,
+      "description": null,
       "created_at": "2024-10-07T20:44:39.607Z",
       "updated_at": "2024-10-07T20:44:39.607Z",
       "id": 6386601,
@@ -389,11 +400,13 @@
       "internal_tags_list": [],
       "internal_tag_ids": [],
       "content_type_asset_preview": null,
+      "metadata": {},
       "component_group_name": "Elements"
     },
     {
       "name": "link_list",
       "display_name": null,
+      "description": null,
       "created_at": "2024-10-07T20:44:39.806Z",
       "updated_at": "2024-10-07T20:44:39.806Z",
       "id": 6386602,
@@ -423,11 +436,13 @@
       "internal_tags_list": [],
       "internal_tag_ids": [],
       "content_type_asset_preview": null,
+      "metadata": {},
       "component_group_name": "Matrix"
     },
     {
       "name": "page",
       "display_name": null,
+      "description": null,
       "created_at": "2024-09-03T16:04:19.291Z",
       "updated_at": "2024-10-07T21:39:21.555Z",
       "id": 6247611,
@@ -489,11 +504,13 @@
       "internal_tags_list": [],
       "internal_tag_ids": [],
       "content_type_asset_preview": null,
+      "metadata": {},
       "component_group_name": "Content"
     },
     {
       "name": "seo",
       "display_name": null,
+      "description": null,
       "created_at": "2024-09-05T00:55:21.910Z",
       "updated_at": "2024-10-02T00:41:59.114Z",
       "id": 6254682,
@@ -531,11 +548,13 @@
       "internal_tags_list": [],
       "internal_tag_ids": [],
       "content_type_asset_preview": null,
+      "metadata": {},
       "component_group_name": "Elements"
     },
     {
       "name": "settings",
       "display_name": null,
+      "description": null,
       "created_at": "2024-09-05T00:59:05.996Z",
       "updated_at": "2024-10-08T00:53:56.647Z",
       "id": 6254683,
@@ -586,11 +605,13 @@
       "internal_tags_list": [],
       "internal_tag_ids": [],
       "content_type_asset_preview": null,
+      "metadata": {},
       "component_group_name": "Content"
     },
     {
       "name": "social_item",
       "display_name": "Item",
+      "description": null,
       "created_at": "2024-09-05T01:02:12.455Z",
       "updated_at": "2024-09-16T21:34:31.352Z",
       "id": 6254685,
@@ -620,6 +641,7 @@
       "internal_tags_list": [],
       "internal_tag_ids": [],
       "content_type_asset_preview": null,
+      "metadata": {},
       "component_group_name": "Elements"
     }
   ],
