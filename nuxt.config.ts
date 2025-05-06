@@ -9,9 +9,7 @@ export default defineNuxtConfig({
     ['@storyblok/nuxt', { accessToken: process.env.NUXT_STORYBLOK_TOKEN }],
     '@nuxtjs/device',
   ],
-
-  ssr: true,
-
+  ssr: process.env.NUXT_STORYBLOK_VERSION === 'published',
   devtools: { enabled: true },
   app: {
     head: {
@@ -54,11 +52,9 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
     layoutTransition: false,
   },
-
   site: {
     url: 'https://www.havenhavelland.com',
   },
-
   runtimeConfig: {
     MAILCHIMP_API_KEY: process.env.NUXT_MAILCHIMP_API_KEY,
     MAILCHIMP_LIST_ID: process.env.NUXT_MAILCHIMP_LIST_ID,
@@ -68,13 +64,10 @@ export default defineNuxtConfig({
       STORYBLOK_VERSION: process.env.NUXT_STORYBLOK_VERSION,
     },
   },
-
   build: {
     transpile: ['gsap'],
   },
-
   compatibilityDate: '2024-04-03',
-
   vite: {
     resolve: {
       dedupe: ['vue'],
@@ -91,11 +84,9 @@ export default defineNuxtConfig({
       },
     },
   },
-
   typescript: {
     strict: true,
   },
-
   postcss: {
     plugins: {
       'postcss-import': {},
@@ -104,19 +95,16 @@ export default defineNuxtConfig({
       'autoprefixer': {},
     },
   },
-
   eslint: {
     config: {
       standalone: false,
       stylistic: true,
     },
   },
-
   // gtag: {
   //   enabled: process.env.NODE_ENV === 'production',
   //   id: 'G-4LBQFXWPY6',
   // },
-
   image: {
     provider: 'storyblok',
     storyblok: {
@@ -134,11 +122,9 @@ export default defineNuxtConfig({
       '3xl': 1920,
     },
   },
-
   sitemap: {
     sources: ['/api/sitemap'],
   },
-
   tailwindcss: {
     cssPath: '@/assets/css/app.css',
   },
