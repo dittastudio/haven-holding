@@ -5,7 +5,7 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     '@nuxt/image',
     '@nuxtjs/sitemap',
-    '@nuxtjs/tailwindcss', // 'nuxt-gtag',
+    '@nuxtjs/tailwindcss',
     ['@storyblok/nuxt', { accessToken: process.env.NUXT_STORYBLOK_TOKEN }],
     '@nuxtjs/device',
   ],
@@ -101,10 +101,6 @@ export default defineNuxtConfig({
       stylistic: true,
     },
   },
-  // gtag: {
-  //   enabled: process.env.NODE_ENV === 'production',
-  //   id: 'G-4LBQFXWPY6',
-  // },
   image: {
     provider: 'storyblok',
     storyblok: {
