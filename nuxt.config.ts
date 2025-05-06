@@ -1,6 +1,18 @@
 import svgLoader from 'vite-svg-loader'
 
 export default defineNuxtConfig({
+  modules: [
+    '@nuxt/eslint',
+    '@nuxt/image',
+    '@nuxtjs/sitemap',
+    '@nuxtjs/tailwindcss', // 'nuxt-gtag',
+    ['@storyblok/nuxt', { accessToken: process.env.NUXT_STORYBLOK_TOKEN }],
+    '@nuxtjs/device',
+  ],
+
+  ssr: true,
+
+  devtools: { enabled: true },
   app: {
     head: {
       htmlAttrs: {
@@ -23,12 +35,38 @@ export default defineNuxtConfig({
         { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
         { rel: 'preconnect', href: 'https://a.storyblok.com' },
         { rel: 'manifest', href: '/site.webmanifest' },
-        { rel: 'preload', type: 'font/woff2', href: '/fonts/Moderat-Book.woff2', as: 'font', crossorigin: '' },
-        { rel: 'preload', type: 'font/woff2', href: '/fonts/Moderat-Mono-Book.woff2', as: 'font', crossorigin: '' },
+        {
+          rel: 'preload',
+          type: 'font/woff2',
+          href: '/fonts/Moderat-Book.woff2',
+          as: 'font',
+          crossorigin: '',
+        },
+        {
+          rel: 'preload',
+          type: 'font/woff2',
+          href: '/fonts/Moderat-Mono-Book.woff2',
+          as: 'font',
+          crossorigin: '',
+        },
       ],
     },
     pageTransition: { name: 'page', mode: 'out-in' },
     layoutTransition: false,
+  },
+
+  site: {
+    url: 'https://www.havenhavelland.com',
+  },
+
+  runtimeConfig: {
+    MAILCHIMP_API_KEY: process.env.NUXT_MAILCHIMP_API_KEY,
+    MAILCHIMP_LIST_ID: process.env.NUXT_MAILCHIMP_LIST_ID,
+    MAILCHIMP_SERVER: process.env.NUXT_MAILCHIMP_SERVER,
+    public: {
+      STORYBLOK_TOKEN: process.env.NUXT_STORYBLOK_TOKEN,
+      STORYBLOK_VERSION: process.env.NUXT_STORYBLOK_VERSION,
+    },
   },
 
   build: {
@@ -37,7 +75,35 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2024-04-03',
 
-  devtools: { enabled: true },
+  vite: {
+    resolve: {
+      dedupe: ['vue'],
+    },
+    plugins: [
+      svgLoader({
+        svgo: false,
+      }),
+    ],
+    vue: {
+      script: {
+        defineModel: true,
+        // propsDestructure: true,
+      },
+    },
+  },
+
+  typescript: {
+    strict: true,
+  },
+
+  postcss: {
+    plugins: {
+      'postcss-import': {},
+      'tailwindcss/nesting': {},
+      'tailwindcss': {},
+      'autoprefixer': {},
+    },
+  },
 
   eslint: {
     config: {
@@ -69,68 +135,11 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: [
-    '@nuxt/eslint',
-    '@nuxt/image',
-    '@nuxtjs/sitemap',
-    '@nuxtjs/tailwindcss', // 'nuxt-gtag',
-    ['@storyblok/nuxt', { accessToken: process.env.NUXT_STORYBLOK_TOKEN }],
-    '@nuxtjs/device',
-  ],
-
-  postcss: {
-    plugins: {
-      'postcss-import': {},
-      'tailwindcss/nesting': {},
-      'tailwindcss': {},
-      'autoprefixer': {},
-    },
-  },
-
-  runtimeConfig: {
-    MAILCHIMP_API_KEY: process.env.NUXT_MAILCHIMP_API_KEY,
-    MAILCHIMP_LIST_ID: process.env.NUXT_MAILCHIMP_LIST_ID,
-    MAILCHIMP_SERVER: process.env.NUXT_MAILCHIMP_SERVER,
-    public: {
-      STORYBLOK_TOKEN: process.env.NUXT_STORYBLOK_TOKEN,
-      STORYBLOK_VERSION: process.env.NUXT_STORYBLOK_VERSION,
-    },
-  },
-
-  site: {
-    url: 'https://www.havenhavelland.com',
-  },
-
   sitemap: {
     sources: ['/api/sitemap'],
   },
 
-  ssr: true,
-
   tailwindcss: {
     cssPath: '@/assets/css/app.css',
-  },
-
-  typescript: {
-    strict: true,
-  },
-
-  vite: {
-    resolve: {
-      dedupe: [
-        'vue',
-      ],
-    },
-    plugins: [
-      svgLoader({
-        svgo: false,
-      }),
-    ],
-    vue: {
-      script: {
-        defineModel: true,
-        // propsDestructure: true,
-      },
-    },
   },
 })
