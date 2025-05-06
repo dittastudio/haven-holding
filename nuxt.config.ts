@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     ['@storyblok/nuxt', { accessToken: process.env.NUXT_STORYBLOK_TOKEN }],
     '@nuxtjs/device',
   ],
-  ssr: process.env.NUXT_STORYBLOK_VERSION === 'published',
+  ssr: true,
   devtools: { enabled: true },
   app: {
     head: {
