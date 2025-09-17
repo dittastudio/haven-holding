@@ -21,13 +21,15 @@ const props = defineProps<Props>()
   </span>
 </template>
 
-<style lang="postcss">
+<style>
+@reference "@/assets/css/main.css";
+
 .ui-button {
   --button-padding-y: 0.8575em;
   --button-padding-x: 2.45em;
-  --button-color: theme('colors.white');
-  --button-hover-color: theme('colors.offblack');
-  --button-hover-tint: theme('colors.black/10%');
+  --button-color: var(--color-white);
+  --button-hover-color: var(--color-offblack);
+  --button-hover-tint: --alpha(var(--color-black) / 10%);
   --button-duration: 0.2s;
 
   isolation: isolate;
@@ -44,9 +46,9 @@ const props = defineProps<Props>()
   border: 1px solid var(--button-color);
 
   transition:
-    background-color var(--button-duration) theme('transitionTimingFunction.smooth'),
-    border-color var(--button-duration) theme('transitionTimingFunction.smooth'),
-    color var(--button-duration) theme('transitionTimingFunction.smooth');
+    background-color var(--button-duration) var(--ease-smooth),
+    border-color var(--button-duration) var(--ease-smooth),
+    color var(--button-duration) var(--ease-smooth);
 
   &::after {
     content: '';
@@ -59,27 +61,27 @@ const props = defineProps<Props>()
     background-color: var(--button-hover-tint);
     border-radius: inherit;
 
-    transition: opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
+    transition: opacity var(--button-duration) var(--ease-smooth);
   }
 
   &--type-rounded {
-    border-radius: theme('borderRadius.full');
+    border-radius: var(--radius-full);
   }
 
   &--type-squared {
-    border-radius: theme('borderRadius.sm');
+    border-radius: var(--radius-md);
   }
 
   &--theme-white {
-    --button-color: theme('colors.white');
-    --button-hover-color: theme('colors.offblack');
-    --button-hover-tint: theme('colors.black/10%');
+    --button-color: var(--color-white);
+    --button-hover-color: var(--color-offblack);
+    --button-hover-tint: --alpha(var(--color-black) / 10%);
   }
 
   &--theme-black {
-    --button-color: theme('colors.offblack');
-    --button-hover-color: theme('colors.offwhite');
-    --button-hover-tint: theme('colors.white/10%');
+    --button-color: var(--color-offblack);
+    --button-hover-color: var(--color-offwhite);
+    --button-hover-tint: --alpha(var(--color-white) / 10%);
   }
 
   a:active &::after,

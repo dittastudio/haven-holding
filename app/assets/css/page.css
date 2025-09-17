@@ -1,25 +1,25 @@
 @layer theme {
   html {
-    color: theme('colors.black');
-    background-color: theme('colors.offwhite');
+    color: var(--color-black);
+    background-color: var(--color-offwhite);
   }
 
   body {
-    font-family: theme('fontFamily.sans');
-    font-size: theme('fontSize.16');
+    font-family: var(--font-sans);
+    font-size: var(--text-16);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    line-height: theme('lineHeight.normal');
+    line-height: var(--leading-normal);
   }
 
   ::selection {
-    color: theme('colors.offwhite');
-    background-color: theme('colors.offblack');
+    color: var(--color-offwhite);
+    background-color: var(--color-offblack);
   }
 
   .wrapper {
     width: 100%;
-    max-width: theme('screens.3xl');
+    max-width: var(--breakpoint-3xl);
     margin-inline: auto;
     padding-inline: var(--app-outer-gutter);
   }
@@ -84,7 +84,7 @@ html.lenis, html.lenis body {
 
 .page-enter-active,
 .page-leave-active {
-  transition: opacity theme('transitionDuration.500') theme('transitionTimingFunction.smooth');
+  transition: opacity 0.5s var(--ease-smooth);
 }
 
 .page-enter-from,

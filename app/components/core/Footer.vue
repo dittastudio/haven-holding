@@ -133,12 +133,12 @@ const props = defineProps<Props>()
 .core-footer__grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: theme('spacing.48') var(--app-inner-gutter);
-  padding-block: theme('spacing.48') theme('spacing.40');
+  gap: --spacing(12) var(--app-inner-gutter);
+  padding-block: --spacing(12) --spacing(10);
 
   @screen md {
     grid-template-columns: var(--app-grid);
-    padding-block-end: theme('spacing.80');
+    padding-block-end: --spacing(20);
   }
 }
 
@@ -208,7 +208,7 @@ const props = defineProps<Props>()
 }
 
 .core-footer__title {
-  margin-block-end: theme('spacing.8');
+  margin-block-end: --spacing(2);
 }
 
 .core-footer__list {
@@ -224,7 +224,7 @@ const props = defineProps<Props>()
 }
 
 .core-footer__info {
-  --credit-padding: theme('spacing.12');
+  --credit-padding: --spacing(3);
 
   overflow: hidden;
 }
@@ -249,7 +249,7 @@ const props = defineProps<Props>()
 
 a.core-footer__link {
   display: inline-block;
-  transition: opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
+  transition: opacity 0.2s var(--ease-smooth);
 
   &:hover {
     opacity: 0.4;

@@ -132,7 +132,7 @@ const imgAttrs = computed(() => ({
     backface-visibility: hidden;
     opacity: 0;
 
-    transition: opacity var(--transition-duration) theme('transitionTimingFunction.out');
+    transition: opacity var(--transition-duration) var(--ease-out);
   }
 
   &.is-loaded {
@@ -150,7 +150,7 @@ const imgAttrs = computed(() => ({
   opacity: 1;
   filter: blur(8px);
 
-  transition: opacity calc(var(--transition-duration) * 2) theme('transitionTimingFunction.out') calc(var(--transition-duration) / 2);
+  transition: opacity calc(var(--transition-duration) * 2) var(--ease-out) calc(var(--transition-duration) / 2);
 
   .media-image__asset.is-loaded + & {
     opacity: 0;

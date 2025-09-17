@@ -51,8 +51,8 @@ const animateMe = (event: any) => {
 }
 
 .ui-attractor {
-  --padding-x: theme('spacing.4');
-  --padding-y: theme('spacing.16');
+  --padding-x: --spacing(1);
+  --padding-y: --spacing(4);
 
   pointer-events: none;
   display: block;
@@ -67,10 +67,10 @@ const animateMe = (event: any) => {
   margin: calc(-1 * var(--padding-y)) calc(-1 * var(--padding-x));
   padding: var(--padding-y) var(--padding-x);
 
-  animation: exit theme('transitionDuration.300') theme('transitionTimingFunction.outBack') forwards;
+  animation: exit 0.3s var(--ease-outBack) forwards;
 
   .ui-attractor:hover & {
-    animation: enter theme('transitionDuration.300') theme('transitionTimingFunction.outBack') forwards;
+    animation: enter 0.3s var(--ease-outBack) forwards;
   }
 }
 </style>

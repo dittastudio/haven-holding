@@ -25,11 +25,11 @@
   pointer-events: none;
 
   position: sticky;
-  z-index: theme('zIndex.10');
+  z-index: 10;
   top: 0;
   transform: translate3d(0,0,0);
 
-  color: theme('colors.offwhite');
+  color: var(--color-offwhite);
 
   backface-visibility: hidden;
   mix-blend-mode: difference;

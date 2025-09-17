@@ -45,7 +45,7 @@ onMounted(async () => {
   pointer-events: none;
 
   position: fixed;
-  z-index: theme('zIndex.20');
+  z-index: 20;
   inset: 0;
 
   height: 100vh;
@@ -53,7 +53,7 @@ onMounted(async () => {
 
   opacity: 0;
 
-  transition: opacity theme('transitionDuration.1000') theme('transitionTimingFunction.smooth');
+  transition: opacity 1s var(--ease-smooth);
 
   &.is-active {
     pointer-events: auto;
@@ -67,7 +67,7 @@ onMounted(async () => {
 
 .core-cover__logo {
   opacity: 0;
-  transition: opacity theme('transitionDuration.500') theme('transitionTimingFunction.smooth');
+  transition: opacity 0.5s var(--ease-smooth);
 
   &.is-active {
     opacity: 1;

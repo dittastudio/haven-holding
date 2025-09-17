@@ -52,9 +52,11 @@ const columnSpan = computed(() => Number(props.block.column_end) - Number(props.
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
+@reference "@/assets/css/main.css";
+
 .block-media {
-  @screen md {
+  @variant md {
     display: grid;
     grid-template-columns: var(--app-grid);
     gap: var(--app-inner-gutter);
@@ -63,7 +65,7 @@ const columnSpan = computed(() => Number(props.block.column_end) - Number(props.
 
 @keyframes caption-scroll-effect {
   0% {
-    translate: calc(-1 * theme('spacing.12')) 0 0;
+    translate: calc(-1 * --spacing(3)) 0 0;
     opacity: 0;
   }
 }
@@ -71,11 +73,11 @@ const columnSpan = computed(() => Number(props.block.column_end) - Number(props.
 .block-media__caption {
   position: relative;
 
-  margin-block-start: theme('spacing.12');
+  margin-block-start: --spacing(3);
   padding-inline-start: 1em;
 
   animation-name: caption-scroll-effect;
-  animation-timing-function: theme('transitionTimingFunction.smooth');
+  animation-timing-function: var(--ease-smooth);
   animation-fill-mode: both;
   animation-timeline: --caption-timeline;
   view-timeline-name: --caption-timeline;

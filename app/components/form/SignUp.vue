@@ -206,7 +206,7 @@ const onSubmit = async () => {
 .form-signup__fieldset {
   display: flex;
   flex-direction: column;
-  row-gap: theme('spacing.4');
+  row-gap: --spacing(1);
   align-items: flex-start;
 }
 
@@ -231,7 +231,7 @@ const onSubmit = async () => {
     opacity: 0.3;
     border-block-end: 1px solid currentcolor;
 
-    transition: opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
+    transition: opacity 0.2s var(--ease-smooth);
   }
 
   &:has(input:focus-within) {
@@ -253,7 +253,7 @@ const onSubmit = async () => {
   &::placeholder {
     color: currentcolor;
     opacity: 1;
-    transition: opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
+    transition: opacity 0.2s var(--ease-smooth);
   }
 
   &:hover::placeholder {
@@ -271,17 +271,17 @@ const onSubmit = async () => {
     font: inherit;
 
     box-shadow: none;
-    caret-color: theme('colors.offblack');
+    caret-color: var(--color-offblack);
 
     transition: background-color 5000s ease-in-out 0s;
 
-    -webkit-text-fill-color: theme('colors.offblack');
+    -webkit-text-fill-color: var(--color-offblack);
   }
 }
 
 .form-signup__error {
-  margin-block: theme('spacing.8');
-  margin-inline-start: theme('spacing.8');
+  margin-block: --spacing(2);
+  margin-inline-start: --spacing(2);
   text-align: left;
   opacity: 0.75;
 }
@@ -291,13 +291,13 @@ const onSubmit = async () => {
 }
 
 .form-signup__fieldset__message {
-  margin-block-start: theme('spacing.16');
-  margin-inline-start: theme('spacing.8');
+  margin-block-start: --spacing(4);
+  margin-inline-start: --spacing(2);
   text-align: left;
 
   & a {
     text-decoration: underline;
-    transition: opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
+    transition: opacity 0.2s var(--ease-smooth);
 
     &:hover {
       opacity: 0.4;

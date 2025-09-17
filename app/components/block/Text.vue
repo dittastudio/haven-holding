@@ -50,7 +50,7 @@ const { block } = defineProps<Props>()
 
   p a {
     text-decoration: underline;
-    transition: opacity theme('transitionDuration.200') theme('transitionTimingFunction.smooth');
+    transition: opacity 0.2s var(--ease-smooth);
 
     &:hover {
       opacity: 0.4;

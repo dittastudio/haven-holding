@@ -160,7 +160,9 @@ onUnmounted(() => {
   />
 </template>
 
-<style lang="postcss">
+<style scoped>
+@reference "@/assets/css/main.css";
+
 .block-hero {
   position: sticky;
   z-index: -1;
@@ -180,7 +182,6 @@ onUnmounted(() => {
   right: 0;
   left: 0;
 
-  height: calc((100vh + 50vh) + (var(--app-header-height) / 2));
   height: calc((100svh + 50svh) + (var(--app-header-height) / 2));
 }
 
@@ -208,7 +209,7 @@ onUnmounted(() => {
   backface-visibility: hidden;
   outline: 1px solid transparent;
 
-  @screen md {
+  @variant md {
     scale: calc(v-bind(logoWidthUnits.large) / v-bind(logoWidthUnits.small));
   }
 }

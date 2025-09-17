@@ -88,7 +88,7 @@ onMounted(async () => {
   --page-delay: 1.5s;
 
   font-size: clamp(7.5rem, 5.3571rem + 10.7143vw, 15rem);
-  color: theme('colors.offblack');
+  color: var(--color-offblack);
 }
 
 @keyframes rotate-logo {
