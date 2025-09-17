@@ -15,7 +15,7 @@ const props = defineProps<Props>()
 
 <template>
   <div class="core-footer bg-white">
-    <div class="core-footer__grid wrapper text-14 font-mono">
+    <div class="core-footer__grid wrapper text-14 font-mono leading-1.4">
       <div class="core-footer__item core-footer__item--logo">
         <NuxtLink
           to="/"
@@ -129,14 +129,16 @@ const props = defineProps<Props>()
   </div>
 </template>
 
-<style lang="postcss">
+<style scoped>
+@reference "@/assets/css/main.css";
+
 .core-footer__grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: --spacing(12) var(--app-inner-gutter);
   padding-block: --spacing(12) --spacing(10);
 
-  @screen md {
+  @variant md {
     grid-template-columns: var(--app-grid);
     padding-block-end: --spacing(20);
   }
@@ -145,11 +147,11 @@ const props = defineProps<Props>()
 .core-footer__item--logo {
   grid-column: span 1;
 
-  @screen md {
+  @variant md {
     grid-column: span 2;
   }
 
-  @screen xl {
+  @variant xl {
     grid-column: span 2;
   }
 }
@@ -157,11 +159,11 @@ const props = defineProps<Props>()
 .core-footer__item--contact {
   grid-column: span 3;
 
-  @screen md {
+  @variant md {
     grid-column: span 5;
   }
 
-  @screen xl {
+  @variant xl {
     grid-column: span 2;
   }
 }
@@ -169,11 +171,11 @@ const props = defineProps<Props>()
 .core-footer__item--social {
   grid-column: 2 / span 3;
 
-  @screen md {
+  @variant md {
     grid-column: span 4;
   }
 
-  @screen xl {
+  @variant xl {
     grid-column: span 2;
   }
 }
@@ -181,15 +183,15 @@ const props = defineProps<Props>()
 .core-footer__item--info {
   grid-column: -1 / 1;
 
-  @screen xs {
+  @variant xs {
     grid-column: 2 / span 3;
   }
 
-  @screen md {
+  @variant md {
     grid-column: 3 /span 9;
   }
 
-  @screen xl {
+  @variant xl {
     grid-column: span 6;
     text-align: right;
   }
@@ -201,7 +203,7 @@ const props = defineProps<Props>()
   width: 48px;
   height: 82px;
 
-  @screen md {
+  @variant md {
     width: 37px;
     height: 63px;
   }

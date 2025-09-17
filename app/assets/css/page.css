@@ -6,10 +6,8 @@
 
   body {
     font-family: var(--font-sans);
-    font-size: var(--text-16);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    line-height: var(--leading-normal);
   }
 
   ::selection {

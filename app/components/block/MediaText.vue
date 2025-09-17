@@ -15,7 +15,7 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
     v-editable="props.block"
     class="block-media-text wrapper"
   >
-    <p class="block-media-text__title text-16 font-mono">
+    <p class="block-media-text__title text-16 font-mono leading-1.4">
       {{ props.block.title }}
     </p>
 
@@ -41,21 +41,24 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
         />
       </div>
 
-      <StoryblokText
-        v-if="storyblokRichTextContent(props.block.text)"
-        :content="props.block.text"
-        class="block-media-text__richtext prose-p:text-fluid-lead-xs-xl prose-p:xl:text-fluid-lead-xl-3xl"
-      />
+      <div class="block-media-text__richtext [&_p]:text-fluid-lead-xs-xl [&_p]:xl:text-fluid-lead-xl-3xl [&_p]:text-pretty [&_p]:leading-1.4">
+        <StoryblokText
+          v-if="storyblokRichTextContent(props.block.text)"
+          :content="props.block.text"
+        />
+      </div>
     </div>
   </div>
 </template>
 
-<style lang="postcss">
+<style scoped>
+@reference "@/assets/css/main.css";
+
 .block-media-text__title {
   margin-block-end: calc(var(--app-vertical-rhythm) / 1.25);
   text-align: center;
 
-  @screen md {
+  @variant md {
     margin-block-end: calc(var(--app-vertical-rhythm) / 1.5);
   }
 }
@@ -65,22 +68,22 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
   flex-direction: column;
   gap: var(--app-vertical-rhythm) var(--app-inner-gutter);
 
-  @screen md {
+  @variant md {
     display: grid;
     grid-template-columns: var(--app-grid);
   }
 }
 
 .block-media-text__media {
-  @screen md {
+  @variant md {
     grid-column: 3 / span 8;
   }
 
-  @screen xl {
+  @variant xl {
     grid-column: 4 / span 6;
   }
 
-  @screen mdMax {
+  @variant max-md {
     padding-inline: var(--app-outer-gutter);
   }
 }
@@ -88,7 +91,7 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
 .block-media-text__richtext {
   grid-column: 1 / -1;
 
-  & p + p {
+  & :deep(p + p) {
     margin-block-start: 1em;
   }
 }

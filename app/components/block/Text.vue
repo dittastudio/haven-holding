@@ -15,40 +15,61 @@ const { block } = defineProps<Props>()
   >
     <StoryblokText
       v-if="storyblokRichTextContent(block.text)"
-      class="block-text__richtext prose-headings:font-normal prose-headings:text-balance prose-h1:text-fluid-h1-sm-3xl prose-h2:font-mono prose-h3:font-mono prose-h2:text-16 prose-h3:text-16 prose-p:text-fluid-lead-xs-xl prose-p:xl:text-fluid-lead-xl-3xl prose-p:text-pretty"
       :content="block.text"
     />
   </div>
 </template>
 
-<style lang="postcss">
-.block-text__richtext {
+<style>
+@reference "@/assets/css/main.css";
+
+.block-text {
   & p + p {
     margin-block-start: 0.5em;
   }
 
-  h1 {
+  & :is(h1, h2, h3, h4, h5, h6) {
+    font-weight: normal;
+    text-wrap: balance;
+  }
+
+  & h1 {
+    font-size: var(--text-fluid-h1-sm-3xl);
+    line-height: var(--leading-1\.3);
     margin-block-end: var(--app-vertical-rhythm);
     text-align: center;
   }
 
-  h2, h3 {
+  & :is(h2, h3) {
+    font-family: var(--font-mono);
+    font-size: var(--text-16);
+    line-height: var(--leading-1\.4);
     margin-block-end: calc(var(--app-vertical-rhythm) * 0.5);
     padding-inline: var(--app-outer-gutter);
     text-align: center;
   }
 
-  p + h2,
-  p + h3 {
+  & p {
+    font-size: var(--text-fluid-lead-xs-xl);
+    line-height: var(--leading-1\.3);
+    text-wrap: pretty;
+
+    @variant md {
+      font-size: var(--text-fluid-lead-xl-3xl);
+    }
+  }
+
+  & p + h2,
+  & p + h3 {
     margin-block-start: calc(var(--app-vertical-rhythm) * 1.25);
   }
 
-  hr {
+  & hr {
     margin-block: calc(var(--app-vertical-rhythm) * 0.5);
     opacity: 0.2;
   }
 
-  p a {
+  & p a {
     text-decoration: underline;
     transition: opacity 0.2s var(--ease-smooth);
 

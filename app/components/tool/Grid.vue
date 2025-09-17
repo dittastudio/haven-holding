@@ -7,12 +7,12 @@ const toggleGrid = () => {
 </script>
 
 <template>
-  <div class="screensize bottom-20 left-20 text-14 text-white backdrop-blur-sm ease-smooth bg-black/20 fixed z-50 pt-[7px] pb-[9px] px-8 font-mono transition-all duration-200 rounded-md shadow-lg" />
+  <div class="screensize bottom-5 left-5 text-14 text-white backdrop-blur-sm ease-smooth bg-black/20 fixed z-50 pt-[7px] pb-[9px] px-2 font-mono transition-all duration-200 rounded-md shadow-lg" />
 
   <button
     data-grid-toggle
     type="button"
-    class="fixed z-50 bottom-20 right-20 font-[monospace] text-14 text-white p-8 shadow-lg backdrop-blur-sm rounded-md transition-all duration-200 ease-smooth"
+    class="fixed z-50 bottom-5 right-5 font-[monospace] text-14 text-white p-2 shadow-lg backdrop-blur-sm rounded-md transition-all duration-200 ease-smooth"
     :class="[
       { 'bg-black/20 hover:bg-black/60 active:shadow-sm': !isOpen },
       { 'bg-black/60 active:shadow-sm': isOpen },
@@ -29,14 +29,14 @@ const toggleGrid = () => {
     ]"
     class="wrapper ease-smooth fixed top-0 left-0 right-0 z-40 w-full h-full transition-opacity duration-200 pointer-events-none"
   >
-    <div class="grid gap-x-[var(--app-inner-gutter)] grid-cols-2 sm:grid-cols-4 md:grid-cols-12 h-screen">
+    <div class="grid gap-x-(--app-inner-gutter) grid-cols-2 sm:grid-cols-4 md:grid-cols-12 h-screen">
       <div
         v-for="i in 12"
         :key="i"
         class="flex items-end justify-center bg-[blue]/10"
-        :class="[{ 'smMax:hidden': i > 2, 'mdMax:hidden': i > 4 }]"
+        :class="[{ 'max-sm:hidden': i > 2, 'max-md:hidden': i > 4 }]"
       >
-        <span class="text-white font-[monospace] opacity-50 text-32 pb-20">{{ i }}</span>
+        <span class="text-white font-[monospace] opacity-50 text-32 pb-5">{{ i }}</span>
       </div>
     </div>
   </div>

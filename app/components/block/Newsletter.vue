@@ -15,7 +15,7 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
     v-editable="props.block"
     class="block-newsletter wrapper"
   >
-    <p class="block-newsletter__title text-16 font-mono">
+    <p class="block-newsletter__title text-16 font-mono leading-1.4">
       {{ props.block.title }}
     </p>
 
@@ -40,12 +40,13 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
         />
       </div>
 
-      <div class="block-newsletter__text">
-        <StoryblokText
-          v-if="storyblokRichTextContent(props.block.text)"
-          :content="props.block.text"
-          class="prose-p:text-20 prose-p:text-pretty"
-        />
+      <div class="block-newsletter__text [&_p]:text-20 [&_p]:text-pretty [&_p]:leading-1.3">
+        <div>
+          <StoryblokText
+            v-if="storyblokRichTextContent(props.block.text)"
+            :content="props.block.text"
+          />
+        </div>
 
         <div>
           <FormSignUp />
@@ -55,12 +56,14 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
   </div>
 </template>
 
-<style lang="postcss">
+<style scoped>
+@reference "@/assets/css/main.css";
+
 .block-newsletter__title {
   margin-block-end: calc(var(--app-vertical-rhythm) / 1.25);
   text-align: center;
 
-  @screen md {
+  @variant md {
     margin-block-end: calc(var(--app-vertical-rhythm) / 1.5);
   }
 }
@@ -75,12 +78,12 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
 .block-newsletter__media {
   grid-column: span 12;
 
-  @screen md {
+  @variant md {
     grid-column: 2 / span 5;
     margin-inline-end: calc(var(--app-inner-gutter) / -2);
   }
 
-  @screen mdMax {
+  @variant max-md {
     padding-inline: var(--app-outer-gutter);
   }
 }
@@ -91,12 +94,12 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
   flex-direction: column;
   gap: calc(var(--app-vertical-rhythm) / 2);
 
-  @screen md {
+  @variant md {
     grid-column: 7 / span 5;
     padding-inline-start: var(--app-inner-gutter);
   }
 
-  @screen lg {
+  @variant lg {
     grid-column: 8 / span 4;
     padding-inline-start: 0;
   }
