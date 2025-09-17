@@ -1,0 +1,107 @@
+
+@import './resets.css';
+@import './fonts.css';
+@import './page.css';
+@import "tailwindcss";
+
+@theme {
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-offwhite: #e6e3e1;
+  --color-offblack: #1c1c1c;
+  --color-lavender: #9f9bcc;
+  --color-poppy: #fc3232;
+  --color-sage: #7a8c52;
+  --color-river: #7ba6a1;
+  --color-sky: #97c8e8;
+  --color-wheat: #cea683;
+
+  --breakpoint-xs: 375px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-2xl: 1440px;
+  --breakpoint-3xl: 1920px;
+
+  --font-sans: 'Moderat', sans-serif;
+  --font-mono: 'Moderat Mono', monospace;
+
+  --text-12: 0.75rem;
+  --text-14: 0.875rem;
+  --text-15: 0.9375rem;
+  --text-16: 1rem;
+  --text-18: 1.125rem;
+  --text-20: 1.25rem;
+  --text-24: 1.5rem;
+  --text-34: 2.125rem;
+  --text-40: 2.5rem;
+  --text-50: 3.125rem;
+  --text-65: 4.0625rem;
+  --text-fluid-lead-xs-xl: clamp(1.25rem, 0.8979rem + 1.5023vw, 2.25rem); /* 20px - 35px */
+  --text-fluid-lead-xl-3xl: clamp(2.25rem, 1.7477rem + 2.2523vw, 3.75rem); /* 35px - 50px */
+  --text-fluid-h1-sm-3xl: clamp(2.5rem, 1.9444rem + 2.5vw, 4.5rem); /* 40px - 65px */
+
+  --leading-none: 1;
+  --leading-snug: 1.1;
+  --leading-relaxed: 1.3;
+  --leading-normal: 1.5;
+
+  --tracking-tighter: -0.02em;
+  --tracking-tight: -0.01em;
+  --tracking-normal: 0;
+
+  --ease-smooth: cubic-bezier(0.4, 0.0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0.0, 1, 1);
+  --ease-out: cubic-bezier(0.0, 0.0, 0.2, 1);
+  --ease-natural: cubic-bezier(0.4, 0.0, 0.2, 1);
+  --ease-inCubic: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  --ease-outCubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --ease-inOutCubic: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --ease-inCirc: cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  --ease-outCirc: cubic-bezier(0.075, 0.82, 0.165, 1);
+  --ease-inOutCirc: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  --ease-inExpo: cubic-bezier(0.95, 0.05, 0.795, 0.035);
+  --ease-outExpo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-inOutExpo: cubic-bezier(1, 0, 0, 1);
+  --ease-inQuad: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  --ease-outQuad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-inOutQuad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  --ease-inQuart: cubic-bezier(0.895, 0.03, 0.685, 0.22);
+  --ease-outQuart: cubic-bezier(0.165, 0.84, 0.44, 1);
+  --ease-inOutQuart: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-inQuint: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+  --ease-outQuint: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-inOutQuint: cubic-bezier(0.86, 0, 0.07, 1);
+  --ease-inSine: cubic-bezier(0.47, 0, 0.745, 0.715);
+  --ease-outSine: cubic-bezier(0.39, 0.575, 0.565, 1);
+  --ease-inOutSine: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  --ease-inBack: cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  --ease-outBack: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-inOutBack: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* --radius-sm: 6px; */
+}
+
+@layer theme {
+  :root {
+    --app-grid: repeat(2, minmax(0, 1fr));
+    --app-inner-gutter: --spacing(4);
+    --app-outer-gutter: clamp(24px, 18.3662px + 1.5023vw, 40px);
+    --app-header-height: 80px;
+    --app-vertical-rhythm: clamp(80px, 51.831px + 7.5117vw, 160px);
+
+    @variant sm {
+      --app-grid: repeat(4, minmax(0, 1fr));
+    }
+
+    @variant md {
+      --app-grid: repeat(12, minmax(0, 1fr));
+      --app-inner-gutter: --spacing(8);
+      --app-header-height: 120px;
+    }
+
+    /* Force CSS variables for breakpoints */
+    --force-breakpoints: var(--breakpoint-xs) var(--breakpoint-sm) var(--breakpoint-md) var(--breakpoint-lg) var(--breakpoint-xl) var(--breakpoint-2xl) var(--breakpoint-3xl);
+  }
+}

@@ -1,0 +1,37 @@
+@layer base {
+  button {
+    text-transform: inherit;
+    letter-spacing: inherit;
+    touch-action: manipulation;
+    user-select: none;
+    cursor: pointer;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  svg {
+    display: block;
+    fill: currentcolor;
+  }
+
+  .is-storyblok-editor {
+    a,
+    button[type="submit"] {
+      pointer-events: none !important;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+

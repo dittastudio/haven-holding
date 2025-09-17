@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Blocks",
+    "id": 396007,
+    "uuid": "a2dd7bb8-b09b-4f23-9ba1-c0ad6aff5716",
+    "parent_id": null,
+    "parent_uuid": null
+  },
+  {
+    "name": "Content",
+    "id": 396027,
+    "uuid": "59079f88-1a70-41c5-aea4-a259f07521e6",
+    "parent_id": null,
+    "parent_uuid": null
+  },
+  {
+    "name": "Elements",
+    "id": 396026,
+    "uuid": "ed662cc8-cd93-4cc9-8a46-b10a46ad7649",
+    "parent_id": null,
+    "parent_uuid": null
+  },
+  {
+    "name": "Matrix",
+    "id": 415553,
+    "uuid": "8ee02387-f74c-4b26-8848-efc0f45722e3",
+    "parent_id": null,
+    "parent_uuid": null
+  }
+]

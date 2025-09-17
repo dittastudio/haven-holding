@@ -1,3 +1,4 @@
+import tailwindcss from '@tailwindcss/vite'
 import svgLoader from 'vite-svg-loader'
 
 export default defineNuxtConfig({
@@ -5,7 +6,6 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     '@nuxt/image',
     '@nuxtjs/sitemap',
-    '@nuxtjs/tailwindcss',
     ['@storyblok/nuxt', { accessToken: process.env.NUXT_STORYBLOK_TOKEN }],
     '@nuxtjs/device',
   ],
@@ -52,8 +52,10 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
     layoutTransition: false,
   },
+  css: ['~/assets/css/main.css'],
   site: {
     url: 'https://www.havenhavelland.com',
+    name: 'Haven Havelland',
   },
   runtimeConfig: {
     MAILCHIMP_API_KEY: process.env.NUXT_MAILCHIMP_API_KEY,
@@ -69,10 +71,8 @@ export default defineNuxtConfig({
   },
   compatibilityDate: '2024-04-03',
   vite: {
-    resolve: {
-      dedupe: ['vue'],
-    },
     plugins: [
+      tailwindcss(),
       svgLoader({
         svgo: false,
       }),
@@ -80,7 +80,7 @@ export default defineNuxtConfig({
     vue: {
       script: {
         defineModel: true,
-        // propsDestructure: true,
+        propsDestructure: true,
       },
     },
   },
@@ -89,16 +89,14 @@ export default defineNuxtConfig({
   },
   postcss: {
     plugins: {
-      'postcss-import': {},
-      'tailwindcss/nesting': {},
-      'tailwindcss': {},
-      'autoprefixer': {},
+      'postcss-nested': {},
     },
   },
   eslint: {
     config: {
       standalone: false,
       stylistic: true,
+      autoInit: false,
     },
   },
   image: {
@@ -120,8 +118,5 @@ export default defineNuxtConfig({
   },
   sitemap: {
     sources: ['/api/sitemap'],
-  },
-  tailwindcss: {
-    cssPath: '@/assets/css/app.css',
   },
 })
