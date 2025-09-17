@@ -31,7 +31,7 @@ export default defineNuxtConfig({
         { rel: 'icon', href: '/favicon.ico', sizes: '32x32' },
         { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
         { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
-        { rel: 'preconnect', href: 'https://a.storyblok.com' },
+        { rel: 'preconnect', href: 'https://a2.storyblok.com' },
         { rel: 'manifest', href: '/site.webmanifest' },
         {
           rel: 'preload',
@@ -102,7 +102,7 @@ export default defineNuxtConfig({
   image: {
     provider: 'storyblok',
     storyblok: {
-      baseURL: 'https://a.storyblok.com',
+      baseURL: 'https://a2.storyblok.com',
     },
     domains: ['storyblok.com', 'havenhavelland.com'],
     quality: 80,

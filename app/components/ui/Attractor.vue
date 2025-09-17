@@ -29,7 +29,9 @@ const animateMe = (event: any) => {
   </span>
 </template>
 
-<style lang="postcss">
+<style>
+@reference "@/assets/css/main.css";
+
 @keyframes enter {
   from {
     translate: 0 0 0;

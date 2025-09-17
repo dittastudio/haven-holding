@@ -74,7 +74,7 @@ onMounted(async () => {
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 .logo {
   --nudge: calc(20 / 170 * 1em);
   --easeSmooth: cubic-bezier(0.4, 0.0, 0.2, 1);

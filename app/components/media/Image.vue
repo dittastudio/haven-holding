@@ -106,7 +106,9 @@ const imgAttrs = computed(() => ({
   </picture>
 </template>
 
-<style lang="postcss">
+<style scoped>
+@reference "@/assets/css/main.css";
+
 .media-image {
   --transition-duration: 1s;
 

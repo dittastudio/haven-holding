@@ -40,8 +40,8 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
         />
       </div>
 
-      <div class="block-newsletter__text [&_p]:text-20 [&_p]:text-pretty [&_p]:leading-1.3">
-        <div>
+      <div class="block-newsletter__text">
+        <div class="[&_p]:text-20 [&_p]:text-pretty [&_p]:leading-1.3">
           <StoryblokText
             v-if="storyblokRichTextContent(props.block.text)"
             :content="props.block.text"

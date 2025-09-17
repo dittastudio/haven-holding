@@ -184,7 +184,7 @@ const onSubmit = async () => {
         </UiButton>
       </button>
 
-      <p class="text-12 leading-1.4 opacity-80 mt-16 text-pretty">
+      <p class="text-12 leading-1.4 opacity-80 mt-4 text-pretty">
         By submitting, you agree to receive news regarding Haven and accept our
 
         <NuxtLink
@@ -198,7 +198,9 @@ const onSubmit = async () => {
   </FormBase>
 </template>
 
-<style lang="postcss">
+<style>
+@reference "@/assets/css/main.css";
+
 .form-signup {
   position: relative;
 }

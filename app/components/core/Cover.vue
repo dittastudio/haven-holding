@@ -40,7 +40,9 @@ onMounted(async () => {
   </div>
 </template>
 
-<style lang="postcss">
+<style scoped>
+@reference "@/assets/css/main.css";
+
 .core-cover {
   pointer-events: none;
 
