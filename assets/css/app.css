@@ -1,9 +1,0 @@
-
-@import '@/assets/css/variables.css';
-@import '@/assets/css/resets.css';
-@import '@/assets/css/fonts.css';
-@import '@/assets/css/page.css';
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;

@@ -1,0 +1,17 @@
+@layer theme {
+  html {
+    color: var(--color-black);
+    background-color: var(--color-offwhite);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    color: var(--color-offwhite);
+    background-color: var(--color-offblack);
+  }
+}
