@@ -65,6 +65,10 @@ const checkBackgroundMatchesPrevBackground = (index: number) => {
   <section class="app-blocks__item">
     <BlockTextGroup />
   </section>
+
+  <section class="">
+    <BlockCarousel />
+  </section>
 </template>
 
 <style lang="postcss">

@@ -8,6 +8,8 @@
 @import './utils.css';
 @import "tailwindcss";
 
+@custom-variant only-hover (@media (hover: hover));
+
 @theme {
   --color-white: #ffffff;
   --color-black: #000000;
@@ -36,9 +38,11 @@
   --text-16: 1rem;
   --text-18: 1.125rem;
   --text-20: 1.25rem;
-  --text-fluid-lead-xs-xl: clamp(1.25rem, 0.8239rem + 1.8182vw, 2.1875rem); /* 375:20px - 1200:35px */
-  --text-fluid-lead-xl-3xl: clamp(2.1875rem, 0.625rem + 2.0833vw, 3.125rem); /* 1200:35px - 1920:50px */
-  --text-fluid-h1-sm-3xl: clamp(2.5rem, 2.1208rem + 1.6181vw, 4.0625rem); /* 375:40px - 1920:65px */
+  --text-375-20px-1200-35px: clamp(1.25rem, 0.8239rem + 1.8182vw, 2.1875rem); /* 375:20px - 1200:35px */
+  --text-1200-35px-1920-50px: clamp(2.1875rem, 0.625rem + 2.0833vw, 3.125rem); /* 1200:35px - 1920:50px */
+  --text-375-40px-1920-65px: clamp(2.5rem, 2.1208rem + 1.6181vw, 4.0625rem); /* 375:40px - 1920:65px */
+  --text-375-30px-1200-50px: clamp(1.875rem, 1.3068rem + 2.4242vw, 3.125rem); /* 375:30px - 1200:50px */
+  --text-1200-50px-1920-70px: clamp(3.125rem, 1.0417rem + 2.7778vw, 4.375rem); /* 1200:50px - 1920:70px */
 
   --ease-smooth: cubic-bezier(0.4, 0.0, 0.2, 1);
   --ease-in: cubic-bezier(0.4, 0.0, 1, 1);
@@ -68,9 +72,6 @@
   --ease-inBack: cubic-bezier(0.6, -0.28, 0.735, 0.045);
   --ease-outBack: cubic-bezier(0.175, 0.885, 0.32, 1.275);
   --ease-inOutBack: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-
-  /* --radius-sm: 6px; */
-  --radius-full: calc(infinity * 1px);
 }
 
 @layer theme {
