@@ -49,6 +49,7 @@ const onInput = (event: Event) => {
       :type="props.field"
       :value="modelValue"
       spellcheck="false"
+      class="outline-none"
       @input="onInput"
     >
   </template>

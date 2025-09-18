@@ -19,24 +19,24 @@ const emit = defineEmits<Emits>()
 
 const video = ref<HTMLVideoElement | null>(null)
 const seen = ref(false)
-const src = computed(() => seen.value ? props.asset?.filename : '')
+const src = computed(() => seen.value && props.asset?.filename ? props.asset.filename : undefined)
 
 useIntersectionObserver(
   video,
-  ([{ target, isIntersecting }]) => {
-    if (!(target instanceof HTMLVideoElement)) {
+  ([entry]) => {
+    if (!entry || !(entry.target instanceof HTMLVideoElement)) {
       return
     }
 
-    if (isIntersecting && !seen.value) {
+    if (entry.isIntersecting && !seen.value) {
       emit('seen', true)
       seen.value = true
     }
-    else if (isIntersecting && seen.value && src.value && target.paused) {
-      target.play()
+    else if (entry.isIntersecting && seen.value && src.value && entry.target.paused) {
+      entry.target.play()
     }
-    else if (!isIntersecting && seen.value && src.value && !target.paused) {
-      target.pause()
+    else if (!entry.isIntersecting && seen.value && src.value && !entry.target.paused) {
+      entry.target.pause()
     }
   },
   { rootMargin: '50% 0px 50% 0px', threshold: 0 },

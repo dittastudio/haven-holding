@@ -4,11 +4,12 @@ import IconLogo from '@/assets/icons/haven-logo-final.svg'
 
 <template>
   <div
-    class="core-header wrapper"
+    data-component="app-header"
+    class="wrapper flex items-center justify-center h-(--app-header-height)"
   >
     <NuxtLink
       to="/"
-      class="core-header__link"
+      class="block pointer-events-auto"
     >
       <IconLogo
         width="138"
@@ -17,17 +18,3 @@ import IconLogo from '@/assets/icons/haven-logo-final.svg'
     </NuxtLink>
   </div>
 </template>
-
-<style lang="postcss">
-.core-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: var(--app-header-height);
-}
-
-.core-header__link {
-  pointer-events: auto;
-  display: block;
-}
-</style>

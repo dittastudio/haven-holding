@@ -1,51 +1,19 @@
 <template>
-  <div
-    class="core-layout"
-  >
+  <div data-component="app-layout">
     <header
-      class="core-layout__header"
+      class="sticky top-0 z-10 transform-gpu mix-blend-difference backface-visibility-hidden text-offwhite pointer-events-none"
     >
       <slot name="header" />
     </header>
 
-    <main class="core-layout__main">
+    <main>
       <slot name="main" />
     </main>
 
-    <footer class="core-layout__footer">
+    <footer>
       <slot name="footer" />
     </footer>
 
     <slot name="dev" />
   </div>
 </template>
-
-<style lang="postcss">
-.core-layout__header {
-  pointer-events: none;
-
-  position: sticky;
-  z-index: 10;
-  top: 0;
-  transform: translate3d(0,0,0);
-
-  color: var(--color-offwhite);
-
-  backface-visibility: hidden;
-  mix-blend-mode: difference;
-}
-
-.core-layout__mask {
-  height: calc((100vh + 50vh) + (var(--app-header-height) / 2));
-}
-
-.core-layout__mask__outer,
-.core-layout__mask__inner {
-  height: 100vh;
-}
-
-.core-layout__logo {
-  backface-visibility: hidden;
-  outline: 1px solid transparent;
-}
-</style>

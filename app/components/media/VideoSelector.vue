@@ -18,8 +18,8 @@ const video = ref<HTMLVideoElement | null>(null)
 const isScreenMdMax = useAtMedia(getMediaQuery('max-md'))
 
 const src = computed<string>(() => {
-  const sm = props.srcSmall?.filename.trim() || ''
-  const lg = props.srcLarge?.filename.trim() || ''
+  const sm = props.srcSmall?.filename?.trim() || ''
+  const lg = props.srcLarge?.filename?.trim() || ''
 
   const src = isScreenMdMax.value ? sm || lg : lg || sm
 
@@ -28,8 +28,8 @@ const src = computed<string>(() => {
 
 const posterSrc = computed<string>(() => {
   const usePosterImage = useImage()
-  const sm = props.srcSmallPoster?.filename.trim() || ''
-  const lg = props.srcLargePoster?.filename.trim() || ''
+  const sm = props.srcSmallPoster?.filename?.trim() || ''
+  const lg = props.srcLargePoster?.filename?.trim() || ''
 
   const src = isScreenMdMax.value ? sm || lg : lg || sm
 

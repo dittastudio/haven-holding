@@ -1,106 +1,46 @@
 <script lang="ts" setup>
 interface Props {
-  type?: 'rounded' | 'squared'
   theme?: 'white' | 'black'
 }
 
-const props = defineProps<Props>()
+const { theme } = defineProps<Props>()
 </script>
 
 <template>
   <span
-    class="ui-button type-mono-14"
-    :class="[
-      { [`ui-button--type-${props.type}`]: props.type },
-      { [`ui-button--theme-${props.theme}`]: props.theme },
-    ]"
+    class="
+      type-mono-14
+      isolate
+      relative
+      inline-flex
+      leading-none
+      rounded-full
+      px-[2.45em]
+      py-[0.8575em]
+      border
+      border-current
+      transition-all
+      duration-200
+      ease-smooth
+      after:absolute
+      after:-inset-px
+      after:z-0
+      after:rounded-[inherit]
+      after:opacity-0
+      after:transition-opacity
+      after:duration-200
+      after:ease-smooth
+      cta-active:after:opacity-10
+    "
+    :class="
+      {
+        'text-offblack cta-hover:bg-offblack cta-hover:text-white cta-hover:border-offblack after:bg-white': theme === 'black',
+        'text-white cta-hover:bg-white cta-hover:text-offblack cta-hover:border-white after:bg-black': theme === 'white',
+      }
+    "
   >
-    <span class="ui-button__text">
+    <span class="relative z-1">
       <slot />
     </span>
   </span>
 </template>
-
-<style>
-@reference "@/assets/css/main.css";
-
-.ui-button {
-  --button-padding-y: 0.8575em;
-  --button-padding-x: 2.45em;
-  --button-color: var(--color-white);
-  --button-hover-color: var(--color-offblack);
-  --button-hover-tint: --alpha(var(--color-black) / 10%);
-  --button-duration: 0.2s;
-
-  isolation: isolate;
-  position: relative;
-
-  display: inline-flex;
-
-  padding: var(--button-padding-y) var(--button-padding-x);
-
-  line-height: 1;
-  color: var(--button-color);
-
-  background-color: transparent;
-  border: 1px solid var(--button-color);
-
-  transition:
-    background-color var(--button-duration) var(--ease-smooth),
-    border-color var(--button-duration) var(--ease-smooth),
-    color var(--button-duration) var(--ease-smooth);
-
-  &::after {
-    content: '';
-
-    position: absolute;
-    z-index: 0;
-    inset: 0;
-
-    opacity: 0;
-    background-color: var(--button-hover-tint);
-    border-radius: inherit;
-
-    transition: opacity var(--button-duration) var(--ease-smooth);
-  }
-
-  a:active &::after,
-  button:not(:disabled):active &::after {
-    opacity: 1;
-  }
-
-  @media (hover: hover) {
-    a:hover &,
-    button:not(:disabled):hover & {
-      color: var(--button-hover-color);
-      background-color: var(--button-color);
-      border-color: var(--button-color);
-    }
-  }
-}
-
-.ui-button--type-rounded {
-  border-radius: var(--radius-full);
-}
-
-.ui-button--type-squared {
-  border-radius: var(--radius-md);
-}
-
-.ui-button--theme-white {
-  --button-color: var(--color-white);
-  --button-hover-color: var(--color-offblack);
-  --button-hover-tint: --alpha(var(--color-black) / 10%);
-}
-
-.ui-button--theme-black {
-  --button-color: var(--color-offblack);
-  --button-hover-color: var(--color-offwhite);
-  --button-hover-tint: --alpha(var(--color-white) / 10%);
-}
-
-.ui-button__text {
-  position: relative;
-  z-index: 1;
-}
-</style>

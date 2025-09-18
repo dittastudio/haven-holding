@@ -35,19 +35,21 @@ const size = {
 }
 
 const placeholderImg = useImage()
-const placeholder = placeholderImg(props.asset.filename, {
-  width: size.width,
-  height: size.height,
-  quality: 10,
-})
+const placeholder = props.asset.filename
+  ? placeholderImg(props.asset.filename, {
+      width: size.width,
+      height: size.height,
+      quality: 10,
+    })
+  : ''
 
 useIntersectionObserver(
   container,
-  ([{ target, isIntersecting }], observerElement) => {
-    if (!(target instanceof HTMLPictureElement))
+  ([entry], observerElement) => {
+    if (!entry || !(entry.target instanceof HTMLPictureElement))
       return
 
-    if (isIntersecting && !ready.value) {
+    if (entry.isIntersecting && !ready.value) {
       ready.value = true
       observerElement.disconnect()
     }
@@ -73,7 +75,7 @@ const imgAttrs = computed(() => ({
   ...rest,
   width: size.width,
   height: size.height,
-  src: ready.value ? props.asset.filename : '',
+  src: ready.value && props.asset.filename ? props.asset.filename : undefined,
   sizes: ready.value ? imgInfo.value.sizes : '',
   srcset: ready.value ? imgInfo.value.srcset : '',
   alt: attrs.value?.alt ?? props.asset.alt ?? '',
@@ -83,20 +85,28 @@ const imgAttrs = computed(() => ({
 <template>
   <picture
     ref="container"
-    class="media-image"
+    class="isolate relative overflow-hidden block w-full h-[inherit]"
     :class="className"
   >
     <img
       v-bind="imgAttrs"
-      class="media-image__asset"
-      :class="[{ 'is-loaded': loaded, 'is-lazy': props.lazy }]"
+      class="w-full h-[inherit]"
+      :class="{
+        'opacity-0': !loaded,
+        'opacity-100': loaded,
+        'absolute z-1 inset-0 backface-visibility-hidden transition-opacity duration-1000 ease-out': props.lazy,
+      }"
       :loading="props.lazy ? 'eager' : 'lazy'"
       @load="loaded = true"
     >
 
     <img
       v-if="props.lazy"
-      class="media-image__placeholder"
+      class="pointer-events-none w-full h-[inherit] backface-visibility-hidden blur-sm transition-opacity duration-2000 ease-out delay-500"
+      :class="{
+        'opacity-100': !loaded,
+        'opacity-0': loaded,
+      }"
       :src="placeholder"
       :width="size.width"
       :height="size.height"
@@ -105,57 +115,3 @@ const imgAttrs = computed(() => ({
     >
   </picture>
 </template>
-
-<style scoped>
-@reference "@/assets/css/main.css";
-
-.media-image {
-  --transition-duration: 1s;
-
-  isolation: isolate;
-  position: relative;
-
-  overflow: hidden;
-  display: block;
-
-  width: 100%;
-  height: inherit;
-}
-
-.media-image__asset {
-  width: 100%;
-  height: auto;
-
-  &.is-lazy {
-    position: absolute;
-    z-index: 1;
-    inset: 0;
-
-    backface-visibility: hidden;
-    opacity: 0;
-
-    transition: opacity var(--transition-duration) var(--ease-out);
-  }
-
-  &.is-loaded {
-    opacity: 1;
-  }
-}
-
-.media-image__placeholder {
-  pointer-events: none;
-
-  width: 100%;
-  height: auto;
-
-  backface-visibility: hidden;
-  opacity: 1;
-  filter: blur(8px);
-
-  transition: opacity calc(var(--transition-duration) * 2) var(--ease-out) calc(var(--transition-duration) / 2);
-
-  .media-image__asset.is-loaded + & {
-    opacity: 0;
-  }
-}
-</style>

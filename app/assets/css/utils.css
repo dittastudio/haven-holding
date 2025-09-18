@@ -37,3 +37,19 @@
     scroll-snap-type: none;
   }
 }
+
+@custom-variant cta-hover {
+  @media (any-hover: hover) {
+    a:hover &,
+    button:not(:disabled):hover & {
+      @slot;
+    }
+  }
+}
+
+@custom-variant cta-active {
+  a:active &,
+  button:not(:disabled):active & {
+    @slot;
+  }
+}

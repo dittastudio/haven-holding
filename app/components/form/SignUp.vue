@@ -83,33 +83,52 @@ const onSubmit = async () => {
   <FormBase
     :loading="loading"
     method="post"
-    class="form-signup"
+    data-component="form-signup"
+    class="relative"
     @submit.prevent="onSubmit"
   >
     <FormFieldset
       legend="Newsletter"
-      class="form-signup__fieldset"
+      class="flex flex-col gap-1 items-start"
     >
       <FormField
         id="fname"
         label="First name"
         a11y
-        class="form-signup__field"
+        class="w-full"
       >
-        <div class="form-signup__box">
-          <FormInput
-            id="fname"
-            v-model="fname"
-            placeholder="First name"
-            class="form-signup__input type-sans-16"
-            autocomplete="given-name"
-          />
-        </div>
+        <FormInput
+          id="fname"
+          v-model="fname"
+          placeholder="First name"
+          class="
+            form-signup__input
+            type-sans-16
+            grow
+            w-full
+            px-2
+            py-3
+            border-b
+            border-current/30
+            focus:border-current/100
+            transition-all
+            duration-200
+            ease-smooth
+            placeholder:text-current
+            placeholder:opacity-100
+            placeholder:transition-opacity
+            placeholder:duration-200
+            placeholder:ease-smooth
+            hover:placeholder:opacity-50
+            focus:placeholder:opacity-0
+          "
+          autocomplete="given-name"
+        />
 
         <FormError
           v-if="errors.fname"
           :message="errors.fname"
-          class="form-signup__error type-mono-12"
+          class="type-mono-12 mt-2 my-2 text-left opacity-75"
         />
       </FormField>
 
@@ -117,22 +136,40 @@ const onSubmit = async () => {
         id="lname"
         label="Last name"
         a11y
-        class="form-signup__field"
+        class="w-full"
       >
-        <div class="form-signup__box">
-          <FormInput
-            id="lname"
-            v-model="lname"
-            placeholder="Last name"
-            class="form-signup__input type-sans-16"
-            autocomplete="family-name"
-          />
-        </div>
+        <FormInput
+          id="lname"
+          v-model="lname"
+          placeholder="Last name"
+          class="
+            form-signup__input
+            type-sans-16
+            grow
+            w-full
+            px-2
+            py-3
+            border-b
+            border-current/30
+            focus:border-current/100
+            transition-all
+            duration-200
+            ease-smooth
+            placeholder:text-current
+            placeholder:opacity-100
+            placeholder:transition-opacity
+            placeholder:duration-200
+            placeholder:ease-smooth
+            hover:placeholder:opacity-50
+            focus:placeholder:opacity-0
+          "
+          autocomplete="family-name"
+        />
 
         <FormError
           v-if="errors.lname"
           :message="errors.lname"
-          class="form-signup__error type-mono-12"
+          class="type-mono-12 mt-2 my-2 text-left opacity-75"
         />
       </FormField>
 
@@ -140,40 +177,56 @@ const onSubmit = async () => {
         id="email"
         label="Email"
         a11y
-        class="form-signup__field"
+        class="w-full"
       >
-        <div class="form-signup__box">
-          <FormInput
-            id="email"
-            v-model="email"
-            field="email"
-            placeholder="Email"
-            class="form-signup__input type-sans-16"
-            autocomplete="on"
-          />
-        </div>
+        <FormInput
+          id="email"
+          v-model="email"
+          field="email"
+          placeholder="Email"
+          class="
+            form-signup__input
+            type-sans-16
+            grow
+            w-full
+            px-2
+            py-3
+            border-b
+            border-current/30
+            focus:border-current/100
+            transition-all
+            duration-200
+            ease-smooth
+            placeholder:text-current
+            placeholder:opacity-100
+            placeholder:transition-opacity
+            placeholder:duration-200
+            placeholder:ease-smooth
+            hover:placeholder:opacity-50
+            focus:placeholder:opacity-0
+            autofill:text-current
+          "
+          autocomplete="on"
+        />
 
         <FormError
           v-if="errors.email"
           :message="errors.email"
-          class="form-signup__error type-mono-12"
+          class="type-mono-12 mt-2 my-2 text-left opacity-75"
         />
       </FormField>
 
       <p
         v-if="message"
-        class="form-signup__fieldset__message type-sans-16"
+        class="flex flex-col gap-y-1 items-start__message type-sans-16 [&_a]:underline [&_a]:transition-opacity [&_a]:duration-200 [&_a]:ease-smooth [&_a]:hover:opacity-40"
         v-html="message"
       />
 
       <button
-        class="form-signup__submit"
+        class="mt-[calc(var(--app-vertical-rhythm)_/_2)]"
         type="submit"
       >
-        <UiButton
-          theme="black"
-          type="rounded"
-        >
+        <UiButton theme="black">
           <template v-if="loading">
             Please wait&hellip;
           </template>
@@ -201,71 +254,7 @@ const onSubmit = async () => {
 <style>
 @reference "@/assets/css/main.css";
 
-.form-signup {
-  position: relative;
-}
-
-.form-signup__fieldset {
-  display: flex;
-  flex-direction: column;
-  row-gap: --spacing(1);
-  align-items: flex-start;
-}
-
-.form-signup__field {
-  width: 100%;
-}
-
-.form-signup__box {
-  position: relative;
-  width: 100%;
-
-  &::after {
-    content: '';
-
-    position: absolute;
-    bottom: 0;
-    left: 0;
-
-    width: 100%;
-    height: 1px;
-
-    opacity: 0.3;
-    border-block-end: 1px solid currentcolor;
-
-    transition: opacity 0.2s var(--ease-smooth);
-  }
-
-  &:has(input:focus-within) {
-    &::after {
-      opacity: 1;
-    }
-  }
-}
-
 .form-signup__input {
-  --input-padding-x: 8px;
-  --input-padding-y: 12px;
-
-  flex-grow: 1;
-  width: 100%;
-  padding: var(--input-padding-y) var(--input-padding-x);
-  outline: none;
-
-  &::placeholder {
-    color: currentcolor;
-    opacity: 1;
-    transition: opacity 0.2s var(--ease-smooth);
-  }
-
-  &:hover::placeholder {
-    opacity: 0.5;
-  }
-
-  &:focus::placeholder {
-    opacity: 0;
-  }
-
   &:-webkit-autofill,
   &:-webkit-autofill:hover,
   &:-webkit-autofill:focus,
@@ -278,32 +267,6 @@ const onSubmit = async () => {
     transition: background-color 5000s ease-in-out 0s;
 
     -webkit-text-fill-color: var(--color-offblack);
-  }
-}
-
-.form-signup__error {
-  margin-block: --spacing(2);
-  margin-inline-start: --spacing(2);
-  text-align: left;
-  opacity: 0.75;
-}
-
-.form-signup__submit {
-  margin-top: calc(var(--app-vertical-rhythm) / 2);
-}
-
-.form-signup__fieldset__message {
-  margin-block-start: --spacing(4);
-  margin-inline-start: --spacing(2);
-  text-align: left;
-
-  & a {
-    text-decoration: underline;
-    transition: opacity 0.2s var(--ease-smooth);
-
-    &:hover {
-      opacity: 0.4;
-    }
   }
 }
 </style>
