@@ -67,7 +67,7 @@ const assetType = computed(() => storyblokAssetType(block.media?.filename || '')
           gap-[calc(var(--app-vertical-rhythm)_/_2)]
         "
       >
-        <div class="[&_p]:type-sans-20 [&_p]:text-pretty">
+        <div class="[&_p]:type-sans-20 [&_p]:text-pretty [&_p+p]:mt-[1lh]">
           <StoryblokText
             v-if="storyblokRichTextContent(block.text)"
             :content="block.text"
