@@ -39,7 +39,7 @@ onMounted(() => {
   mm.add({ isDesktop: getMediaQuery('md'), isMobile: getMediaQuery('max-md') }, (context) => { // not sure why it has to have two arguments
     const { isDesktop } = context.conditions as { isDesktop: boolean }
 
-    const header = document.querySelector('.core-header')
+    const header = document.querySelector('[data-component="app-header"]')
     const hide = { opacity: 0, visibility: 'hidden' }
     const show = { opacity: 1, visibility: 'visible' }
 
@@ -99,7 +99,7 @@ onUnmounted(() => {
     trigger.kill()
   })
 
-  const header = document.querySelector('.core-header')
+  const header = document.querySelector('[data-component="app-header"]')
 
   gsap.set(header, { clearProps: 'all' })
   if (logo.value)

@@ -89,7 +89,7 @@ const onSubmit = async () => {
   >
     <FormFieldset
       legend="Newsletter"
-      class="flex flex-col gap-1 items-start"
+      class="flex flex-col gap-y-1 items-start"
     >
       <FormField
         id="fname"
@@ -215,39 +215,39 @@ const onSubmit = async () => {
           class="type-mono-12 mt-2 my-2 text-left opacity-75"
         />
       </FormField>
-
-      <p
-        v-if="message"
-        class="flex flex-col gap-y-1 items-start__message type-sans-16 [&_a]:underline [&_a]:transition-opacity [&_a]:duration-200 [&_a]:ease-smooth [&_a]:hover:opacity-40"
-        v-html="message"
-      />
-
-      <button
-        class="mt-[calc(var(--app-vertical-rhythm)_/_2)]"
-        type="submit"
-      >
-        <UiButton theme="black">
-          <template v-if="loading">
-            Please wait&hellip;
-          </template>
-
-          <template v-else>
-            Submit
-          </template>
-        </UiButton>
-      </button>
-
-      <p class="type-sans-12 opacity-80 mt-4 text-pretty">
-        By submitting, you agree to receive news regarding Haven and accept our
-
-        <NuxtLink
-          to="/privacy-policy"
-          class="inline-block underline hover:opacity-40 transition-opacity duration-200 ease-smooth"
-        >
-          privacy policy
-        </NuxtLink>.
-      </p>
     </FormFieldset>
+
+    <p
+      v-if="message"
+      class="type-sans-16 mt-6 [&_a]:underline [&_a]:transition-opacity [&_a]:duration-200 [&_a]:ease-smooth [&_a]:hover:opacity-40"
+      v-html="message"
+    />
+
+    <button
+      class="mt-[calc(var(--app-vertical-rhythm)_/_2)]"
+      type="submit"
+    >
+      <UiButton theme="black">
+        <template v-if="loading">
+          Please wait&hellip;
+        </template>
+
+        <template v-else>
+          Submit
+        </template>
+      </UiButton>
+    </button>
+
+    <p class="type-sans-12 opacity-80 mt-4 text-pretty">
+      By submitting, you agree to receive news regarding Haven and accept our
+
+      <NuxtLink
+        to="/privacy-policy"
+        class="inline-block underline hover:opacity-40 transition-opacity duration-200 ease-smooth"
+      >
+        privacy policy
+      </NuxtLink>.
+    </p>
   </FormBase>
 </template>
 
