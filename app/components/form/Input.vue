@@ -20,9 +20,7 @@ interface Props {
     | 'week'
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  field: 'text',
-})
+const { id, field = 'text' } = defineProps<Props>()
 
 const modelValue = defineModel<string>()
 
@@ -32,9 +30,9 @@ const onInput = (event: Event) => {
 </script>
 
 <template>
-  <template v-if="props.field === 'textarea'">
+  <template v-if="field === 'textarea'">
     <textarea
-      :id="props.id"
+      :id="id"
       class="min-h-[110px]"
       :value="modelValue"
       autocomplete="off"
@@ -45,8 +43,8 @@ const onInput = (event: Event) => {
 
   <template v-else>
     <input
-      :id="props.id"
-      :type="props.field"
+      :id="id"
+      :type="field"
       :value="modelValue"
       spellcheck="false"
       class="outline-none"

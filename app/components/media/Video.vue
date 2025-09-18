@@ -7,9 +7,7 @@ interface Props {
   ratio?: App.TAspectRatios | string | number
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  ratio: 'auto',
-})
+const { asset, ratio = 'auto' } = defineProps<Props>()
 
 interface Emits {
   (event: 'seen' | 'playing', payload: boolean): void
@@ -19,7 +17,7 @@ const emit = defineEmits<Emits>()
 
 const video = ref<HTMLVideoElement | null>(null)
 const seen = ref(false)
-const src = computed(() => seen.value && props.asset?.filename ? props.asset.filename : undefined)
+const src = computed(() => seen.value && asset?.filename ? asset.filename : undefined)
 
 useIntersectionObserver(
   video,
@@ -55,7 +53,7 @@ onUnmounted(() => {
 
 <template>
   <video
-    v-if="props.asset"
+    v-if="asset"
     ref="video"
     :src="src"
     playsinline
@@ -63,6 +61,6 @@ onUnmounted(() => {
     muted
     loop
     class="w-full h-[inherit] object-cover"
-    :class="ratioMap[props.ratio]"
+    :class="ratioMap[ratio]"
   />
 </template>

@@ -3,13 +3,11 @@ interface Props {
   message?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  message: '',
-})
+const { message = '' } = defineProps<Props>()
 </script>
 
 <template>
   <p>
-    {{ props.message }}
+    {{ message }}
   </p>
 </template>

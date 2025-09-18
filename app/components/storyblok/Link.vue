@@ -1,43 +1,36 @@
 <script lang="ts" setup>
-import type { MultilinkStoryblok } from '@/types/storyblok'
+import type { StoryblokMultilink } from '@@/.storyblok/types/storyblok'
 
 interface Props {
-  item: MultilinkStoryblok | string | undefined
-  disabled?: boolean
+  item: StoryblokMultilink
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  disabled: false,
-})
+const { item } = defineProps<Props>()
 
 const href
-  = props.item?.linktype === 'email'
-    ? `mailto:${props.item?.email}`
-    : props.item?.linktype === 'story'
-      ? `/${props.item?.cached_url?.replace('home', '')}`
-      : props.item?.cached_url
+  = item?.linktype === 'email'
+    ? `mailto:${item?.email}`
+    : item?.linktype === 'story'
+      ? `/${item?.cached_url?.replace('home', '')}`
+      : item?.cached_url
 
 const customAttributes = {
-  class: props.item?.class,
-  title: props.item?.title,
-  rel: props.item?.rel,
+  title: item?.title,
+  rel: item?.rel,
 }
 
 const attributes = {
   ...customAttributes,
   to: href?.trim().replace(/\/+$/, ''),
-  target: props.item?.target ?? props.item?.linktype === 'asset' ? '_blank' : null,
+  target: item?.target ?? item?.linktype === 'asset' ? '_blank' : null,
 }
-
-const element = !props.item || props.disabled ? 'div' : resolveComponent('NuxtLink')
 </script>
 
 <template>
-  <Component
-    :is="element"
+  <NuxtLink
     v-bind="attributes"
     class="group/link"
   >
     <slot />
-  </Component>
+  </NuxtLink>
 </template>

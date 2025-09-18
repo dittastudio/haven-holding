@@ -6,25 +6,20 @@ interface Props {
   is?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  a11y: false,
-  id: '',
-  label: '',
-  is: 'label',
-})
+const { a11y = false, id = '', label = '', is = 'label' } = defineProps<Props>()
 </script>
 
 <template>
   <div>
     <Component
-      :is="props.is"
-      v-if="props.label"
+      :is="is"
+      v-if="label"
       :class="{
-        'sr-only': props.a11y,
+        'sr-only': a11y,
       }"
-      :for="props.id && props.is === 'label' ? props.id : null"
+      :for="id && is === 'label' ? id : null"
     >
-      {{ props.label }}
+      {{ label }}
     </Component>
 
     <slot />

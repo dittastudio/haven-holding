@@ -10,7 +10,7 @@ interface Props {
   linkItems: Link[] | undefined
 }
 
-const props = defineProps<Props>()
+const { address, addressLink, socials, linkItems } = defineProps<Props>()
 </script>
 
 <template>
@@ -49,13 +49,13 @@ const props = defineProps<Props>()
         </h4>
 
         <StoryblokLink
-          v-if="storyblokRichTextContent(props.address)"
+          v-if="storyblokRichTextContent(address)"
           class="inline-block transition-opacity duration-200 ease-smooth hover:opacity-40"
-          :item="props.addressLink"
+          :item="addressLink"
         >
           <address class="not-italic">
             <StoryblokText
-              :content="props.address"
+              :content="address"
             />
           </address>
         </StoryblokLink>
@@ -68,7 +68,7 @@ const props = defineProps<Props>()
 
         <ul class="inline-block">
           <template
-            v-for="social in props.socials"
+            v-for="social in socials"
             :key="social._uid"
           >
             <li
@@ -123,7 +123,7 @@ const props = defineProps<Props>()
             </li>
 
             <li
-              v-for="item in props.linkItems"
+              v-for="item in linkItems"
               :key="item._uid"
               class="flex before:content-['/'] before:inline-block before:-mx-[0.5ch]"
             >

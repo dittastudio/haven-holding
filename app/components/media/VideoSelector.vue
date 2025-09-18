@@ -9,17 +9,15 @@ interface Props {
   ratio?: App.TAspectRatios | string | number
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  ratio: 'auto',
-})
+const { srcSmall, srcSmallPoster, srcLarge, srcLargePoster, ratio = 'auto' } = defineProps<Props>()
 
 const video = ref<HTMLVideoElement | null>(null)
 
 const isScreenMdMax = useAtMedia(getMediaQuery('max-md'))
 
 const src = computed<string>(() => {
-  const sm = props.srcSmall?.filename?.trim() || ''
-  const lg = props.srcLarge?.filename?.trim() || ''
+  const sm = srcSmall?.filename?.trim() || ''
+  const lg = srcLarge?.filename?.trim() || ''
 
   const src = isScreenMdMax.value ? sm || lg : lg || sm
 
@@ -28,8 +26,8 @@ const src = computed<string>(() => {
 
 const posterSrc = computed<string>(() => {
   const usePosterImage = useImage()
-  const sm = props.srcSmallPoster?.filename?.trim() || ''
-  const lg = props.srcLargePoster?.filename?.trim() || ''
+  const sm = srcSmallPoster?.filename?.trim() || ''
+  const lg = srcLargePoster?.filename?.trim() || ''
 
   const src = isScreenMdMax.value ? sm || lg : lg || sm
 
@@ -45,7 +43,7 @@ const posterSrc = computed<string>(() => {
     v-if="src"
     ref="video"
     class="w-full h-[inherit] object-cover"
-    :class="ratioMap[props.ratio]"
+    :class="ratioMap[ratio]"
     :src="src"
     :poster="posterSrc"
   />

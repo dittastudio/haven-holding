@@ -3,15 +3,13 @@ interface Props {
   legend?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  legend: '',
-})
+const { legend = '' } = defineProps<Props>()
 </script>
 
 <template>
   <fieldset>
     <legend class="sr-only">
-      {{ props.legend }}
+      {{ legend }}
     </legend>
 
     <slot />
