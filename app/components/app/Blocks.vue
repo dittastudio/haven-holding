@@ -33,12 +33,12 @@ const checkBackgroundMatchesPrevBackground = (index: number) => {
   <section
     v-for="(block, index) in content.blocks"
     :key="block._uid"
-    class="content-blocks__item"
+    class="app-blocks__item"
     :class="[
-      `content-blocks__item--${block.component}`,
+      `app-blocks__item--${block.component}`,
       getBlockColour(block),
       getBlockBackground(block),
-      checkBackgroundMatchesPrevBackground(index) ? 'content-blocks__item--same-background' : '',
+      checkBackgroundMatchesPrevBackground(index) ? 'app-blocks__item--same-background' : '',
     ]"
   >
     <BlockMedia
@@ -64,7 +64,7 @@ const checkBackgroundMatchesPrevBackground = (index: number) => {
 </template>
 
 <style lang="postcss">
-.content-blocks__item {
+.app-blocks__item {
   padding-block: var(--app-vertical-rhythm);
 
   &:first-child {
@@ -72,16 +72,13 @@ const checkBackgroundMatchesPrevBackground = (index: number) => {
   }
 }
 
-.content-blocks__item:not([class*="bg-"]) + .content-blocks__item.bg-offwhite,
-.content-blocks__item.bg-offwhite + .content-blocks__item:not([class*="bg-"]) {
+.app-blocks__item:not([class*="bg-"]) + .app-blocks__item.bg-offwhite,
+.app-blocks__item.bg-offwhite + .app-blocks__item:not([class*="bg-"]),
+.app-blocks__item--same-background {
   padding-block-start: 0;
 }
 
-.content-blocks__item--same-background {
-  padding-block-start: 0;
-}
-
-.content-blocks__item--block_text:first-child {
+.app-blocks__item--block_text:first-child {
   padding-block-start: calc(var(--app-vertical-rhythm) * 0.75);
 }
 </style>

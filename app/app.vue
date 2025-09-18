@@ -46,9 +46,9 @@ onMounted(() => {
 
 <template>
   <div>
-    <CoreLayout>
+    <AppLayout>
       <template #header>
-        <CoreHeader />
+        <AppHeader />
       </template>
 
       <template #main>
@@ -56,7 +56,7 @@ onMounted(() => {
       </template>
 
       <template #footer>
-        <CoreFooter
+        <AppFooter
           v-if="settings"
           :address="settings.content.address"
           :address-link="settings.content.address_link"
@@ -68,9 +68,9 @@ onMounted(() => {
       <template #dev>
         <ToolGrid v-if="isDev || storyblokEditor(route.query)" />
       </template>
-    </CoreLayout>
+    </AppLayout>
 
-    <CoreCover v-if="!splashSeen && !isDev && !storyblokEditor(route.query)" />
-    <!-- <CoreCover /> -->
+    <AppCover v-if="!splashSeen && !isDev && !storyblokEditor(route.query)" />
+    <!-- <AppCover /> -->
   </div>
 </template>

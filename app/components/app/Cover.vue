@@ -23,7 +23,7 @@ onMounted(async () => {
 
 <template>
   <div
-    data-component="core-cover"
+    data-component="app-cover"
     class="fixed z-20 inset-0 h-dvh [html:has(&.is-active)]:overflow-hidden transition-opacity duration-1000 ease-smooth"
     :class="[
       { 'opacity-0 pointer-events-none': !coverVisible },
@@ -39,7 +39,7 @@ onMounted(async () => {
           'opacity-100': logoVisible,
         }"
       >
-        <CoreCoverLogo />
+        <AppCoverLogo />
       </div>
     </div>
   </div>

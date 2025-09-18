@@ -13,7 +13,7 @@ const story = await useStory<Page>(route.path)
     />
 
     <div class="bg-offwhite">
-      <ContentBlocks
+      <AppBlocks
         v-if="story"
         :content="story.content"
       />
