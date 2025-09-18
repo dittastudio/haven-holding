@@ -70,7 +70,7 @@ onMounted(() => {
       </template>
     </AppLayout>
 
-    <AppCover v-if="!splashSeen && !isDev && !storyblokEditor(route.query)" />
-    <!-- <AppCover /> -->
+    <!-- <AppCover v-if="!splashSeen && !isDev && !storyblokEditor(route.query)" /> -->
+    <AppCover />
   </div>
 </template>

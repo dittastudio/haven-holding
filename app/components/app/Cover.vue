@@ -27,7 +27,7 @@ onMounted(async () => {
     class="fixed z-20 inset-0 h-dvh [html:has(&.is-active)]:overflow-hidden transition-opacity duration-1000 ease-smooth"
     :class="[
       { 'opacity-0 pointer-events-none': !coverVisible },
-      { 'opacity-100 pointer-events-auto': coverVisible },
+      { 'is-active opacity-100 pointer-events-auto': coverVisible },
       backgroundClass,
     ]"
   >
