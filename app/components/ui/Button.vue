@@ -64,26 +64,6 @@ const props = defineProps<Props>()
     transition: opacity var(--button-duration) var(--ease-smooth);
   }
 
-  &--type-rounded {
-    border-radius: var(--radius-full);
-  }
-
-  &--type-squared {
-    border-radius: var(--radius-md);
-  }
-
-  &--theme-white {
-    --button-color: var(--color-white);
-    --button-hover-color: var(--color-offblack);
-    --button-hover-tint: --alpha(var(--color-black) / 10%);
-  }
-
-  &--theme-black {
-    --button-color: var(--color-offblack);
-    --button-hover-color: var(--color-offwhite);
-    --button-hover-tint: --alpha(var(--color-white) / 10%);
-  }
-
   a:active &::after,
   button:not(:disabled):active &::after {
     opacity: 1;
@@ -97,6 +77,26 @@ const props = defineProps<Props>()
       border-color: var(--button-color);
     }
   }
+}
+
+.ui-button--type-rounded {
+  border-radius: var(--radius-full);
+}
+
+.ui-button--type-squared {
+  border-radius: var(--radius-md);
+}
+
+.ui-button--theme-white {
+  --button-color: var(--color-white);
+  --button-hover-color: var(--color-offblack);
+  --button-hover-tint: --alpha(var(--color-black) / 10%);
+}
+
+.ui-button--theme-black {
+  --button-color: var(--color-offblack);
+  --button-hover-color: var(--color-offwhite);
+  --button-hover-tint: --alpha(var(--color-white) / 10%);
 }
 
 .ui-button__text {
