@@ -11,7 +11,13 @@ const { block } = defineProps<Props>()
 <template>
   <div
     v-editable="block"
-    class="block-text wrapper"
+    class="
+      block-text
+      wrapper
+      [&_h1]:type-sans-40-65
+      [&_h2,_&_h3]:type-mono-16
+      [&_p]:type-sans-20-50
+    "
   >
     <StoryblokText
       v-if="storyblokRichTextContent(block.text)"
@@ -34,29 +40,18 @@ const { block } = defineProps<Props>()
   }
 
   & h1 {
-    font-size: var(--text-fluid-h1-sm-3xl);
-    line-height: var(--leading-1\.3);
     margin-block-end: var(--app-vertical-rhythm);
     text-align: center;
   }
 
   & :is(h2, h3) {
-    font-family: var(--font-mono);
-    font-size: var(--text-16);
-    line-height: var(--leading-1\.4);
     margin-block-end: calc(var(--app-vertical-rhythm) * 0.5);
     padding-inline: var(--app-outer-gutter);
     text-align: center;
   }
 
   & p {
-    font-size: var(--text-fluid-lead-xs-xl);
-    line-height: var(--leading-1\.3);
     text-wrap: pretty;
-
-    @variant md {
-      font-size: var(--text-fluid-lead-xl-3xl);
-    }
   }
 
   & p + h2,

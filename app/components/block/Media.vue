@@ -5,28 +5,28 @@ interface Props {
   block: BlockMedia
 }
 
-const props = defineProps<Props>()
+const { block } = defineProps<Props>()
 
-const assetType = computed(() => storyblokAssetType(props.block.media?.filename || ''))
-const columnSpan = computed(() => Number(props.block.column_end) - Number(props.block.column_start))
+const assetType = computed(() => storyblokAssetType(block.media?.filename || ''))
+const columnSpan = computed(() => Number(block.column_end) - Number(block.column_start))
 </script>
 
 <template>
   <div
     v-editable="block"
-    class="block-media wrapper"
+    data-component="block-media"
+    class="wrapper md:grid md:grid-cols-(--app-grid) md:gap-(--app-inner-gutter)"
   >
     <div
       :class="[
-        colStartMap[props.block.column_start],
-        colEndMap[props.block.column_end],
+        colStartMap[block.column_start],
+        colEndMap[block.column_end],
       ]"
     >
       <MediaImage
-        v-if="props.block.media && assetType === 'image'"
-        class="block-media__media"
-        :asset="props.block.media"
-        :ratio="props.block.ratio"
+        v-if="block.media && assetType === 'image'"
+        :asset="block.media"
+        :ratio="block.ratio"
         :sizes="`
           100vw
           sm:100vw
@@ -36,17 +36,31 @@ const columnSpan = computed(() => Number(props.block.column_end) - Number(props.
       />
 
       <MediaVideo
-        v-else-if="props.block.media && assetType === 'video'"
-        class="block-media__media"
-        :asset="props.block.media"
-        :ratio="props.block.ratio"
+        v-else-if="block.media && assetType === 'video'"
+        :asset="block.media"
+        :ratio="block.ratio"
       />
 
       <p
-        v-if="props.block.caption"
-        class="block-media__caption text-14 font-mono"
+        v-if="block.caption"
+        class="
+          block-media__caption
+          type-mono-14
+          relative
+          mt-3
+          ps-[1em]
+          before:absolute
+          before:top-0
+          before:bottom-0
+          before:left-0
+          before:size-[0.4em]
+          before:m-auto
+          before:border
+          before:border-current
+          before:rounded-full
+        "
       >
-        {{ props.block.caption }}
+        {{ block.caption }}
       </p>
     </div>
   </div>
@@ -54,14 +68,6 @@ const columnSpan = computed(() => Number(props.block.column_end) - Number(props.
 
 <style scoped>
 @reference "@/assets/css/main.css";
-
-.block-media {
-  @variant md {
-    display: grid;
-    grid-template-columns: var(--app-grid);
-    gap: var(--app-inner-gutter);
-  }
-}
 
 @keyframes caption-scroll-effect {
   0% {
@@ -71,11 +77,6 @@ const columnSpan = computed(() => Number(props.block.column_end) - Number(props.
 }
 
 .block-media__caption {
-  position: relative;
-
-  margin-block-start: --spacing(3);
-  padding-inline-start: 1em;
-
   animation-name: caption-scroll-effect;
   animation-timing-function: var(--ease-smooth);
   animation-fill-mode: both;
@@ -83,21 +84,5 @@ const columnSpan = computed(() => Number(props.block.column_end) - Number(props.
   view-timeline-name: --caption-timeline;
 
   animation-range: entry 25% cover 25%;
-
-  &::before {
-    content: '';
-
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-
-    width: 0.4em;
-    height: 0.4em;
-    margin: auto;
-
-    border:thin solid currentColor;
-    border-radius: 50%;
-  }
 }
 </style>

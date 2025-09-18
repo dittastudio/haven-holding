@@ -101,7 +101,7 @@ const onSubmit = async () => {
             id="fname"
             v-model="fname"
             placeholder="First name"
-            class="form-signup__input text-16 leading-1.3"
+            class="form-signup__input type-sans-16"
             autocomplete="given-name"
           />
         </div>
@@ -109,7 +109,7 @@ const onSubmit = async () => {
         <FormError
           v-if="errors.fname"
           :message="errors.fname"
-          class="form-signup__error text-12 font-mono leading-1.4"
+          class="form-signup__error type-mono-12"
         />
       </FormField>
 
@@ -124,7 +124,7 @@ const onSubmit = async () => {
             id="lname"
             v-model="lname"
             placeholder="Last name"
-            class="form-signup__input text-16 leading-1.3"
+            class="form-signup__input type-sans-16"
             autocomplete="family-name"
           />
         </div>
@@ -132,7 +132,7 @@ const onSubmit = async () => {
         <FormError
           v-if="errors.lname"
           :message="errors.lname"
-          class="form-signup__error text-12 font-mono leading-1.4"
+          class="form-signup__error type-mono-12"
         />
       </FormField>
 
@@ -148,7 +148,7 @@ const onSubmit = async () => {
             v-model="email"
             field="email"
             placeholder="Email"
-            class="form-signup__input text-16 leading-1.3"
+            class="form-signup__input type-sans-16"
             autocomplete="on"
           />
         </div>
@@ -156,13 +156,13 @@ const onSubmit = async () => {
         <FormError
           v-if="errors.email"
           :message="errors.email"
-          class="form-signup__error text-12 font-mono leading-1.4"
+          class="form-signup__error type-mono-12"
         />
       </FormField>
 
       <p
         v-if="message"
-        class="form-signup__fieldset__message text-16 leading-1.3"
+        class="form-signup__fieldset__message type-sans-16"
         v-html="message"
       />
 
@@ -184,7 +184,7 @@ const onSubmit = async () => {
         </UiButton>
       </button>
 
-      <p class="text-12 leading-1.4 opacity-80 mt-4 text-pretty">
+      <p class="type-sans-12 opacity-80 mt-4 text-pretty">
         By submitting, you agree to receive news regarding Haven and accept our
 
         <NuxtLink

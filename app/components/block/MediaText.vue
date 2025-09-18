@@ -5,26 +5,41 @@ interface Props {
   block: BlockMediaText
 }
 
-const props = defineProps<Props>()
+const { block } = defineProps<Props>()
 
-const assetType = computed(() => storyblokAssetType(props.block.media?.filename || ''))
+const assetType = computed(() => storyblokAssetType(block.media?.filename || ''))
 </script>
 
 <template>
   <div
-    v-editable="props.block"
-    class="block-media-text wrapper"
+    v-editable="block"
+    data-component="block-media-text"
+    class="wrapper"
   >
-    <p class="block-media-text__title text-16 font-mono leading-1.4">
-      {{ props.block.title }}
+    <p
+      class="
+      type-mono-16
+      text-center
+      mb-[calc(var(--app-vertical-rhythm)_/_1.25)]
+      md:mb-[calc(var(--app-vertical-rhythm)_/_1.5)]
+    "
+    >
+      {{ block.title }}
     </p>
 
-    <div class="block-media-text__grid">
-      <div class="block-media-text__media">
+    <div class="grid grid-cols-(--app-grid) gap-x-(--app-inner-gutter) gap-y-(--app-vertical-rhythm)">
+      <div
+        class="
+          col-span-full
+          md:col-start-3 md:col-span-8
+          xl:col-start-4 xl:col-span-6
+          max-md:px-(--app-outer-gutter)
+        "
+      >
         <MediaImage
-          v-if="props.block.media && assetType === 'image'"
-          :asset="props.block.media"
-          :ratio="props.block.ratio"
+          v-if="block.media && assetType === 'image'"
+          :asset="block.media"
+          :ratio="block.ratio"
           :sizes="`
             100vw
             sm:100vw
@@ -35,64 +50,18 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
         />
 
         <MediaVideo
-          v-else-if="props.block.media && assetType === 'video'"
-          :asset="props.block.media"
-          :ratio="props.block.ratio"
+          v-else-if="block.media && assetType === 'video'"
+          :asset="block.media"
+          :ratio="block.ratio"
         />
       </div>
 
-      <div class="block-media-text__richtext [&_p]:text-fluid-lead-xs-xl [&_p]:xl:text-fluid-lead-xl-3xl [&_p]:text-pretty [&_p]:leading-1.4">
+      <div class="col-span-full [&_p]:type-sans-20-50 [&_p]:text-pretty [&_p+p]:mt-[1lh]">
         <StoryblokText
-          v-if="storyblokRichTextContent(props.block.text)"
-          :content="props.block.text"
+          v-if="storyblokRichTextContent(block.text)"
+          :content="block.text"
         />
       </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-@reference "@/assets/css/main.css";
-
-.block-media-text__title {
-  margin-block-end: calc(var(--app-vertical-rhythm) / 1.25);
-  text-align: center;
-
-  @variant md {
-    margin-block-end: calc(var(--app-vertical-rhythm) / 1.5);
-  }
-}
-
-.block-media-text__grid {
-  display: flex;
-  flex-direction: column;
-  gap: var(--app-vertical-rhythm) var(--app-inner-gutter);
-
-  @variant md {
-    display: grid;
-    grid-template-columns: var(--app-grid);
-  }
-}
-
-.block-media-text__media {
-  @variant md {
-    grid-column: 3 / span 8;
-  }
-
-  @variant xl {
-    grid-column: 4 / span 6;
-  }
-
-  @variant max-md {
-    padding-inline: var(--app-outer-gutter);
-  }
-}
-
-.block-media-text__richtext {
-  grid-column: 1 / -1;
-
-  & :deep(p + p) {
-    margin-block-start: 1em;
-  }
-}
-</style>

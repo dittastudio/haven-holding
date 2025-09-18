@@ -38,7 +38,7 @@ useHead({
         </a>
       </h1>
 
-      <p class="text-24 text-balance">
+      <p class="type-sans-20 text-balance">
         Uh oh, there was a problem loading up this page.
       </p>
 

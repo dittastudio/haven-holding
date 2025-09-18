@@ -15,7 +15,7 @@ const props = defineProps<Props>()
 
 <template>
   <div class="core-footer bg-white">
-    <div class="core-footer__grid wrapper text-14 font-mono leading-1.4">
+    <div class="core-footer__grid wrapper type-mono-14">
       <div class="core-footer__item core-footer__item--logo">
         <NuxtLink
           to="/"
@@ -40,7 +40,6 @@ const props = defineProps<Props>()
           <address class="not-italic">
             <StoryblokText
               :content="props.address"
-              class="prose-p:text-14"
             />
           </address>
         </StoryblokLink>

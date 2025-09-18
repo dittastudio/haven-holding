@@ -1,28 +1,43 @@
 <script lang="ts" setup>
 import type { Page } from '@@/.storyblok/types/303510/storyblok-components'
+import { colourBackground, colourText } from '@/utils/maps'
 
 interface Props {
   content: Page
 }
 
-const props = defineProps<Props>()
+const { content } = defineProps<Props>()
+
+const getBlockColour = (block: NonNullable<Page['blocks']>[0]) => {
+  return 'colour' in block && block.colour ? colourText[block.colour] : ''
+}
+
+const getBlockBackground = (block: NonNullable<Page['blocks']>[0]) => {
+  return 'background' in block && block.background ? colourBackground[block.background] : ''
+}
 
 const checkBackgroundMatchesPrevBackground = (index: number) => {
   if (index === 0)
     return false
-  return props.content?.blocks?.[index].background === props.content.blocks?.[index - 1].background
+
+  const currentBlock = content?.blocks?.[index]
+  const prevBlock = content?.blocks?.[index - 1]
+
+  return currentBlock && prevBlock && 'background' in currentBlock && 'background' in prevBlock
+    ? currentBlock.background === prevBlock.background
+    : false
 }
 </script>
 
 <template>
   <section
-    v-for="(block, index) in props.content.blocks"
+    v-for="(block, index) in content.blocks"
     :key="block._uid"
     class="content-blocks__item"
     :class="[
       `content-blocks__item--${block.component}`,
-      block.colour ? colourText[block.colour] : '',
-      block.background ? colourBackground[block.background] : '',
+      getBlockColour(block),
+      getBlockBackground(block),
       checkBackgroundMatchesPrevBackground(index) ? 'content-blocks__item--same-background' : '',
     ]"
   >

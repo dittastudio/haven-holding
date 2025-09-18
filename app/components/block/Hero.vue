@@ -11,7 +11,7 @@ interface Props {
   block: BlockHero
 }
 
-const props = defineProps<Props>()
+const { block } = defineProps<Props>()
 
 const route = useRoute()
 const isDev = import.meta.dev
@@ -20,7 +20,7 @@ const isCoverFinished = useState('isCoverFinished')
 const splashSeen = useState('splashSeen')
 const video = ref<any | null>(null)
 
-const assetType = computed(() => storyblokAssetType(props.block.media_desktop?.filename || ''))
+const assetType = computed(() => storyblokAssetType(block.media_desktop?.filename || ''))
 
 watch(isCoverFinished, async () => {
   if (video.value)
@@ -109,30 +109,28 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="block-hero__mask"
+    class="absolute top-0 right-0 left-0 z-1 pointer-events-none h-[calc((100svh_+_50svh)_+_(var(--app-header-height)_/_2))]"
   >
-    <div class="block-hero__mask__outer">
-      <div class="block-hero__mask__inner">
+    <div class="sticky top-0 h-svh flex items-center justify-center">
+      <div class="flex items-center justify-center h-(--app-header-height)">
         <div
           ref="logo"
-          class="block-hero__logo"
+          class="block-hero__logo backface-visibility-hidden outline outline-transparent"
         >
-          <IconLogo
-            class="block-hero__svg"
-          />
+          <IconLogo class="w-[138px] h-[28px]" />
         </div>
       </div>
     </div>
   </div>
 
   <div
-    v-if="props.block.media_desktop"
-    class="block-hero bg-sky"
+    v-if="block.media_desktop"
+    class="sticky top-0 -z-1 h-svh -mt-(--app-header-height) bg-sky"
   >
-    <div class="block-hero__container">
+    <div class="flex items-center justify-center size-full">
       <MediaImage
-        v-if="props.block.media_desktop && assetType === 'image'"
-        :asset="props.block.media_desktop"
+        v-if="block.media_desktop && assetType === 'image'"
+        :asset="block.media_desktop"
         sizes="
           100vw
           sm:100vw
@@ -140,12 +138,12 @@ onUnmounted(() => {
       />
 
       <MediaVideoSelector
-        v-else-if="props.block.media_desktop && assetType === 'video'"
+        v-else-if="block.media_desktop && assetType === 'video'"
         ref="video"
-        :src-small="props.block.media_mobile"
-        :src-small-poster="props.block.media_mobile_poster"
-        :src-large="props.block.media_desktop"
-        :src-large-poster="props.block.media_desktop_poster"
+        :src-small="block.media_mobile"
+        :src-small-poster="block.media_mobile_poster"
+        :src-large="block.media_desktop"
+        :src-large-poster="block.media_desktop_poster"
         loop
         muted
         playsinline
@@ -156,79 +154,18 @@ onUnmounted(() => {
 
   <div
     ref="triggerRef"
-    class="block-hero__spacer bg-offwhite"
+    class="h-(--app-header-height) bg-offwhite"
   />
 </template>
 
 <style scoped>
 @reference "@/assets/css/main.css";
 
-.block-hero {
-  position: sticky;
-  z-index: -1;
-  top: 0;
-
-  height: 100vh;
-  height: 100svh;
-  margin-block-start: calc(var(--app-header-height) * -1); /* negative causes lighthouse issues. wtf */
-}
-
-.block-hero__mask {
-  pointer-events: none;
-
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  right: 0;
-  left: 0;
-
-  height: calc((100svh + 50svh) + (var(--app-header-height) / 2));
-}
-
-.block-hero__mask__outer {
-  position: sticky;
-  top: 0;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  height: 100vh;
-  height: 100svh;
-}
-
-.block-hero__mask__inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: var(--app-header-height);
-}
-
 .block-hero__logo {
   scale: calc(v-bind(logoWidthUnits.medium) / v-bind(logoWidthUnits.small));
-  backface-visibility: hidden;
-  outline: 1px solid transparent;
 
   @variant md {
     scale: calc(v-bind(logoWidthUnits.large) / v-bind(logoWidthUnits.small));
   }
-}
-
-.block-hero__svg {
-  width: 138px;
-  height: 28px;
-}
-
-.block-hero__container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-  height: 100%;
-}
-
-.block-hero__spacer {
-  height: var(--app-header-height);
 }
 </style>

@@ -5,26 +5,41 @@ interface Props {
   block: BlockNewsletter
 }
 
-const props = defineProps<Props>()
+const { block } = defineProps<Props>()
 
-const assetType = computed(() => storyblokAssetType(props.block.media?.filename || ''))
+const assetType = computed(() => storyblokAssetType(block.media?.filename || ''))
 </script>
 
 <template>
   <div
-    v-editable="props.block"
+    v-editable="block"
+    data-component="block-newsletter"
     class="block-newsletter wrapper"
   >
-    <p class="block-newsletter__title text-16 font-mono leading-1.4">
-      {{ props.block.title }}
+    <p
+      class="
+        type-mono-16
+        text-center
+        mb-[calc(var(--app-vertical-rhythm)_/_1.25)]
+        md:mb-[calc(var(--app-vertical-rhythm)_/_1.5)]
+      "
+    >
+      {{ block.title }}
     </p>
 
-    <div class="block-newsletter__grid">
-      <div class="block-newsletter__media">
+    <div class="grid grid-cols-(--app-grid) gap-x-(--app-inner-gutter) gap-y-[calc(var(--app-vertical-rhythm)_/_2)] items-center">
+      <div
+        class="
+          col-span-full
+          md:col-start-2 md:col-span-5
+          md:-me-[calc(var(--app-inner-gutter)_/_2)]
+          max-md:px-(--app-outer-gutter)
+        "
+      >
         <MediaImage
-          v-if="props.block.media && assetType === 'image'"
-          :asset="props.block.media"
-          :ratio="props.block.ratio"
+          v-if="block.media && assetType === 'image'"
+          :asset="block.media"
+          :ratio="block.ratio"
           :sizes="`
             100vw
             sm:100vw
@@ -34,17 +49,28 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
         />
 
         <MediaVideo
-          v-else-if="props.block.media && assetType === 'video'"
-          :asset="props.block.media"
-          :ratio="props.block.ratio"
+          v-else-if="block.media && assetType === 'video'"
+          :asset="block.media"
+          :ratio="block.ratio"
         />
       </div>
 
-      <div class="block-newsletter__text">
-        <div class="[&_p]:text-20 [&_p]:text-pretty [&_p]:leading-1.3">
+      <div
+        class="
+          col-span-full
+          md:col-start-7 md:col-span-5
+          md:ps-(--app-inner-gutter)
+          lg:col-start-8 lg:col-span-4
+          lg:ps-0
+          flex
+          flex-col
+          gap-[calc(var(--app-vertical-rhythm)_/_2)]
+        "
+      >
+        <div class="[&_p]:type-sans-20 [&_p]:text-pretty">
           <StoryblokText
-            v-if="storyblokRichTextContent(props.block.text)"
-            :content="props.block.text"
+            v-if="storyblokRichTextContent(block.text)"
+            :content="block.text"
           />
         </div>
 
@@ -55,53 +81,3 @@ const assetType = computed(() => storyblokAssetType(props.block.media?.filename 
     </div>
   </div>
 </template>
-
-<style scoped>
-@reference "@/assets/css/main.css";
-
-.block-newsletter__title {
-  margin-block-end: calc(var(--app-vertical-rhythm) / 1.25);
-  text-align: center;
-
-  @variant md {
-    margin-block-end: calc(var(--app-vertical-rhythm) / 1.5);
-  }
-}
-
-.block-newsletter__grid {
-  display: grid;
-  grid-template-columns: var(--app-grid);
-  gap: calc(var(--app-vertical-rhythm) / 2) var(--app-inner-gutter);
-  align-items: center;
-}
-
-.block-newsletter__media {
-  grid-column: span 12;
-
-  @variant md {
-    grid-column: 2 / span 5;
-    margin-inline-end: calc(var(--app-inner-gutter) / -2);
-  }
-
-  @variant max-md {
-    padding-inline: var(--app-outer-gutter);
-  }
-}
-
-.block-newsletter__text {
-  display: flex;
-  grid-column: span 12;
-  flex-direction: column;
-  gap: calc(var(--app-vertical-rhythm) / 2);
-
-  @variant md {
-    grid-column: 7 / span 5;
-    padding-inline-start: var(--app-inner-gutter);
-  }
-
-  @variant lg {
-    grid-column: 8 / span 4;
-    padding-inline-start: 0;
-  }
-}
-</style>

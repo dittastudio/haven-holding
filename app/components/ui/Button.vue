@@ -9,7 +9,7 @@ const props = defineProps<Props>()
 
 <template>
   <span
-    class="ui-button text-14 font-mono"
+    class="ui-button type-mono-14"
     :class="[
       { [`ui-button--type-${props.type}`]: props.type },
       { [`ui-button--theme-${props.theme}`]: props.theme },

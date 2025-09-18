@@ -49,7 +49,7 @@ export default defineNuxtConfig({
         },
       ],
     },
-    pageTransition: { name: 'page', mode: 'out-in' },
+    pageTransition: { name: 'fade', mode: 'out-in' },
     layoutTransition: false,
   },
   css: ['~/assets/css/main.css'],

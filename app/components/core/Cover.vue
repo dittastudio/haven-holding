@@ -9,7 +9,7 @@ const currentIndex = backgroundIndex.value
 
 if (import.meta.server) {
   backgroundIndex.value = currentIndex != null && currentIndex < 2 ? currentIndex + 1 : 0
-  backgroundClass.value = backgroundClasses[currentIndex] || backgroundClasses[0]
+  backgroundClass.value = backgroundClasses[currentIndex ?? 0]!
 }
 
 onMounted(async () => {
@@ -23,63 +23,24 @@ onMounted(async () => {
 
 <template>
   <div
-    class="core-cover"
+    data-component="core-cover"
+    class="fixed z-20 inset-0 h-dvh [html:has(&.is-active)]:overflow-hidden transition-opacity duration-1000 ease-smooth"
     :class="[
-      { 'is-active': coverVisible },
+      { 'opacity-0 pointer-events-none': !coverVisible },
+      { 'opacity-100 pointer-events-auto': coverVisible },
       backgroundClass,
     ]"
   >
-    <div class="core-cover__wrapper wrapper">
+    <div class="wrapper flex items-center justify-center h-[inherit]">
       <div
-        class="core-cover__logo"
-        :class="[{ 'is-active': logoVisible }]"
+        class="transition-opacity duration-500 ease-smooth"
+        :class="{
+          'opacity-0': !logoVisible,
+          'opacity-100': logoVisible,
+        }"
       >
         <CoreCoverLogo />
       </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-@reference "@/assets/css/main.css";
-
-.core-cover {
-  pointer-events: none;
-
-  position: fixed;
-  z-index: 20;
-  inset: 0;
-
-  height: 100vh;
-  height: 100dvh;
-
-  opacity: 0;
-
-  transition: opacity 1s var(--ease-smooth);
-
-  &.is-active {
-    pointer-events: auto;
-    opacity: 1;
-  }
-
-  html:has(&.is-active) {
-    overflow: hidden;
-  }
-}
-
-.core-cover__logo {
-  opacity: 0;
-  transition: opacity 0.5s var(--ease-smooth);
-
-  &.is-active {
-    opacity: 1;
-  }
-}
-
-.core-cover__wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: inherit;
-}
-</style>
