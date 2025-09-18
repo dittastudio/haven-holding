@@ -34,6 +34,7 @@
   --text-12: 0.75rem;
   --text-14: 0.875rem;
   --text-16: 1rem;
+  --text-18: 1.125rem;
   --text-20: 1.25rem;
   --text-fluid-lead-xs-xl: clamp(1.25rem, 0.8239rem + 1.8182vw, 2.1875rem); /* 375:20px - 1200:35px */
   --text-fluid-lead-xl-3xl: clamp(2.1875rem, 0.625rem + 2.0833vw, 3.125rem); /* 1200:35px - 1920:50px */

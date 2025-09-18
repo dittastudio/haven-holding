@@ -61,6 +61,10 @@ const checkBackgroundMatchesPrevBackground = (index: number) => {
       :block="block"
     />
   </section>
+
+  <section class="app-blocks__item">
+    <BlockTextGroup />
+  </section>
 </template>
 
 <style lang="postcss">

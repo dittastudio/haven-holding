@@ -26,6 +26,11 @@
   line-height: 1.3;
 }
 
+@utility type-sans-18 {
+  font-size: var(--text-18);
+  line-height: 1.3;
+}
+
 @utility type-sans-20 {
   font-size: var(--text-20);
   line-height: 1.3;
