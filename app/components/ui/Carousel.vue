@@ -13,13 +13,9 @@ interface Props {
     pagination?: boolean
     slideClasses?: string
   }
-  ratioX?: number
-  ratioY?: number
-  ratioDesktopX?: number
-  ratioDesktopY?: number
 }
 
-const { slides, ratioX = 10, ratioY = 16, ratioDesktopX = 16, ratioDesktopY = 9, options = {
+const { slides, options = {
   autoplay: false,
   autoplayDuration: 2000,
   navigation: true,
@@ -47,11 +43,15 @@ const slideStates = computed(() => {
   const currentIndex = current.value
   const prevIndex = currentIndex === 0 ? totalSlides - 1 : currentIndex - 1
   const nextIndex = currentIndex === totalSlides - 1 ? 0 : currentIndex + 1
+  const prevPrevIndex = prevIndex === 0 ? totalSlides - 1 : prevIndex - 1
+  const nextNextIndex = nextIndex === totalSlides - 1 ? 0 : nextIndex + 1
 
   return {
     active: currentIndex,
     previous: prevIndex,
     next: nextIndex,
+    previousPrevious: prevPrevIndex,
+    nextNext: nextNextIndex,
   }
 })
 
@@ -66,6 +66,10 @@ const getSlideClasses = (index: number) => {
     classes.push('slide-previous')
   if (index === states.next)
     classes.push('slide-next')
+  if (index === states.previousPrevious)
+    classes.push('slide-previous-previous')
+  if (index === states.nextNext)
+    classes.push('slide-next-next')
 
   return classes
 }
@@ -143,19 +147,21 @@ onMounted(() => {
   isReady.value = true
   supportsHover.value = window.matchMedia('(hover: hover)').matches
 
-  const easing = (x: number): number => (x < 0.5 ? 8 * x ** 4 : 1 - (-2 * x + 2) ** 4 / 2)
+  const easing = (x: number): number => 1 - (1 - x) ** 4
 
   if (slider.value) {
     sliderInstance.value = new KeenSlider(slider.value, {
       initial: current.value,
-      loop: true,
+      loop: false,
       slides: {
         number: slides?.length || 0,
         origin: 'center',
-        perView: 1,
+        perView: 'auto',
+        spacing: 0,
+        // perView: 1,
       },
       defaultAnimation: {
-        duration: 500,
+        duration: 1000,
         easing,
       },
       slideChanged(slider) {
@@ -220,12 +226,6 @@ onUnmounted(() => {
     <div
       ref="slider"
       class="ui-carousel-fade__container keen-slider relative w-full h-[inherit]"
-      :style="{
-        '--carousel-ratio-x': ratioX,
-        '--carousel-ratio-y': ratioY,
-        '--carousel-ratio-x-desktop': ratioDesktopX,
-        '--carousel-ratio-y-desktop': ratioDesktopY,
-      }"
     >
       <div
         v-for="(slide, index) in slides"
@@ -246,7 +246,7 @@ onUnmounted(() => {
       <!-- Navigation Buttons -->
       <div
         v-if="options.navigation"
-        class="absolute inset-0 flex"
+        class="absolute inset-0 flex hidden"
       >
         <button
           class="w-1/2 flex items-center justify-start p-[var(--app-outer-gutter)] cursor-none"
@@ -321,7 +321,7 @@ onUnmounted(() => {
         v-if="options.pagination"
         class="w-1/2 text-right"
       >
-        {{ current + 1 }}/{{ slides.length }}
+        <UiDial :number="current + 1" />/{{ slides.length }}
       </p>
 
       <p
@@ -334,29 +334,61 @@ onUnmounted(() => {
   </div>
 </template>
 
-<style scoped>
+<style>
 @reference "@/assets/css/main.css";
 
 .ui-carousel-fade__container {
+  position: relative;
+  overflow: hidden;
+
   display: flex;
   align-content: flex-start;
-  overflow: hidden;
-  position: relative;
+
   touch-action: pan-y;
   user-select: none;
-  width: 100%;
-  /* aspect-ratio: var(--carousel-ratio-x) / var(--carousel-ratio-y); */
-
-  @variant md {
-    /* aspect-ratio: var(--carousel-ratio-x-desktop) / var(--carousel-ratio-y-desktop); */
-  }
 }
 
 .ui-carousel-fade__slide {
-  flex-shrink: 0;
   min-height: 100%;
-  overflow: hidden;
-  position: relative;
-  width: 100%;
+}
+
+.ui-carousel-fade__slide .carousel-slide {
+  transition: translate 0.25s var(--ease-out);
+}
+
+.ui-carousel-fade__slide.slide-previous .carousel-slide.is-landscape,
+.ui-carousel-fade__slide.slide-previous-previous .carousel-slide.is-landscape {
+  translate: calc(var(--app-outer-gutter) * -2.5) 0;
+
+  @variant md {
+    translate: calc(((var(--_grid-column) * 4) - (var(--app-inner-gutter) / 2)) * -1) 0;
+  }
+}
+
+.ui-carousel-fade__slide.slide-previous .carousel-slide.is-portrait,
+.ui-carousel-fade__slide.slide-previous-previous .carousel-slide.is-portrait {
+  translate: calc(var(--app-outer-gutter) / -1) 0;
+
+  @variant md {
+    translate: calc((var(--_grid-column) + (var(--_grid-pure-column) / 2)) * -1) 0;
+  }
+}
+
+.ui-carousel-fade__slide.slide-next .carousel-slide.is-landscape,
+.ui-carousel-fade__slide.slide-next-next .carousel-slide.is-landscape {
+  translate: calc(var(--app-outer-gutter) * 2.5) 0;
+
+  @variant md {
+    translate: calc((var(--_grid-column) * 4) - (var(--app-inner-gutter) / 2)) 0;
+  }
+}
+
+.ui-carousel-fade__slide.slide-next .carousel-slide.is-portrait,
+.ui-carousel-fade__slide.slide-next-next .carousel-slide.is-portrait {
+  translate: calc(var(--app-outer-gutter) / 1) 0;
+
+  @variant md {
+    translate: calc(var(--_grid-column) + (var(--_grid-pure-column) / 2)) 0;
+  }
 }
 </style>
