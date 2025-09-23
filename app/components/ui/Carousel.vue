@@ -37,22 +37,92 @@ const isReady = ref(false)
 // Computed properties for slide states
 const slideStates = computed(() => {
   const totalSlides = slides?.length || 0
-  if (totalSlides === 0)
-    return {}
-
   const currentIndex = current.value
+
+  const states = {
+    active: currentIndex,
+    previous: -1,
+    next: -1,
+    previousPrevious: -1,
+    nextNext: -1,
+  }
+
+  if (totalSlides === 0) {
+    return states
+  }
+
+  // 1 slide: only active
+  if (totalSlides === 1) {
+    return states
+  }
+
+  // 2 slides: active + next/previous
+  if (totalSlides === 2) {
+    const otherIndex = currentIndex === 0 ? 1 : 0
+    states.previous = currentIndex === 0 ? -1 : otherIndex
+    states.next = currentIndex === 0 ? otherIndex : -1
+    return states
+  }
+
+  // 3 slides: active + next/previous + nextNext/previousPrevious
+  if (totalSlides === 3) {
+    if (currentIndex === 0) {
+      // Slide 1 active: slide 2 is next, slide 3 is next-next
+      states.next = 1
+      states.nextNext = 2
+    }
+    else if (currentIndex === 1) {
+      // Slide 2 active: slide 1 is previous, slide 3 is next
+      states.previous = 0
+      states.next = 2
+    }
+    else {
+      // Slide 3 active: slide 1 is previous-previous, slide 2 is previous
+      states.previous = 1
+      states.previousPrevious = 0
+    }
+    return states
+  }
+
+  // 4 slides: specific logic to avoid conflicts
+  if (totalSlides === 4) {
+    if (currentIndex === 0) {
+      // Slide 1 active: slide 2 is next, slide 3 is next-next, slide 4 has no state
+      states.next = 1
+      states.nextNext = 2
+    }
+    else if (currentIndex === 1) {
+      // Slide 2 active: slide 1 is previous, slide 3 is next, slide 4 is next-next
+      states.previous = 0
+      states.next = 2
+      states.nextNext = 3
+    }
+    else if (currentIndex === 2) {
+      // Slide 3 active: slide 1 is previous-previous, slide 2 is previous, slide 4 is next
+      states.previous = 1
+      states.next = 3
+      states.previousPrevious = 0
+    }
+    else {
+      // Slide 4 active: slide 1 has no state, slide 2 is previous-previous, slide 3 is previous
+      states.previous = 2
+      states.previousPrevious = 1
+    }
+    return states
+  }
+
+  // 5+ slides: full logic
   const prevIndex = currentIndex === 0 ? totalSlides - 1 : currentIndex - 1
   const nextIndex = currentIndex === totalSlides - 1 ? 0 : currentIndex + 1
   const prevPrevIndex = prevIndex === 0 ? totalSlides - 1 : prevIndex - 1
   const nextNextIndex = nextIndex === totalSlides - 1 ? 0 : nextIndex + 1
 
-  return {
-    active: currentIndex,
-    previous: prevIndex,
-    next: nextIndex,
-    previousPrevious: prevPrevIndex,
-    nextNext: nextNextIndex,
-  }
+  states.previous = prevIndex
+  states.next = nextIndex
+  states.previousPrevious = prevPrevIndex
+  states.nextNext = nextNextIndex
+
+  return states
 })
 
 // Function to get slide classes based on index
@@ -62,13 +132,13 @@ const getSlideClasses = (index: number) => {
 
   if (index === states.active)
     classes.push('slide-active')
-  if (index === states.previous)
+  if (states.previous !== undefined && states.previous >= 0 && index === states.previous)
     classes.push('slide-previous')
-  if (index === states.next)
+  if (states.next !== undefined && states.next >= 0 && index === states.next)
     classes.push('slide-next')
-  if (index === states.previousPrevious)
+  if (states.previousPrevious !== undefined && states.previousPrevious >= 0 && index === states.previousPrevious)
     classes.push('slide-previous-previous')
-  if (index === states.nextNext)
+  if (states.nextNext !== undefined && states.nextNext >= 0 && index === states.nextNext)
     classes.push('slide-next-next')
 
   return classes
@@ -157,11 +227,9 @@ onMounted(() => {
         number: slides?.length || 0,
         origin: 'center',
         perView: 'auto',
-        spacing: 0,
-        // perView: 1,
       },
       defaultAnimation: {
-        duration: 1000,
+        duration: 500,
         easing,
       },
       slideChanged(slider) {
@@ -225,28 +293,31 @@ onUnmounted(() => {
   <div class="relative h-[inherit]">
     <div
       ref="slider"
-      class="ui-carousel-fade__container keen-slider relative w-full h-[inherit]"
+      class="ui-carousel__container keen-slider relative w-full h-[inherit]"
     >
       <div
         v-for="(slide, index) in slides"
         :key="index"
-        class="ui-carousel-fade__slide keen-slider__slide w-full select-none"
+        class="ui-carousel__slide keen-slider__slide w-full select-none"
         :class="[
           options.slideClasses,
           ...getSlideClasses(index),
+          slide.ratio === 'landscape' ? 'is-landscape' : 'is-portrait',
         ]"
       >
-        <slot
-          name="slide"
-          :slide="slide"
-          :index="index"
-        />
+        <div class="ui-carousel__item">
+          <slot
+            name="slide"
+            :slide="slide"
+            :index="index"
+          />
+        </div>
       </div>
 
       <!-- Navigation Buttons -->
       <div
         v-if="options.navigation"
-        class="absolute inset-0 flex hidden"
+        class="absolute inset-0 flex hiddenx"
       >
         <button
           class="w-1/2 flex items-center justify-start p-[var(--app-outer-gutter)] cursor-none"
@@ -259,13 +330,13 @@ onUnmounted(() => {
         >
           <span class="sr-only">Previous</span>
 
-          <IconArrowLarge
-            class="only-hover:hidden w-[16px] h-[18px] rotate-90 filter-shadow-light"
-          />
+          <!-- <IconArrowLarge
+            class="only-hover:hiddenx w-[16px] h-[18px] rotate-90 filter-shadow-light"
+          /> -->
         </button>
 
         <button
-          class="ui-carousel-fade__button ui-carousel-fade__button--right w-1/2 flex items-center justify-end p-[var(--app-outer-gutter)] cursor-none"
+          class="ui-carousel__button ui-carousel__button--right w-1/2 flex items-center justify-end p-[var(--app-outer-gutter)] cursor-none"
           @click="handleChange('next')"
           @mousemove.passive="handleMouseMove"
           @mouseenter="handleMouseEnter('right')"
@@ -275,16 +346,15 @@ onUnmounted(() => {
         >
           <span class="sr-only">Next</span>
 
-          <IconArrowLarge
-            class="only-hover:hidden w-[16px] h-[18px] -rotate-90 filter-shadow-light"
-          />
+          <!-- <IconArrowLarge
+            class="only-hover:hiddenx w-[16px] h-[18px] -rotate-90 filter-shadow-light"
+          /> -->
         </button>
-      </div>
 
-      <!-- Cursor Takeover -->
-      <div
-        v-if="isHovering"
-        class="
+        <!-- Cursor Takeover -->
+        <div
+          v-if="isHovering"
+          class="
           absolute
           pointer-events-none
           z-1
@@ -294,25 +364,26 @@ onUnmounted(() => {
           translate-x-[calc(var(--carousel-cursor-x)_-_50%)]
           translate-y-[calc(var(--carousel-cursor-y)_-_50%)]
           [@media(hover:none)]:hidden
-          text-black
-          filter-shadow-light
+          text-white
+          mix-blend-difference
         "
-        :style="{
-          '--carousel-cursor-x': `${cursorPosition.x}px`,
-          '--carousel-cursor-y': `${cursorPosition.y}px`,
-        }"
-      >
-        <IconArrowLarge
-          class="block w-[16px] h-[18px] transition-all duration-300 ease-out"
-          :class="[
-            hoveredButton === 'left' ? 'rotate-90' : '-rotate-90',
-            {
-              'text-white/60': depressed,
-              '-translate-x-1/4': depressed && hoveredButton === 'left',
-              'translate-x-1/4': depressed && hoveredButton === 'right',
-            },
-          ]"
-        />
+          :style="{
+            '--carousel-cursor-x': `${cursorPosition.x}px`,
+            '--carousel-cursor-y': `${cursorPosition.y}px`,
+          }"
+        >
+          <IconArrowLarge
+            class="block w-[16px] h-[18px] transition-all duration-300 ease-out"
+            :class="[
+              hoveredButton === 'left' ? 'rotate-90' : '-rotate-90',
+              {
+                'opacity-60': depressed,
+                '-translate-x-1/4': depressed && hoveredButton === 'left',
+                'translate-x-1/4': depressed && hoveredButton === 'right',
+              },
+            ]"
+          />
+        </div>
       </div>
     </div>
 
@@ -321,7 +392,7 @@ onUnmounted(() => {
         v-if="options.pagination"
         class="w-1/2 text-right"
       >
-        <UiDial :number="current + 1" />/{{ slides.length }}
+        {{ current + 1 }}/{{ slides.length }}
       </p>
 
       <p
@@ -337,7 +408,7 @@ onUnmounted(() => {
 <style>
 @reference "@/assets/css/main.css";
 
-.ui-carousel-fade__container {
+.ui-carousel__container {
   position: relative;
   overflow: hidden;
 
@@ -348,25 +419,28 @@ onUnmounted(() => {
   user-select: none;
 }
 
-.ui-carousel-fade__slide {
+.ui-carousel__slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-height: 100%;
 }
 
-.ui-carousel-fade__slide .carousel-slide {
+.ui-carousel__item {
   transition: translate 0.25s var(--ease-out);
 }
 
-.ui-carousel-fade__slide.slide-previous .carousel-slide.is-landscape,
-.ui-carousel-fade__slide.slide-previous-previous .carousel-slide.is-landscape {
-  translate: calc(var(--app-outer-gutter) * -2.5) 0;
+.is-landscape.slide-active + .is-landscape .ui-carousel__item ,
+.is-landscape.slide-active + .is-portrait .ui-carousel__item {
+  translate: calc(var(--app-outer-gutter) / 1) 0;
 
   @variant md {
-    translate: calc(((var(--_grid-column) * 4) - (var(--app-inner-gutter) / 2)) * -1) 0;
+    translate: calc(var(--_grid-column) + (var(--_grid-pure-column) / 2)) 0;
   }
 }
 
-.ui-carousel-fade__slide.slide-previous .carousel-slide.is-portrait,
-.ui-carousel-fade__slide.slide-previous-previous .carousel-slide.is-portrait {
+.is-landscape.slide-previous:has(+ .is-landscape) .ui-carousel__item,
+.is-portrait.slide-previous:has(+ .is-landscape) .ui-carousel__item {
   translate: calc(var(--app-outer-gutter) / -1) 0;
 
   @variant md {
@@ -374,21 +448,21 @@ onUnmounted(() => {
   }
 }
 
-.ui-carousel-fade__slide.slide-next .carousel-slide.is-landscape,
-.ui-carousel-fade__slide.slide-next-next .carousel-slide.is-landscape {
+.is-landscape.slide-previous:has(+ .is-portrait) .ui-carousel__item,
+.is-portrait.slide-previous:has(+ .is-portrait) .ui-carousel__item {
+  translate: calc(var(--app-outer-gutter) * -2.5) 0;
+
+  @variant md {
+    translate: calc(((var(--_grid-column) * 4) - (var(--app-inner-gutter) / 2)) * -1) 0;
+  }
+}
+
+.is-portrait.slide-active + .is-landscape .ui-carousel__item,
+.is-portrait.slide-active + .is-portrait .ui-carousel__item {
   translate: calc(var(--app-outer-gutter) * 2.5) 0;
 
   @variant md {
     translate: calc((var(--_grid-column) * 4) - (var(--app-inner-gutter) / 2)) 0;
-  }
-}
-
-.ui-carousel-fade__slide.slide-next .carousel-slide.is-portrait,
-.ui-carousel-fade__slide.slide-next-next .carousel-slide.is-portrait {
-  translate: calc(var(--app-outer-gutter) / 1) 0;
-
-  @variant md {
-    translate: calc(var(--_grid-column) + (var(--_grid-pure-column) / 2)) 0;
   }
 }
 </style>

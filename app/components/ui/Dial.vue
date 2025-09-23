@@ -3,54 +3,46 @@ interface Props {
   number: number
 }
 
-const props = defineProps<Props>()
+const { number } = defineProps<Props>()
 
-const currentNumber = ref(props.number)
+const currentNumber = ref(number)
 const transitionName = ref('slide-up')
 
-// Watch for number changes and determine transition direction
-watch(() => props.number, (newNumber, oldNumber) => {
-  if (newNumber > oldNumber) {
+watch(() => number, (newValue, oldValue) => {
+  if (newValue > oldValue) {
     transitionName.value = 'slide-up'
   }
-  else if (newNumber < oldNumber) {
+  else if (newValue < oldValue) {
     transitionName.value = 'slide-down'
   }
 
-  currentNumber.value = newNumber
+  currentNumber.value = newValue
 })
 </script>
 
 <template>
-  <div class="dial-container">
+  <span class="ui-dial inline-block">
     <Transition
       :name="transitionName"
       mode="out-in"
     >
-      <div
+      <span
         :key="currentNumber"
-        class="dial-number"
+        class="block min-w-[1ch] transform-gpu"
       >
-        {{ currentNumber }}
-      </div>
+        <slot />
+      </span>
     </Transition>
-  </div>
+  </span>
 </template>
 
 <style scoped>
-.dial-container {
-  display: inline-flex;
-  perspective: 1em;
-  transform-style: preserve-3d;
+.ui-dial {
+  --_scale: 0.975;
+  --_opacity: 0;
+  --_y: 0.5em;
 }
 
-.dial-number {
-  min-width: 1ch;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-}
-
-/* Slide up transition (for incrementing numbers) */
 .slide-up-enter-active {
   transition: all 0.3s var(--ease-outQuart);
 }
@@ -60,24 +52,16 @@ watch(() => props.number, (newNumber, oldNumber) => {
 }
 
 .slide-up-enter-from {
-  translate: 0 50%;
-  transform: rotateX(-20deg);
-  opacity: 0;
-  /* transform: rotateX(10deg); */
-  /* transform: translateY(100%);
-  opacity: 0; */
+  translate: 0 var(--_y);
+  scale: var(--_scale);
+  opacity: var(--_opacity);
 }
 
 .slide-up-leave-to {
-  translate: 0 -50%;
-  transform: rotateX(20deg);
-  opacity: 0;
-  /* transform: rotateX(10deg); */
-  /* transform: translateY(-100%);
-  opacity: 0; */
+  translate: 0 calc(-1 * var(--_y));
+  scale: var(--_scale);
+  opacity: var(--_opacity);
 }
-
-/* Slide down transition (for decrementing numbers) */
 
 .slide-down-enter-active {
   transition: all 0.3s var(--ease-outQuart);
@@ -88,16 +72,14 @@ watch(() => props.number, (newNumber, oldNumber) => {
 }
 
 .slide-down-enter-from {
-  translate: 0 -50%;
-  transform: rotateX(20deg);
-  opacity: 0;
-  /* opacity: 0; */
+  translate: 0 calc(-1 * var(--_y));
+  scale: var(--_scale);
+  opacity: var(--_opacity);
 }
 
 .slide-down-leave-to {
-  translate: 0 50%;
-  transform: rotateX(-20deg);
-  opacity: 0;
-  /* opacity: 0; */
+  translate: 0 var(--_y);
+  scale: var(--_scale);
+  opacity: var(--_opacity);
 }
 </style>

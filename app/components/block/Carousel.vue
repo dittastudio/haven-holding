@@ -7,10 +7,73 @@
 
 // const { block } = defineProps<Props>()
 
-import { colourBackground } from '~/utils/maps'
-
-// Get the color keys as an array to loop through
-const colorKeys = Object.keys(colourBackground)
+const slides = [
+  {
+    ratio: 'landscape',
+    image: 'https://picsum.photos/900/600',
+    caption: 'Lounge Room',
+  },
+  {
+    ratio: 'landscape',
+    image: 'https://picsum.photos/900/600',
+    caption: 'Lounge Room',
+  },
+  {
+    ratio: 'portrait',
+    image: 'https://picsum.photos/600/900',
+    caption: 'Dining Room',
+  },
+  {
+    ratio: 'portrait',
+    image: 'https://picsum.photos/600/900',
+    caption: 'Dining Room',
+  },
+  {
+    ratio: 'landscape',
+    image: 'https://picsum.photos/900/600',
+    caption: 'Lounge Room',
+  },
+  {
+    ratio: 'portrait',
+    image: 'https://picsum.photos/600/900',
+    caption: 'Dining Room',
+  },
+  {
+    ratio: 'landscape',
+    image: 'https://picsum.photos/900/600',
+    caption: 'Lounge Room',
+  },
+  {
+    ratio: 'portrait',
+    image: 'https://picsum.photos/600/900',
+    caption: 'Dining Room',
+  },
+  {
+    ratio: 'landscape',
+    image: 'https://picsum.photos/900/600',
+    caption: 'Lounge Room',
+  },
+  {
+    ratio: 'portrait',
+    image: 'https://picsum.photos/600/900',
+    caption: 'Dining Room',
+  },
+  {
+    ratio: 'landscape',
+    image: 'https://picsum.photos/900/600',
+    caption: 'Lounge Room',
+  },
+  {
+    ratio: 'portrait',
+    image: 'https://picsum.photos/600/900',
+    caption: 'Dining Room',
+  },
+  {
+    ratio: 'landscape',
+    image: 'https://picsum.photos/900/600',
+    caption: 'Lounge Room',
+  },
+]
 </script>
 
 <template>
@@ -24,9 +87,7 @@ const colorKeys = Object.keys(colourBackground)
       class="size-full object-cover aspect-[2/3] md:aspect-[3/2] max-h-screen col-span-full row-span-full"
     >
 
-    <div class="col-span-full row-span-full bg-black/30" />
-
-    <div class="col-span-full row-span-full">
+    <div class="col-span-full row-span-full bg-black/30 opacity-100">
       <p class="type-mono-30-70 p-[5%] flex flex-col h-full justify-between text-white">
         <span class="self-end">A</span>
 
@@ -42,46 +103,36 @@ const colorKeys = Object.keys(colourBackground)
   </div>
 
   <!-- Carousel -->
-  <div class="block-carousel bg-white py-(--app-vertical-rhythm)">
+  <div class="block-carousel overflow-hidden bg-white py-(--app-vertical-rhythm)">
     <h2 class="type-mono-12 md:type-mono-14 text-center pb-[calc(var(--app-vertical-rhythm)_*_0.5)]">
       The Space
     </h2>
 
     <UiCarousel
-      :slides="[
-        { caption: 'Lounge Room' },
-        { caption: 'Dining Room' },
-        { caption: 'Kitchen' },
-        { caption: 'Bathroom' },
-        { caption: 'Bedroom' },
-        { caption: 'Garden' },
-      ]"
+      :slides="slides"
       :options="{
         autoplay: false,
         navigation: true,
         pagination: true,
       }"
     >
-      <template #slide="{ slide, index }">
+      <template #slide="{ slide }">
         <div
-          class="carousel-slide size-full flex items-center justify-center type-sans-40-65"
-          :class="index % 3 === 0 ? 'is-landscape' : 'is-portrait'"
-        >
-          <div
-            class="
+          class="
+              carousel-slide
               bg-wheat
-              flex
-              items-center
-              justify-center
               xmd:w-auto
               xmd:h-[48.5vw]
               x3xl:h-[930px]
               mx-auto
             "
-            :class="index % 3 === 0 ? 'aspect-[3/2] w-[calc(100vw-(var(--app-outer-gutter)*2))] md:w-[calc(var(--_grid-column)*9)] h-auto' : 'aspect-[2/3] w-[calc(100vw-(var(--app-outer-gutter)*6))] md:w-[calc(var(--_grid-column)*4)] h-auto'"
+          :class="slide.ratio === 'landscape' ? 'aspect-[3/2] w-[calc(100vw-(var(--app-outer-gutter)*3))] md:w-[calc(var(--_grid-column)*9)] h-auto' : 'aspect-[2/3] w-[calc(100vw-(var(--app-outer-gutter)*6))] md:w-[calc(var(--_grid-column)*4)] h-auto'"
+        >
+          <img
+            :src="slide.image"
+            :alt="slide.caption"
+            class="w-full h-full object-cover"
           >
-            {{ index + 1 }}
-          </div>
         </div>
       </template>
     </UiCarousel>
