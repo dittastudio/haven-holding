@@ -1,29 +1,32 @@
 <script lang="ts" setup>
-// import type { BlockTextGroup } from '@@/.storyblok/types/303510/storyblok-components'
+import type { BlockTextGroup } from '@@/.storyblok/types/303510/storyblok-components'
 
-// interface Props {
-//   block: BlockTextGroup
-// }
+interface Props {
+  block: BlockTextGroup
+}
 
-// const { block } = defineProps<Props>()
+const { block } = defineProps<Props>()
 </script>
 
 <template>
-  <!-- v-editable="block" -->
-  <div class="block-text-group wrapper">
+  <div
+    v-editable="block"
+    class="block-text-group wrapper"
+  >
     <div
       class="
         border-t
-        border-current/30
-        pt-7
+        border-current/50
+        pt-9
       "
     >
       <div
         class="
-          grid
-          grid-cols-(--app-grid)
+          flex
           gap-x-(--app-inner-gutter)
-          gap-y-(--app-vertical-rhythm)
+          gap-y-18
+          flex-col
+          lg:flex-row
           [&_h1]:type-sans-40-65
           [&_h2,&_h3]:type-mono-16
           [&_p]:type-sans-16
@@ -31,24 +34,24 @@
         "
       >
         <div
-          v-for="item in 3"
-          :key="item"
-          class="block-text-group__item col-span-full lg:col-span-4"
+          v-for="item in block.items"
+          :key="item._uid"
+          class="block-text-group__item col-span-full lg:w-1/3 lg:grow"
         >
-          <h2>Title goes here</h2>
+          <h2>{{ item.title }}</h2>
 
-          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reiciendis accusamus, a quae commodi rerum possimus! Repellat voluptas nostrum qui magni ullam accusamus aperiam recusandae quis deserunt amet? Atque, dolore est?</p>
+          <StoryblokText
+            v-if="storyblokRichTextContent(item.copy)"
+            :content="item.copy"
+          />
         </div>
       </div>
 
       <div class="block-text-group__bottom type-mono-12 md:type-mono-14 text-center pt-[calc(var(--app-vertical-rhythm)_*_1.5)] md:pt-(--app-vertical-rhythm)">
-        <p>
-          Email us to plan your retreat
-
-          <br>
-
-          <a href="mailto:info@example.com">info@example.com</a>
-        </p>
+        <StoryblokText
+          v-if="storyblokRichTextContent(block.contact)"
+          :content="block.contact"
+        />
       </div>
     </div>
   </div>

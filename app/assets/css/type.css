@@ -1,18 +1,18 @@
 @utility type-mono-12 {
   font-family: var(--font-mono);
   font-size: var(--text-12);
-  line-height: 1.4;
+  line-height: 1.6;
 }
 
 @utility type-sans-12 {
   font-size: var(--text-12);
-  line-height: 1.4;
+  line-height: 1.6;
 }
 
 @utility type-mono-14 {
   font-family: var(--font-mono);
   font-size: var(--text-14);
-  line-height: 1.4;
+  line-height: 1.6;
 }
 
 @utility type-mono-16 {

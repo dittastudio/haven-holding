@@ -60,11 +60,16 @@ const checkBackgroundMatchesPrevBackground = (index: number) => {
       v-else-if="block.component === 'block_text'"
       :block="block"
     />
+
+    <BlockTextGroup
+      v-else-if="block.component === 'block_text_group'"
+      :block="block"
+    />
   </section>
 
-  <section class="app-blocks__item">
+  <!-- <section class="app-blocks__item">
     <BlockTextGroup />
-  </section>
+  </section> -->
 
   <section class="">
     <BlockCarousel />
@@ -82,7 +87,8 @@ const checkBackgroundMatchesPrevBackground = (index: number) => {
 
 .app-blocks__item:not([class*="bg-"]) + .app-blocks__item.bg-offwhite,
 .app-blocks__item.bg-offwhite + .app-blocks__item:not([class*="bg-"]),
-.app-blocks__item--same-background {
+.app-blocks__item--same-background,
+.app-blocks__item:not([class*="bg-"]) + .app-blocks__item:not([class*="bg-"]) {
   padding-block-start: 0;
 }
 

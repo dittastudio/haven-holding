@@ -144,7 +144,8 @@ const slides = [
 
 .block-carousel {
   --_grid-cols: 2;
-  --_grid-max-width: min(100vw, 1920px);
+  /* --_grid-max-width: min(100vw, 1920px); */
+  --_grid-max-width: 100vw;
   --_grid-inner: calc(var(--_grid-max-width) - (var(--app-outer-gutter) * 2));
   --_grid-gaps-total: calc(var(--app-inner-gutter) * (var(--_grid-cols) - 1));
   --_grid-pure-column: calc((var(--_grid-inner) - var(--_grid-gaps-total)) / var(--_grid-cols));

@@ -51,6 +51,13 @@ export interface BlockText {
   _uid: string;
 }
 
+export interface BlockTextGroup {
+  items?: TextItem[];
+  contact?: StoryblokRichtext;
+  component: "block_text_group";
+  _uid: string;
+}
+
 export interface Link {
   title: string;
   link: Exclude<StoryblokMultilink, {linktype?: "asset"}>;
@@ -66,7 +73,7 @@ export interface LinkList {
 
 export interface Page {
   hero?: BlockHero[];
-  blocks?: (BlockHero | BlockMedia | BlockMediaText | BlockNewsletter | BlockText)[];
+  blocks?: (BlockHero | BlockMedia | BlockMediaText | BlockNewsletter | BlockText | BlockTextGroup)[];
   seo: Seo[];
   component: "page";
   _uid: string;
@@ -93,5 +100,12 @@ export interface SocialItem {
   title: string;
   link?: Exclude<StoryblokMultilink, {linktype?: "asset"}>;
   component: "social_item";
+  _uid: string;
+}
+
+export interface TextItem {
+  title: string;
+  copy?: StoryblokRichtext;
+  component: "text_item";
   _uid: string;
 }
