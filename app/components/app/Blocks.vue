@@ -65,10 +65,11 @@ const checkBackgroundMatchesPrevBackground = (index: number) => {
       v-else-if="block.component === 'block_text_group'"
       :block="block"
     />
-  </section>
 
-  <section class="">
-    <BlockCarousel />
+    <BlockCarousel
+      v-else-if="block.component === 'block_carousel'"
+      :block="block"
+    />
   </section>
 </template>
 
@@ -90,5 +91,9 @@ const checkBackgroundMatchesPrevBackground = (index: number) => {
 
 .app-blocks__item--block_text:first-child {
   padding-block-start: calc(var(--app-vertical-rhythm) * 0.75);
+}
+
+.app-blocks__item--block_carousel {
+  padding-block: 0;
 }
 </style>

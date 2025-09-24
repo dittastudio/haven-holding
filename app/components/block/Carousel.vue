@@ -88,7 +88,7 @@ const slides = [
     >
 
     <div class="w-full bg-black/30 opacity-100">
-      <p class="type-mono-30-70 p-(--app-outer-gutter) md:p-[5%] flex flex-col h-full justify-between text-white">
+      <p class="type-mono-30-70 px-(--app-outer-gutter) py-[calc(var(--app-outer-gutter)*1.5)] md:p-[5%] flex flex-col h-full justify-between text-white">
         <span class="self-end">A</span>
 
         <span class="self-start">space</span>
@@ -101,7 +101,7 @@ const slides = [
   </div>
 
   <!-- Carousel -->
-  <div class="block-carousel overflow-hidden bg-white py-(--app-vertical-rhythm)">
+  <div class="block-carousel min-h-screen overflow-hidden bg-white py-(--app-vertical-rhythm)">
     <h2 class="type-mono-12 md:type-mono-14 text-center pb-[calc(var(--app-vertical-rhythm)_*_0.5)]">
       The Space
     </h2>
@@ -118,10 +118,6 @@ const slides = [
         <div
           class="
               carousel-slide
-              bg-wheat
-              xmd:w-auto
-              xmd:h-[48.5vw]
-              x3xl:h-[930px]
               mx-auto
             "
           :class="slide.ratio === 'landscape' ? 'aspect-[3/2] w-[calc(100vw-(var(--app-outer-gutter)*3))] md:w-[calc(var(--_grid-column)*9)] h-auto' : 'aspect-[2/3] w-[calc(100vw-(var(--app-outer-gutter)*6))] md:w-[calc(var(--_grid-column)*4)] h-auto'"
@@ -142,8 +138,8 @@ const slides = [
 
 .block-carousel {
   --_grid-cols: 2;
-  /* --_grid-max-width: min(100vw, 1920px); */
-  --_grid-max-width: 100vw;
+  --_grid-max-width: min(100vw, 1920px);
+  /* --_grid-max-width: 100vw; */
   --_grid-inner: calc(var(--_grid-max-width) - (var(--app-outer-gutter) * 2));
   --_grid-gaps-total: calc(var(--app-inner-gutter) * (var(--_grid-cols) - 1));
   --_grid-pure-column: calc((var(--_grid-inner) - var(--_grid-gaps-total)) / var(--_grid-cols));

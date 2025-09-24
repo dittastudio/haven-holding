@@ -298,14 +298,14 @@ onUnmounted(() => {
       <div
         v-for="(slide, index) in slides"
         :key="index"
-        class="ui-carousel__slide keen-slider__slide w-full select-none"
+        class="ui-carousel__slide keen-slider__slide w-full h-full select-none"
         :class="[
           options.slideClasses,
           ...getSlideClasses(index),
           slide.ratio === 'landscape' ? 'is-landscape' : 'is-portrait',
         ]"
       >
-        <div class="ui-carousel__item">
+        <div class="ui-carousel__item h-[inherit]">
           <slot
             name="slide"
             :slide="slide"
@@ -329,10 +329,6 @@ onUnmounted(() => {
           @mouseup="handleMouseUp"
         >
           <span class="sr-only">Previous</span>
-
-          <!-- <IconArrowLarge
-            class="only-hover:hiddenx w-[16px] h-[18px] rotate-90 filter-shadow-light"
-          /> -->
         </button>
 
         <button
@@ -345,10 +341,6 @@ onUnmounted(() => {
           @mouseup="handleMouseUp"
         >
           <span class="sr-only">Next</span>
-
-          <!-- <IconArrowLarge
-            class="only-hover:hiddenx w-[16px] h-[18px] -rotate-90 filter-shadow-light"
-          /> -->
         </button>
 
         <!-- Cursor Takeover -->
@@ -463,6 +455,22 @@ onUnmounted(() => {
 
   @variant md {
     translate: calc((var(--_grid-column) * 4) - (var(--app-inner-gutter) / 2)) 0;
+  }
+}
+
+.slide-next-next .ui-carousel__item {
+  translate: calc(var(--app-outer-gutter) * 5) 0;
+
+  @variant md {
+    translate: calc((var(--_grid-column) * 8) - (var(--app-inner-gutter) / 2)) 0;
+  }
+}
+
+.slide-previous-previous .ui-carousel__item {
+  translate: calc(var(--app-outer-gutter) * -5) 0;
+
+  @variant md {
+    translate: calc((var(--_grid-column) * -8) - (var(--app-inner-gutter) / 2)) 0;
   }
 }
 </style>
