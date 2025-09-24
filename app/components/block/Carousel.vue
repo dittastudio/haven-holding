@@ -80,24 +80,22 @@ const slides = [
   <!-- v-editable="block" -->
 
   <!-- Cover Image -->
-  <div class="grid">
+  <div class="relative flex isolate min-h-screen">
     <img
       src="/images/carousel-test.jpg"
       alt="Carousel"
-      class="size-full object-cover aspect-[2/3] md:aspect-[3/2] max-h-screen col-span-full row-span-full"
+      class="absolute inset-0 size-full object-cover -z-1"
     >
 
-    <div class="col-span-full row-span-full bg-black/30 opacity-100">
-      <p class="type-mono-30-70 p-[5%] flex flex-col h-full justify-between text-white">
+    <div class="w-full bg-black/30 opacity-100">
+      <p class="type-mono-30-70 p-(--app-outer-gutter) md:p-[5%] flex flex-col h-full justify-between text-white">
         <span class="self-end">A</span>
 
         <span class="self-start">space</span>
 
         <span class="self-center">for</span>
 
-        <span class="self-end">
-          <span class="-my-[0.1em]">creation</span>
-        </span>
+        <span class="self-end">creation</span>
       </p>
     </div>
   </div>
