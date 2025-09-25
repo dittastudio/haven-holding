@@ -21,7 +21,7 @@ const { theme } = defineProps<Props>()
       border-current
       transition-all
       duration-200
-      ease-smooth
+      ease-out
       after:absolute
       after:-inset-px
       after:z-0

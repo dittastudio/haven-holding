@@ -144,18 +144,18 @@ const getSlideClasses = (index: number) => {
   return classes
 }
 
-const currentSlideCaption = computed(() => {
-  if (!slides?.length)
-    return ''
+// const currentSlideCaption = computed(() => {
+//   if (!slides?.length)
+//     return ''
 
-  const currentSlide = slides[current.value]
+//   const currentSlide = slides[current.value]
 
-  if (currentSlide?.caption) {
-    return currentSlide.caption
-  }
+//   if (currentSlide?.caption) {
+//     return currentSlide.caption
+//   }
 
-  return ''
-})
+//   return ''
+// })
 
 const updateCursorPosition = (x: number, y: number) => {
   if (!supportsHover.value) {
@@ -293,12 +293,12 @@ onUnmounted(() => {
   <div class="relative h-[inherit]">
     <div
       ref="slider"
-      class="ui-carousel__container keen-slider relative w-full h-[inherit]"
+      class="keen-slider relative overflow-hidden flex w-full h-[inherit] touch-pan-y select-none"
     >
       <div
         v-for="(slide, index) in slides"
         :key="index"
-        class="ui-carousel__slide keen-slider__slide w-full h-full select-none"
+        class="keen-slider__slide flex items-center justify-center w-full h-[inherit] min-h-full"
         :class="[
           options.slideClasses,
           ...getSlideClasses(index),
@@ -379,98 +379,70 @@ onUnmounted(() => {
       </div>
     </div>
 
-    <div class="wrapper flex gap-x-(--app-inner-gutter) mt-(--app-outer-gutter) type-mono-12 md:type-mono-14">
-      <p
-        v-if="options.pagination"
-        class="w-1/2 text-right"
-      >
-        {{ current + 1 }}/{{ slides.length }}
-      </p>
-
-      <p
-        v-if="currentSlideCaption"
-        class="w-1/2"
-      >
-        {{ currentSlideCaption }}
-      </p>
-    </div>
+    <slot
+      name="caption"
+      :slide="slides[current]"
+      :current="current"
+    />
   </div>
 </template>
 
 <style>
 @reference "@/assets/css/main.css";
 
-.ui-carousel__container {
-  position: relative;
-  overflow: hidden;
-
-  display: flex;
-  align-content: flex-start;
-
-  touch-action: pan-y;
-  user-select: none;
-}
-
-.ui-carousel__slide {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100%;
-}
-
 .ui-carousel__item {
   transition: translate 0.25s var(--ease-out);
-}
 
-.is-landscape.slide-active + .is-landscape .ui-carousel__item ,
-.is-landscape.slide-active + .is-portrait .ui-carousel__item {
-  translate: calc(var(--app-outer-gutter) / 1) 0;
+  .is-landscape.slide-active + .is-landscape &,
+  .is-landscape.slide-active + .is-portrait & {
+    translate: calc(var(--app-outer-gutter) / 1) 0;
 
-  @variant md {
-    translate: calc(var(--_grid-column) + (var(--_grid-pure-column) / 2)) 0;
+    @variant md {
+      translate: calc(var(--_grid-column) + (var(--_grid-pure-column) / 2)) 0;
+    }
   }
-}
 
-.is-landscape.slide-previous:has(+ .is-landscape) .ui-carousel__item,
-.is-portrait.slide-previous:has(+ .is-landscape) .ui-carousel__item {
-  translate: calc(var(--app-outer-gutter) / -1) 0;
+  .is-landscape.slide-previous:has(+ .is-landscape) &,
+  .is-portrait.slide-previous:has(+ .is-landscape) & {
+    translate: calc(var(--app-outer-gutter) / -1) 0;
 
-  @variant md {
-    translate: calc((var(--_grid-column) + (var(--_grid-pure-column) / 2)) * -1) 0;
+    @variant md {
+      translate: calc((var(--_grid-column) + (var(--_grid-pure-column) / 2)) * -1) 0;
+    }
   }
-}
 
-.is-landscape.slide-previous:has(+ .is-portrait) .ui-carousel__item,
-.is-portrait.slide-previous:has(+ .is-portrait) .ui-carousel__item {
-  translate: calc(var(--app-outer-gutter) * -2.5) 0;
+  .is-landscape.slide-previous:has(+ .is-portrait) &,
+  .is-portrait.slide-previous:has(+ .is-portrait) & {
+    translate: calc(var(--app-outer-gutter) * -2.5) 0;
 
-  @variant md {
-    translate: calc(((var(--_grid-column) * 4) - (var(--app-inner-gutter) / 2)) * -1) 0;
+    @variant md {
+      translate: calc(((var(--_grid-column) * 4) - (var(--app-inner-gutter) / 2)) * -1) 0;
+    }
   }
-}
 
-.is-portrait.slide-active + .is-landscape .ui-carousel__item,
-.is-portrait.slide-active + .is-portrait .ui-carousel__item {
-  translate: calc(var(--app-outer-gutter) * 2.5) 0;
+  .is-portrait.slide-active + .is-landscape &,
+  .is-portrait.slide-active + .is-portrait & {
+    translate: calc(var(--app-outer-gutter) * 2.5) 0;
 
-  @variant md {
-    translate: calc((var(--_grid-column) * 4) - (var(--app-inner-gutter) / 2)) 0;
+    @variant md {
+      translate: calc((var(--_grid-column) * 4) - (var(--app-inner-gutter) / 2)) 0;
+    }
   }
-}
 
-.slide-next-next .ui-carousel__item {
-  translate: calc(var(--app-outer-gutter) * 5) 0;
+  .slide-next-next & {
+    translate: calc(var(--app-outer-gutter) * 5) 0;
 
-  @variant md {
-    translate: calc((var(--_grid-column) * 8) - (var(--app-inner-gutter) / 2)) 0;
+    @variant md {
+      translate: calc((var(--_grid-column) * 8) - (var(--app-inner-gutter) / 2)) 0;
+    }
   }
-}
 
-.slide-previous-previous .ui-carousel__item {
-  translate: calc(var(--app-outer-gutter) * -5) 0;
+  .slide-previous-previous & {
+    translate: calc(var(--app-outer-gutter) * -5) 0;
 
-  @variant md {
-    translate: calc((var(--_grid-column) * -8) - (var(--app-inner-gutter) / 2)) 0;
+    @variant md {
+      translate: calc((var(--_grid-column) * -8) - (var(--app-inner-gutter) / 2)) 0;
+    }
   }
 }
 </style>

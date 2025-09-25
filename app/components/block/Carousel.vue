@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-// import type { BlockCarousel } from '@@/.storyblok/types/303510/storyblok-components'
+import type { BlockCarousel } from '@@/.storyblok/types/303510/storyblok-components'
 
-// interface Props {
-//   block: BlockCarousel
-// }
+interface Props {
+  block: BlockCarousel
+}
 
-// const { block } = defineProps<Props>()
+const { block } = defineProps<Props>()
 
 const slides = [
   {
@@ -77,59 +77,81 @@ const slides = [
 </script>
 
 <template>
-  <!-- v-editable="block" -->
+  <div
+    v-editable="block"
+    class="block-carousel"
+  >
+    <!-- Cover Image -->
+    <div class="sticky top-0 flex items-center justify-center z-1 opacity-50 pointer-events-none">
+      <div class="sticky bottom-0 w-full flex isolate min-h-screen">
+        <img
+          src="/images/carousel-test.jpg"
+          alt="Carousel"
+          class="absolute inset-0 size-full object-cover -z-1 opacity-20"
+        >
 
-  <!-- Cover Image -->
-  <div class="relative flex isolate min-h-screen">
-    <img
-      src="/images/carousel-test.jpg"
-      alt="Carousel"
-      class="absolute inset-0 size-full object-cover -z-1"
-    >
+        <div class="w-full bg-black/30 opacity-100">
+          <p class="type-mono-30-70 px-(--app-outer-gutter) py-[calc(var(--app-outer-gutter)*1.5)] md:p-[5%] flex flex-col h-full justify-between text-white">
+            <span class="self-end">A</span>
 
-    <div class="w-full bg-black/30 opacity-100">
-      <p class="type-mono-30-70 px-(--app-outer-gutter) py-[calc(var(--app-outer-gutter)*1.5)] md:p-[5%] flex flex-col h-full justify-between text-white">
-        <span class="self-end">A</span>
+            <span class="self-start">space</span>
 
-        <span class="self-start">space</span>
+            <span class="self-center">for</span>
 
-        <span class="self-center">for</span>
-
-        <span class="self-end">creation</span>
-      </p>
+            <span class="self-end">creation</span>
+          </p>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <!-- Carousel -->
-  <div class="block-carousel min-h-screen overflow-hidden bg-white py-(--app-vertical-rhythm)">
-    <h2 class="type-mono-12 md:type-mono-14 text-center pb-[calc(var(--app-vertical-rhythm)_*_0.5)]">
-      The Space
-    </h2>
+    <!-- Carousel -->
+    <div class="flex flex-col justify-center min-h-screen overflow-hidden bg-white py-(--app-vertical-rhythm)">
+      <h2 class="type-mono-12 md:type-mono-14 text-center mb-[calc(var(--app-vertical-rhythm)_*_0.5)]">
+        The Space
+      </h2>
 
-    <UiCarousel
-      :slides="slides"
-      :options="{
-        autoplay: false,
-        navigation: true,
-        pagination: true,
-      }"
-    >
-      <template #slide="{ slide }">
-        <div
-          class="
+      <UiCarousel
+        :slides="slides"
+        :options="{
+          autoplay: false,
+          navigation: true,
+          pagination: true,
+        }"
+      >
+        <template #slide="{ slide }">
+          <div
+            class="
               carousel-slide
               mx-auto
             "
-          :class="slide.ratio === 'landscape' ? 'aspect-[3/2] w-[calc(100vw-(var(--app-outer-gutter)*3))] md:w-[calc(var(--_grid-column)*9)] h-auto' : 'aspect-[2/3] w-[calc(100vw-(var(--app-outer-gutter)*6))] md:w-[calc(var(--_grid-column)*4)] h-auto'"
-        >
-          <img
-            :src="slide.image"
-            :alt="slide.caption"
-            class="w-full h-full object-cover"
+            :class="slide.ratio === 'landscape' ? 'aspect-[3/2] w-[calc(100vw-(var(--app-outer-gutter)*3))] md:w-[calc(var(--_grid-column)*9)] h-auto' : 'aspect-[2/3] w-[calc(100vw-(var(--app-outer-gutter)*6))] md:w-[calc(var(--_grid-column)*4)] h-auto'"
           >
-        </div>
-      </template>
-    </UiCarousel>
+            <img
+              :src="slide.image"
+              :alt="slide.caption"
+              class="w-full h-full object-cover"
+            >
+          </div>
+        </template>
+
+        <template #caption="{ slide, current }">
+          <div class="wrapper flex gap-x-(--app-inner-gutter) my-[calc(var(--app-vertical-rhythm)_*_0.25)] type-mono-12 md:type-mono-14">
+            <p
+              class="w-1/2 text-right"
+            >
+              {{ current + 1 }}/{{ slides.length }}
+            </p>
+
+            <p
+              v-if="slide.caption"
+              class="w-1/2"
+            >
+              {{ slide.caption }}
+            </p>
+          </div>
+        </template>
+      </UiCarousel>
+    </div>
   </div>
 </template>
 
@@ -137,6 +159,9 @@ const slides = [
 @reference "@/assets/css/main.css";
 
 .block-carousel {
+  display: grid;
+  grid-auto-rows: minmax(auto, 1fr);
+
   --_grid-cols: 2;
   --_grid-max-width: min(100vw, 1920px);
   /* --_grid-max-width: 100vw; */
