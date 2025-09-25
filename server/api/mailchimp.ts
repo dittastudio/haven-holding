@@ -39,10 +39,9 @@ export default defineEventHandler(async (event) => {
       .min(1, 'Please provide your last name')
       .default(''),
     email: z
-      .string()
-      .trim()
-      .min(1, 'Please provide your email')
       .email({ message: 'Email address must be valid' })
+      .trim()
+      .min(6, 'Please provide your email')
       .default(''),
   })
 

@@ -14,65 +14,55 @@ const slides = [
     caption: 'Lounge Room',
   },
   {
-    ratio: 'landscape',
-    image: 'https://picsum.photos/900/600',
-    caption: 'Lounge Room',
-  },
-  {
     ratio: 'portrait',
     image: 'https://picsum.photos/600/900',
     caption: 'Dining Room',
   },
-  // {
-  //   ratio: 'portrait',
-  //   image: 'https://picsum.photos/600/900',
-  //   caption: 'Dining Room',
-  // },
-  // {
-  //   ratio: 'landscape',
-  //   image: 'https://picsum.photos/900/600',
-  //   caption: 'Lounge Room',
-  // },
-  // {
-  //   ratio: 'portrait',
-  //   image: 'https://picsum.photos/600/900',
-  //   caption: 'Dining Room',
-  // },
-  // {
-  //   ratio: 'landscape',
-  //   image: 'https://picsum.photos/900/600',
-  //   caption: 'Lounge Room',
-  // },
-  // {
-  //   ratio: 'portrait',
-  //   image: 'https://picsum.photos/600/900',
-  //   caption: 'Dining Room',
-  // },
-  // {
-  //   ratio: 'landscape',
-  //   image: 'https://picsum.photos/900/600',
-  //   caption: 'Lounge Room',
-  // },
-  // {
-  //   ratio: 'portrait',
-  //   image: 'https://picsum.photos/600/900',
-  //   caption: 'Dining Room',
-  // },
-  // {
-  //   ratio: 'landscape',
-  //   image: 'https://picsum.photos/900/600',
-  //   caption: 'Lounge Room',
-  // },
-  // {
-  //   ratio: 'portrait',
-  //   image: 'https://picsum.photos/600/900',
-  //   caption: 'Dining Room',
-  // },
-  // {
-  //   ratio: 'landscape',
-  //   image: 'https://picsum.photos/900/600',
-  //   caption: 'Lounge Room',
-  // },
+  {
+    ratio: 'landscape',
+    image: 'https://picsum.photos/900/600',
+    caption: 'Studio',
+  },
+  {
+    ratio: 'portrait',
+    image: 'https://picsum.photos/600/900',
+    caption: 'Office',
+  },
+  {
+    ratio: 'landscape',
+    image: 'https://picsum.photos/900/600',
+    caption: 'Living Room',
+  },
+  {
+    ratio: 'portrait',
+    image: 'https://picsum.photos/600/900',
+    caption: 'Kitchen',
+  },
+  {
+    ratio: 'landscape',
+    image: 'https://picsum.photos/900/600',
+    caption: 'Bedroom',
+  },
+  {
+    ratio: 'portrait',
+    image: 'https://picsum.photos/600/900',
+    caption: 'Bathroom',
+  },
+  {
+    ratio: 'landscape',
+    image: 'https://picsum.photos/900/600',
+    caption: 'Balcony',
+  },
+  {
+    ratio: 'portrait',
+    image: 'https://picsum.photos/600/900',
+    caption: 'Garden',
+  },
+  {
+    ratio: 'landscape',
+    image: 'https://picsum.photos/900/600',
+    caption: 'Pool',
+  },
 ]
 </script>
 
