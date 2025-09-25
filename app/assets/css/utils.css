@@ -53,3 +53,7 @@
     @slot;
   }
 }
+
+@utility text-trim-both {
+  text-box-trim: trim-both;
+}

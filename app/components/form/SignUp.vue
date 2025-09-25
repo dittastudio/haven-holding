@@ -19,20 +19,14 @@ const validationSchema = toTypedSchema(
       .min(1, 'Please provide your last name')
       .default(''),
     email: z
-      .string()
+      .email({ error: 'Email address must be valid' })
       .trim()
-      .min(1, 'Please provide your email')
-      .email({ message: 'Email address must be valid' })
+      .min(6, 'Please provide your email')
       .default(''),
   }),
 )
 
 const { errors, resetForm } = useForm({
-  initialValues: {
-    fname: '',
-    lname: '',
-    email: '',
-  },
   validationSchema,
 })
 
@@ -66,6 +60,7 @@ const onSubmit = async () => {
 
     message.value = response.statusMessage
 
+    // @ts-expect-error Because the API is correct. TODO: Get proper fix sorted.
     if (response?.statusCode === 200) {
       resetForm()
     }

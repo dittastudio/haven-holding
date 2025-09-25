@@ -9,7 +9,6 @@ const resolvers = {
       to: storyblokSlug(node.attrs?.href),
       target: node.attrs?.target,
     }, { default: () => node.text ?? '' }),
-  [BlockTypes.BR]: () => h('br'),
 }
 
 interface Props {

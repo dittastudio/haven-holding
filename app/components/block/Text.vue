@@ -66,7 +66,7 @@ const { block } = defineProps<Props>()
 
   & p a {
     text-decoration: underline;
-    transition: opacity 0.2s var(--ease-smooth);
+    transition: opacity 0.2s var(--ease-out);
 
     &:hover {
       opacity: 0.4;
