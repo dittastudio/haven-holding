@@ -34,114 +34,38 @@ const supportsHover = ref(false)
 const isVisible = ref(false)
 const isReady = ref(false)
 
-// Computed properties for slide states
-const slideStates = computed(() => {
-  const totalSlides = slides?.length || 0
-  const currentIndex = current.value
-
-  const states = {
-    active: currentIndex,
-    previous: -1,
-    next: -1,
-    previousPrevious: -1,
-    nextNext: -1,
-  }
-
-  if (totalSlides === 0) {
-    return states
-  }
-
-  // 1 slide: only active
-  if (totalSlides === 1) {
-    return states
-  }
-
-  // 2 slides: active + next/previous
-  if (totalSlides === 2) {
-    const otherIndex = currentIndex === 0 ? 1 : 0
-    states.previous = currentIndex === 0 ? -1 : otherIndex
-    states.next = currentIndex === 0 ? otherIndex : -1
-    return states
-  }
-
-  // 3 slides: active + next/previous + nextNext/previousPrevious
-  if (totalSlides === 3) {
-    if (currentIndex === 0) {
-      // Slide 1 active: slide 2 is next, slide 3 is next-next
-      states.next = 1
-      states.nextNext = 2
-    }
-    else if (currentIndex === 1) {
-      // Slide 2 active: slide 1 is previous, slide 3 is next
-      states.previous = 0
-      states.next = 2
-    }
-    else {
-      // Slide 3 active: slide 1 is previous-previous, slide 2 is previous
-      states.previous = 1
-      states.previousPrevious = 0
-    }
-    return states
-  }
-
-  // 4 slides: specific logic to avoid conflicts
-  if (totalSlides === 4) {
-    if (currentIndex === 0) {
-      // Slide 1 active: slide 2 is next, slide 3 is next-next, slide 4 has no state
-      states.next = 1
-      states.nextNext = 2
-    }
-    else if (currentIndex === 1) {
-      // Slide 2 active: slide 1 is previous, slide 3 is next, slide 4 is next-next
-      states.previous = 0
-      states.next = 2
-      states.nextNext = 3
-    }
-    else if (currentIndex === 2) {
-      // Slide 3 active: slide 1 is previous-previous, slide 2 is previous, slide 4 is next
-      states.previous = 1
-      states.next = 3
-      states.previousPrevious = 0
-    }
-    else {
-      // Slide 4 active: slide 1 has no state, slide 2 is previous-previous, slide 3 is previous
-      states.previous = 2
-      states.previousPrevious = 1
-    }
-    return states
-  }
-
-  // 5+ slides: full logic
-  const prevIndex = currentIndex === 0 ? totalSlides - 1 : currentIndex - 1
-  const nextIndex = currentIndex === totalSlides - 1 ? 0 : currentIndex + 1
-  const prevPrevIndex = prevIndex === 0 ? totalSlides - 1 : prevIndex - 1
-  const nextNextIndex = nextIndex === totalSlides - 1 ? 0 : nextIndex + 1
-
-  states.previous = prevIndex
-  states.next = nextIndex
-  states.previousPrevious = prevPrevIndex
-  states.nextNext = nextNextIndex
-
-  return states
-})
-
-// Function to get slide classes based on index
 const getSlideClasses = (index: number) => {
-  const states = slideStates.value
-  const classes = []
+  const currentIndex = current.value
+  const totalSlides = slides?.length || 0
+  const diff = index - currentIndex
 
-  if (index === states.active)
-    classes.push('slide-active')
-  if (states.previous !== undefined && states.previous >= 0 && index === states.previous)
-    classes.push('slide-previous')
-  if (states.next !== undefined && states.next >= 0 && index === states.next)
-    classes.push('slide-next')
-  if (states.previousPrevious !== undefined && states.previousPrevious >= 0 && index === states.previousPrevious)
-    classes.push('slide-previous-previous')
-  if (states.nextNext !== undefined && states.nextNext >= 0 && index === states.nextNext)
-    classes.push('slide-next-next')
+  const positions = {
+    previousPrevious: -2,
+    previous: -1,
+    active: 0,
+    next: 1,
+    nextNext: 2,
+  }
 
-  return classes
+  const hasPrevious = currentIndex > 0
+  const hasPreviousPrevious = currentIndex > 1
+  const hasNext = currentIndex < totalSlides - 1
+  const hasNextNext = currentIndex < totalSlides - 2
+
+  switch (diff) {
+    case positions.active:
+      return 'slide-active'
+    case positions.previous:
+      return hasPrevious ? 'slide-previous' : ''
+    case positions.previousPrevious:
+      return hasPreviousPrevious ? 'slide-previous-previous' : ''
+    case positions.next:
+      return hasNext ? 'slide-next' : ''
+    case positions.nextNext:
+      return hasNextNext ? 'slide-next-next' : ''
+    default:
+      return ''
+  }
 }
 
 const updateCursorPosition = (x: number, y: number) => {
@@ -288,7 +212,7 @@ onUnmounted(() => {
         class="keen-slider__slide flex items-center justify-center w-full h-[inherit] min-h-full"
         :class="[
           options.slideClasses,
-          ...getSlideClasses(index),
+          getSlideClasses(index),
           slide.ratio === 'landscape' ? 'is-landscape' : 'is-portrait',
         ]"
       >

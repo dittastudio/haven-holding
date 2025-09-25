@@ -23,56 +23,56 @@ const slides = [
     image: 'https://picsum.photos/600/900',
     caption: 'Dining Room',
   },
-  {
-    ratio: 'portrait',
-    image: 'https://picsum.photos/600/900',
-    caption: 'Dining Room',
-  },
-  {
-    ratio: 'landscape',
-    image: 'https://picsum.photos/900/600',
-    caption: 'Lounge Room',
-  },
-  {
-    ratio: 'portrait',
-    image: 'https://picsum.photos/600/900',
-    caption: 'Dining Room',
-  },
-  {
-    ratio: 'landscape',
-    image: 'https://picsum.photos/900/600',
-    caption: 'Lounge Room',
-  },
-  {
-    ratio: 'portrait',
-    image: 'https://picsum.photos/600/900',
-    caption: 'Dining Room',
-  },
-  {
-    ratio: 'landscape',
-    image: 'https://picsum.photos/900/600',
-    caption: 'Lounge Room',
-  },
-  {
-    ratio: 'portrait',
-    image: 'https://picsum.photos/600/900',
-    caption: 'Dining Room',
-  },
-  {
-    ratio: 'landscape',
-    image: 'https://picsum.photos/900/600',
-    caption: 'Lounge Room',
-  },
-  {
-    ratio: 'portrait',
-    image: 'https://picsum.photos/600/900',
-    caption: 'Dining Room',
-  },
-  {
-    ratio: 'landscape',
-    image: 'https://picsum.photos/900/600',
-    caption: 'Lounge Room',
-  },
+  // {
+  //   ratio: 'portrait',
+  //   image: 'https://picsum.photos/600/900',
+  //   caption: 'Dining Room',
+  // },
+  // {
+  //   ratio: 'landscape',
+  //   image: 'https://picsum.photos/900/600',
+  //   caption: 'Lounge Room',
+  // },
+  // {
+  //   ratio: 'portrait',
+  //   image: 'https://picsum.photos/600/900',
+  //   caption: 'Dining Room',
+  // },
+  // {
+  //   ratio: 'landscape',
+  //   image: 'https://picsum.photos/900/600',
+  //   caption: 'Lounge Room',
+  // },
+  // {
+  //   ratio: 'portrait',
+  //   image: 'https://picsum.photos/600/900',
+  //   caption: 'Dining Room',
+  // },
+  // {
+  //   ratio: 'landscape',
+  //   image: 'https://picsum.photos/900/600',
+  //   caption: 'Lounge Room',
+  // },
+  // {
+  //   ratio: 'portrait',
+  //   image: 'https://picsum.photos/600/900',
+  //   caption: 'Dining Room',
+  // },
+  // {
+  //   ratio: 'landscape',
+  //   image: 'https://picsum.photos/900/600',
+  //   caption: 'Lounge Room',
+  // },
+  // {
+  //   ratio: 'portrait',
+  //   image: 'https://picsum.photos/600/900',
+  //   caption: 'Dining Room',
+  // },
+  // {
+  //   ratio: 'landscape',
+  //   image: 'https://picsum.photos/900/600',
+  //   caption: 'Lounge Room',
+  // },
 ]
 </script>
 
@@ -114,7 +114,7 @@ const slides = [
         :slides="slides"
         :options="{
           autoplay: false,
-          navigation: true,
+          navigation: slides.length > 1,
           pagination: true,
         }"
       >
