@@ -144,19 +144,6 @@ const getSlideClasses = (index: number) => {
   return classes
 }
 
-// const currentSlideCaption = computed(() => {
-//   if (!slides?.length)
-//     return ''
-
-//   const currentSlide = slides[current.value]
-
-//   if (currentSlide?.caption) {
-//     return currentSlide.caption
-//   }
-
-//   return ''
-// })
-
 const updateCursorPosition = (x: number, y: number) => {
   if (!supportsHover.value) {
     return
@@ -305,13 +292,11 @@ onUnmounted(() => {
           slide.ratio === 'landscape' ? 'is-landscape' : 'is-portrait',
         ]"
       >
-        <div class="ui-carousel__item h-[inherit]">
-          <slot
-            name="slide"
-            :slide="slide"
-            :index="index"
-          />
-        </div>
+        <slot
+          name="slide"
+          :slide="slide"
+          :index="index"
+        />
       </div>
 
       <!-- Navigation Buttons -->
@@ -386,63 +371,3 @@ onUnmounted(() => {
     />
   </div>
 </template>
-
-<style>
-@reference "@/assets/css/main.css";
-
-.ui-carousel__item {
-  transition: translate 0.25s var(--ease-out);
-
-  .is-landscape.slide-active + .is-landscape &,
-  .is-landscape.slide-active + .is-portrait & {
-    translate: calc(var(--app-outer-gutter) / 1) 0;
-
-    @variant md {
-      translate: calc(var(--_grid-column) + (var(--_grid-pure-column) / 2)) 0;
-    }
-  }
-
-  .is-landscape.slide-previous:has(+ .is-landscape) &,
-  .is-portrait.slide-previous:has(+ .is-landscape) & {
-    translate: calc(var(--app-outer-gutter) / -1) 0;
-
-    @variant md {
-      translate: calc((var(--_grid-column) + (var(--_grid-pure-column) / 2)) * -1) 0;
-    }
-  }
-
-  .is-landscape.slide-previous:has(+ .is-portrait) &,
-  .is-portrait.slide-previous:has(+ .is-portrait) & {
-    translate: calc(var(--app-outer-gutter) * -2.5) 0;
-
-    @variant md {
-      translate: calc(((var(--_grid-column) * 4) - (var(--app-inner-gutter) / 2)) * -1) 0;
-    }
-  }
-
-  .is-portrait.slide-active + .is-landscape &,
-  .is-portrait.slide-active + .is-portrait & {
-    translate: calc(var(--app-outer-gutter) * 2.5) 0;
-
-    @variant md {
-      translate: calc((var(--_grid-column) * 4) - (var(--app-inner-gutter) / 2)) 0;
-    }
-  }
-
-  .slide-next-next & {
-    translate: calc(var(--app-outer-gutter) * 5) 0;
-
-    @variant md {
-      translate: calc((var(--_grid-column) * 8) - (var(--app-inner-gutter) / 2)) 0;
-    }
-  }
-
-  .slide-previous-previous & {
-    translate: calc(var(--app-outer-gutter) * -5) 0;
-
-    @variant md {
-      translate: calc((var(--_grid-column) * -8) - (var(--app-inner-gutter) / 2)) 0;
-    }
-  }
-}
-</style>

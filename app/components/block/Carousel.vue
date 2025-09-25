@@ -120,10 +120,7 @@ const slides = [
       >
         <template #slide="{ slide }">
           <div
-            class="
-              carousel-slide
-              mx-auto
-            "
+            class="block-carousel__item"
             :class="slide.ratio === 'landscape' ? 'aspect-[3/2] w-[calc(100vw-(var(--app-outer-gutter)*3))] md:w-[calc(var(--_grid-column)*9)] h-auto' : 'aspect-[2/3] w-[calc(100vw-(var(--app-outer-gutter)*6))] md:w-[calc(var(--_grid-column)*4)] h-auto'"
           >
             <img
@@ -176,6 +173,62 @@ const slides = [
 
   @variant md {
     --_grid-cols: 12;
+  }
+}
+
+.block-carousel__item {
+  transition: translate 0.25s var(--ease-out);
+
+  .is-landscape.slide-active + .is-landscape &,
+  .is-landscape.slide-active + .is-portrait & {
+    translate: calc(var(--app-outer-gutter) / 1) 0;
+
+    @variant md {
+      translate: calc(var(--_grid-column) + (var(--_grid-pure-column) / 2)) 0;
+    }
+  }
+
+  .is-landscape.slide-previous:has(+ .is-landscape) &,
+  .is-portrait.slide-previous:has(+ .is-landscape) & {
+    translate: calc(var(--app-outer-gutter) / -1) 0;
+
+    @variant md {
+      translate: calc((var(--_grid-column) + (var(--_grid-pure-column) / 2)) * -1) 0;
+    }
+  }
+
+  .is-landscape.slide-previous:has(+ .is-portrait) &,
+  .is-portrait.slide-previous:has(+ .is-portrait) & {
+    translate: calc(var(--app-outer-gutter) * -2.5) 0;
+
+    @variant md {
+      translate: calc(((var(--_grid-column) * 4) - (var(--app-inner-gutter) / 2)) * -1) 0;
+    }
+  }
+
+  .is-portrait.slide-active + .is-landscape &,
+  .is-portrait.slide-active + .is-portrait & {
+    translate: calc(var(--app-outer-gutter) * 2.5) 0;
+
+    @variant md {
+      translate: calc((var(--_grid-column) * 4) - (var(--app-inner-gutter) / 2)) 0;
+    }
+  }
+
+  .slide-next-next & {
+    translate: calc(var(--app-outer-gutter) * 5) 0;
+
+    @variant md {
+      translate: calc((var(--_grid-column) * 8) - (var(--app-inner-gutter) / 2)) 0;
+    }
+  }
+
+  .slide-previous-previous & {
+    translate: calc(var(--app-outer-gutter) * -5) 0;
+
+    @variant md {
+      translate: calc((var(--_grid-column) * -8) - (var(--app-inner-gutter) / 2)) 0;
+    }
   }
 }
 </style>
