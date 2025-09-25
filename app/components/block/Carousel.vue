@@ -72,12 +72,12 @@ const slides = [
     class="block-carousel"
   >
     <!-- Cover Image -->
-    <div class="sticky top-0 flex items-center justify-center z-1 opacity-50 pointer-events-none">
+    <div class="sticky top-0 flex items-center justify-center z-1 opacity-20 pointer-events-none">
       <div class="sticky bottom-0 w-full flex isolate min-h-screen">
         <img
           src="/images/carousel-test.jpg"
           alt="Carousel"
-          class="absolute inset-0 size-full object-cover -z-1 opacity-20"
+          class="absolute inset-0 size-full object-cover -z-1"
         >
 
         <div class="w-full bg-black/30 opacity-100">
