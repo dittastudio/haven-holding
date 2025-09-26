@@ -51,6 +51,7 @@ const colourText: Record<string, string> = {
   river: 'text-river',
   sky: 'text-sky',
   wheat: 'text-wheat',
+  cream: 'text-cream',
 } as const
 
 const colourBackground: Record<string, string> = {
@@ -65,6 +66,7 @@ const colourBackground: Record<string, string> = {
   river: 'bg-river',
   sky: 'bg-sky',
   wheat: 'bg-wheat',
+  cream: 'bg-cream',
 } as const
 
 export { colEndMap, colourBackground, colourText, colStartMap, ratioMap }
