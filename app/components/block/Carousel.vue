@@ -188,10 +188,10 @@ onMounted(() => {
           </div>
         </div>
 
-        <div class="w-full bg-black/50 opacity-100">
+        <div class="w-full">
           <p
             ref="text"
-            class="type-mono-30-70 px-(--app-outer-gutter) py-[calc(var(--app-outer-gutter)*1.5)] md:p-[5%] flex flex-col h-full justify-between text-white"
+            class="type-mono-30-70 px-(--app-outer-gutter) py-[calc(var(--app-outer-gutter)*1.5)] md:p-[5%] flex flex-col h-full justify-between text-white bg-black/50"
           >
             <span class="self-end">A</span>
 
