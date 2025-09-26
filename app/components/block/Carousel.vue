@@ -16,7 +16,7 @@ const { block } = defineProps<Props>()
 const slides = [
   {
     ratio: 'landscape',
-    image: 'https://picsum.photos/900/600',
+    image: '/images/carousel-test.jpg',
     caption: 'Lounge Room',
   },
   {
@@ -71,51 +71,16 @@ const slides = [
   },
 ]
 
-onMounted(() => {
-  // console.log(Flip)
-
-  // const items = main.value?.querySelectorAll('.block-carousel__item')
-
-  // if (!items || !items.length) {
-  //   return
-  // }
-
-  // const firstItem = items[0]
-  // const state = Flip.getState(firstItem)
-  // const firstImage = firstItem?.querySelector('img')
-
-  // firstImage?.classList.add('object-cover', 'absolute', 'inset-0', 'size-full', '-z-1')
-
-  // im.value.appendChild(firstImage)
-
-  // console.log('State:', state)
-
-  // const tl = gsap.timeline({
-  //   scrollTrigger: {
-  //     trigger: main.value,
-  //     start: 'top bottom',
-  //     end: 'top top',
-  //     scrub: true,
-  //     markers: true,
-  //   },
-  // })
-
-  // tl.add(
-  //   Flip.to(state, {
-  //     duration: 1,
-  //     ease: 'none',
-  //   }),
-  // )
-})
-
 const carouselRef = useTemplateRef<Carousel>('carouselRef')
 const carouselDetails = computed(() => carouselRef.value?.carousel.details.value)
+const carouselCurrentSlide = computed(() => carouselRef.value?.carousel.slider.value.slides[carouselDetails.value?.abs || 0])
+
 const primary = useTemplateRef('primary')
 const image = useTemplateRef('image')
 const text = useTemplateRef('text')
 const secondary = useTemplateRef('secondary')
 
-onMounted(() => {
+onMounted(async () => {
   const spans = text.value?.querySelectorAll('span')
 
   if (!spans) {
@@ -134,15 +99,27 @@ onMounted(() => {
     .fromTo(
       spans,
       { opacity: 0, yPercent: -50 },
-      { opacity: 1, yPercent: 0, stagger: 0.2, ease: 'none' },
+      { opacity: 1, yPercent: 0, stagger: 0.5, ease: 'none' },
     )
     .to(
       text.value,
       { opacity: 0 },
     )
 
-  const width = image.value.clientWidth / 2
-  const height = image.value.clientHeight / 2
+  await wait(100)
+
+  const activeSlide = carouselCurrentSlide.value?.firstElementChild
+
+  if (!activeSlide) {
+    return
+  }
+
+  gsap.set(activeSlide, { opacity: 0 })
+
+  const width = activeSlide.clientWidth
+  const height = activeSlide.clientHeight
+
+  console.log({ width, height })
 
   gsap.timeline({
     scrollTrigger: {
@@ -151,14 +128,14 @@ onMounted(() => {
       end: 'top top',
       scrub: true,
       markers: true,
-      // onLeave: () => {
-      //   gsap.set(firstItem, { opacity: 1 })
-      //   gsap.set(image.value, { opacity: 0 })
-      // },
-      // onEnterBack: () => {
-      //   gsap.set(firstItem, { opacity: 0 })
-      //   gsap.set(image.value, { opacity: 1 })
-      // },
+      onLeave: () => {
+        gsap.set(activeSlide, { opacity: 1 })
+        gsap.set(image.value, { opacity: 0 })
+      },
+      onEnterBack: () => {
+        gsap.set(activeSlide, { opacity: 0 })
+        gsap.set(image.value, { opacity: 1 })
+      },
     },
   })
     .to(
@@ -262,10 +239,8 @@ onMounted(() => {
 @reference "@/assets/css/main.css";
 
 .block-carousel {
-/*
   display: grid;
   grid-auto-rows: minmax(auto, 1fr);
-*/
 
   --_grid-cols: 2;
   --_grid-max-width: min(100vw, 1920px);
