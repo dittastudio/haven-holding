@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { BlockCarousel } from '@@/.storyblok/types/303510/storyblok-components'
+import type { Carousel } from '@/components/ui/Carousel.vue'
 import { gsap } from 'gsap'
 import { Flip } from 'gsap/Flip'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -107,6 +108,8 @@ onMounted(() => {
   // )
 })
 
+const carouselRef = useTemplateRef<Carousel>('carouselRef')
+const carouselDetails = computed(() => carouselRef.value?.carousel.details.value)
 const primary = useTemplateRef('primary')
 const image = useTemplateRef('image')
 const text = useTemplateRef('text')
@@ -216,43 +219,41 @@ onMounted(() => {
       </h2>
 
       <UiCarousel
-        :slides="slides"
-        :options="{
-          autoplay: false,
-          navigation: slides.length > 1,
-          pagination: true,
-        }"
+        ref="carouselRef"
+        :items="slides"
       >
-        <template #slide="{ slide }">
+        <template #item="{ item, setSlideClasses }">
           <div
             class="block-carousel__item"
-            :class="slide.ratio === 'landscape' ? 'aspect-[3/2] w-[calc(100vw-(var(--app-outer-gutter)*3))] md:w-[calc(var(--_grid-column)*9)] h-auto' : 'aspect-[2/3] w-[calc(100vw-(var(--app-outer-gutter)*6))] md:w-[calc(var(--_grid-column)*4)] h-auto'"
+            :class="item.ratio === 'landscape' ? 'aspect-[3/2] w-[calc(100vw-(var(--app-outer-gutter)*3))] md:w-[calc(var(--_grid-column)*9)] h-auto' : 'aspect-[2/3] w-[calc(100vw-(var(--app-outer-gutter)*6))] md:w-[calc(var(--_grid-column)*4)] h-auto'"
+            :onVnodeBeforeMount="() => setSlideClasses({
+              'flex items-center justify-center w-full h-[inherit] min-h-full': true,
+            })"
           >
             <img
-              :src="slide.image"
-              :alt="slide.caption"
+              :src="item.image"
+              :alt="item.caption"
               class="w-full h-full object-cover"
             >
           </div>
         </template>
-
-        <template #caption="{ slide, current }">
-          <div class="wrapper flex gap-x-(--app-inner-gutter) my-[calc(var(--app-vertical-rhythm)_*_0.25)] type-mono-12 md:type-mono-14">
-            <p
-              class="w-1/2 text-right"
-            >
-              {{ current + 1 }}/{{ slides.length }}
-            </p>
-
-            <p
-              v-if="slide.caption"
-              class="w-1/2"
-            >
-              {{ slide.caption }}
-            </p>
-          </div>
-        </template>
       </UiCarousel>
+
+      <div
+        v-if="typeof carouselDetails?.abs === 'number'"
+        class="wrapper flex gap-x-(--app-inner-gutter) my-[calc(var(--app-vertical-rhythm)_*_0.25)] type-mono-12 md:type-mono-14"
+      >
+        <p class="w-1/2 text-right">
+          {{ carouselDetails.abs + 1 }}/{{ carouselDetails.length + 1 }}
+        </p>
+
+        <p
+          v-if="slides[carouselDetails.abs]?.caption"
+          class="w-1/2"
+        >
+          {{ slides[carouselDetails.abs]?.caption }}
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -319,22 +320,6 @@ onMounted(() => {
 
     @variant md {
       translate: calc((var(--_grid-column) * 4) - (var(--app-inner-gutter) / 2)) 0;
-    }
-  }
-
-  .slide-next-next & {
-    translate: calc(var(--app-outer-gutter) * 5) 0;
-
-    @variant md {
-      translate: calc((var(--_grid-column) * 8) - (var(--app-inner-gutter) / 2)) 0;
-    }
-  }
-
-  .slide-previous-previous & {
-    translate: calc(var(--app-outer-gutter) * -5) 0;
-
-    @variant md {
-      translate: calc((var(--_grid-column) * -8) - (var(--app-inner-gutter) / 2)) 0;
     }
   }
 }
