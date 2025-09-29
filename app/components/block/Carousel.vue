@@ -16,71 +16,83 @@ const { block } = defineProps<Props>()
 const slides = [
   {
     ratio: 'landscape',
-    image: '/images/carousel-test.jpg',
+    image: '/images/carousel-test-1.jpg',
     caption: 'Lounge Room',
   },
   {
     ratio: 'portrait',
-    image: 'https://picsum.photos/600/900',
+    image: '/images/carousel-test-2.jpg',
     caption: 'Dining Room',
   },
   {
     ratio: 'landscape',
-    image: 'https://picsum.photos/900/600',
+    image: '/images/carousel-test-1b.jpg',
     caption: 'Studio',
   },
   {
     ratio: 'portrait',
-    image: 'https://picsum.photos/600/900',
+    image: '/images/carousel-test-2.jpg',
     caption: 'Office',
   },
   {
     ratio: 'landscape',
-    image: 'https://picsum.photos/900/600',
+    image: '/images/carousel-test-1.jpg',
     caption: 'Living Room',
   },
   {
     ratio: 'portrait',
-    image: 'https://picsum.photos/600/900',
+    image: '/images/carousel-test-2.jpg',
     caption: 'Kitchen',
   },
   {
     ratio: 'landscape',
-    image: 'https://picsum.photos/900/600',
+    image: '/images/carousel-test-1b.jpg',
     caption: 'Bedroom',
   },
   {
     ratio: 'portrait',
-    image: 'https://picsum.photos/600/900',
+    image: '/images/carousel-test-2.jpg',
     caption: 'Bathroom',
   },
   {
     ratio: 'landscape',
-    image: 'https://picsum.photos/900/600',
+    image: '/images/carousel-test-1.jpg',
     caption: 'Balcony',
   },
-  {
-    ratio: 'portrait',
-    image: 'https://picsum.photos/600/900',
-    caption: 'Garden',
-  },
-  {
-    ratio: 'landscape',
-    image: 'https://picsum.photos/900/600',
-    caption: 'Pool',
-  },
 ]
-
-const carouselRef = useTemplateRef<Carousel>('carouselRef')
-const carouselDetails = computed(() => carouselRef.value?.carousel.details.value)
-const carouselCurrentSlide = computed(() => carouselRef.value?.carousel.slider.value.slides[carouselDetails.value?.abs || 0])
 
 const primary = useTemplateRef('primary')
 const image = useTemplateRef('image')
 const text = useTemplateRef('text')
 const secondary = useTemplateRef('secondary')
 
-onMounted(async () => {
+const tl = ref<gsap.core.Timeline | null>(null)
+
+const carouselRef = useTemplateRef<Carousel>('carouselRef')
+const carouselDetails = computed(() => carouselRef.value?.carousel.details.value)
+const carouselCurrentSlide = computed(() => carouselRef.value?.carousel.slider.value.slides[carouselDetails.value?.abs || 0])
+const carouselCurrentMedia = computed(() => carouselCurrentSlide.value?.querySelector('img'))
+const carouselCurrentProperties = computed(() => {
+  const slide = carouselRef.value?.carousel.slider.value.slides[carouselDetails.value?.abs || 0]
+  const media = slide?.querySelector('img')
+
+  if (!media) {
+    return null
+  }
+
+  const { width, height, top, left } = media.getBoundingClientRect()
+
+  return {
+    src: media.getAttribute('src'),
+    width,
+    height,
+    top,
+    left,
+    relativeTop: top - (secondary.value ? secondary.value?.getBoundingClientRect().top : 0) || 0,
+  }
+})
+
+const sequenceText = () => {
   const spans = text.value?.querySelectorAll('span')
 
   if (!spans) {
@@ -93,103 +105,152 @@ onMounted(async () => {
       start: 'top top',
       end: 'bottom top',
       scrub: true,
-      markers: true,
+      markers: false,
     },
   })
     .fromTo(
       spans,
       { opacity: 0, yPercent: -50 },
-      { opacity: 1, yPercent: 0, stagger: 0.5, ease: 'none' },
+      { opacity: 1, yPercent: 0, stagger: 0.25, ease: 'none' },
     )
     .to(
       text.value,
       { opacity: 0 },
     )
+}
 
-  await wait(100)
-
-  const activeSlide = carouselCurrentSlide.value?.firstElementChild
-
-  if (!activeSlide) {
+const sequenceMedia = () => {
+  if (!carouselCurrentMedia.value || !carouselCurrentProperties.value) {
     return
   }
 
-  gsap.set(activeSlide, { opacity: 0 })
+  gsap.set(carouselCurrentMedia.value, { opacity: 0 })
 
-  const width = activeSlide.clientWidth
-  const height = activeSlide.clientHeight
-
-  console.log({ width, height })
-
-  gsap.timeline({
+  tl.value = gsap.timeline({
     scrollTrigger: {
       trigger: secondary.value,
       start: 'top bottom',
       end: 'top top',
       scrub: true,
-      markers: true,
+      markers: false,
+      invalidateOnRefresh: true,
       onLeave: () => {
-        gsap.set(activeSlide, { opacity: 1 })
+        if (!carouselCurrentMedia.value) {
+          return
+        }
+
+        gsap.set(carouselCurrentMedia.value, { opacity: 1 })
         gsap.set(image.value, { opacity: 0 })
       },
       onEnterBack: () => {
-        gsap.set(activeSlide, { opacity: 0 })
+        if (!carouselCurrentMedia.value) {
+          return
+        }
+
+        gsap.set(carouselCurrentMedia.value, { opacity: 0 })
         gsap.set(image.value, { opacity: 1 })
       },
     },
   })
-    .to(
+    .fromTo(
       image.value,
-      { width, height, ease: 'none' },
+      {
+        width: '100%',
+        height: '100%',
+        top: 0,
+        left: 0,
+      },
+      {
+        width: () => carouselCurrentProperties.value?.width || 0,
+        height: () => carouselCurrentProperties.value?.height || 0,
+        top: () => carouselCurrentProperties.value?.relativeTop || 0,
+        left: () => carouselCurrentProperties.value?.left || 0,
+        ease: 'none',
+        lazy: false,
+      },
     )
+}
+
+onMounted(async () => {
+  sequenceText()
+
+  await wait(1000)
+
+  sequenceMedia()
 })
+
+const requestRefresh = gsap.delayedCall(0.05, () => {
+  tl.value?.invalidate()
+  tl.value?.scrollTrigger?.refresh()
+}).pause()
+
+watch(
+  () => [
+    carouselDetails.value?.abs,
+    carouselCurrentProperties.value?.width,
+    carouselCurrentProperties.value?.height,
+    carouselCurrentProperties.value?.top,
+    carouselCurrentProperties.value?.left,
+    carouselCurrentProperties.value?.relativeTop,
+  ],
+  () => requestRefresh.restart(true),
+  {
+    flush: 'post',
+    immediate: true,
+  },
+)
 </script>
 
 <template>
   <div
     v-editable="block"
-    class="block-carousel"
+    class="block-carousel relative bg-white"
   >
-    <div class="sticky top-0 flex items-center justify-center z-1 pointer-events-none">
-      <div
-        ref="primary"
-        class="sticky bottom-0 w-full flex isolate min-h-screen"
-      >
-        <div class="absolute inset-0 size-full -z-1 flex items-center justify-center">
-          <div
-            ref="image"
-            class="size-full"
+    <!--
+    <pre class="fixed top-10 right-10 bg-black/20 p-4 h-[50vh] overflow-scroll rounded">
+      {{ carouselCurrentProperties }}
+    </pre>
+    -->
+
+    <div class="pointer-events-none absolute inset-0 z-1 size-full">
+      <div class="sticky top-0 w-full h-screen">
+        <div
+          ref="image"
+          class="absolute inset-0 size-full"
+        >
+          <img
+            v-if="carouselCurrentMedia"
+            :src="carouselCurrentMedia.src"
+            alt=""
+            class="block size-full object-cover"
           >
-            <img
-              src="/images/carousel-test.jpg"
-              alt="Carousel"
-              class="block size-full object-cover"
-            >
-          </div>
-        </div>
-
-        <div class="w-full">
-          <p
-            ref="text"
-            class="type-mono-30-70 px-(--app-outer-gutter) py-[calc(var(--app-outer-gutter)*1.5)] md:p-[5%] flex flex-col h-full justify-between text-white bg-black/50"
-          >
-            <span class="self-end">A</span>
-
-            <span class="self-start">space</span>
-
-            <span class="self-center">for</span>
-
-            <span class="self-end">creation</span>
-          </p>
         </div>
       </div>
     </div>
 
-    <div class="sticky top-0 flex flex-col justify-center w-full min-h-screen bg-green-500/20" />
+    <div class="relative z-10 w-full h-[300vh]">
+      <div
+        ref="primary"
+        class="sticky top-0 w-full h-screen"
+      >
+        <p
+          ref="text"
+          class="size-full type-mono-30-70 px-(--app-outer-gutter) py-[calc(var(--app-outer-gutter)*1.5)] md:p-[5%] flex flex-col justify-between text-white bg-black/50"
+        >
+          <span class="self-end">A</span>
+
+          <span class="self-start">space</span>
+
+          <span class="self-center">for</span>
+
+          <span class="self-end">creation</span>
+        </p>
+      </div>
+    </div>
 
     <div
       ref="secondary"
-      class="sticky top-0 flex flex-col justify-center min-h-screen overflow-hidden bg-red-500 py-(--app-vertical-rhythm)"
+      class="flex flex-col justify-center h-screen overflow-hidden py-(--app-vertical-rhythm)"
     >
       <h2 class="type-mono-12 md:type-mono-14 text-center mb-[calc(var(--app-vertical-rhythm)_*_0.5)]">
         The Space
@@ -198,19 +259,14 @@ onMounted(async () => {
       <UiCarousel
         ref="carouselRef"
         :items="slides"
+        class="shrink-0"
       >
-        <template #item="{ item, setSlideClasses }">
-          <div
-            class="block-carousel__item"
-            :class="item.ratio === 'landscape' ? 'aspect-[3/2] w-[calc(100vw-(var(--app-outer-gutter)*3))] md:w-[calc(var(--_grid-column)*9)] h-auto' : 'aspect-[2/3] w-[calc(100vw-(var(--app-outer-gutter)*6))] md:w-[calc(var(--_grid-column)*4)] h-auto'"
-            :onVnodeBeforeMount="() => setSlideClasses({
-              'flex items-center justify-center w-full h-[inherit] min-h-full': true,
-            })"
-          >
+        <template #item="{ item }">
+          <div class="block-carousel__item size-full px-(--app-outer-gutter) flex items-center justify-center">
             <img
               :src="item.image"
               :alt="item.caption"
-              class="w-full h-full object-cover"
+              class="block size-auto max-w-full max-h-full"
             >
           </div>
         </template>
@@ -239,8 +295,8 @@ onMounted(async () => {
 @reference "@/assets/css/main.css";
 
 .block-carousel {
-  display: grid;
-  grid-auto-rows: minmax(auto, 1fr);
+  /* display: grid;
+  grid-auto-rows: minmax(auto, 1fr); */
 
   --_grid-cols: 2;
   --_grid-max-width: min(100vw, 1920px);
@@ -259,7 +315,7 @@ onMounted(async () => {
   }
 }
 
-.block-carousel__item {
+/* .block-carousel__item {
   transition: translate 0.25s var(--ease-out);
 
   .is-landscape.slide-active + .is-landscape &,
@@ -297,5 +353,5 @@ onMounted(async () => {
       translate: calc((var(--_grid-column) * 4) - (var(--app-inner-gutter) / 2)) 0;
     }
   }
-}
+} */
 </style>

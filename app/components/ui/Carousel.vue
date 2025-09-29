@@ -79,12 +79,12 @@ defineExpose({
   <div class="@container/carousel size-full">
     <div
       ref="container"
-      class="group/carousel keen-slider !overflow-visible size-full"
+      class="group/carousel keen-slider size-full"
     >
       <div
         v-for="(item, index) in items"
         :key="index"
-        class="keen-slider__slide size-full"
+        class="keen-slider__slide"
         :class="[slideClassesMap.get(index)]"
       >
         <slot
