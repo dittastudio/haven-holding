@@ -271,8 +271,6 @@ watch(
         </template>
       </UiCarousel>
 
-      <p>{{ carouselDetails?.abs }}</p>
-
       <div
         v-if="typeof carouselDetails?.abs === 'number'"
         class="wrapper flex gap-x-(--app-inner-gutter) my-[calc(var(--app-vertical-rhythm)_*_0.25)] type-mono-12 md:type-mono-14"
