@@ -2,10 +2,9 @@
 import type { BlockCarousel } from '@@/.storyblok/types/303510/storyblok-components'
 import type { Carousel } from '@/components/ui/Carousel.vue'
 import { gsap } from 'gsap'
-import { Flip } from 'gsap/Flip'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-gsap.registerPlugin(ScrollTrigger, Flip)
+gsap.registerPlugin(ScrollTrigger)
 
 interface Props {
   block: BlockCarousel
@@ -68,9 +67,11 @@ const secondary = useTemplateRef('secondary')
 
 const tl = ref<gsap.core.Timeline | null>(null)
 
+const retrigger = ref(0)
+
 const carouselRef = useTemplateRef<Carousel>('carouselRef')
 const carouselDetails = computed(() => carouselRef.value?.carousel.details.value)
-const carouselCurrentSlide = computed(() => carouselRef.value?.carousel.slider.value.slides[carouselDetails.value?.abs || 0])
+const carouselCurrentSlide = computed(() => carouselRef.value?.carousel.slider.value?.slides[carouselDetails.value?.abs || 0])
 const carouselCurrentMedia = computed(() => carouselCurrentSlide.value?.querySelector('img'))
 const carouselCurrentProperties = computed(() => {
   const slide = carouselRef.value?.carousel.slider.value.slides[carouselDetails.value?.abs || 0]
@@ -83,6 +84,7 @@ const carouselCurrentProperties = computed(() => {
   const { width, height, top, left } = media.getBoundingClientRect()
 
   return {
+    retrigger: retrigger.value,
     src: media.getAttribute('src'),
     width,
     height,
@@ -172,10 +174,11 @@ const sequenceMedia = () => {
 }
 
 onMounted(async () => {
+  await wait(100)
+
+  retrigger.value = 1 // Hack to force recompute.
+
   sequenceText()
-
-  await wait(1000)
-
   sequenceMedia()
 })
 
@@ -186,17 +189,15 @@ const requestRefresh = gsap.delayedCall(0.05, () => {
 
 watch(
   () => [
-    carouselDetails.value?.abs,
-    carouselCurrentProperties.value?.width,
-    carouselCurrentProperties.value?.height,
-    carouselCurrentProperties.value?.top,
-    carouselCurrentProperties.value?.left,
-    carouselCurrentProperties.value?.relativeTop,
+    carouselCurrentProperties.value,
   ],
-  () => requestRefresh.restart(true),
+  () => {
+    console.log('carouselCurrentProperties changed')
+    return requestRefresh.restart(true)
+  },
   {
     flush: 'post',
-    immediate: true,
+    immediate: false,
   },
 )
 </script>
@@ -206,11 +207,9 @@ watch(
     v-editable="block"
     class="block-carousel relative bg-white"
   >
-    <!--
-    <pre class="fixed top-10 right-10 bg-black/20 p-4 h-[50vh] overflow-scroll rounded">
-      {{ carouselCurrentProperties }}
-    </pre>
-    -->
+    <pre class="fixed top-10 right-10 z-50 bg-black/50 text-white text-12 p-4 max-h-[50vh] overflow-scroll rounded-xl backdrop-blur-2xl">
+{{ carouselCurrentProperties }}
+</pre>
 
     <div class="pointer-events-none absolute inset-0 z-1 size-full">
       <div class="sticky top-0 w-full h-screen">
@@ -228,7 +227,7 @@ watch(
       </div>
     </div>
 
-    <div class="relative z-10 w-full h-[300vh]">
+    <div class="relative z-10 w-full h-[200vh]">
       <div
         ref="primary"
         class="sticky top-0 w-full h-screen"
@@ -250,7 +249,7 @@ watch(
 
     <div
       ref="secondary"
-      class="flex flex-col justify-center h-screen overflow-hidden py-(--app-vertical-rhythm)"
+      class="flex flex-col justify-center h-screen overflow-hidden pt-[calc(var(--app-vertical-rhythm)_*_2)] pb-(--app-vertical-rhythm)"
     >
       <h2 class="type-mono-12 md:type-mono-14 text-center mb-[calc(var(--app-vertical-rhythm)_*_0.5)]">
         The Space
@@ -272,6 +271,8 @@ watch(
         </template>
       </UiCarousel>
 
+      <p>{{ carouselDetails?.abs }}</p>
+
       <div
         v-if="typeof carouselDetails?.abs === 'number'"
         class="wrapper flex gap-x-(--app-inner-gutter) my-[calc(var(--app-vertical-rhythm)_*_0.25)] type-mono-12 md:type-mono-14"
@@ -290,68 +291,3 @@ watch(
     </div>
   </div>
 </template>
-
-<style>
-@reference "@/assets/css/main.css";
-
-.block-carousel {
-  /* display: grid;
-  grid-auto-rows: minmax(auto, 1fr); */
-
-  --_grid-cols: 2;
-  --_grid-max-width: min(100vw, 1920px);
-  /* --_grid-max-width: 100vw; */
-  --_grid-inner: calc(var(--_grid-max-width) - (var(--app-outer-gutter) * 2));
-  --_grid-gaps-total: calc(var(--app-inner-gutter) * (var(--_grid-cols) - 1));
-  --_grid-pure-column: calc((var(--_grid-inner) - var(--_grid-gaps-total)) / var(--_grid-cols));
-  --_grid-column: calc(var(--_grid-pure-column) + var(--app-inner-gutter));
-
-  @variant sm {
-    --_grid-cols: 4;
-  }
-
-  @variant md {
-    --_grid-cols: 12;
-  }
-}
-
-/* .block-carousel__item {
-  transition: translate 0.25s var(--ease-out);
-
-  .is-landscape.slide-active + .is-landscape &,
-  .is-landscape.slide-active + .is-portrait & {
-    translate: calc(var(--app-outer-gutter) / 1) 0;
-
-    @variant md {
-      translate: calc(var(--_grid-column) + (var(--_grid-pure-column) / 2)) 0;
-    }
-  }
-
-  .is-landscape.slide-previous:has(+ .is-landscape) &,
-  .is-portrait.slide-previous:has(+ .is-landscape) & {
-    translate: calc(var(--app-outer-gutter) / -1) 0;
-
-    @variant md {
-      translate: calc((var(--_grid-column) + (var(--_grid-pure-column) / 2)) * -1) 0;
-    }
-  }
-
-  .is-landscape.slide-previous:has(+ .is-portrait) &,
-  .is-portrait.slide-previous:has(+ .is-portrait) & {
-    translate: calc(var(--app-outer-gutter) * -2.5) 0;
-
-    @variant md {
-      translate: calc(((var(--_grid-column) * 4) - (var(--app-inner-gutter) / 2)) * -1) 0;
-    }
-  }
-
-  .is-portrait.slide-active + .is-landscape &,
-  .is-portrait.slide-active + .is-portrait & {
-    translate: calc(var(--app-outer-gutter) * 2.5) 0;
-
-    @variant md {
-      translate: calc((var(--_grid-column) * 4) - (var(--app-inner-gutter) / 2)) 0;
-    }
-  }
-} */
-</style>

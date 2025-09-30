@@ -20,6 +20,11 @@ interface Props<T> {
   spacing?: number
 }
 
+// interface Emits {
+//   (e: 'created', slider: KeenSliderInstance): void
+//   (e: 'slideChanged', slider: KeenSliderInstance): void
+// }
+
 const {
   items,
   options = {},
