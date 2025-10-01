@@ -17,6 +17,7 @@
     "nuke": "del-cli '.output' 'dist' '.nuxt' 'node_modules' 'package-lock.json'"
   },
   "dependencies": {
+    "@netlify/functions": "^4.2.7",
     "@tailwindcss/vite": "^4.1.13",
     "@vee-validate/zod": "^4.15.1",
     "@vueuse/core": "^13.9.0",
