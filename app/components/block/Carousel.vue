@@ -112,8 +112,8 @@ const sequenceText = () => {
   })
     .fromTo(
       spans,
-      { opacity: 0, yPercent: -50 },
-      { opacity: 1, yPercent: 0, stagger: 0.25, ease: 'none' },
+      { opacity: 0, yPercent: 10 },
+      { opacity: 1, yPercent: 0, stagger: 0.25, ease: 'power2.out' },
     )
     .to(
       text.value,
@@ -261,7 +261,9 @@ watch(
         class="shrink-0"
       >
         <template #item="{ item }">
-          <div class="block-carousel__item size-full px-(--app-outer-gutter) flex items-center justify-center">
+          <div
+            class="block-carousel__item size-full px-(--app-outer-gutter) flex items-center justify-center"
+          >
             <img
               :src="item.image"
               :alt="item.caption"

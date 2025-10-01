@@ -4,7 +4,6 @@ import type { KeenSliderInstance, KeenSliderOptions, TrackDetails } from 'keen-s
 
 <script generic="T" lang="ts" setup>
 import { useKeenSlider } from 'keen-slider/vue.es'
-import 'keen-slider/keen-slider.min.css'
 
 export interface Carousel {
   carousel: {
@@ -84,12 +83,12 @@ defineExpose({
   <div class="@container/carousel size-full">
     <div
       ref="container"
-      class="group/carousel keen-slider size-full"
+      class="group/carousel keen-slider size-full relative flex w-full h-[inherit] touch-pan-y select-none"
     >
       <div
         v-for="(item, index) in items"
         :key="index"
-        class="keen-slider__slide"
+        class="keen-slider__slide w-full min-h-full flex items-center justify-center shrink-0"
         :class="[slideClassesMap.get(index)]"
       >
         <slot
