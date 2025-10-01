@@ -66,7 +66,7 @@ const checkBackgroundMatchesPrevBackground = (index: number) => {
       :block="block"
     />
 
-    <BlockCarouselV2
+    <BlockCarousel
       v-else-if="block.component === 'block_carousel'"
       :block="block"
     />
