@@ -80,7 +80,7 @@ defineExpose({
 </script>
 
 <template>
-  <div class="@container/carousel size-full">
+  <div class="size-full">
     <div
       ref="container"
       class="group/carousel keen-slider size-full relative flex touch-pan-y select-none"

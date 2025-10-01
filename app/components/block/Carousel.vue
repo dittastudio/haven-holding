@@ -82,20 +82,17 @@ const carouselCurrentProperties = computed(() => {
     return null
   }
 
-  const { width, height, top, left } = media.getBoundingClientRect()
+  const { width, height } = media.getBoundingClientRect()
 
   return {
     retrigger: retrigger.value,
     src: media.getAttribute('src'),
     width,
     height,
-    top,
-    left,
-    relativeTop: top - (container.value ? container.value?.getBoundingClientRect().top : 0) || 0,
   }
 })
 
-const carouselInfo = ref(false)
+const isAnimationComplete = ref(false)
 
 const sequenceText = () => {
   const spans = text.value?.querySelectorAll('span')
@@ -108,20 +105,37 @@ const sequenceText = () => {
     scrollTrigger: {
       trigger: main.value,
       start: 'top top',
-      end: '50% top',
-      scrub: true,
+      end: 'center top',
+      scrub: 0.5,
       markers: false,
     },
   })
     .fromTo(
-      spans,
-      { opacity: 0, yPercent: 10 },
-      { opacity: 1, yPercent: 0, stagger: 0.25, ease: 'power2.out' },
-    )
-    .to(
       text.value,
       { opacity: 0 },
+      { opacity: 1 },
     )
+    .fromTo(
+      spans,
+      {
+        opacity: 0,
+        scale: 0.975,
+        rotate: 1,
+        yPercent: 10,
+      },
+      {
+        opacity: 1,
+        scale: 1,
+        rotate: 0,
+        yPercent: 0,
+        stagger: 0.25,
+        ease: 'power2.out',
+      },
+    )
+    // .to(
+    //   text.value,
+    //   { opacity: 0 },
+    // )
 }
 
 const sequenceMedia = () => {
@@ -134,20 +148,14 @@ const sequenceMedia = () => {
   tl.value = gsap.timeline({
     scrollTrigger: {
       trigger: main.value,
-      start: '50% top',
-      end: '75% top',
-      scrub: true,
+      start: 'center top',
+      end: 'center top',
       markers: false,
-      invalidateOnRefresh: true,
+      toggleActions: 'play none none reverse',
+      // scrub: true,
+      // invalidateOnRefresh: true,
       onLeave: () => {
-        if (!carouselCurrentMedia.value) {
-          return
-        }
-
-        gsap.set(carouselCurrentMedia.value, { opacity: 1 })
-        gsap.set(image.value, { opacity: 0 })
-
-        carouselInfo.value = true
+        isAnimationComplete.value = true
       },
       onEnterBack: () => {
         if (!carouselCurrentMedia.value) {
@@ -157,7 +165,7 @@ const sequenceMedia = () => {
         gsap.set(carouselCurrentMedia.value, { opacity: 0 })
         gsap.set(image.value, { opacity: 1 })
 
-        carouselInfo.value = false
+        isAnimationComplete.value = false
       },
     },
   })
@@ -166,18 +174,30 @@ const sequenceMedia = () => {
       {
         width: '100%',
         height: '100%',
-        x: 0,
-        y: 0,
       },
       {
         width: () => carouselCurrentProperties.value?.width || 0,
         height: () => carouselCurrentProperties.value?.height || 0,
-        x: () => carouselCurrentProperties.value?.left || 0,
-        y: () => carouselCurrentProperties.value?.relativeTop || 0,
-        ease: 'none',
+        ease: 'expo.inOut',
+        duration: 0.75,
         lazy: false,
+        onComplete: () => {
+          if (!carouselCurrentMedia.value) {
+            return
+          }
+
+          gsap.set(carouselCurrentMedia.value, { opacity: 1 })
+          gsap.set(image.value, { opacity: 0 })
+          // gsap.set(text.value, { opacity: 0 })
+        },
+        // onReverseComplete: () => {
+        //   gsap.to(text.value, { opacity: 1 })
+        // },
       },
     )
+    // .add(() => {
+    //   gsap.to(text.value, { opacity: 0, duration: 0.25 })
+    // }, '<')
 }
 
 onMounted(async () => {
@@ -208,20 +228,20 @@ watch(
   <div
     ref="main"
     v-editable="block"
-    class="relative bg-white h-[500vh]"
+    class="relative h-[300vh] transition-colors duration-750 ease-inOutExpo"
+    :class="{
+      'bg-sky': !isAnimationComplete,
+      'bg-white': isAnimationComplete,
+    }"
   >
-    <!-- <pre class="fixed top-10 right-10 z-50 bg-black/50 text-white text-12 p-4 max-h-[50vh] overflow-scroll rounded-xl backdrop-blur-2xl">
-{{ carouselCurrentProperties }}
-</pre> -->
-
     <div
       ref="container"
       class="sticky inset-0 z-1 w-full h-screen"
     >
-      <div class="absolute inset-0 z-20 size-full pointer-events-none">
+      <div class="absolute inset-0 z-20 size-full pointer-events-none flex items-center justify-center">
         <div
           ref="image"
-          class="absolute inset-0 z-20 size-full"
+          class="size-full backface-visibility-hidden transform-gpu will-change-[width,height]"
         >
           <img
             v-if="carouselCurrentMedia"
@@ -232,7 +252,13 @@ watch(
         </div>
       </div>
 
-      <div class="absolute inset-0 z-30 size-full pointer-events-none">
+      <div
+        class="absolute inset-0 z-30 size-full pointer-events-none transition-opacity ease-out"
+        :class="{
+          'opacity-100 duration-500 delay-500': !isAnimationComplete,
+          'opacity-0 duration-250': isAnimationComplete,
+        }"
+      >
         <p
           ref="text"
           class="size-full type-mono-30-70 px-(--app-outer-gutter) py-[calc(var(--app-outer-gutter)*1.5)] md:p-[5%] flex flex-col justify-between text-white bg-black/50"
@@ -247,24 +273,36 @@ watch(
         </p>
       </div>
 
-      <div class="absolute inset-0 z-10 size-full">
-        <div class="grid grid-cols-1 grid-rows-[auto_1fr_auto] gap-y-(--app-outer-gutter) size-full">
+      <div class="absolute inset-0 z-10 size-full flex flex-col justify-center">
+        <div class="grid grid-cols-1 grid-rows-[auto_1fr_auto] gap-y-(--app-outer-gutter) w-full max-h-full">
           <div class="flex flex-col items-center justify-end pt-(--app-header-height)">
             <h2
-              class="type-mono-12 md:type-mono-14 text-center transition-opacity duration-500 ease-out"
+              class="block-carousel__item block-carousel__item--top type-mono-12 md:type-mono-14 text-center"
               :class="{
-                'opacity-100': carouselInfo,
-                'opacity-0': !carouselInfo,
+                'is-animation-complete': isAnimationComplete,
               }"
             >
               The Space
             </h2>
           </div>
 
-          <div class="size-full overflow-hidden">
+          <div
+            class="size-full overflow-hidden"
+            :class="{
+              'pointer-events-none': !isAnimationComplete,
+              'pointer-events-auto': isAnimationComplete,
+            }"
+          >
             <UiCarousel
               ref="carousel"
               :items="slides"
+              :options="{
+                slides: {
+                  perView: 1.25,
+                  spacing: 0,
+                  origin: 'center',
+                },
+              }"
             >
               <template #item="{ item }">
                 <div class="size-full px-(--app-outer-gutter) flex items-center justify-center">
@@ -281,25 +319,59 @@ watch(
 
           <div
             v-if="typeof carouselDetails?.abs === 'number'"
-            class="wrapper flex gap-x-(--app-inner-gutter) type-mono-12 md:type-mono-14 pb-(--app-header-height) transition-opacity duration-500 ease-out"
-            :class="{
-              'opacity-100': carouselInfo,
-              'opacity-0': !carouselInfo,
-            }"
+            class="wrapper pb-(--app-header-height)"
           >
-            <p class="w-1/2 text-right">
-              {{ carouselDetails.abs + 1 }}/{{ carouselDetails.length + 1 }}
-            </p>
-
-            <p
-              v-if="slides[carouselDetails.abs]?.caption"
-              class="w-1/2"
+            <div
+              class="block-carousel__item block-carousel__item--bottom type-mono-12 md:type-mono-14 flex gap-x-(--app-inner-gutter)"
+              :class="{
+                'is-animation-complete': isAnimationComplete,
+              }"
             >
-              {{ slides[carouselDetails.abs]?.caption }}
-            </p>
+              <p class="w-1/2 text-right">
+                {{ carouselDetails.abs + 1 }}/{{ slides.length }}
+              </p>
+
+              <p
+                v-if="slides[carouselDetails.abs]?.caption"
+                class="w-1/2"
+              >
+                {{ slides[carouselDetails.abs]?.caption }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+.block-carousel__item {
+  opacity: 0;
+  scale: 1.1;
+
+  transition:
+    opacity 0.25s var(--ease-outExpo),
+    scale 0s 0.25s,
+    translate 0s 0.25s;
+
+  &.is-animation-complete {
+    opacity: 1;
+    scale: 1;
+    translate: 0 0;
+
+    transition:
+      opacity 0.5s var(--ease-outExpo) 0.45s,
+      scale 0.5s var(--ease-outExpo) 0.45s,
+      translate 0.5s var(--ease-outExpo) 0.45s;
+  }
+}
+
+.block-carousel__item--top {
+  translate: 0 -100%;
+}
+
+.block-carousel__item--bottom {
+  translate: 0 100%;
+}
+</style>
