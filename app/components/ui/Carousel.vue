@@ -83,7 +83,7 @@ defineExpose({
   <div class="@container/carousel size-full">
     <div
       ref="container"
-      class="group/carousel keen-slider size-full relative flex w-full h-[inherit] touch-pan-y select-none"
+      class="group/carousel keen-slider size-full relative flex touch-pan-y select-none"
     >
       <div
         v-for="(item, index) in items"

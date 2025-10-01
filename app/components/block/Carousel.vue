@@ -94,6 +94,8 @@ const carouselCurrentProperties = computed(() => {
   }
 })
 
+const carouselInfo = ref(false)
+
 const sequenceText = () => {
   const spans = text.value?.querySelectorAll('span')
 
@@ -143,6 +145,8 @@ const sequenceMedia = () => {
 
         gsap.set(carouselCurrentMedia.value, { opacity: 1 })
         gsap.set(image.value, { opacity: 0 })
+
+        carouselInfo.value = true
       },
       onEnterBack: () => {
         if (!carouselCurrentMedia.value) {
@@ -151,6 +155,8 @@ const sequenceMedia = () => {
 
         gsap.set(carouselCurrentMedia.value, { opacity: 0 })
         gsap.set(image.value, { opacity: 1 })
+
+        carouselInfo.value = false
       },
     },
   })
@@ -159,14 +165,14 @@ const sequenceMedia = () => {
       {
         width: '100%',
         height: '100%',
-        top: 0,
-        left: 0,
+        x: 0,
+        y: 0,
       },
       {
         width: () => carouselCurrentProperties.value?.width || 0,
         height: () => carouselCurrentProperties.value?.height || 0,
-        top: () => carouselCurrentProperties.value?.relativeTop || 0,
-        left: () => carouselCurrentProperties.value?.left || 0,
+        x: () => carouselCurrentProperties.value?.left || 0,
+        y: () => carouselCurrentProperties.value?.relativeTop || 0,
         ease: 'none',
         lazy: false,
       },
@@ -188,12 +194,8 @@ const requestRefresh = gsap.delayedCall(0.05, () => {
 }).pause()
 
 watch(
-  () => [
-    carouselCurrentProperties.value,
-  ],
-  () => {
-    return requestRefresh.restart(true)
-  },
+  () => carouselCurrentProperties.value,
+  () => requestRefresh.restart(true),
   {
     flush: 'post',
     immediate: false,
@@ -205,7 +207,7 @@ watch(
   <div
     ref="main"
     v-editable="block"
-    class="block-carousel relative bg-white h-[500vh]"
+    class="relative bg-white h-[500vh]"
   >
     <!-- <pre class="fixed top-10 right-10 z-50 bg-black/50 text-white text-12 p-4 max-h-[50vh] overflow-scroll rounded-xl backdrop-blur-2xl">
 {{ carouselCurrentProperties }}
@@ -245,30 +247,43 @@ watch(
       </div>
 
       <div class="absolute inset-0 z-10 size-full">
-        <div class="flex flex-col justify-center h-screen overflow-hidden pt-[calc(var(--app-vertical-rhythm)_*_2)] pb-(--app-vertical-rhythm)">
-          <h2 class="type-mono-12 md:type-mono-14 text-center mb-[calc(var(--app-vertical-rhythm)_*_0.5)]">
-            The Space
-          </h2>
+        <div class="grid grid-cols-1 grid-rows-[auto_1fr_auto] gap-y-(--app-outer-gutter) size-full">
+          <div class="flex flex-col items-center justify-end pt-(--app-header-height)">
+            <h2
+              class="type-mono-12 md:type-mono-14 text-center transition-opacity duration-500 ease-out"
+              :class="{
+                'opacity-100': carouselInfo,
+                'opacity-0': !carouselInfo,
+              }"
+            >
+              The Space
+            </h2>
+          </div>
 
-          <UiCarousel
-            ref="carousel"
-            :items="slides"
-            class="shrink-0"
-          >
-            <template #item="{ item }">
-              <div class="block-carousel__item size-full px-(--app-outer-gutter) flex items-center justify-center">
-                <img
-                  :src="item.image"
-                  :alt="item.caption"
-                  class="block size-auto max-w-full max-h-full"
-                >
-              </div>
-            </template>
-          </UiCarousel>
+          <div class="size-full overflow-hidden">
+            <UiCarousel
+              ref="carousel"
+              :items="slides"
+            >
+              <template #item="{ item }">
+                <div class="size-full px-(--app-outer-gutter) flex items-center justify-center">
+                  <img
+                    :src="item.image"
+                    :alt="item.caption"
+                    class="block size-auto max-w-full max-h-full"
+                  >
+                </div>
+              </template>
+            </UiCarousel>
+          </div>
 
           <div
             v-if="typeof carouselDetails?.abs === 'number'"
-            class="wrapper flex gap-x-(--app-inner-gutter) my-[calc(var(--app-vertical-rhythm)_*_0.25)] type-mono-12 md:type-mono-14"
+            class="wrapper flex gap-x-(--app-inner-gutter) type-mono-12 md:type-mono-14 pb-(--app-header-height) transition-opacity duration-500 ease-out"
+            :class="{
+              'opacity-100': carouselInfo,
+              'opacity-0': !carouselInfo,
+            }"
           >
             <p class="w-1/2 text-right">
               {{ carouselDetails.abs + 1 }}/{{ carouselDetails.length + 1 }}
