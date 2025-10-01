@@ -72,6 +72,7 @@ const retrigger = ref(0)
 const carousel = useTemplateRef<Carousel>('carousel')
 const carouselDetails = computed(() => carousel.value?.carousel.details.value)
 const carouselCurrentSlide = computed(() => carousel.value?.carousel.slider.value?.slides[carouselDetails.value?.abs || 0])
+
 const carouselCurrentMedia = computed(() => carouselCurrentSlide.value?.querySelector('img'))
 const carouselCurrentProperties = computed(() => {
   const slide = carousel.value?.carousel.slider.value.slides[carouselDetails.value?.abs || 0]
@@ -271,6 +272,7 @@ watch(
                     :src="item.image"
                     :alt="item.caption"
                     class="block size-auto max-w-full max-h-full"
+                    @load="retrigger++"
                   >
                 </div>
               </template>
