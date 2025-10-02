@@ -12,56 +12,7 @@ interface Props {
 
 const { block } = defineProps<Props>()
 
-const slides = [
-  {
-    ratio: 'landscape',
-    image: '/images/carousel-test-1.jpg',
-    caption: 'Lounge Room',
-  },
-  {
-    ratio: 'portrait',
-    image: '/images/carousel-test-2.jpg',
-    caption: 'Dining Room',
-  },
-  {
-    ratio: 'landscape',
-    image: '/images/carousel-test-1b.jpg',
-    caption: 'Studio',
-  },
-  {
-    ratio: 'portrait',
-    image: '/images/carousel-test-2.jpg',
-    caption: 'Office',
-  },
-  {
-    ratio: 'landscape',
-    image: '/images/carousel-test-1.jpg',
-    caption: 'Living Room',
-  },
-  {
-    ratio: 'portrait',
-    image: '/images/carousel-test-2.jpg',
-    caption: 'Kitchen',
-  },
-  {
-    ratio: 'landscape',
-    image: '/images/carousel-test-1b.jpg',
-    caption: 'Bedroom',
-  },
-  {
-    ratio: 'portrait',
-    image: '/images/carousel-test-2.jpg',
-    caption: 'Bathroom',
-  },
-  {
-    ratio: 'landscape',
-    image: '/images/carousel-test-1.jpg',
-    caption: 'Balcony',
-  },
-]
-
 const main = useTemplateRef('main')
-const container = useTemplateRef('container')
 const image = useTemplateRef('image')
 const text = useTemplateRef('text')
 
@@ -105,7 +56,7 @@ const sequenceText = () => {
     scrollTrigger: {
       trigger: main.value,
       start: 'top top',
-      end: 'center top',
+      end: '50% top',
       scrub: 0.5,
       markers: false,
     },
@@ -148,13 +99,20 @@ const sequenceMedia = () => {
   tl.value = gsap.timeline({
     scrollTrigger: {
       trigger: main.value,
-      start: 'center top',
-      end: 'center top',
+      start: '50% top',
+      end: '50% top',
       markers: false,
       toggleActions: 'play none none reverse',
       // scrub: true,
       // invalidateOnRefresh: true,
       onLeave: () => {
+        // if (!carouselCurrentMedia.value) {
+        //   return
+        // }
+
+        // gsap.set(carouselCurrentMedia.value, { opacity: 1 })
+        // gsap.set(image.value, { opacity: 0 })
+
         isAnimationComplete.value = true
       },
       onEnterBack: () => {
@@ -178,7 +136,7 @@ const sequenceMedia = () => {
       {
         width: () => carouselCurrentProperties.value?.width || 0,
         height: () => carouselCurrentProperties.value?.height || 0,
-        ease: 'expo.inOut',
+        ease: 'power4.inOut',
         duration: 0.75,
         lazy: false,
         onComplete: () => {
@@ -188,11 +146,7 @@ const sequenceMedia = () => {
 
           gsap.set(carouselCurrentMedia.value, { opacity: 1 })
           gsap.set(image.value, { opacity: 0 })
-          // gsap.set(text.value, { opacity: 0 })
         },
-        // onReverseComplete: () => {
-        //   gsap.to(text.value, { opacity: 1 })
-        // },
       },
     )
     // .add(() => {
@@ -228,20 +182,17 @@ watch(
   <div
     ref="main"
     v-editable="block"
-    class="relative h-[300vh] transition-colors duration-750 ease-inOutExpo"
+    class="relative h-[300vh] transition-colors duration-750 ease-smooth"
     :class="{
-      'bg-sky': !isAnimationComplete,
+      'bg-offwhite': !isAnimationComplete,
       'bg-white': isAnimationComplete,
     }"
   >
-    <div
-      ref="container"
-      class="sticky inset-0 z-1 w-full h-screen"
-    >
+    <div class="sticky inset-0 z-1 w-full h-screen">
       <div class="absolute inset-0 z-20 size-full pointer-events-none flex items-center justify-center">
         <div
           ref="image"
-          class="size-full backface-visibility-hidden transform-gpu will-change-[width,height]"
+          class="size-full backface-visibility-hidden will-change-[width,height]"
         >
           <img
             v-if="carouselCurrentMedia"
@@ -261,7 +212,7 @@ watch(
       >
         <p
           ref="text"
-          class="size-full type-mono-30-70 px-(--app-outer-gutter) py-[calc(var(--app-outer-gutter)*1.5)] md:p-[5%] flex flex-col justify-between text-white bg-black/50"
+          class="size-full type-mono-30-70 px-(--app-outer-gutter) py-[calc(var(--app-outer-gutter)*1.5)] md:p-[5%] flex flex-col justify-between text-white bg-black/30"
         >
           <span class="self-end">A</span>
 
@@ -295,7 +246,7 @@ watch(
           >
             <UiCarousel
               ref="carousel"
-              :items="slides"
+              :items="block.items"
               :options="{
                 slides: {
                   perView: 1.25,
@@ -305,13 +256,25 @@ watch(
               }"
             >
               <template #item="{ item }">
-                <div class="size-full px-(--app-outer-gutter) flex items-center justify-center">
-                  <img
-                    :src="item.image"
-                    :alt="item.caption"
-                    class="block size-auto max-w-full max-h-full"
-                    @load="retrigger++"
+                <div class="size-full px-(--app-outer-gutter)">
+                  <picture
+                    v-if="item.small_device"
+                    class="size-full flex items-center justify-center"
                   >
+                    <source
+                      v-if="item.large_device"
+                      media="(min-width: 768px)"
+                      :srcset="item.large_device.filename || ''"
+                      sizes="100vw"
+                    >
+
+                    <img
+                      :src="item.small_device.filename || ''"
+                      :alt="item.caption || item.small_device.alt || ''"
+                      class="block size-auto max-w-full max-h-full mx-auto"
+                      @load="retrigger++"
+                    >
+                  </picture>
                 </div>
               </template>
             </UiCarousel>
@@ -328,14 +291,14 @@ watch(
               }"
             >
               <p class="w-1/2 text-right">
-                {{ carouselDetails.abs + 1 }}/{{ slides.length }}
+                {{ carouselDetails.abs + 1 }}/{{ block.items.length }}
               </p>
 
               <p
-                v-if="slides[carouselDetails.abs]?.caption"
+                v-if="block.items[carouselDetails.abs]?.caption"
                 class="w-1/2"
               >
-                {{ slides[carouselDetails.abs]?.caption }}
+                {{ block.items[carouselDetails.abs]?.caption }}
               </p>
             </div>
           </div>
@@ -347,31 +310,34 @@ watch(
 
 <style scoped>
 .block-carousel__item {
+  --_delay: 0.35s;
+  --_ease: var(--ease-outQuart);
+
   opacity: 0;
   scale: 1.1;
 
   transition:
-    opacity 0.25s var(--ease-outExpo),
-    scale 0s 0.25s,
-    translate 0s 0.25s;
+    opacity 0.25s var(--ease-out),
+    translate 0s 0.25s,
+    scale 0s 0.25s;
 
   &.is-animation-complete {
     opacity: 1;
+    translate: 0 0 0;
     scale: 1;
-    translate: 0 0;
 
     transition:
-      opacity 0.5s var(--ease-outExpo) 0.45s,
-      scale 0.5s var(--ease-outExpo) 0.45s,
-      translate 0.5s var(--ease-outExpo) 0.45s;
+      opacity 0.25s var(--_ease) var(--_delay),
+      translate 0.25s var(--_ease) var(--_delay),
+      scale 0.25s var(--_ease) var(--_delay);
   }
 }
 
 .block-carousel__item--top {
-  translate: 0 -100%;
+  translate: 0 -200% 0;
 }
 
 .block-carousel__item--bottom {
-  translate: 0 100%;
+  translate: 0 200% 0;
 }
 </style>
