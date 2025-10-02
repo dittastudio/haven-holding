@@ -272,6 +272,7 @@ watch(
                       :src="item.small_device.filename || ''"
                       :alt="item.caption || item.small_device.alt || ''"
                       class="block size-auto max-w-full max-h-full mx-auto"
+                      loading="lazy"
                       @load="retrigger++"
                     >
                   </picture>
