@@ -283,7 +283,7 @@ watch(
 
           <div
             v-if="typeof carouselDetails?.abs === 'number'"
-            class="wrapper pb-(--app-header-height)"
+            class="wrapper pb-(--app-header-height) overflow-hidden"
           >
             <div
               class="block-carousel__item block-carousel__item--bottom type-mono-12 md:type-mono-14 flex gap-x-(--app-inner-gutter)"
