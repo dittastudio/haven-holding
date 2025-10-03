@@ -59,8 +59,6 @@ const currentCarouselItem = computed(() => {
 })
 
 const isAnimationComplete = ref(false)
-const scrollProgress = ref(0)
-const isScrollProgressVisible = ref(false)
 
 const sequenceText = () => {
   const spans = text.value?.querySelectorAll('span')
@@ -71,7 +69,6 @@ const sequenceText = () => {
 
   const split = SplitText.create(spans, {
     type: 'chars',
-    // mask: 'chars',
   })
 
   gsap.timeline({
@@ -110,16 +107,7 @@ const sequenceMedia = () => {
       end: '50% top',
       markers: false,
       toggleActions: 'play none none reverse',
-      // scrub: true,
-      // invalidateOnRefresh: true,
       onLeave: () => {
-        // if (!carouselCurrentMedia.value) {
-        //   return
-        // }
-
-        // gsap.set(carouselCurrentMedia.value, { opacity: 1 })
-        // gsap.set(image.value, { opacity: 0 })
-
         isAnimationComplete.value = true
       },
       onEnterBack: () => {
@@ -127,8 +115,9 @@ const sequenceMedia = () => {
           return
         }
 
-        gsap.set(carouselCurrentMedia.value, { opacity: 0 })
-        gsap.set(image.value, { opacity: 1 })
+        // gsap.set(carouselCurrentMedia.value, { opacity: 0 })
+        // gsap.set(image.value, { opacity: 1 })
+        gsap.to(image.value, { opacity: 1, duration: 0.1 }) // Stops flicker
 
         isAnimationComplete.value = false
       },
@@ -143,7 +132,7 @@ const sequenceMedia = () => {
       {
         width: () => carouselCurrentProperties.value?.width || 0,
         height: () => carouselCurrentProperties.value?.height || 0,
-        ease: 'power4.inOut',
+        ease: 'expo.inOut',
         duration: 0.75,
         lazy: false,
         onComplete: () => {
@@ -156,20 +145,23 @@ const sequenceMedia = () => {
         },
       },
     )
-    // .add(() => {
-    //   gsap.to(text.value, { opacity: 0, duration: 0.25 })
-    // }, '<')
 }
+
+const scrollProgress = ref(0)
+const isScrollProgressVisible = ref(false)
+const isScrollProgressThemeDark = ref(false)
 
 const setupScrollProgress = () => {
   ScrollTrigger.create({
     trigger: main.value,
     start: 'top top',
     end: 'bottom bottom',
-    markers: true,
+    markers: false,
     scrub: true,
     onUpdate: (self) => {
       scrollProgress.value = self.progress
+
+      isScrollProgressThemeDark.value = scrollProgress.value > 0.75
     },
     onEnter: () => {
       isScrollProgressVisible.value = true
@@ -267,7 +259,7 @@ watch(
       >
         <p
           ref="text"
-          class="size-full type-mono-30-70 px-(--app-outer-gutter) py-[calc(var(--app-outer-gutter)*1.5)] md:p-[5%] flex flex-col justify-between text-white bg-black/30"
+          class="size-full type-mono-30-70 px-(--app-outer-gutter) py-(--app-header-height) flex flex-col justify-between text-white bg-black/30"
         >
           <span class="self-end">A</span>
 
@@ -368,25 +360,29 @@ watch(
       w-[100px]
       mx-auto
       rounded-full
-      bg-black/20
-      border-black/20
-      outline-white/20
-      outline-1
-      border-1
+
       backdrop-blur-sm
       overflow-hidden
       transition-all
-      duration-500
-      ease-out
+      duration-750
+      ease-inOutQuart
     "
     :class="{
       'opacity-0 translate-y-full': !isScrollProgressVisible,
       'opacity-100 translate-y-0': isScrollProgressVisible,
+      'bg-white/20': !isScrollProgressThemeDark,
+      'bg-black/20': isScrollProgressThemeDark,
     }"
   >
     <div
-      class="h-2 rounded-full bg-white transition-transform duration-500 ease-out origin-left"
-      :style="{ scale: `${scrollProgress} 1` }"
+      class="h-1 rounded-full transition-[scale,background-color] duration-500 ease-out origin-left"
+      :style="{
+        scale: `${scrollProgress} 1`,
+      }"
+      :class="{
+        'bg-white': !isScrollProgressThemeDark,
+        'bg-black': isScrollProgressThemeDark,
+      }"
     />
   </div>
 </template>
