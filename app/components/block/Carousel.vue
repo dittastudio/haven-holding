@@ -367,7 +367,6 @@ watch(
       h-1
       mx-auto
       rounded-full
-      backdrop-blur-sm
       overflow-hidden
       transition-all
       duration-500
