@@ -64,6 +64,7 @@ const imgInfo = computed(() => asset.filename
         width: size.width,
         height: size.height,
         quality: 80,
+        format: 'webp',
       },
     })
   : { sizes: '', srcset: '' })

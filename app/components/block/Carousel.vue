@@ -3,8 +3,9 @@ import type { BlockCarousel } from '@@/.storyblok/types/303510/storyblok-compone
 import type { Carousel } from '@/components/ui/Carousel.vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { SplitText } from 'gsap/SplitText'
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger, SplitText)
 
 interface Props {
   block: BlockCarousel
@@ -19,19 +20,28 @@ const text = useTemplateRef('text')
 const tl = ref<gsap.core.Timeline | null>(null)
 
 const retrigger = ref(0)
+const resizeTrigger = ref(0)
 
 const carousel = useTemplateRef<Carousel>('carousel')
 const carouselDetails = computed(() => carousel.value?.carousel.details.value)
-const carouselCurrentSlide = computed(() => carousel.value?.carousel.slider.value?.slides[carouselDetails.value?.abs || 0])
+const currentSlideIndex = computed(() => carouselDetails.value?.abs ?? 0)
+
+const carouselCurrentSlide = computed(() => {
+  const slides = carousel.value?.carousel.slider.value?.slides
+  return slides?.[currentSlideIndex.value]
+})
 
 const carouselCurrentMedia = computed(() => carouselCurrentSlide.value?.querySelector('img'))
+
 const carouselCurrentProperties = computed(() => {
-  const slide = carousel.value?.carousel.slider.value.slides[carouselDetails.value?.abs || 0]
-  const media = slide?.querySelector('img')
+  const media = carouselCurrentMedia.value
 
   if (!media) {
     return null
   }
+
+  // Include resizeTrigger to force recalculation on window resize
+  const _ = resizeTrigger.value
 
   const { width, height } = media.getBoundingClientRect()
 
@@ -43,6 +53,11 @@ const carouselCurrentProperties = computed(() => {
   }
 })
 
+const currentCarouselItem = computed(() => {
+  const index = currentSlideIndex.value
+  return block.items[index] || null
+})
+
 const isAnimationComplete = ref(false)
 
 const sequenceText = () => {
@@ -51,6 +66,11 @@ const sequenceText = () => {
   if (!spans) {
     return
   }
+
+  const split = SplitText.create(spans, {
+    type: 'chars',
+    // mask: 'chars',
+  })
 
   gsap.timeline({
     scrollTrigger: {
@@ -66,23 +86,29 @@ const sequenceText = () => {
       { opacity: 0 },
       { opacity: 1 },
     )
-    .fromTo(
-      spans,
-      {
-        opacity: 0,
-        scale: 0.975,
-        rotate: 1,
-        yPercent: 10,
-      },
-      {
-        opacity: 1,
-        scale: 1,
-        rotate: 0,
-        yPercent: 0,
-        stagger: 0.25,
-        ease: 'power2.out',
-      },
-    )
+    .from(split.chars, {
+      opacity: 0,
+      yPercent: -10,
+      skewY: -3,
+      stagger: 0.05,
+    })
+    // .fromTo(
+    //   spans,
+    //   {
+    //     opacity: 0,
+    //     scale: 0.975,
+    //     rotate: 1,
+    //     yPercent: 10,
+    //   },
+    //   {
+    //     opacity: 1,
+    //     scale: 1,
+    //     rotate: 0,
+    //     yPercent: 0,
+    //     stagger: 0.25,
+    //     ease: 'power2.out',
+    //   },
+    // )
     // .to(
     //   text.value,
     //   { opacity: 0 },
@@ -159,8 +185,19 @@ onMounted(async () => {
 
   retrigger.value = 1 // Hack to force recompute.
 
+  const handleResize = async () => {
+    await wait(200)
+    resizeTrigger.value++
+  }
+
+  window.addEventListener('resize', handleResize)
+
   sequenceText()
   sequenceMedia()
+
+  onUnmounted(() => {
+    window.removeEventListener('resize', handleResize)
+  })
 })
 
 const requestRefresh = gsap.delayedCall(0.05, () => {
@@ -194,12 +231,22 @@ watch(
           ref="image"
           class="size-full backface-visibility-hidden will-change-[width,height]"
         >
-          <img
-            v-if="carouselCurrentMedia"
-            :src="carouselCurrentMedia.src"
-            alt=""
-            class="block size-full object-cover"
-          >
+          <MediaImageResponsive
+            v-if="currentCarouselItem?.small_device"
+            :asset="currentCarouselItem.small_device"
+            :desktop-asset="currentCarouselItem.large_device"
+            sizes="
+              xs:100vw
+              sm:100vw
+            "
+            desktop-sizes="
+              md:50vw
+              lg:50vw
+            "
+            :alt="currentCarouselItem.caption || currentCarouselItem.small_device.alt || ''"
+            :lazy="false"
+            class="block size-full"
+          />
         </div>
       </div>
 
@@ -249,33 +296,30 @@ watch(
               :items="block.items"
               :options="{
                 slides: {
-                  perView: 1.25,
+                  // perView: 1,
                   spacing: 0,
                   origin: 'center',
                 },
               }"
             >
               <template #item="{ item }">
-                <div class="size-full px-(--app-outer-gutter)">
-                  <picture
+                <div class="size-full p-(--app-outer-gutter)">
+                  <MediaImageResponsive
                     v-if="item.small_device"
-                    class="size-full flex items-center justify-center"
-                  >
-                    <source
-                      v-if="item.large_device"
-                      media="(min-width: 768px)"
-                      :srcset="item.large_device.filename || ''"
-                      sizes="100vw"
-                    >
-
-                    <img
-                      :src="item.small_device.filename || ''"
-                      :alt="item.caption || item.small_device.alt || ''"
-                      class="block size-auto max-w-full max-h-full mx-auto"
-                      loading="lazy"
-                      @load="retrigger++"
-                    >
-                  </picture>
+                    :asset="item.small_device"
+                    :desktop-asset="item.large_device"
+                    sizes="
+                      xs:100vw
+                      sm:100vw
+                    "
+                    desktop-sizes="
+                      md:50vw
+                      lg:50vw
+                    "
+                    :alt="item.caption || item.small_device.alt || ''"
+                    :lazy="false"
+                    :cover="false"
+                  />
                 </div>
               </template>
             </UiCarousel>
@@ -309,7 +353,7 @@ watch(
   </div>
 </template>
 
-<style scoped>
+<style>
 .block-carousel__item {
   --_delay: 0.35s;
   --_ease: var(--ease-outQuart);
@@ -340,5 +384,15 @@ watch(
 
 .block-carousel__item--bottom {
   translate: 0 200% 0;
+}
+
+.slide-portrait {
+  aspect-ratio: 2/3;
+  width: min(40vh, calc(100vw - (var(--app-outer-gutter) * 6)));
+}
+
+.slide-landscape {
+  aspect-ratio: 3/2;
+  width: min(90vh, calc(100vw - (var(--app-outer-gutter) * 2)));
 }
 </style>

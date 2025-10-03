@@ -89,7 +89,10 @@ defineExpose({
         v-for="(item, index) in items"
         :key="index"
         class="keen-slider__slide w-full min-h-full flex items-center justify-center shrink-0"
-        :class="[slideClassesMap.get(index)]"
+        :class="[
+          slideClassesMap.get(index),
+          { 'is-active': details?.abs === index },
+        ]"
       >
         <slot
           name="item"
