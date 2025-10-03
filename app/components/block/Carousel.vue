@@ -59,6 +59,8 @@ const currentCarouselItem = computed(() => {
 })
 
 const isAnimationComplete = ref(false)
+const scrollProgress = ref(0)
+const isScrollProgressVisible = ref(false)
 
 const sequenceText = () => {
   const spans = text.value?.querySelectorAll('span')
@@ -92,27 +94,6 @@ const sequenceText = () => {
       skewY: -3,
       stagger: 0.05,
     })
-    // .fromTo(
-    //   spans,
-    //   {
-    //     opacity: 0,
-    //     scale: 0.975,
-    //     rotate: 1,
-    //     yPercent: 10,
-    //   },
-    //   {
-    //     opacity: 1,
-    //     scale: 1,
-    //     rotate: 0,
-    //     yPercent: 0,
-    //     stagger: 0.25,
-    //     ease: 'power2.out',
-    //   },
-    // )
-    // .to(
-    //   text.value,
-    //   { opacity: 0 },
-    // )
 }
 
 const sequenceMedia = () => {
@@ -180,6 +161,31 @@ const sequenceMedia = () => {
     // }, '<')
 }
 
+const setupScrollProgress = () => {
+  ScrollTrigger.create({
+    trigger: main.value,
+    start: 'top top',
+    end: 'bottom bottom',
+    markers: true,
+    scrub: true,
+    onUpdate: (self) => {
+      scrollProgress.value = self.progress
+    },
+    onEnter: () => {
+      isScrollProgressVisible.value = true
+    },
+    onEnterBack: () => {
+      isScrollProgressVisible.value = true
+    },
+    onLeave: () => {
+      isScrollProgressVisible.value = false
+    },
+    onLeaveBack: () => {
+      isScrollProgressVisible.value = false
+    },
+  })
+}
+
 onMounted(async () => {
   await wait(100)
 
@@ -192,11 +198,13 @@ onMounted(async () => {
 
   window.addEventListener('resize', handleResize)
 
+  setupScrollProgress()
   sequenceText()
   sequenceMedia()
 
   onUnmounted(() => {
     window.removeEventListener('resize', handleResize)
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill())
   })
 })
 
@@ -350,6 +358,36 @@ watch(
         </div>
       </div>
     </div>
+  </div>
+
+  <div
+    class="
+      sticky
+      bottom-(--app-outer-gutter)
+      z-50
+      w-[100px]
+      mx-auto
+      rounded-full
+      bg-black/20
+      border-black/20
+      outline-white/20
+      outline-1
+      border-1
+      backdrop-blur-sm
+      overflow-hidden
+      transition-all
+      duration-500
+      ease-out
+    "
+    :class="{
+      'opacity-0 translate-y-full': !isScrollProgressVisible,
+      'opacity-100 translate-y-0': isScrollProgressVisible,
+    }"
+  >
+    <div
+      class="h-2 rounded-full bg-white transition-transform duration-500 ease-out origin-left"
+      :style="{ scale: `${scrollProgress} 1` }"
+    />
   </div>
 </template>
 
