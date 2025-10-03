@@ -355,35 +355,42 @@ watch(
   <div
     class="
       sticky
-      bottom-(--app-outer-gutter)
+      bottom-0
+      pb-(--app-outer-gutter)
       z-50
+      -mt-[calc(var(--app-outer-gutter)_+_--spacing(1))]
+    "
+  >
+    <div
+      class="
       w-[100px]
+      h-1
       mx-auto
       rounded-full
-
       backdrop-blur-sm
       overflow-hidden
       transition-all
-      duration-750
-      ease-inOutQuart
+      duration-500
+      ease-outQuart
     "
-    :class="{
-      'opacity-0 translate-y-full': !isScrollProgressVisible,
-      'opacity-100 translate-y-0': isScrollProgressVisible,
-      'bg-white/20': !isScrollProgressThemeDark,
-      'bg-black/20': isScrollProgressThemeDark,
-    }"
-  >
-    <div
-      class="h-1 rounded-full transition-[scale,background-color] duration-500 ease-out origin-left"
-      :style="{
-        scale: `${scrollProgress} 1`,
-      }"
       :class="{
-        'bg-white': !isScrollProgressThemeDark,
-        'bg-black': isScrollProgressThemeDark,
+        'bg-white/20': !isScrollProgressThemeDark,
+        'bg-black/20': isScrollProgressThemeDark,
+        'opacity-0 scale-80': !isScrollProgressVisible,
+        'opacity-100 scale-100': isScrollProgressVisible,
       }"
-    />
+    >
+      <div
+        class="h-1 mb-(--app-outer-gutter) rounded-full transition-[scale,background-color] duration-500 ease-out origin-left"
+        :style="{
+          scale: `${scrollProgress} 1`,
+        }"
+        :class="{
+          'bg-white': !isScrollProgressThemeDark,
+          'bg-black': isScrollProgressThemeDark,
+        }"
+      />
+    </div>
   </div>
 </template>
 
