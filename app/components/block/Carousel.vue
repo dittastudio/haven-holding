@@ -4,6 +4,7 @@ import type { Carousel } from '@/components/ui/Carousel.vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
+import IconArrow from '@/assets/icons/arrow.svg'
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
 
@@ -88,9 +89,14 @@ const sequenceText = () => {
     .from(split.chars, {
       opacity: 0,
       yPercent: -10,
-      skewY: -3,
+      skewY: -5,
+      rotateY: -20,
       stagger: 0.05,
     })
+    .to(
+      text.value,
+      { opacity: 0 },
+    )
 }
 
 const sequenceMedia = () => {
@@ -103,21 +109,30 @@ const sequenceMedia = () => {
   tl.value = gsap.timeline({
     scrollTrigger: {
       trigger: main.value,
-      start: '50% top',
-      end: '50% top',
+      start: '40% top',
+      end: '60% top',
       markers: false,
-      toggleActions: 'play none none reverse',
+      // toggleActions: 'play none none reverse',
+      scrub: true,
+      invalidateOnRefresh: true,
       onLeave: () => {
-        isAnimationComplete.value = true
+        if (!carouselCurrentMedia.value) {
+          return
+        }
+
+        gsap.set(carouselCurrentMedia.value, { opacity: 1 })
+        gsap.set(image.value, { opacity: 0 })
+
+        // isAnimationComplete.value = true
       },
       onEnterBack: () => {
         if (!carouselCurrentMedia.value) {
           return
         }
 
-        // gsap.set(carouselCurrentMedia.value, { opacity: 0 })
-        // gsap.set(image.value, { opacity: 1 })
-        gsap.to(image.value, { opacity: 1, duration: 0.1 }) // Stops flicker
+        gsap.set(carouselCurrentMedia.value, { opacity: 0 })
+        gsap.set(image.value, { opacity: 1 })
+        // gsap.to(image.value, { opacity: 1, duration: 0.1 }) // Stops flicker
 
         isAnimationComplete.value = false
       },
@@ -132,17 +147,19 @@ const sequenceMedia = () => {
       {
         width: () => carouselCurrentProperties.value?.width || 0,
         height: () => carouselCurrentProperties.value?.height || 0,
-        ease: 'expo.inOut',
-        duration: 0.75,
+        ease: 'power4.in',
+        // duration: 0.75,
         lazy: false,
         onComplete: () => {
-          if (!carouselCurrentMedia.value) {
-            return
-          }
-
-          gsap.set(carouselCurrentMedia.value, { opacity: 1 })
-          gsap.set(image.value, { opacity: 0 })
+          isAnimationComplete.value = true
         },
+        // if (!carouselCurrentMedia.value) {
+        //   return
+        // }
+
+        // gsap.set(carouselCurrentMedia.value, { opacity: 1 })
+        // gsap.set(image.value, { opacity: 0 })
+        // },
       },
     )
 }
@@ -161,7 +178,7 @@ const setupScrollProgress = () => {
     onUpdate: (self) => {
       scrollProgress.value = self.progress
 
-      isScrollProgressThemeDark.value = scrollProgress.value > 0.75
+      isScrollProgressThemeDark.value = scrollProgress.value > 0.815
     },
     onEnter: () => {
       isScrollProgressVisible.value = true
@@ -178,26 +195,26 @@ const setupScrollProgress = () => {
   })
 }
 
+const handleResize = async () => {
+  await wait(200)
+  resizeTrigger.value++
+}
+
 onMounted(async () => {
   await wait(100)
 
   retrigger.value = 1 // Hack to force recompute.
-
-  const handleResize = async () => {
-    await wait(200)
-    resizeTrigger.value++
-  }
 
   window.addEventListener('resize', handleResize)
 
   setupScrollProgress()
   sequenceText()
   sequenceMedia()
+})
 
-  onUnmounted(() => {
-    window.removeEventListener('resize', handleResize)
-    ScrollTrigger.getAll().forEach(trigger => trigger.kill())
-  })
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize)
+  ScrollTrigger.getAll().forEach(trigger => trigger.kill())
 })
 
 const requestRefresh = gsap.delayedCall(0.05, () => {
@@ -219,11 +236,7 @@ watch(
   <div
     ref="main"
     v-editable="block"
-    class="relative h-[300vh] transition-colors duration-750 ease-smooth"
-    :class="{
-      'bg-offwhite': !isAnimationComplete,
-      'bg-white': isAnimationComplete,
-    }"
+    class="relative h-[300vh]"
   >
     <div class="sticky inset-0 z-1 w-full h-screen">
       <div class="absolute inset-0 z-20 size-full pointer-events-none flex items-center justify-center">
@@ -271,7 +284,40 @@ watch(
         </p>
       </div>
 
-      <div class="absolute inset-0 z-10 size-full flex flex-col justify-center">
+      <div
+        :class="{
+          'bg-offwhite pointer-events-none': !isAnimationComplete,
+          'bg-white pointer-events-auto': isAnimationComplete,
+        }"
+        class="absolute inset-0 z-10 size-full flex flex-col justify-center transition-colors duration-500 ease-smooth"
+      >
+        <div class="absolute inset-0 z-1 flex mix-blend-difference text-white">
+          <button
+            class="w-1/2"
+            @click="carousel?.carousel.previous()"
+          >
+            <span class="sr-only">Previous</span>
+
+            <UiCursor class="">
+              <IconArrow :class="currentSlideIndex === 0 && 'opacity-20'" />
+            </UiCursor>
+          </button>
+
+          <button
+            class="w-1/2"
+            @click="carousel?.carousel.next()"
+          >
+            <span class="sr-only">Next</span>
+
+            <UiCursor>
+              <IconArrow
+                :class="currentSlideIndex === block.items.length - 1 && 'opacity-20'"
+                class="rotate-180"
+              />
+            </UiCursor>
+          </button>
+        </div>
+
         <div class="grid grid-cols-1 grid-rows-[auto_1fr_auto] gap-y-(--app-outer-gutter) w-full max-h-full">
           <div class="flex flex-col items-center justify-end pt-(--app-header-height)">
             <h2
@@ -286,10 +332,6 @@ watch(
 
           <div
             class="size-full overflow-hidden"
-            :class="{
-              'pointer-events-none': !isAnimationComplete,
-              'pointer-events-auto': isAnimationComplete,
-            }"
           >
             <UiCarousel
               ref="carousel"
@@ -359,6 +401,7 @@ watch(
       pb-(--app-outer-gutter)
       z-50
       -mt-[calc(var(--app-outer-gutter)_+_--spacing(1))]
+      pointer-events-none
     "
   >
     <div
@@ -368,25 +411,30 @@ watch(
       mx-auto
       rounded-full
       overflow-hidden
-      transition-all
-      duration-500
-      ease-outQuart
+      bg-current/20
+      transition-[scale,color]
+      ease-inOutQuart
     "
       :class="{
-        'bg-white/20': !isScrollProgressThemeDark,
-        'bg-black/20': isScrollProgressThemeDark,
-        'opacity-0 scale-80': !isScrollProgressVisible,
-        'opacity-100 scale-100': isScrollProgressVisible,
+        'text-white': !isScrollProgressThemeDark,
+        'text-black': isScrollProgressThemeDark,
+        'scale-0 duration-250': !isScrollProgressVisible,
+        'scale-100 duration-500': isScrollProgressVisible,
       }"
     >
       <div
-        class="h-1 mb-(--app-outer-gutter) rounded-full transition-[scale,background-color] duration-500 ease-out origin-left"
+        class="
+          h-1
+          mb-(--app-outer-gutter)
+          rounded-full
+          bg-current
+          transition-[scale]
+          duration-[0.25s]
+          ease-out
+          origin-left
+        "
         :style="{
           scale: `${scrollProgress} 1`,
-        }"
-        :class="{
-          'bg-white': !isScrollProgressThemeDark,
-          'bg-black': isScrollProgressThemeDark,
         }"
       />
     </div>
@@ -395,14 +443,14 @@ watch(
 
 <style>
 .block-carousel__item {
-  --_delay: 0.35s;
+  --_delay: 0s;
   --_ease: var(--ease-outQuart);
 
   opacity: 0;
   scale: 1.1;
 
   transition:
-    opacity 0.25s var(--ease-out),
+    opacity 0.1s var(--ease-out),
     translate 0s 0.25s,
     scale 0s 0.25s;
 
@@ -419,11 +467,11 @@ watch(
 }
 
 .block-carousel__item--top {
-  translate: 0 -200% 0;
+  translate: 0 -50% 0;
 }
 
 .block-carousel__item--bottom {
-  translate: 0 200% 0;
+  translate: 0 50% 0;
 }
 
 .slide-portrait {

@@ -1,14 +1,13 @@
-<script lang="ts">
-import type { KeenSliderInstance, KeenSliderOptions, TrackDetails } from 'keen-slider'
-</script>
-
 <script generic="T" lang="ts" setup>
+import type { KeenSliderInstance, KeenSliderOptions, TrackDetails } from 'keen-slider'
 import { useKeenSlider } from 'keen-slider/vue.es'
 
 export interface Carousel {
   carousel: {
     slider: Ref<KeenSliderInstance>
     details: Ref<TrackDetails>
+    next: () => Ref<KeenSliderInstance>
+    previous: () => Ref<KeenSliderInstance>
   }
 }
 
@@ -69,9 +68,19 @@ watch(() => [perView, spacing], ([newPerView, newSpacing]) => {
   })
 })
 
+const next = () => {
+  slider.value?.next()
+}
+
+const previous = () => {
+  slider.value?.prev()
+}
+
 const carousel = {
   slider,
   details,
+  next,
+  previous,
 }
 
 defineExpose({
