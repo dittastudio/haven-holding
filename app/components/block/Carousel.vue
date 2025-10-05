@@ -292,7 +292,7 @@ watch(
         class="absolute inset-0 z-10 size-full flex flex-col justify-center transition-colors duration-500 ease-smooth"
       >
         <!-- Carousel navigation buttons -->
-        <div class="absolute inset-0 z-1 flex mix-blend-difference text-white">
+        <div class="only-touch:hidden absolute inset-0 z-1 flex mix-blend-difference text-white">
           <button
             v-for="button in ['previous', 'next'] as const"
             :key="button"
@@ -334,7 +334,7 @@ watch(
               :items="block.items"
               :options="{
                 slides: {
-                  // perView: 1,
+                  perView: 1.1,
                   spacing: 0,
                   origin: 'center',
                 },
@@ -460,7 +460,7 @@ watch(
 
   &.is-active + & {
     .block-carousel__slide-inner {
-      translate: calc((var(--app-outer-gutter) * -3)) 0 0;
+      translate: calc((var(--app-outer-gutter) * -2)) 0 0;
     }
   }
 

@@ -1,37 +1,25 @@
 <script lang="ts" setup>
 const hover = ref<HTMLElement | null>(null)
 const cursorPosition = ref({ x: 0, y: 0 })
-const supportsHover = ref(false)
+// const supportsHover = ref(false)
 const isHovering = ref(false)
 
 const updateCursorPosition = (x: number, y: number) => {
-  if (!supportsHover.value) {
-    return
-  }
-
   cursorPosition.value = { x, y }
 
   console.log(cursorPosition.value)
 }
 
 const handleMouseEnter = () => {
-  if (!supportsHover.value) {
-    return
-  }
-
   isHovering.value = true
 }
 
 const handleMouseLeave = () => {
-  if (!supportsHover.value) {
-    return
-  }
-
   isHovering.value = false
 }
 
 const handleMouseMove = (e: MouseEvent) => {
-  if (!isHovering.value || !supportsHover.value) {
+  if (!isHovering.value) {
     return
   }
 
@@ -42,13 +30,13 @@ const handleMouseMove = (e: MouseEvent) => {
   }
 }
 
-onMounted(() => {
-  supportsHover.value = window.matchMedia('(hover: hover)').matches
-})
+// onMounted(() => {
+//   supportsHover.value = window.matchMedia('(hover: hover)').matches
+// })
 
-onUnmounted(() => {
-  supportsHover.value = false
-})
+// onUnmounted(() => {
+//   supportsHover.value = false
+// })
 </script>
 
 <template>
@@ -58,8 +46,6 @@ onUnmounted(() => {
     @mousemove.passive="handleMouseMove"
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
-    @mousedown="handleMouseDown"
-    @mouseup="handleMouseUp"
   >
     <span
       v-if="isHovering"
