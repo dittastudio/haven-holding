@@ -291,28 +291,26 @@ watch(
         }"
         class="absolute inset-0 z-10 size-full flex flex-col justify-center transition-colors duration-500 ease-smooth"
       >
+        <!-- Carousel navigation buttons -->
         <div class="absolute inset-0 z-1 flex mix-blend-difference text-white">
           <button
-            class="w-1/2"
-            @click="carousel?.carousel.previous()"
+            v-for="button in ['previous', 'next'] as const"
+            :key="button"
+            class="group/button w-1/2"
+            @click="carousel?.carousel[button]()"
           >
-            <span class="sr-only">Previous</span>
-
-            <UiCursor class="">
-              <IconArrow :class="currentSlideIndex === 0 && 'opacity-20'" />
-            </UiCursor>
-          </button>
-
-          <button
-            class="w-1/2"
-            @click="carousel?.carousel.next()"
-          >
-            <span class="sr-only">Next</span>
+            <span class="sr-only">{{ button }}</span>
 
             <UiCursor>
               <IconArrow
-                :class="currentSlideIndex === block.items.length - 1 && 'opacity-20'"
-                class="rotate-180"
+                class="transition-all duration-200 ease-smooth"
+                :class="[
+                  {
+                    'opacity-20': button === 'previous' && currentSlideIndex === 0 || currentSlideIndex === block.items.length - 1 && button === 'next',
+                    'group-active/button:-translate-x-1 group-active/button:opacity-60': button === 'previous',
+                    'group-active/button:translate-x-1 group-active/button:opacity-60 rotate-180': button === 'next',
+                  },
+                ]"
               />
             </UiCursor>
           </button>
@@ -330,9 +328,7 @@ watch(
             </h2>
           </div>
 
-          <div
-            class="size-full overflow-hidden"
-          >
+          <div class="size-full overflow-hidden">
             <UiCarousel
               ref="carousel"
               :items="block.items"
@@ -342,10 +338,17 @@ watch(
                   spacing: 0,
                   origin: 'center',
                 },
+                defaultAnimation: {
+                  duration: 500,
+                  easing: x => { return 1 - Math.pow(1 - x, 4) },
+                },
               }"
             >
-              <template #item="{ item }">
-                <div class="size-full p-(--app-outer-gutter)">
+              <template #item="{ item, setSlideClasses }">
+                <div
+                  class="block-carousel__slide-inner size-full px-[calc(var(--app-outer-gutter)_*_2)]"
+                  :class="setSlideClasses('block-carousel__slide')"
+                >
                   <MediaImageResponsive
                     v-if="item.small_device"
                     :asset="item.small_device"
@@ -375,6 +378,7 @@ watch(
               class="block-carousel__item block-carousel__item--bottom type-mono-12 md:type-mono-14 flex gap-x-(--app-inner-gutter)"
               :class="{
                 'is-animation-complete': isAnimationComplete,
+
               }"
             >
               <p class="w-1/2 text-right">
@@ -394,6 +398,7 @@ watch(
     </div>
   </div>
 
+  <!-- Scroll progress bar -->
   <div
     class="
       sticky
@@ -418,8 +423,8 @@ watch(
       :class="{
         'text-white': !isScrollProgressThemeDark,
         'text-black': isScrollProgressThemeDark,
-        'scale-0 duration-250': !isScrollProgressVisible,
-        'scale-100 duration-500': isScrollProgressVisible,
+        'scale-0 duration-[0.25s,_0.1s]': !isScrollProgressVisible,
+        'scale-100 duration-[0.5s,_0.1s]': isScrollProgressVisible,
       }"
     >
       <div
@@ -442,6 +447,34 @@ watch(
 </template>
 
 <style>
+.block-carousel__slide {
+  &.is-active {
+    .block-carousel__slide-inner {
+      translate: calc(50% + (var(--app-outer-gutter) * -2)) 0 0;
+    }
+
+    .block-carousel__slide-inner img {
+      translate: -50% 0 0;
+    }
+  }
+
+  &.is-active + & {
+    .block-carousel__slide-inner {
+      translate: calc((var(--app-outer-gutter) * -3)) 0 0;
+    }
+  }
+
+  img {
+    margin-left: 0;
+  }
+}
+
+.block-carousel__slide-inner,
+.block-carousel__slide-inner img {
+  translate: 0 0 0;
+  transition: translate 0.3s var(--ease-out);
+}
+
 .block-carousel__item {
   --_delay: 0s;
   --_ease: var(--ease-outQuart);

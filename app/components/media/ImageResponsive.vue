@@ -149,7 +149,7 @@ const breakpointMedia = computed(() => {
 
 <template>
   <div
-    class="media-image relative isolate overflow-hidden w-full h-[inherit]"
+    class="media-image relative isolate xoverflow-hidden w-full h-[inherit]"
     :class="[className, { 'is-loaded': loaded, 'is-lazy': lazy }]"
   >
     <picture

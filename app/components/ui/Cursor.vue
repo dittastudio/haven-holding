@@ -3,7 +3,6 @@ const hover = ref<HTMLElement | null>(null)
 const cursorPosition = ref({ x: 0, y: 0 })
 const supportsHover = ref(false)
 const isHovering = ref(false)
-const isDepressed = ref(false)
 
 const updateCursorPosition = (x: number, y: number) => {
   if (!supportsHover.value) {
@@ -29,14 +28,6 @@ const handleMouseLeave = () => {
   }
 
   isHovering.value = false
-}
-
-const handleMouseDown = () => {
-  isDepressed.value = true
-}
-
-const handleMouseUp = () => {
-  isDepressed.value = false
 }
 
 const handleMouseMove = (e: MouseEvent) => {
