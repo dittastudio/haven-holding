@@ -334,7 +334,7 @@ watch(
               :items="block.items"
               :options="{
                 slides: {
-                  perView: 1.1,
+                  perView: 1,
                   spacing: 0,
                   origin: 'center',
                 },
@@ -460,7 +460,7 @@ watch(
 
   &.is-active + & {
     .block-carousel__slide-inner {
-      translate: calc((var(--app-outer-gutter) * -2)) 0 0;
+      translate: calc((var(--app-outer-gutter) * -3)) 0 0;
     }
   }
 
