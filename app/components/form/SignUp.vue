@@ -101,7 +101,6 @@ const onSubmit = async () => {
             type-sans-16
             grow
             w-full
-            px-2
             py-3
             border-b
             border-current/30
@@ -142,7 +141,6 @@ const onSubmit = async () => {
             type-sans-16
             grow
             w-full
-            px-2
             py-3
             border-b
             border-current/30
@@ -184,7 +182,6 @@ const onSubmit = async () => {
             type-sans-16
             grow
             w-full
-            px-2
             py-3
             border-b
             border-current/30
