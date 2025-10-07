@@ -93,10 +93,10 @@ const sequenceText = () => {
       rotateY: -20,
       stagger: 0.05,
     })
-    .to(
-      text.value,
-      { opacity: 0 },
-    )
+    // .to(
+    //   text.value,
+    //   { opacity: 0 },
+    // )
 }
 
 const sequenceMedia = () => {
@@ -109,30 +109,30 @@ const sequenceMedia = () => {
   tl.value = gsap.timeline({
     scrollTrigger: {
       trigger: main.value,
-      start: '40% top',
-      end: '60% top',
+      start: '50% top',
+      end: '50% top',
       markers: false,
-      // toggleActions: 'play none none reverse',
-      scrub: true,
-      invalidateOnRefresh: true,
+      toggleActions: 'play none none reverse',
+      // scrub: true,
+      // invalidateOnRefresh: true,
       onLeave: () => {
         if (!carouselCurrentMedia.value) {
           return
         }
 
-        gsap.set(carouselCurrentMedia.value, { opacity: 1 })
-        gsap.set(image.value, { opacity: 0 })
+        // gsap.set(carouselCurrentMedia.value, { opacity: 1 })
+        // gsap.set(image.value, { opacity: 0 })
 
-        // isAnimationComplete.value = true
+        isAnimationComplete.value = true
       },
       onEnterBack: () => {
         if (!carouselCurrentMedia.value) {
           return
         }
 
-        gsap.set(carouselCurrentMedia.value, { opacity: 0 })
-        gsap.set(image.value, { opacity: 1 })
-        // gsap.to(image.value, { opacity: 1, duration: 0.1 }) // Stops flicker
+        // gsap.set(carouselCurrentMedia.value, { opacity: 0 })
+        // gsap.set(image.value, { opacity: 1 })
+        gsap.to(image.value, { opacity: 1, duration: 0.1 }) // Stops flicker
 
         isAnimationComplete.value = false
       },
@@ -147,19 +147,20 @@ const sequenceMedia = () => {
       {
         width: () => carouselCurrentProperties.value?.width || 0,
         height: () => carouselCurrentProperties.value?.height || 0,
-        ease: 'power4.in',
-        // duration: 0.75,
+        ease: 'power4.inOut',
+        duration: 0.75,
         lazy: false,
         onComplete: () => {
-          isAnimationComplete.value = true
-        },
-        // if (!carouselCurrentMedia.value) {
-        //   return
-        // }
+          if (!carouselCurrentMedia.value) {
+            return
+          }
 
-        // gsap.set(carouselCurrentMedia.value, { opacity: 1 })
-        // gsap.set(image.value, { opacity: 0 })
-        // },
+          gsap.set(carouselCurrentMedia.value, { opacity: 1 })
+          gsap.set(image.value, { opacity: 0 })
+
+          isAnimationComplete.value = true
+          // },
+        },
       },
     )
 }
@@ -178,7 +179,7 @@ const setupScrollProgress = () => {
     onUpdate: (self) => {
       scrollProgress.value = self.progress
 
-      isScrollProgressThemeDark.value = scrollProgress.value > 0.815
+      isScrollProgressThemeDark.value = scrollProgress.value > 0.75
     },
     onEnter: () => {
       isScrollProgressVisible.value = true
@@ -292,7 +293,7 @@ watch(
         class="absolute inset-0 z-10 size-full flex flex-col justify-center transition-colors duration-500 ease-smooth"
       >
         <!-- Carousel navigation buttons -->
-        <div class="only-touch:hidden absolute inset-0 z-1 flex mix-blend-difference text-white">
+        <div class="xhidden only-touch:hidden absolute inset-0 z-1 flex mix-blend-difference text-white">
           <button
             v-for="button in ['previous', 'next'] as const"
             :key="button"
@@ -334,19 +335,19 @@ watch(
               :items="block.items"
               :options="{
                 slides: {
-                  perView: 1,
+                  perView: 'auto',
                   spacing: 0,
                   origin: 'center',
                 },
                 defaultAnimation: {
-                  duration: 500,
-                  easing: x => { return 1 - Math.pow(1 - x, 4) },
+                  duration: 750,
+                  // easing: x => { return 1 - Math.pow(1 - x, 4) },
                 },
               }"
             >
               <template #item="{ item, setSlideClasses }">
                 <div
-                  class="block-carousel__slide-inner size-full px-[calc(var(--app-outer-gutter)_*_2)]"
+                  class="block-carousel__slide-inner size-full xh-full xpx-[calc(var(--app-outer-gutter)_*_2)]"
                   :class="setSlideClasses('block-carousel__slide')"
                 >
                   <MediaImageResponsive
@@ -448,31 +449,54 @@ watch(
 
 <style>
 .block-carousel__slide {
+  .block-carousel__slide-inner {
+    /* translate: calc(50% + (var(--app-outer-gutter) * -2)) 0 0; */
+  }
+
+  .block-carousel__slide-inner img {
+    /* translate: -50% 0 0; */
+  }
+
   &.is-active {
     .block-carousel__slide-inner {
-      translate: calc(50% + (var(--app-outer-gutter) * -2)) 0 0;
+      /* translate: calc(50% + (var(--app-outer-gutter) * -2)) 0 0; */
     }
 
     .block-carousel__slide-inner img {
-      translate: -50% 0 0;
+      /* translate: -50% 0 0; */
     }
   }
 
   &.is-active + & {
     .block-carousel__slide-inner {
-      translate: calc((var(--app-outer-gutter) * -3)) 0 0;
+      /* translate: -50% 0 0; */
+    }
+
+    .block-carousel__slide-inner img {
+      /* translate: 0% 0 0; */
+      /* translate: calc(50% - (var(--app-outer-gutter) * 1)) 0 0; */
     }
   }
 
   img {
-    margin-left: 0;
+    /* margin-left: 0; */
   }
 }
 
 .block-carousel__slide-inner,
 .block-carousel__slide-inner img {
-  translate: 0 0 0;
-  transition: translate 0.3s var(--ease-out);
+  /* translate: 0 0 0; */
+  transition: translate 0s var(--ease-out);
+}
+
+.block-carousel__slide.is-active .block-carousel__slide-inner,
+.block-carousel__slide.is-active .block-carousel__slide-inner img {
+  transition: translate 1s var(--ease-smooth);
+}
+
+.block-carousel__slide.is-active + .block-carousel__slide .block-carousel__slide-inner,
+.block-carousel__slide.is-active + .block-carousel__slide .block-carousel__slide-inner img {
+  transition: translate 0s var(--ease-out);
 }
 
 .block-carousel__item {
