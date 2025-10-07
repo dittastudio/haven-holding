@@ -347,7 +347,7 @@ watch(
             >
               <template #item="{ item, setSlideClasses }">
                 <div
-                  class="block-carousel__slide-inner size-full xh-full xpx-[calc(var(--app-outer-gutter)_*_2)]"
+                  class="block-carousel__slide-inner size-full xh-full px-[calc(var(--app-outer-gutter)_*_1)]"
                   :class="setSlideClasses('block-carousel__slide')"
                 >
                   <MediaImageResponsive
