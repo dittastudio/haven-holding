@@ -4,10 +4,10 @@ import type { StoryblokMultilink, StoryblokRichtext } from '@@/.storyblok/types/
 import IconLogoSymbol from '@/assets/icons/haven-logo-symbol-final.svg'
 
 interface Props {
-  address: StoryblokRichtext | undefined
-  addressLink: StoryblokMultilink | string | undefined
-  socials: SocialItem[] | undefined
-  linkItems: Link[] | undefined
+  address?: StoryblokRichtext
+  addressLink?: StoryblokMultilink
+  socials?: SocialItem[]
+  linkItems?: Link[]
 }
 
 const { address, addressLink, socials, linkItems } = defineProps<Props>()
@@ -49,14 +49,12 @@ const { address, addressLink, socials, linkItems } = defineProps<Props>()
         </h4>
 
         <StoryblokLink
-          v-if="storyblokRichTextContent(address)"
+          v-if="addressLink && storyblokRichTextContent(address)"
           class="inline-block transition-opacity duration-200 ease-smooth hover:opacity-40"
           :item="addressLink"
         >
           <address class="not-italic">
-            <StoryblokText
-              :content="address"
-            />
+            <StoryblokText :content="address" />
           </address>
         </StoryblokLink>
       </div>
