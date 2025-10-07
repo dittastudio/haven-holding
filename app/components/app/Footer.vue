@@ -23,7 +23,7 @@ const { address, addressLink, socials, linkItems } = defineProps<Props>()
         wrapper
         type-mono-14
         grid
-        grid-cols-4
+        grid-cols-3
         md:grid-cols-(--app-grid)
         gap-x-(--app-inner-gutter)
         gap-y-12
@@ -43,7 +43,7 @@ const { address, addressLink, socials, linkItems } = defineProps<Props>()
         </NuxtLink>
       </div>
 
-      <div class="col-span-3 md:col-span-5 xl:col-span-2">
+      <div class="col-start-2 col-span-2 sm:col-span-1 md:col-span-5 lg:col-span-2 2xl:col-span-1">
         <h4 class="mb-2">
           Contact
         </h4>
@@ -53,18 +53,18 @@ const { address, addressLink, socials, linkItems } = defineProps<Props>()
           class="inline-block transition-opacity duration-200 ease-smooth hover:opacity-40"
           :item="addressLink"
         >
-          <address class="not-italic">
+          <address class="not-italic font-sans text-13">
             <StoryblokText :content="address" />
           </address>
         </StoryblokLink>
       </div>
 
-      <div class="col-start-2 col-span-3 md:col-span-4 xl:col-span-2">
+      <div class="col-start-2 col-span-2 sm:col-span-1 md:col-span-5 lg:col-span-2 2xl:col-span-1">
         <h4 class="mb-2">
           Social
         </h4>
 
-        <ul class="inline-block">
+        <ul class="inline-block font-sans text-13">
           <template
             v-for="social in socials"
             :key="social._uid"
@@ -85,35 +85,57 @@ const { address, addressLink, socials, linkItems } = defineProps<Props>()
         </ul>
       </div>
 
-      <div class="col-span-full xs:col-start-2 xs:col-span-3 md:col-start-3 md:col-span-9 xl:col-span-6 xl:ml-auto">
-        <div class="overflow-hidden">
-          <ul class="flex -mx-3">
-            <li class="flex">
-              <NuxtLink
-                class="inline-block px-3 transition-opacity duration-200 ease-smooth hover:opacity-40"
-                to="https://studioparallel.co.uk/"
-                target="_blank"
-                rel="noopener"
-              >
-                Design by Studio Parallel
-              </NuxtLink>
-            </li>
+      <div class="col-start-2 col-span-2 sm:col-span-1 sm:col-start-2 md:col-span-5 md:col-start-3 lg:col-span-2 2xl:col-span-1 2xl:col-start-10">
+        <h4 class="mb-2">
+          Design
+        </h4>
 
-            <li class="flex before:content-['/'] before:inline-block before:-mx-[0.5ch]">
-              <NuxtLink
-                class="inline-block px-3 transition-opacity duration-200 ease-smooth hover:opacity-40"
-                to="https://ditta.studio"
-                target="_blank"
-                rel="noopener"
-              >
-                Made by ditta
-              </NuxtLink>
-            </li>
-          </ul>
-        </div>
+        <p class="font-sans text-13">
+          <NuxtLink
+            class="inline-block transition-opacity duration-200 ease-smooth hover:opacity-40"
+            to="https://studioparallel.co.uk"
+            target="_blank"
+          >
+            Studio Parallel
+          </NuxtLink>
+        </p>
+      </div>
 
+      <div class="col-start-2 col-span-2 sm:col-span-1 md:col-span-5 lg:col-span-2 2xl:col-span-1">
+        <h4 class="mb-2">
+          Made by
+        </h4>
+
+        <p class="font-sans text-13">
+          <NuxtLink
+            class="inline-block transition-opacity duration-200 ease-smooth hover:opacity-40"
+            to="https://ditta.studio"
+            target="_blank"
+          >
+            ditta
+          </NuxtLink>
+        </p>
+      </div>
+
+      <div class="col-start-2 col-span-2 sm:col-span-1 sm:col-start-2 md:col-span-5 md:col-start-3 lg:col-span-2 2xl:col-span-1">
+        <h4 class="mb-2">
+          Interiors
+        </h4>
+
+        <p class="font-sans text-13">
+          <NuxtLink
+            class="inline-block transition-opacity duration-200 ease-smooth hover:opacity-40"
+            to="https://studiolineatur.com"
+            target="_blank"
+          >
+            Lineatur
+          </NuxtLink>
+        </p>
+      </div>
+
+      <div class="col-span-full sm:col-start-2 md:col-start-3">
         <div class="overflow-hidden">
-          <ul class="flex -mx-3">
+          <ul class="flex -mx-3 text-12">
             <li class="flex before:content-['/'] before:inline-block before:-mx-[0.5ch]">
               <span class="inline-block px-3">
                 ©2024 All rights reserved
