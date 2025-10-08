@@ -58,25 +58,18 @@ const carouselCurrentProperties = computed(() => {
   const relativeBottom = containerHeight - height - relativeTop
   const relativeRight = containerWidth - width - relativeLeft
 
-  const relativeTopPercent = containerHeight > 0 ? (relativeTop / containerHeight) * 100 : 0
-  const relativeLeftPercent = containerWidth > 0 ? (relativeLeft / containerWidth) * 100 : 0
-  const relativeBottomPercent = containerHeight > 0 ? (relativeBottom / containerHeight) * 100 : 0
-  const relativeRightPercent = containerWidth > 0 ? (relativeRight / containerWidth) * 100 : 0
-
   return {
     retrigger: retrigger.value,
     width,
     height,
+    src: media.src,
     top,
     left,
     relativeTop,
     relativeLeft,
     relativeBottom,
     relativeRight,
-    relativeTopPercent,
-    relativeLeftPercent,
-    relativeBottomPercent,
-    relativeRightPercent,
+    any: carouselDetails.value?.abs,
   }
 })
 
@@ -142,13 +135,6 @@ const sequenceMedia = () => {
       // scrub: true,
       // invalidateOnRefresh: true,
       onLeave: () => {
-        if (!carouselCurrentMedia.value) {
-          return
-        }
-
-        // gsap.set(carouselCurrentMedia.value, { opacity: 1 })
-        // gsap.set(image.value, { opacity: 0 })
-
         isAnimationComplete.value = true
       },
       onEnterBack: () => {
@@ -156,9 +142,9 @@ const sequenceMedia = () => {
           return
         }
 
-        // gsap.set(carouselCurrentMedia.value, { opacity: 0 })
-        // gsap.set(image.value, { opacity: 1 })
-        gsap.to(image.value, { opacity: 1, duration: 0.1 }) // Stops flicker
+        gsap.set(carouselCurrentMedia.value, { opacity: 0 })
+        gsap.set(image.value, { opacity: 1 })
+        // gsap.to(image.value, { opacity: 1, duration: 0.1, delay: 0.1 }) // Stops flicker
 
         isAnimationComplete.value = false
       },
@@ -167,15 +153,15 @@ const sequenceMedia = () => {
     .fromTo(
       imageMask.value,
       {
-        clipPath: 'inset(0% 0% 0% 0%)',
+        clipPath: 'inset(0 0 0 0)',
       },
       {
-        clipPath: `
+        clipPath: () => `
           inset(
-            ${carouselCurrentProperties.value?.relativeTopPercent || 0}%
-            ${carouselCurrentProperties.value?.relativeRightPercent || 0}%
-            ${carouselCurrentProperties.value?.relativeBottomPercent || 0}%
-            ${carouselCurrentProperties.value?.relativeLeftPercent || 0}%
+            ${carouselCurrentProperties.value?.relativeTop || 0}px
+            ${carouselCurrentProperties.value?.relativeRight || 0}px
+            ${carouselCurrentProperties.value?.relativeBottom || 0}px
+            ${carouselCurrentProperties.value?.relativeLeft || 0}px
           )
         `,
         ease: 'power4.inOut',
@@ -207,7 +193,6 @@ const sequenceMedia = () => {
           gsap.set(image.value, { opacity: 0 })
 
           isAnimationComplete.value = true
-        // },
         },
       },
       '-=90%',
@@ -288,6 +273,8 @@ watch(
     v-editable="block"
     class="relative h-[400vh]"
   >
+    <pre class="fixed z-50 top-0 left-0">{{ carouselCurrentProperties }}</pre>
+
     <div
       ref="container"
       class="sticky inset-0 z-1 w-full h-screen"
@@ -401,7 +388,6 @@ watch(
                 },
                 defaultAnimation: {
                   duration: 750,
-                  // easing: x => { return 1 - Math.pow(1 - x, 4) },
                 },
               }"
             >
