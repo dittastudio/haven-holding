@@ -2,6 +2,7 @@
 // DO NOT MODIFY THIS FILE BY HAND.
 import type { StoryblokRichtext, StoryblokMultilink, StoryblokAsset } from '../storyblok.d.ts';
 export interface BlockCarousel {
+  items: Image[];
   component: "block_carousel";
   _uid: string;
 }
@@ -60,6 +61,14 @@ export interface BlockTextGroup {
   items?: TextItem[];
   contact?: StoryblokRichtext;
   component: "block_text_group";
+  _uid: string;
+}
+
+export interface Image {
+  small_device: StoryblokAsset;
+  large_device?: StoryblokAsset;
+  caption?: string;
+  component: "image";
   _uid: string;
 }
 
