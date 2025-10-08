@@ -16,6 +16,7 @@ const { block } = defineProps<Props>()
 
 const main = useTemplateRef('main')
 const container = useTemplateRef('container')
+const imageMask = useTemplateRef('imageMask')
 const image = useTemplateRef('image')
 const text = useTemplateRef('text')
 
@@ -47,6 +48,20 @@ const carouselCurrentProperties = computed(() => {
   const _ = resizeTrigger.value
 
   const { width, height, top, left } = media.getBoundingClientRect()
+  const containerRect = container.value?.getBoundingClientRect()
+
+  const containerWidth = containerRect?.width || 0
+  const containerHeight = containerRect?.height || 0
+
+  const relativeTop = top - (containerRect?.top || 0)
+  const relativeLeft = left - (containerRect?.left || 0)
+  const relativeBottom = containerHeight - height - relativeTop
+  const relativeRight = containerWidth - width - relativeLeft
+
+  const relativeTopPercent = containerHeight > 0 ? (relativeTop / containerHeight) * 100 : 0
+  const relativeLeftPercent = containerWidth > 0 ? (relativeLeft / containerWidth) * 100 : 0
+  const relativeBottomPercent = containerHeight > 0 ? (relativeBottom / containerHeight) * 100 : 0
+  const relativeRightPercent = containerWidth > 0 ? (relativeRight / containerWidth) * 100 : 0
 
   return {
     retrigger: retrigger.value,
@@ -54,8 +69,14 @@ const carouselCurrentProperties = computed(() => {
     height,
     top,
     left,
-    relativeTop: top - (container.value ? container.value?.getBoundingClientRect().top : 0) || 0,
-    relativeLeft: left - (container.value ? container.value?.getBoundingClientRect().left : 0) || 0,
+    relativeTop,
+    relativeLeft,
+    relativeBottom,
+    relativeRight,
+    relativeTopPercent,
+    relativeLeftPercent,
+    relativeBottomPercent,
+    relativeRightPercent,
   }
 })
 
@@ -144,6 +165,24 @@ const sequenceMedia = () => {
     },
   })
     .fromTo(
+      imageMask.value,
+      {
+        clipPath: 'inset(0% 0% 0% 0%)',
+      },
+      {
+        clipPath: `
+          inset(
+            ${carouselCurrentProperties.value?.relativeTopPercent || 0}%
+            ${carouselCurrentProperties.value?.relativeRightPercent || 0}%
+            ${carouselCurrentProperties.value?.relativeBottomPercent || 0}%
+            ${carouselCurrentProperties.value?.relativeLeftPercent || 0}%
+          )
+        `,
+        ease: 'power4.inOut',
+        duration: 0.75,
+      },
+    )
+    .fromTo(
       image.value,
       {
         width: '100%',
@@ -168,9 +207,10 @@ const sequenceMedia = () => {
           gsap.set(image.value, { opacity: 0 })
 
           isAnimationComplete.value = true
-          // },
+        // },
         },
       },
+      '-=90%',
     )
 }
 
@@ -252,27 +292,32 @@ watch(
       ref="container"
       class="sticky inset-0 z-1 w-full h-screen"
     >
-      <div class="absolute inset-0 z-20 size-full pointer-events-none flex items-center justify-center">
+      <div class="absolute inset-0 z-20 pointer-events-none flex items-center justify-center">
         <div
-          ref="image"
-          class="absolute inset-0 z-20 size-full backface-visibility-hidden will-change-[width,height]"
+          ref="imageMask"
+          class="absolute inset-0 z-20"
         >
-          <MediaImageResponsive
-            v-if="currentCarouselItem?.small_device"
-            :asset="currentCarouselItem.small_device"
-            :desktop-asset="currentCarouselItem.large_device"
-            sizes="
+          <div
+            ref="image"
+            class="absolute inset-0 z-20 size-full backface-visibility-hidden will-change-[width,height]"
+          >
+            <MediaImageResponsive
+              v-if="currentCarouselItem?.small_device"
+              :asset="currentCarouselItem.small_device"
+              :desktop-asset="currentCarouselItem.large_device"
+              sizes="
               xs:100vw
               sm:100vw
             "
-            desktop-sizes="
+              desktop-sizes="
               md:50vw
               lg:50vw
             "
-            :alt="currentCarouselItem.caption || currentCarouselItem.small_device.alt || ''"
-            :lazy="false"
-            class="block size-full"
-          />
+              :alt="currentCarouselItem.caption || currentCarouselItem.small_device.alt || ''"
+              :lazy="false"
+              class="block size-full"
+            />
+          </div>
         </div>
       </div>
 
@@ -341,7 +386,10 @@ watch(
             </h2>
           </div>
 
-          <div class="size-full overflow-hidden">
+          <div
+            :class="{ 'is-animation-complete': isAnimationComplete }"
+            class="block-carousel__slider size-full overflow-hidden"
+          >
             <UiCarousel
               ref="carousel"
               :items="block.items"
@@ -360,7 +408,7 @@ watch(
               <template #item="{ item, setSlideClasses }">
                 <div
                   class="block-carousel__slide-inner size-full px-[calc(var(--app-outer-gutter)_*_0.5)]"
-                  :class="setSlideClasses('w-[calc(100%-(calc(var(--app-outer-gutter)*3)))] md:w-[calc(59vw)]')"
+                  :class="setSlideClasses('block-carousel__slide w-[calc(100%-(calc(var(--app-outer-gutter)*3)))] md:w-[calc(59%)]')"
                 >
                   <MediaImageResponsive
                     v-if="item.small_device"
@@ -391,7 +439,6 @@ watch(
               class="block-carousel__item block-carousel__item--bottom type-mono-12 md:type-mono-14 flex flex-col gap-2 items-center"
               :class="{
                 'is-animation-complete': isAnimationComplete,
-
               }"
             >
               <p>
@@ -424,7 +471,7 @@ watch(
   >
     <div
       class="
-      w-1/3
+      w-40
       h-[2px]
       mx-auto
       rounded-full
@@ -455,88 +502,27 @@ watch(
         }"
       />
     </div>
-    <!-- <div
-      class="
-      w-full
-      h-[2px]
-      mx-auto
-      rounded-full
-      overflow-hidden
-      bg-current/20
-      transition-[scale,color]
-      ease-inOutQuart
-    "
-      :class="{
-        'text-white': !isScrollProgressThemeDark,
-        'text-black': isScrollProgressThemeDark,
-        'scale-0 duration-[0.25s,_0.75s]': !isScrollProgressVisible,
-        'scale-100 duration-[0.5s,_0.75s]': isScrollProgressVisible,
-      }"
-    >
-      <div
-        class="
-          h-1
-          mb-(--app-outer-gutter)
-          rounded-full
-          bg-current
-          transition-[scale]
-          duration-[0.25s]
-          ease-out
-          origin-left
-        "
-        :style="{
-          scale: `${scrollProgress} 1`,
-        }"
-      />
-    </div> -->
   </div>
 </template>
 
 <style>
-.keen-slider__slide.is-active {
-  /* transform: translateX(-50px)!important; */
-}
-
-.block-carousel__slide {
-  .block-carousel__slide-inner {
-    /* translate: calc(-50% + (var(--app-outer-gutter) * 3)) 0 0; */
+.block-carousel__slider {
+  & .block-carousel__slide.is-active + .block-carousel__slide .block-carousel__slide-inner {
+    translate: 50% 0 0;
+    transition: translate 0.75s var(--ease-inOutQuart);
   }
 
-  .block-carousel__slide-inner img {
-    /* margin-right: 0; */
-    /* translate: 50% 0 0; */
+  & .block-carousel__slide:has(+ .block-carousel__slide.is-active) .block-carousel__slide-inner {
+    translate: -50% 0 0;
+    transition: translate 0.75s var(--ease-inOutQuart);
   }
 
-  &.is-active {
-    .block-carousel__slide-inner {
-      /* translate: calc(50% + (var(--app-outer-gutter) * -2)) 0 0; */
-    }
-
-    .block-carousel__slide-inner img {
-      /* translate: -50% 0 0; */
+  &.is-animation-complete {
+    & .block-carousel__slide.is-active + .block-carousel__slide .block-carousel__slide-inner,
+    & .block-carousel__slide:has(+ .block-carousel__slide.is-active) .block-carousel__slide-inner {
+      translate: 0 0 0;
     }
   }
-
-  &.is-active + & {
-    .block-carousel__slide-inner {
-      /* translate: calc(-100% + (var(--app-outer-gutter) * 2)) 0 0; */
-    }
-
-    .block-carousel__slide-inner img {
-      /* translate: 100% 0 0; */
-      /* margin-left: calc(var(--app-outer-gutter) * -2); */
-      /* translate: calc(50% - (var(--app-outer-gutter) * 1)) 0 0; */
-    }
-  }
-
-  img {
-    /* margin-left: 0; */
-  }
-}
-
-.block-carousel__slide .block-carousel__slide-inner,
-.block-carousel__slide .block-carousel__slide-inner img {
-  /* transition: translate 0.75s var(--ease-outQuart); */
 }
 
 .block-carousel__item {
