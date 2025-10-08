@@ -92,12 +92,12 @@ defineExpose({
   <div class="size-full">
     <div
       ref="container"
-      class="group/carousel keen-slider size-full relative flex xoverflow-hidden touch-pan-y select-none"
+      class="keen-slider size-full relative flex touch-pan-y select-none"
     >
       <div
         v-for="(item, index) in items"
         :key="index"
-        class="keen-slider__slide xw-full xmin-h-full xflex xitems-center xjustify-center shrink-0"
+        class="keen-slider__slide shrink-0"
         :class="[
           slideClassesMap.get(index),
           { 'is-active': details?.abs === index },

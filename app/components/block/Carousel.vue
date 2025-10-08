@@ -273,7 +273,7 @@ watch(
     v-editable="block"
     class="relative h-[400vh]"
   >
-    <pre class="fixed z-50 top-0 left-0">{{ carouselCurrentProperties }}</pre>
+    <pre class="fixed z-50 top-0 left-0 pointer-events-none">{{ carouselCurrentProperties }}</pre>
 
     <div
       ref="container"
@@ -288,18 +288,13 @@ watch(
             ref="image"
             class="absolute inset-0 z-20 size-full backface-visibility-hidden will-change-[width,height]"
           >
-            <MediaImageResponsive
+            <MediaImage
               v-if="currentCarouselItem?.small_device"
               :asset="currentCarouselItem.small_device"
-              :desktop-asset="currentCarouselItem.large_device"
               sizes="
-              xs:100vw
-              sm:100vw
-            "
-              desktop-sizes="
-              md:50vw
-              lg:50vw
-            "
+                xs:100vw
+                sm:100vw
+              "
               :alt="currentCarouselItem.caption || currentCarouselItem.small_device.alt || ''"
               :lazy="false"
               class="block size-full"
@@ -396,18 +391,12 @@ watch(
                   class="block-carousel__slide-inner size-full px-[calc(var(--app-outer-gutter)_*_0.5)]"
                   :class="setSlideClasses('block-carousel__slide w-[calc(100%-(calc(var(--app-outer-gutter)*3)))] md:w-[calc(59%)]')"
                 >
-                  <MediaImageResponsive
+                  <MediaImage
                     v-if="item.small_device"
                     :asset="item.small_device"
-                    :desktop-asset="item.large_device"
                     sizes="
                       xs:100vw
-                      sm:100vw
-                    "
-                    desktop-sizes="
-                      md:50vw
-                      lg:50vw
-                    "
+                      sm:100vw"
                     :alt="item.caption || item.small_device.alt || ''"
                     :lazy="false"
                     :cover="false"

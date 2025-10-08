@@ -13,32 +13,41 @@ interface Props {
   ratio?: string | number
   sizes: string
   lazy?: boolean
+  cover?: boolean
 }
 
-const { asset, ratio = 'auto', sizes, lazy = true } = defineProps<Props>()
+const { asset, ratio = 'auto', sizes, lazy = true, cover = true } = defineProps<Props>()
 
 const container = ref<HTMLPictureElement | null>(null)
 const ready = ref(!lazy)
 const loaded = ref(!lazy)
 
-const { width, height } = storyblokImageDimensions(asset.filename)
+const size = computed(() => {
+  const { width, height } = storyblokImageDimensions(asset.filename)
 
-const ratioValid = validAspectRatio(ratio)
-const ratioFormat = ratio && ratioValid ? calculateAspectRatio(ratioDimensions(ratio).width, ratioDimensions(ratio).height) : calculateAspectRatio(width, height)
+  if (ratio === 'auto') {
+    return {
+      width,
+      height,
+    }
+  }
 
-const size = {
-  width: ratioDimensions(ratioFormat).width,
-  height: ratioDimensions(ratioFormat).height,
-}
+  const ratioFormat = calculateAspectRatio(ratioDimensions(ratio).width, ratioDimensions(ratio).height)
+
+  return {
+    width: ratioDimensions(ratioFormat).width,
+    height: ratioDimensions(ratioFormat).height,
+  }
+})
 
 const placeholderImg = useImage()
-const placeholder = asset.filename
+const placeholder = computed(() => asset.filename
   ? placeholderImg(asset.filename, {
-      width: size.width,
-      height: size.height,
+      width: size.value.width,
+      height: size.value.height,
       quality: 10,
     })
-  : ''
+  : '')
 
 useIntersectionObserver(
   container,
@@ -61,9 +70,9 @@ const imgInfo = computed(() => asset.filename
       provider: 'storyblok',
       sizes,
       modifiers: {
-        width: size.width,
-        height: size.height,
-        quality: 80,
+        width: size.value.width,
+        height: size.value.height,
+        quality: 90,
         format: 'webp',
       },
     })
@@ -73,8 +82,8 @@ const { class: className, ...rest } = attrs
 
 const imgAttrs = computed(() => ({
   ...rest,
-  width: size.width,
-  height: size.height,
+  width: size.value.width,
+  height: size.value.height,
   src: ready.value && asset.filename ? asset.filename : undefined,
   sizes: ready.value ? imgInfo.value.sizes : '',
   srcset: ready.value ? imgInfo.value.srcset : '',
@@ -86,15 +95,19 @@ const imgAttrs = computed(() => ({
   <picture
     ref="container"
     class="isolate relative overflow-hidden block w-full h-[inherit]"
-    :class="className"
+    :class="[
+      className,
+      { 'flex items-center justify-center': !cover },
+    ]"
   >
     <img
       v-bind="imgAttrs"
-      class="w-full h-[inherit]"
       :class="{
         'opacity-0': !loaded,
         'opacity-100': loaded,
         'absolute z-1 inset-0 backface-visibility-hidden transition-opacity duration-1000 ease-out': lazy,
+        'size-auto max-w-full max-h-full mx-auto': !cover,
+        'w-full h-[inherit] object-cover': cover,
       }"
       :loading="lazy ? 'eager' : 'lazy'"
       @load="loaded = true"
