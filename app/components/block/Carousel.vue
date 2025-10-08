@@ -142,9 +142,9 @@ const sequenceMedia = () => {
           return
         }
 
-        gsap.set(carouselCurrentMedia.value, { opacity: 0 })
-        gsap.set(image.value, { opacity: 1 })
-        // gsap.to(image.value, { opacity: 1, duration: 0.1, delay: 0.1 }) // Stops flicker
+        // gsap.set(carouselCurrentMedia.value, { opacity: 0 })
+        // gsap.set(image.value, { opacity: 1 })
+        gsap.to(image.value, { opacity: 1, duration: 0.01 }) // Stops flicker
 
         isAnimationComplete.value = false
       },
@@ -332,7 +332,7 @@ watch(
         class="absolute inset-0 z-10 size-full flex flex-col justify-center transition-colors duration-750 ease-smooth"
       >
         <!-- Carousel navigation buttons -->
-        <div class="hidden only-touch:hidden absolute inset-0 z-1 flex mix-blend-difference text-white">
+        <div class="xhidden only-touch:hidden absolute inset-0 z-1 flex mix-blend-difference text-white">
           <button
             v-for="button in ['previous', 'next'] as const"
             :key="button"
