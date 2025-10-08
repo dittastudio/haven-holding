@@ -27,9 +27,8 @@ const { address, addressLink, socials, linkItems } = defineProps<Props>()
         md:grid-cols-(--app-grid)
         gap-x-(--app-inner-gutter)
         gap-y-12
-        pt-12
-        pb-10
-        md:pb-20
+        md:gap-y-22
+        py-12
       "
     >
       <div class="col-span-1 md:col-span-2">
@@ -43,94 +42,112 @@ const { address, addressLink, socials, linkItems } = defineProps<Props>()
         </NuxtLink>
       </div>
 
-      <div class="col-start-2 col-span-2 sm:col-span-1 md:col-span-5 lg:col-span-2 2xl:col-span-1">
-        <h4 class="mb-2">
-          Contact
-        </h4>
-
-        <StoryblokLink
-          v-if="addressLink && storyblokRichTextContent(address)"
-          class="inline-block transition-opacity duration-200 ease-smooth hover:opacity-40"
-          :item="addressLink"
+      <div class="@container/footer col-span-full col-start-2 md:col-start-3">
+        <div
+          class="
+            flex
+            flex-col
+            @2xl/footer:flex-row
+            gap-y-38
+            @2xl/footer:gap-y-14
+            items-start
+            justify-between
+          "
         >
-          <address class="not-italic font-sans text-13">
-            <StoryblokText :content="address" />
-          </address>
-        </StoryblokLink>
-      </div>
+          <div class="w-full @2xl/footer:w-auto grid grid-cols-1 @xs/footer:grid-cols-2 @2xl/footer:flex gap-8 @3xl/footer:gap-14">
+            <div class="flex flex-col gap-2">
+              <h4>
+                Contact
+              </h4>
 
-      <div class="col-start-2 col-span-2 sm:col-span-1 md:col-span-5 lg:col-span-2 2xl:col-span-1">
-        <h4 class="mb-2">
-          Social
-        </h4>
-
-        <ul class="inline-block font-sans text-13">
-          <template
-            v-for="social in socials"
-            :key="social._uid"
-          >
-            <li
-              v-if="social.title && social.link?.url"
-              class="block"
-            >
               <StoryblokLink
+                v-if="addressLink && storyblokRichTextContent(address)"
                 class="inline-block transition-opacity duration-200 ease-smooth hover:opacity-40"
-                :item="social.link"
-                :title="social.title"
+                :item="addressLink"
               >
-                {{ social.title }}
+                <address class="not-italic font-sans text-13">
+                  <StoryblokText :content="address" />
+                </address>
               </StoryblokLink>
-            </li>
-          </template>
-        </ul>
-      </div>
+            </div>
 
-      <div class="col-start-2 col-span-2 sm:col-span-1 sm:col-start-2 md:col-span-5 md:col-start-3 lg:col-span-2 2xl:col-span-1 2xl:col-start-10">
-        <h4 class="mb-2">
-          Design
-        </h4>
+            <div class="flex flex-col gap-2">
+              <h4>
+                Social
+              </h4>
 
-        <p class="font-sans text-13">
-          <NuxtLink
-            class="inline-block transition-opacity duration-200 ease-smooth hover:opacity-40"
-            to="https://studioparallel.co.uk"
-            target="_blank"
-          >
-            Studio Parallel
-          </NuxtLink>
-        </p>
-      </div>
+              <ul class="inline-block font-sans text-13">
+                <template
+                  v-for="social in socials"
+                  :key="social._uid"
+                >
+                  <li
+                    v-if="social.title && social.link?.url"
+                    class="block"
+                  >
+                    <StoryblokLink
+                      class="inline-block transition-opacity duration-200 ease-smooth hover:opacity-40"
+                      :item="social.link"
+                      :title="social.title"
+                    >
+                      {{ social.title }}
+                    </StoryblokLink>
+                  </li>
+                </template>
+              </ul>
+            </div>
+          </div>
 
-      <div class="col-start-2 col-span-2 sm:col-span-1 md:col-span-5 lg:col-span-2 2xl:col-span-1">
-        <h4 class="mb-2">
-          Made by
-        </h4>
+          <div class="w-full @2xl/footer:w-auto grid grid-cols-1 @xs/footer:grid-cols-2 @2xl/footer:flex gap-8 @3xl/footer:gap-14">
+            <div class="flex flex-col gap-2">
+              <h4>
+                Design
+              </h4>
 
-        <p class="font-sans text-13">
-          <NuxtLink
-            class="inline-block transition-opacity duration-200 ease-smooth hover:opacity-40"
-            to="https://ditta.studio"
-            target="_blank"
-          >
-            ditta
-          </NuxtLink>
-        </p>
-      </div>
+              <p class="font-sans text-13">
+                <NuxtLink
+                  class="inline-block transition-opacity duration-200 ease-smooth hover:opacity-40"
+                  to="https://studioparallel.co.uk"
+                  target="_blank"
+                >
+                  Studio Parallel
+                </NuxtLink>
+              </p>
+            </div>
 
-      <div class="col-start-2 col-span-2 sm:col-span-1 sm:col-start-2 md:col-span-5 md:col-start-3 lg:col-span-2 2xl:col-span-1">
-        <h4 class="mb-2">
-          Interiors
-        </h4>
+            <div class="flex flex-col gap-2">
+              <h4>
+                Build
+              </h4>
 
-        <p class="font-sans text-13">
-          <NuxtLink
-            class="inline-block transition-opacity duration-200 ease-smooth hover:opacity-40"
-            to="https://studiolineatur.com"
-            target="_blank"
-          >
-            Lineatur
-          </NuxtLink>
-        </p>
+              <p class="font-sans text-13">
+                <NuxtLink
+                  class="inline-block transition-opacity duration-200 ease-smooth hover:opacity-40"
+                  to="https://ditta.studio"
+                  target="_blank"
+                >
+                  ditta
+                </NuxtLink>
+              </p>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <h4>
+                Interiors
+              </h4>
+
+              <p class="font-sans text-13">
+                <NuxtLink
+                  class="inline-block transition-opacity duration-200 ease-smooth hover:opacity-40"
+                  to="https://studiolineatur.com"
+                  target="_blank"
+                >
+                  Lineatur
+                </NuxtLink>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="col-span-full sm:col-start-2 md:col-start-3">
