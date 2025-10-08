@@ -15,6 +15,7 @@ interface Props {
 const { block } = defineProps<Props>()
 
 const main = useTemplateRef('main')
+const container = useTemplateRef('container')
 const image = useTemplateRef('image')
 const text = useTemplateRef('text')
 
@@ -35,7 +36,8 @@ const carouselCurrentSlide = computed(() => {
 const carouselCurrentMedia = computed(() => carouselCurrentSlide.value?.querySelector('img'))
 
 const carouselCurrentProperties = computed(() => {
-  const media = carouselCurrentMedia.value
+  const slide = carousel.value?.carousel.slider.value.slides[carouselDetails.value?.abs || 0]
+  const media = slide?.querySelector('img')
 
   if (!media) {
     return null
@@ -48,11 +50,11 @@ const carouselCurrentProperties = computed(() => {
 
   return {
     retrigger: retrigger.value,
-    src: media.getAttribute('src'),
     width,
     height,
     top,
     left,
+    relativeTop: top - (container.value ? container.value?.getBoundingClientRect().top : 0) || 0,
   }
 })
 
@@ -145,12 +147,14 @@ const sequenceMedia = () => {
       {
         width: '100%',
         height: '100%',
+        x: 0,
+        y: 0,
       },
       {
         width: () => carouselCurrentProperties.value?.width || 0,
         height: () => carouselCurrentProperties.value?.height || 0,
-        top: () => carouselCurrentProperties.value?.top || 0,
-        left: () => carouselCurrentProperties.value?.left || 0,
+        x: () => carouselCurrentProperties.value?.left || 0,
+        y: () => carouselCurrentProperties.value?.relativeTop || 0,
         // y: () => (carouselCurrentProperties.value?.top / carouselCurrentProperties.value?.height) || 0,
         // x: () => (carouselCurrentProperties.value?.left / carouselCurrentProperties.value?.width) || 0,
         ease: 'power4.inOut',
@@ -245,11 +249,14 @@ watch(
     v-editable="block"
     class="relative h-[400vh]"
   >
-    <div class="sticky inset-0 z-1 w-full h-screen">
+    <div
+      ref="container"
+      class="sticky inset-0 z-1 w-full h-screen"
+    >
       <div class="absolute inset-0 z-20 size-full pointer-events-none flex items-center justify-center">
         <div
           ref="image"
-          class="size-full backface-visibility-hidden will-change-[width,height]"
+          class="absolute inset-0 z-20 size-full backface-visibility-hidden will-change-[width,height]"
         >
           <MediaImageResponsive
             v-if="currentCarouselItem?.small_device"
