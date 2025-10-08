@@ -36,17 +36,14 @@ const carouselCurrentSlide = computed(() => {
 const carouselCurrentMedia = computed(() => carouselCurrentSlide.value?.querySelector('img'))
 
 const carouselCurrentProperties = computed(() => {
-  const slide = carousel.value?.carousel.slider.value.slides[carouselDetails.value?.abs || 0]
-  const media = slide?.querySelector('img')
-
-  if (!media) {
+  if (!carouselCurrentMedia.value) {
     return null
   }
 
   // Include resizeTrigger to force recalculation on window resize
   const _ = resizeTrigger.value
 
-  const { width, height, top, left } = media.getBoundingClientRect()
+  const { width, height, top, left } = carouselCurrentMedia.value.getBoundingClientRect() || { width: 0, height: 0, top: 0, left: 0 }
 
   return {
     retrigger: retrigger.value,
