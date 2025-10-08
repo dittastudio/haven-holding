@@ -44,13 +44,15 @@ const carouselCurrentProperties = computed(() => {
   // Include resizeTrigger to force recalculation on window resize
   const _ = resizeTrigger.value
 
-  const { width, height } = media.getBoundingClientRect()
+  const { width, height, top, left } = media.getBoundingClientRect()
 
   return {
     retrigger: retrigger.value,
     src: media.getAttribute('src'),
     width,
     height,
+    top,
+    left,
   }
 })
 
@@ -147,6 +149,10 @@ const sequenceMedia = () => {
       {
         width: () => carouselCurrentProperties.value?.width || 0,
         height: () => carouselCurrentProperties.value?.height || 0,
+        top: () => carouselCurrentProperties.value?.top || 0,
+        left: () => carouselCurrentProperties.value?.left || 0,
+        // y: () => (carouselCurrentProperties.value?.top / carouselCurrentProperties.value?.height) || 0,
+        // x: () => (carouselCurrentProperties.value?.left / carouselCurrentProperties.value?.width) || 0,
         ease: 'power4.inOut',
         duration: 0.75,
         lazy: false,
@@ -179,7 +185,7 @@ const setupScrollProgress = () => {
     onUpdate: (self) => {
       scrollProgress.value = self.progress
 
-      isScrollProgressThemeDark.value = scrollProgress.value > 0.75
+      isScrollProgressThemeDark.value = scrollProgress.value > 0.66
     },
     onEnter: () => {
       isScrollProgressVisible.value = true
@@ -237,7 +243,7 @@ watch(
   <div
     ref="main"
     v-editable="block"
-    class="relative h-[300vh]"
+    class="relative h-[400vh]"
   >
     <div class="sticky inset-0 z-1 w-full h-screen">
       <div class="absolute inset-0 z-20 size-full pointer-events-none flex items-center justify-center">
@@ -293,7 +299,7 @@ watch(
         class="absolute inset-0 z-10 size-full flex flex-col justify-center transition-colors duration-500 ease-smooth"
       >
         <!-- Carousel navigation buttons -->
-        <div class="xhidden only-touch:hidden absolute inset-0 z-1 flex mix-blend-difference text-white">
+        <div class="hidden xonly-touch:hidden absolute inset-0 z-1 xflex mix-blend-difference text-white">
           <button
             v-for="button in ['previous', 'next'] as const"
             :key="button"
@@ -376,22 +382,23 @@ watch(
             class="wrapper pb-(--app-header-height) overflow-hidden"
           >
             <div
-              class="block-carousel__item block-carousel__item--bottom type-mono-12 md:type-mono-14 flex gap-x-(--app-inner-gutter)"
+              class="block-carousel__item block-carousel__item--bottom type-mono-12 md:type-mono-14 flex flex-col gap-x-(--app-inner-gutter) items-center"
               :class="{
                 'is-animation-complete': isAnimationComplete,
 
               }"
             >
-              <p class="w-1/2 text-right">
+              <p>
                 {{ carouselDetails.abs + 1 }}/{{ block.items.length }}
               </p>
 
               <p
                 v-if="block.items[carouselDetails.abs]?.caption"
-                class="w-1/2"
               >
                 {{ block.items[carouselDetails.abs]?.caption }}
               </p>
+
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates rerum eligendi sequi deleniti in dolorum nobis nam veritatis aut libero sit, maiores corporis reprehenderit voluptatum! Tempora in itaque fuga ut.</p>
             </div>
           </div>
         </div>
@@ -424,8 +431,8 @@ watch(
       :class="{
         'text-white': !isScrollProgressThemeDark,
         'text-black': isScrollProgressThemeDark,
-        'scale-0 duration-[0.25s,_0.1s]': !isScrollProgressVisible,
-        'scale-100 duration-[0.5s,_0.1s]': isScrollProgressVisible,
+        'scale-0 duration-[0.25s,_0.75s]': !isScrollProgressVisible,
+        'scale-100 duration-[0.5s,_0.75s]': isScrollProgressVisible,
       }"
     >
       <div
@@ -500,7 +507,7 @@ watch(
 }
 
 .block-carousel__item {
-  --_delay: 0s;
+  --_delay: 0.4s;
   --_ease: var(--ease-outQuart);
 
   opacity: 0;
