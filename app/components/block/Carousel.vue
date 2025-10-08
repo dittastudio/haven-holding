@@ -36,14 +36,17 @@ const carouselCurrentSlide = computed(() => {
 const carouselCurrentMedia = computed(() => carouselCurrentSlide.value?.querySelector('img'))
 
 const carouselCurrentProperties = computed(() => {
-  if (!carouselCurrentMedia.value) {
+  const slide = carousel.value?.carousel.slider.value.slides[carouselDetails.value?.abs || 0]
+  const media = slide?.querySelector('img')
+
+  if (!media) {
     return null
   }
 
   // Include resizeTrigger to force recalculation on window resize
   const _ = resizeTrigger.value
 
-  const { width, height, top, left } = carouselCurrentMedia.value.getBoundingClientRect() || { width: 0, height: 0, top: 0, left: 0 }
+  const { width, height, top, left } = media.getBoundingClientRect()
 
   return {
     retrigger: retrigger.value,
@@ -52,6 +55,7 @@ const carouselCurrentProperties = computed(() => {
     top,
     left,
     relativeTop: top - (container.value ? container.value?.getBoundingClientRect().top : 0) || 0,
+    relativeLeft: left - (container.value ? container.value?.getBoundingClientRect().left : 0) || 0,
   }
 })
 
@@ -150,10 +154,8 @@ const sequenceMedia = () => {
       {
         width: () => carouselCurrentProperties.value?.width || 0,
         height: () => carouselCurrentProperties.value?.height || 0,
-        x: () => carouselCurrentProperties.value?.left || 0,
+        x: () => carouselCurrentProperties.value?.relativeLeft || 0,
         y: () => carouselCurrentProperties.value?.relativeTop || 0,
-        // y: () => (carouselCurrentProperties.value?.top / carouselCurrentProperties.value?.height) || 0,
-        // x: () => (carouselCurrentProperties.value?.left / carouselCurrentProperties.value?.width) || 0,
         ease: 'power4.inOut',
         duration: 0.75,
         lazy: false,
@@ -180,7 +182,7 @@ const setupScrollProgress = () => {
   ScrollTrigger.create({
     trigger: main.value,
     start: 'top top',
-    end: 'bottom bottom',
+    end: '75% bottom',
     markers: false,
     scrub: true,
     onUpdate: (self) => {
@@ -297,13 +299,13 @@ watch(
 
       <div
         :class="{
-          'bg-offwhite pointer-events-none': !isAnimationComplete,
-          'bg-white pointer-events-auto': isAnimationComplete,
+          'bg-cream pointer-events-none': !isAnimationComplete,
+          'bg-white pointer-events-auto delay-250': isAnimationComplete,
         }"
-        class="absolute inset-0 z-10 size-full flex flex-col justify-center transition-colors duration-500 ease-smooth"
+        class="absolute inset-0 z-10 size-full flex flex-col justify-center transition-colors duration-750 ease-smooth"
       >
         <!-- Carousel navigation buttons -->
-        <div class="hidden xonly-touch:hidden absolute inset-0 z-1 xflex mix-blend-difference text-white">
+        <div class="hidden only-touch:hidden absolute inset-0 z-1 flex mix-blend-difference text-white">
           <button
             v-for="button in ['previous', 'next'] as const"
             :key="button"
@@ -357,8 +359,8 @@ watch(
             >
               <template #item="{ item, setSlideClasses }">
                 <div
-                  class="block-carousel__slide-inner size-full xh-full px-[calc(var(--app-outer-gutter)_*_1)]"
-                  :class="setSlideClasses('block-carousel__slide')"
+                  class="block-carousel__slide-inner size-full px-[calc(var(--app-outer-gutter)_*_0.5)]"
+                  :class="setSlideClasses('w-[calc(100%-(calc(var(--app-outer-gutter)*3)))] md:w-[calc(59vw)]')"
                 >
                   <MediaImageResponsive
                     v-if="item.small_device"
@@ -386,7 +388,7 @@ watch(
             class="wrapper pb-(--app-header-height) overflow-hidden"
           >
             <div
-              class="block-carousel__item block-carousel__item--bottom type-mono-12 md:type-mono-14 flex flex-col gap-x-(--app-inner-gutter) items-center"
+              class="block-carousel__item block-carousel__item--bottom type-mono-12 md:type-mono-14 flex flex-col gap-2 items-center"
               :class="{
                 'is-animation-complete': isAnimationComplete,
 
@@ -401,8 +403,6 @@ watch(
               >
                 {{ block.items[carouselDetails.abs]?.caption }}
               </p>
-
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates rerum eligendi sequi deleniti in dolorum nobis nam veritatis aut libero sit, maiores corporis reprehenderit voluptatum! Tempora in itaque fuga ut.</p>
             </div>
           </div>
         </div>
@@ -419,12 +419,46 @@ watch(
       z-50
       -mt-[calc(var(--app-outer-gutter)_+_--spacing(1))]
       pointer-events-none
+      wrapper
     "
   >
     <div
       class="
-      w-[100px]
-      h-1
+      w-1/3
+      h-[2px]
+      mx-auto
+      rounded-full
+      overflow-hidden
+      bg-current/20
+      transition-[scale,color]
+      ease-inOutQuart
+      text-white
+    "
+      :class="{
+        'scale-0 duration-[0.25s,_0.75s]': !isScrollProgressVisible,
+        'scale-100 duration-[0.5s,_0.75s]': isScrollProgressVisible,
+      }"
+    >
+      <div
+        class="
+          h-1
+          mb-(--app-outer-gutter)
+          rounded-full
+          bg-current
+          transition-[scale]
+          duration-[0.25s]
+          ease-out
+          origin-left
+        "
+        :style="{
+          scale: `${scrollProgress} 1`,
+        }"
+      />
+    </div>
+    <!-- <div
+      class="
+      w-full
+      h-[2px]
       mx-auto
       rounded-full
       overflow-hidden
@@ -454,18 +488,23 @@ watch(
           scale: `${scrollProgress} 1`,
         }"
       />
-    </div>
+    </div> -->
   </div>
 </template>
 
 <style>
+.keen-slider__slide.is-active {
+  /* transform: translateX(-50px)!important; */
+}
+
 .block-carousel__slide {
   .block-carousel__slide-inner {
-    /* translate: calc(50% + (var(--app-outer-gutter) * -2)) 0 0; */
+    /* translate: calc(-50% + (var(--app-outer-gutter) * 3)) 0 0; */
   }
 
   .block-carousel__slide-inner img {
-    /* translate: -50% 0 0; */
+    /* margin-right: 0; */
+    /* translate: 50% 0 0; */
   }
 
   &.is-active {
@@ -480,11 +519,12 @@ watch(
 
   &.is-active + & {
     .block-carousel__slide-inner {
-      /* translate: -50% 0 0; */
+      /* translate: calc(-100% + (var(--app-outer-gutter) * 2)) 0 0; */
     }
 
     .block-carousel__slide-inner img {
-      /* translate: 0% 0 0; */
+      /* translate: 100% 0 0; */
+      /* margin-left: calc(var(--app-outer-gutter) * -2); */
       /* translate: calc(50% - (var(--app-outer-gutter) * 1)) 0 0; */
     }
   }
@@ -494,20 +534,9 @@ watch(
   }
 }
 
-.block-carousel__slide-inner,
-.block-carousel__slide-inner img {
-  /* translate: 0 0 0; */
-  transition: translate 0s var(--ease-out);
-}
-
-.block-carousel__slide.is-active .block-carousel__slide-inner,
-.block-carousel__slide.is-active .block-carousel__slide-inner img {
-  transition: translate 1s var(--ease-smooth);
-}
-
-.block-carousel__slide.is-active + .block-carousel__slide .block-carousel__slide-inner,
-.block-carousel__slide.is-active + .block-carousel__slide .block-carousel__slide-inner img {
-  transition: translate 0s var(--ease-out);
+.block-carousel__slide .block-carousel__slide-inner,
+.block-carousel__slide .block-carousel__slide-inner img {
+  /* transition: translate 0.75s var(--ease-outQuart); */
 }
 
 .block-carousel__item {
