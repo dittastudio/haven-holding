@@ -256,13 +256,13 @@ onUnmounted(() => {
             class="absolute inset-0 z-20 size-full backface-hidden will-change-[width,height]"
           >
             <MediaImage
-              v-if="currentCarouselItem?.small_device"
-              :asset="currentCarouselItem.small_device"
+              v-if="currentCarouselItem?.image"
+              :asset="currentCarouselItem.image"
               sizes="
                 xs:100vw
                 sm:100vw
               "
-              :alt="currentCarouselItem.caption || currentCarouselItem.small_device.alt || ''"
+              :alt="currentCarouselItem.caption || currentCarouselItem.image.alt || ''"
               :lazy="false"
               class="block size-full"
             />
@@ -299,7 +299,7 @@ onUnmounted(() => {
         class="absolute inset-0 z-10 size-full flex flex-col justify-center transition-colors duration-750 ease-smooth"
       >
         <!-- Carousel navigation buttons -->
-        <div class="hidden only-touch:hidden flex absolute inset-0 z-1 mix-blend-difference text-white">
+        <div class="only-touch:hidden flex absolute inset-0 z-1 mix-blend-difference text-white">
           <button
             v-for="button in ['previous', 'next'] as const"
             :key="button"
@@ -349,7 +349,7 @@ onUnmounted(() => {
                   origin: 'center',
                 },
                 defaultAnimation: {
-                  duration: 1750,
+                  duration: 750,
                 },
               }"
             >
@@ -359,12 +359,12 @@ onUnmounted(() => {
                   :class="setSlideClasses('block-carousel__slide w-[calc(100%-(calc(var(--app-outer-gutter)*3)))] md:w-[calc(59%)]')"
                 >
                   <MediaImage
-                    v-if="item.small_device"
-                    :asset="item.small_device"
+                    v-if="item.image"
+                    :asset="item.image"
                     sizes="
                       xs:100vw
                       sm:100vw"
-                    :alt="item.caption || item.small_device.alt || ''"
+                    :alt="item.caption || item.image.alt || ''"
                     :lazy="false"
                     :cover="false"
                   />
