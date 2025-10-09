@@ -1,7 +1,3 @@
-@utility backface-visibility-hidden {
-  backface-visibility: hidden;
-}
-
 @utility wrapper {
   width: 100%;
   max-width: var(--breakpoint-3xl);

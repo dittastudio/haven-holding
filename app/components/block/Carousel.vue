@@ -273,7 +273,7 @@ watch(
     v-editable="block"
     class="relative h-[400vh]"
   >
-    <pre class="fixed z-50 top-0 left-0 pointer-events-none">{{ carouselCurrentProperties }}</pre>
+    <!-- <pre class="fixed z-50 top-0 left-0 pointer-events-none">{{ carouselCurrentProperties }}</pre> -->
 
     <div
       ref="container"
@@ -286,7 +286,7 @@ watch(
         >
           <div
             ref="image"
-            class="absolute inset-0 z-20 size-full backface-visibility-hidden will-change-[width,height]"
+            class="absolute inset-0 z-20 size-full backface-hidden will-change-[width,height]"
           >
             <MediaImage
               v-if="currentCarouselItem?.small_device"
@@ -304,10 +304,10 @@ watch(
       </div>
 
       <div
-        class="absolute inset-0 z-30 size-full pointer-events-none transition-opacity ease-out"
+        class="absolute inset-0 z-30 size-full pointer-events-none transition-opacity ease-out transform-gpu backface-hidden"
         :class="{
           'opacity-100 duration-500 delay-500': !isAnimationComplete,
-          'opacity-0 duration-250': isAnimationComplete,
+          'opacity-0 duration-350': isAnimationComplete,
         }"
       >
         <p

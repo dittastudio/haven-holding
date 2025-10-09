@@ -105,7 +105,7 @@ const imgAttrs = computed(() => ({
       :class="{
         'opacity-0': !loaded,
         'opacity-100': loaded,
-        'absolute z-1 inset-0 backface-visibility-hidden transition-opacity duration-1000 ease-out': lazy,
+        'absolute z-1 inset-0 backface-hidden transition-opacity duration-1000 ease-out': lazy,
         'size-auto max-w-full max-h-full mx-auto': !cover,
         'w-full h-[inherit] object-cover': cover,
       }"
@@ -115,7 +115,7 @@ const imgAttrs = computed(() => ({
 
     <img
       v-if="lazy"
-      class="pointer-events-none w-full h-[inherit] backface-visibility-hidden blur-sm transition-opacity duration-2000 ease-out delay-500"
+      class="pointer-events-none w-full h-[inherit] backface-hidden blur-sm transition-opacity duration-2000 ease-out delay-500"
       :class="{
         'opacity-100': !loaded,
         'opacity-0': loaded,
