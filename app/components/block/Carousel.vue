@@ -334,7 +334,7 @@ watch(
         class="absolute inset-0 z-10 size-full flex flex-col justify-center transition-colors duration-750 ease-smooth"
       >
         <!-- Carousel navigation buttons -->
-        <div class="xhidden only-touch:hidden absolute inset-0 z-1 flex mix-blend-difference text-white">
+        <div class="only-touch:hidden flex absolute inset-0 z-1 mix-blend-difference text-white">
           <button
             v-for="button in ['previous', 'next'] as const"
             :key="button"
@@ -532,15 +532,5 @@ watch(
 
 .block-carousel__item--bottom {
   translate: 0 50% 0;
-}
-
-.slide-portrait {
-  aspect-ratio: 2/3;
-  width: min(40vh, calc(100vw - (var(--app-outer-gutter) * 6)));
-}
-
-.slide-landscape {
-  aspect-ratio: 3/2;
-  width: min(90vh, calc(100vw - (var(--app-outer-gutter) * 2)));
 }
 </style>
