@@ -1,13 +1,10 @@
 <script lang="ts" setup>
-const hover = ref<HTMLElement | null>(null)
+const hover = useTemplateRef('hover')
 const cursorPosition = ref({ x: 0, y: 0 })
-// const supportsHover = ref(false)
 const isHovering = ref(false)
 
 const updateCursorPosition = (x: number, y: number) => {
   cursorPosition.value = { x, y }
-
-  console.log(cursorPosition.value)
 }
 
 const handleMouseEnter = () => {
@@ -25,18 +22,12 @@ const handleMouseMove = (e: MouseEvent) => {
 
   const rect = hover.value?.getBoundingClientRect()
 
-  if (rect) {
-    updateCursorPosition(e.clientX - rect.left, e.clientY - rect.top)
+  if (!rect) {
+    return
   }
+
+  updateCursorPosition(e.clientX - rect.left, e.clientY - rect.top)
 }
-
-// onMounted(() => {
-//   supportsHover.value = window.matchMedia('(hover: hover)').matches
-// })
-
-// onUnmounted(() => {
-//   supportsHover.value = false
-// })
 </script>
 
 <template>
@@ -68,7 +59,3 @@ const handleMouseMove = (e: MouseEvent) => {
     </span>
   </span>
 </template>
-
-<style>
-/* @reference "@/assets/css/main.css"; */
-</style>

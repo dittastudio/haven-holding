@@ -35,37 +35,38 @@ const carouselCurrentSlide = computed(() => carouselSlides.value?.[currentSlideI
 const carouselCurrentMedia = computed(() => carouselCurrentSlide.value?.querySelector('img'))
 
 // Reactive trigger for recomputation
-const resizeTrigger = ref(0)
+const reTrigger = ref(0)
 
 const carouselCurrentProperties = computed(() => {
   // Directly query the slide and media to match original behavior
   const slide = carousel.value?.carousel.slider.value?.slides[carouselDetails.value?.abs ?? 0]
   const media = slide?.querySelector('img')
-  const containerEl = container.value
 
-  if (!media || !containerEl) {
+  if (!media || !container.value) {
     return null
   }
 
-  // Reactively depend on resizeTrigger to force recalculation
-  const _trigger = resizeTrigger.value
-
   const mediaRect = media.getBoundingClientRect()
-  const containerRect = containerEl.getBoundingClientRect()
+  const containerRect = container.value.getBoundingClientRect()
+
+  const mediaRectWidth = Math.round(mediaRect.width)
+  const mediaRectHeight = Math.round(mediaRect.height)
+  const containerRectWidth = Math.round(containerRect.width)
+  const containerRectHeight = Math.round(containerRect.height)
 
   const relativeTop = mediaRect.top - containerRect.top
   const relativeLeft = mediaRect.left - containerRect.left
-  const relativeBottom = containerRect.height - mediaRect.height - relativeTop
-  const relativeRight = containerRect.width - mediaRect.width - relativeLeft
+  const relativeBottom = containerRectHeight - mediaRectHeight - relativeTop
+  const relativeRight = containerRectWidth - mediaRectWidth - relativeLeft
 
   return {
-    width: mediaRect.width,
-    height: mediaRect.height,
+    _trigger: reTrigger.value,
+    width: mediaRectWidth,
+    height: mediaRectHeight,
     relativeTop,
     relativeLeft,
     relativeBottom,
     relativeRight,
-    _trigger,
   }
 })
 
@@ -105,14 +106,11 @@ const sequenceText = () => {
 }
 
 const sequenceMedia = () => {
-  const media = carouselCurrentMedia.value
-  const properties = carouselCurrentProperties.value
-
-  if (!media || !properties) {
+  if (!carouselCurrentMedia.value || !carouselCurrentProperties.value) {
     return
   }
 
-  gsap.set(media, { opacity: 0 })
+  gsap.set(carouselCurrentMedia.value, { opacity: 0 })
 
   tl.value = gsap.timeline({
     scrollTrigger: {
@@ -120,19 +118,18 @@ const sequenceMedia = () => {
       start: '50% top',
       end: '50% top',
       toggleActions: 'play none none reverse',
+      invalidateOnRefresh: true,
       onLeave: () => {
         isAnimationComplete.value = true
       },
       onEnterBack: () => {
-        const currentMedia = carouselCurrentMedia.value
-
-        if (!currentMedia) {
+        if (!carouselCurrentMedia.value) {
           return
         }
 
-        // Prevent flicker on scroll back
-        gsap.to(currentMedia, { opacity: 1, duration: 0.01 })
-        gsap.to(image.value, { opacity: 1, duration: 0.01 })
+        gsap.set(carouselCurrentMedia.value, { opacity: 0 })
+        gsap.set(image.value, { opacity: 1 })
+
         isAnimationComplete.value = false
       },
     },
@@ -158,15 +155,12 @@ const sequenceMedia = () => {
         duration: 0.75,
         lazy: false,
         onComplete: () => {
-          const currentMedia = carouselCurrentMedia.value
-
-          if (!currentMedia) {
+          if (!carouselCurrentMedia.value) {
             return
           }
 
-          gsap.set(currentMedia, { opacity: 1 })
+          gsap.set(carouselCurrentMedia.value, { opacity: 1 })
           gsap.set(image.value, { opacity: 0 })
-          isAnimationComplete.value = true
         },
       },
       '-=90%',
@@ -198,9 +192,8 @@ const setupScrollProgress = () => {
   })
 }
 
-const handleResize = async () => {
-  await wait(200)
-  resizeTrigger.value++
+const doRetrigger = () => {
+  reTrigger.value++
 }
 
 const requestRefresh = gsap.delayedCall(0.05, () => {
@@ -208,24 +201,32 @@ const requestRefresh = gsap.delayedCall(0.05, () => {
   tl.value?.scrollTrigger?.refresh()
 }).pause()
 
-watch(carouselCurrentProperties, () => {
-  requestRefresh.restart(true)
-}, { flush: 'post' })
+watch(
+  () => carouselCurrentProperties.value,
+  () => {
+    console.log('changed!')
+    requestRefresh.restart(true)
+  },
+  {
+    flush: 'post',
+    immediate: true,
+  },
+)
 
 onMounted(async () => {
   await wait(100)
 
-  resizeTrigger.value = 1 // Hack to force recompute.
-
-  window.addEventListener('resize', handleResize)
+  doRetrigger()
 
   setupScrollProgress()
   sequenceText()
   sequenceMedia()
+
+  window.addEventListener('resize', doRetrigger)
 })
 
 onUnmounted(() => {
-  window.removeEventListener('resize', handleResize)
+  window.removeEventListener('resize', doRetrigger)
   requestRefresh.kill()
   tl.value?.kill()
   ScrollTrigger.getAll().forEach(trigger => trigger.kill())
@@ -238,12 +239,13 @@ onUnmounted(() => {
     v-editable="block"
     class="relative h-[400vh] select-none"
   >
-    <!-- <pre class="fixed z-50 top-0 left-0 pointer-events-none">{{ carouselCurrentProperties }}</pre> -->
+    <pre class="fixed z-50 bottom-5 left-5 bg-white/50 backdrop-blur-2xl text-12 p-4 rounded pointer-events-none">{{ carouselCurrentProperties }}</pre>
 
     <div
       ref="container"
       class="sticky inset-0 z-1 w-full h-screen"
     >
+      <!-- XXXXXXXXXX -->
       <div class="absolute inset-0 z-20 pointer-events-none flex items-center justify-center">
         <div
           ref="imageMask"
@@ -297,7 +299,7 @@ onUnmounted(() => {
         class="absolute inset-0 z-10 size-full flex flex-col justify-center transition-colors duration-750 ease-smooth"
       >
         <!-- Carousel navigation buttons -->
-        <div class="only-touch:hidden flex absolute inset-0 z-1 mix-blend-difference text-white">
+        <div class="hidden only-touch:hidden flex absolute inset-0 z-1 mix-blend-difference text-white">
           <button
             v-for="button in ['previous', 'next'] as const"
             :key="button"
@@ -347,7 +349,7 @@ onUnmounted(() => {
                   origin: 'center',
                 },
                 defaultAnimation: {
-                  duration: 750,
+                  duration: 1750,
                 },
               }"
             >

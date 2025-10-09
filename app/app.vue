@@ -66,7 +66,7 @@ onMounted(() => {
       </template>
 
       <template #dev>
-        <ToolGrid v-if="isDev || storyblokEditor(route.query)" />
+        <!-- <ToolGrid v-if="isDev || storyblokEditor(route.query)" /> -->
       </template>
     </AppLayout>
 
