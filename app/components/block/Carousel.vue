@@ -181,6 +181,7 @@ const setupScrollProgress = () => {
     end: '75% bottom',
     scrub: true,
     onUpdate: (self) => {
+      scrollProgress.value = self.progress
       isScrollProgressThemeDark.value = self.progress > 0.66
     },
     onEnter: () => {
