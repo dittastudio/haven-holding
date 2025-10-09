@@ -47,7 +47,7 @@ useHead({
           href="/"
           class="block"
         >
-          Back to home 🤪
+          Back to home 🧘🏻‍♀️
         </a>
       </p>
     </div>
