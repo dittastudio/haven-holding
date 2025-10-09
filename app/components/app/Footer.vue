@@ -44,7 +44,7 @@ const credits = [
         md:grid-cols-(--app-grid)
         gap-x-(--app-inner-gutter)
         gap-y-6
-        md:gap-y-22
+        sm:gap-y-22
         py-12
       "
     >
@@ -72,7 +72,8 @@ const credits = [
             flex
             flex-col
             @2xl/footer:flex-row
-            gap-y-32
+            gap-y-28
+            @xs/footer:gap-y-14
             @2xl/footer:gap-y-14
             items-start
             justify-between
@@ -127,9 +128,9 @@ const credits = [
               v-for="credit in credits"
               :key="credit.name"
             >
-              <div class="flex @xs/footer:flex-col gap-2">
+              <div class="flex flex-wrap @xs/footer:flex-col @xs/footer:gap-2">
                 <h4 class="type-mono-14">
-                  {{ credit.title }}
+                  {{ credit.title }} <span class="@xs/footer:hidden">by&nbsp;</span>
                 </h4>
 
                 <p class="type-mono-14 @xs/footer:type-sans-14">
@@ -138,7 +139,7 @@ const credits = [
                     :to="credit.url"
                     target="_blank"
                   >
-                    <span class="@xs/footer:hidden">by </span>{{ credit.name }}
+                    {{ credit.name }}
                   </NuxtLink>
                 </p>
               </div>
@@ -147,12 +148,12 @@ const credits = [
         </div>
       </div>
 
-      <div class="col-span-full col-start-2 md:col-start-3 flex items-start justify-start gap-3">
-        <p class="type-mono-14 md:type-mono-12">
+      <div class="col-span-full col-start-2 md:col-start-3 flex flex-wrap items-start justify-start gap-x-3">
+        <p class="type-mono-14 sm:type-mono-12">
           ©{{ new Date().getFullYear() }} All rights reserved
         </p>
 
-        <ul class="type-mono-14 md:type-mono-12 flex flex-wrap items-start">
+        <ul class="type-mono-14 sm:type-mono-12 flex flex-wrap items-start">
           <li
             v-for="item in linkItems"
             :key="item._uid"
