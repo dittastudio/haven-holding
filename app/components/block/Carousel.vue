@@ -34,11 +34,9 @@ const carouselSlides = computed(() => carousel.value?.carousel.slider.value?.sli
 const carouselCurrentSlide = computed(() => carouselSlides.value?.[currentSlideIndex.value])
 const carouselCurrentMedia = computed(() => carouselCurrentSlide.value?.querySelector('img'))
 
-// Reactive trigger for recomputation
 const reTrigger = ref(0)
 
 const carouselCurrentProperties = computed(() => {
-  // Directly query the slide and media to match original behavior
   const slide = carousel.value?.carousel.slider.value?.slides[carouselDetails.value?.abs ?? 0]
   const media = slide?.querySelector('img')
 
@@ -110,7 +108,7 @@ const sequenceMedia = () => {
     return
   }
 
-  gsap.set(carouselCurrentMedia.value, { opacity: 0 })
+  gsap.set(carouselCurrentMedia.value.parentElement, { opacity: 0 })
 
   tl.value = gsap.timeline({
     scrollTrigger: {
@@ -127,7 +125,7 @@ const sequenceMedia = () => {
           return
         }
 
-        gsap.set(carouselCurrentMedia.value, { opacity: 0 })
+        gsap.set(carouselCurrentMedia.value.parentElement, { opacity: 0 })
         gsap.set(image.value, { opacity: 1 })
 
         isAnimationComplete.value = false
@@ -159,7 +157,7 @@ const sequenceMedia = () => {
             return
           }
 
-          gsap.set(carouselCurrentMedia.value, { opacity: 1 })
+          gsap.set(carouselCurrentMedia.value.parentElement, { opacity: 1 })
           gsap.set(image.value, { opacity: 0 })
         },
       },
@@ -193,18 +191,16 @@ const setupScrollProgress = () => {
 }
 
 const doRetrigger = () => {
-  reTrigger.value++
+  reTrigger.value += 1
 }
 
 const requestRefresh = gsap.delayedCall(0.05, () => {
   tl.value?.invalidate()
-  tl.value?.scrollTrigger?.refresh()
 }).pause()
 
 watch(
   () => carouselCurrentProperties.value,
   () => {
-    console.log('changed!')
     requestRefresh.restart(true)
   },
   {
@@ -239,7 +235,7 @@ onUnmounted(() => {
     v-editable="block"
     class="relative h-[400vh] select-none"
   >
-    <pre class="fixed z-50 bottom-5 left-5 bg-white/50 backdrop-blur-2xl text-12 p-4 rounded pointer-events-none">{{ carouselCurrentProperties }}</pre>
+    <!-- <pre class="fixed z-50 bottom-5 left-5 bg-white/50 backdrop-blur-2xl text-12 p-4 rounded pointer-events-none">{{ carouselCurrentProperties }}</pre> -->
 
     <div
       ref="container"
@@ -258,13 +254,11 @@ onUnmounted(() => {
             <MediaImage
               v-if="currentCarouselItem?.image"
               :asset="currentCarouselItem.image"
-              sizes="
-                xs:100vw
-                sm:100vw
-              "
+              sizes="xs:100vw sm:100vw"
               :alt="currentCarouselItem.caption || currentCarouselItem.image.alt || ''"
-              :lazy="false"
               class="block size-full"
+              :cover="true"
+              @load="doRetrigger"
             />
           </div>
         </div>
@@ -353,20 +347,18 @@ onUnmounted(() => {
                 },
               }"
             >
-              <template #item="{ item, setSlideClasses }">
+              <template #item="{ index, item, setSlideClasses }">
                 <div
                   class="block-carousel__slide-inner size-full px-[calc(var(--app-outer-gutter)_*_0.5)]"
-                  :class="setSlideClasses('block-carousel__slide w-[calc(100%-(calc(var(--app-outer-gutter)*3)))] md:w-[calc(59%)]')"
+                  :class="setSlideClasses('block-carousel__slide w-[calc(100%-(calc(var(--app-outer-gutter)*3)))] md:w-[59%]')"
                 >
                   <MediaImage
                     v-if="item.image"
                     :asset="item.image"
-                    sizes="
-                      xs:100vw
-                      sm:100vw"
+                    sizes="xs:100vw sm:100vw"
                     :alt="item.caption || item.image.alt || ''"
-                    :lazy="false"
-                    :cover="false"
+                    :lazy="index === 0 ? false : true"
+                    @load="doRetrigger"
                   />
                 </div>
               </template>
