@@ -56,7 +56,7 @@ const assetType = computed(() => storyblokAssetType(block.media?.filename || '')
         />
       </div>
 
-      <div class="col-span-full [&_p]:type-sans-20-50 [&_p]:text-pretty [&_p+p]:mt-[1lh]">
+      <div class="col-span-full [&_h1,&_p]:type-sans-20-50 [&_h1,&_p]:text-pretty [&_*+*]:mt-[1lh]">
         <StoryblokText
           v-if="storyblokRichTextContent(block.text)"
           :content="block.text"
