@@ -27,11 +27,14 @@ const checkBackgroundMatchesPrevBackground = (index: number) => {
     ? currentBlock.background === prevBlock.background
     : false
 }
+
+// Quick hack to filter out unsupported blocks for now.
+const blocks = content.blocks?.filter(block => block && (block.component !== 'block_carousel' && block.component !== 'block_text_group')) || []
 </script>
 
 <template>
   <section
-    v-for="(block, index) in content.blocks"
+    v-for="(block, index) in blocks"
     :key="block._uid"
     class="app-blocks__item"
     :class="[
