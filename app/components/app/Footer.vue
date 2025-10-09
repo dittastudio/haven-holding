@@ -81,9 +81,9 @@ const credits = [
         >
           <div class="w-full @2xl/footer:w-auto grid grid-cols-1 @xs/footer:grid-cols-2 @2xl/footer:flex gap-8 @3xl/footer:gap-14">
             <div class="flex flex-col gap-2">
-              <h4 class="type-mono-14">
+              <h3 class="type-mono-14">
                 Contact
-              </h4>
+              </h3>
 
               <StoryblokLink
                 v-if="addressLink && storyblokRichTextContent(address)"
@@ -97,9 +97,9 @@ const credits = [
             </div>
 
             <div class="flex flex-col gap-2">
-              <h4 class="type-mono-14">
+              <h3 class="type-mono-14">
                 Social
-              </h4>
+              </h3>
 
               <ul class="inline-block type-sans-14">
                 <template
@@ -129,9 +129,9 @@ const credits = [
               :key="credit.name"
             >
               <div class="flex flex-wrap @xs/footer:flex-col @xs/footer:gap-2">
-                <h4 class="type-mono-14">
+                <h3 class="type-mono-14">
                   {{ credit.title }} <span class="@xs/footer:hidden">by&nbsp;</span>
-                </h4>
+                </h3>
 
                 <p class="type-mono-14 @xs/footer:type-sans-14">
                   <NuxtLink
