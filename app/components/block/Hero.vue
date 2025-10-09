@@ -115,7 +115,7 @@ onUnmounted(() => {
       <div class="flex items-center justify-center h-(--app-header-height)">
         <div
           ref="logo"
-          class="block-hero__logo backface-visibility-hidden outline outline-transparent"
+          class="block-hero__logo backface-hidden outline outline-transparent"
         >
           <IconLogo class="w-[138px] h-[28px]" />
         </div>

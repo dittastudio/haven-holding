@@ -105,7 +105,7 @@ export default defineNuxtConfig({
       baseURL: 'https://a2.storyblok.com',
     },
     domains: ['storyblok.com', 'havenhavelland.com'],
-    quality: 80,
+    quality: 90,
     screens: {
       'xs': 375,
       'sm': 640,

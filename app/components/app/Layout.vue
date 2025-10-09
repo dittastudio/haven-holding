@@ -1,7 +1,7 @@
 <template>
   <div data-component="app-layout">
     <header
-      class="sticky top-0 z-10 transform-gpu mix-blend-difference backface-visibility-hidden text-offwhite pointer-events-none"
+      class="sticky top-0 z-10 transform-gpu mix-blend-difference backface-hidden text-offwhite pointer-events-none"
     >
       <slot name="header" />
     </header>
