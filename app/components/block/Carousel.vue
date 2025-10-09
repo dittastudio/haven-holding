@@ -1,5 +1,12 @@
 <script lang="ts" setup>
 import type { BlockCarousel } from '@@/.storyblok/types/303510/storyblok-components'
+import type { Carousel } from '@/components/ui/Carousel.vue'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { SplitText } from 'gsap/SplitText'
+import IconArrow from '@/assets/icons/arrow.svg'
+
+gsap.registerPlugin(ScrollTrigger, SplitText)
 
 interface Props {
   block: BlockCarousel
@@ -7,218 +14,476 @@ interface Props {
 
 const { block } = defineProps<Props>()
 
-const slides = [
-  {
-    ratio: 'landscape',
-    image: 'https://picsum.photos/900/600',
-    caption: 'Lounge Room',
+const main = useTemplateRef('main')
+const container = useTemplateRef('container')
+const imageMask = useTemplateRef('imageMask')
+const image = useTemplateRef('image')
+const text = useTemplateRef('text')
+const carousel = useTemplateRef<Carousel>('carousel')
+
+const tl = ref<gsap.core.Timeline | null>(null)
+const isAnimationComplete = ref(false)
+
+const scrollProgress = ref(0)
+const isScrollProgressVisible = ref(false)
+const isScrollProgressThemeDark = ref(false)
+
+const carouselDetails = computed(() => carousel.value?.carousel.details.value)
+const currentSlideIndex = computed(() => carouselDetails.value?.abs ?? 0)
+const carouselSlides = computed(() => carousel.value?.carousel.slider.value?.slides)
+const carouselCurrentSlide = computed(() => carouselSlides.value?.[currentSlideIndex.value])
+const carouselCurrentMedia = computed(() => carouselCurrentSlide.value?.querySelector('img'))
+
+const reTrigger = ref(0)
+
+const carouselCurrentProperties = computed(() => {
+  const slide = carousel.value?.carousel.slider.value?.slides[carouselDetails.value?.abs ?? 0]
+  const media = slide?.querySelector('img')
+
+  if (!media || !container.value) {
+    return null
+  }
+
+  const mediaRect = media.getBoundingClientRect()
+  const containerRect = container.value.getBoundingClientRect()
+
+  const mediaRectWidth = Math.round(mediaRect.width)
+  const mediaRectHeight = Math.round(mediaRect.height)
+  const containerRectWidth = Math.round(containerRect.width)
+  const containerRectHeight = Math.round(containerRect.height)
+
+  const relativeTop = mediaRect.top - containerRect.top
+  const relativeLeft = mediaRect.left - containerRect.left
+  const relativeBottom = containerRectHeight - mediaRectHeight - relativeTop
+  const relativeRight = containerRectWidth - mediaRectWidth - relativeLeft
+
+  return {
+    _trigger: reTrigger.value,
+    width: mediaRectWidth,
+    height: mediaRectHeight,
+    relativeTop,
+    relativeLeft,
+    relativeBottom,
+    relativeRight,
+  }
+})
+
+const currentCarouselItem = computed(() => block.items[currentSlideIndex.value])
+
+const sequenceText = () => {
+  const textEl = text.value
+
+  if (!textEl) {
+    return
+  }
+
+  const spans = textEl.querySelectorAll('span')
+
+  if (!spans.length) {
+    return
+  }
+
+  const split = SplitText.create(spans, { type: 'chars' })
+
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: main.value,
+      start: 'top top',
+      end: '50% top',
+      scrub: 0.5,
+    },
+  })
+    .fromTo(textEl, { opacity: 0 }, { opacity: 1 })
+    .from(split.chars, {
+      opacity: 0,
+      yPercent: -10,
+      skewY: -5,
+      rotateY: -20,
+      stagger: 0.05,
+    })
+}
+
+const sequenceMedia = () => {
+  if (!carouselCurrentMedia.value || !carouselCurrentProperties.value) {
+    return
+  }
+
+  gsap.set(carouselCurrentMedia.value.parentElement, { opacity: 0 })
+
+  tl.value = gsap.timeline({
+    scrollTrigger: {
+      trigger: main.value,
+      start: '50% top',
+      end: '50% top',
+      toggleActions: 'play none none reverse',
+      invalidateOnRefresh: true,
+      onLeave: () => {
+        isAnimationComplete.value = true
+      },
+      onEnterBack: () => {
+        if (!carouselCurrentMedia.value) {
+          return
+        }
+
+        gsap.set(carouselCurrentMedia.value.parentElement, { opacity: 0 })
+        gsap.set(image.value, { opacity: 1 })
+
+        isAnimationComplete.value = false
+      },
+    },
+  })
+    .fromTo(
+      imageMask.value,
+      { clipPath: 'inset(0 0 0 0)' },
+      {
+        clipPath: () => `inset(${carouselCurrentProperties.value?.relativeTop ?? 0}px ${carouselCurrentProperties.value?.relativeRight ?? 0}px ${carouselCurrentProperties.value?.relativeBottom ?? 0}px ${carouselCurrentProperties.value?.relativeLeft ?? 0}px)`,
+        ease: 'power4.inOut',
+        duration: 0.75,
+      },
+    )
+    .fromTo(
+      image.value,
+      { width: '100%', height: '100%', x: 0, y: 0 },
+      {
+        width: () => carouselCurrentProperties.value?.width ?? 0,
+        height: () => carouselCurrentProperties.value?.height ?? 0,
+        x: () => carouselCurrentProperties.value?.relativeLeft ?? 0,
+        y: () => carouselCurrentProperties.value?.relativeTop ?? 0,
+        ease: 'power4.inOut',
+        duration: 0.75,
+        lazy: false,
+        onComplete: () => {
+          if (!carouselCurrentMedia.value) {
+            return
+          }
+
+          gsap.set(carouselCurrentMedia.value.parentElement, { opacity: 1 })
+          gsap.set(image.value, { opacity: 0 })
+        },
+      },
+      '-=90%',
+    )
+}
+
+const setupScrollProgress = () => {
+  ScrollTrigger.create({
+    trigger: main.value,
+    start: 'top top',
+    end: '75% bottom',
+    scrub: true,
+    onUpdate: (self) => {
+      scrollProgress.value = self.progress
+      isScrollProgressThemeDark.value = self.progress > 0.66
+    },
+    onEnter: () => {
+      isScrollProgressVisible.value = true
+    },
+    onEnterBack: () => {
+      isScrollProgressVisible.value = true
+    },
+    onLeave: () => {
+      isScrollProgressVisible.value = false
+    },
+    onLeaveBack: () => {
+      isScrollProgressVisible.value = false
+    },
+  })
+}
+
+const doRetrigger = () => {
+  reTrigger.value += 1
+}
+
+const requestRefresh = gsap.delayedCall(0.05, () => {
+  tl.value?.invalidate()
+}).pause()
+
+watch(
+  () => carouselCurrentProperties.value,
+  () => {
+    requestRefresh.restart(true)
   },
   {
-    ratio: 'portrait',
-    image: 'https://picsum.photos/600/900',
-    caption: 'Dining Room',
+    flush: 'post',
+    immediate: true,
   },
-  {
-    ratio: 'landscape',
-    image: 'https://picsum.photos/900/600',
-    caption: 'Studio',
-  },
-  {
-    ratio: 'portrait',
-    image: 'https://picsum.photos/600/900',
-    caption: 'Office',
-  },
-  {
-    ratio: 'landscape',
-    image: 'https://picsum.photos/900/600',
-    caption: 'Living Room',
-  },
-  {
-    ratio: 'portrait',
-    image: 'https://picsum.photos/600/900',
-    caption: 'Kitchen',
-  },
-  {
-    ratio: 'landscape',
-    image: 'https://picsum.photos/900/600',
-    caption: 'Bedroom',
-  },
-  {
-    ratio: 'portrait',
-    image: 'https://picsum.photos/600/900',
-    caption: 'Bathroom',
-  },
-  {
-    ratio: 'landscape',
-    image: 'https://picsum.photos/900/600',
-    caption: 'Balcony',
-  },
-  {
-    ratio: 'portrait',
-    image: 'https://picsum.photos/600/900',
-    caption: 'Garden',
-  },
-  {
-    ratio: 'landscape',
-    image: 'https://picsum.photos/900/600',
-    caption: 'Pool',
-  },
-]
+)
+
+onMounted(async () => {
+  await wait(100)
+
+  doRetrigger()
+
+  setupScrollProgress()
+  sequenceText()
+  sequenceMedia()
+
+  window.addEventListener('resize', doRetrigger)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', doRetrigger)
+  requestRefresh.kill()
+  tl.value?.kill()
+  ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+})
 </script>
 
 <template>
   <div
+    ref="main"
     v-editable="block"
-    class="block-carousel"
+    class="relative h-[400vh] select-none"
   >
-    <!-- Cover Image -->
-    <div class="sticky top-0 flex items-center justify-center z-1 opacity-20 pointer-events-none">
-      <div class="sticky bottom-0 w-full flex isolate min-h-screen">
-        <img
-          src="/images/carousel-test.jpg"
-          alt="Carousel"
-          class="absolute inset-0 size-full object-cover -z-1"
+    <!-- <pre class="fixed z-50 bottom-5 left-5 bg-white/50 backdrop-blur-2xl text-12 p-4 rounded pointer-events-none">{{ carouselCurrentProperties }}</pre> -->
+
+    <div
+      ref="container"
+      class="sticky inset-0 z-1 w-full h-screen"
+    >
+      <!-- XXXXXXXXXX -->
+      <div class="absolute inset-0 z-20 pointer-events-none flex items-center justify-center">
+        <div
+          ref="imageMask"
+          class="absolute inset-0 z-20"
         >
+          <div
+            ref="image"
+            class="absolute inset-0 z-20 size-full backface-hidden will-change-[width,height]"
+          >
+            <MediaImage
+              v-if="currentCarouselItem?.image"
+              :asset="currentCarouselItem.image"
+              sizes="xs:100vw sm:100vw"
+              :alt="currentCarouselItem.caption || currentCarouselItem.image.alt || ''"
+              class="block size-full"
+              :cover="true"
+              @load="doRetrigger"
+            />
+          </div>
+        </div>
+      </div>
 
-        <div class="w-full bg-black/30 opacity-100">
-          <p class="type-mono-30-70 px-(--app-outer-gutter) py-[calc(var(--app-outer-gutter)*1.5)] md:p-[5%] flex flex-col h-full justify-between text-white">
-            <span class="self-end">A</span>
+      <div
+        class="absolute inset-0 z-30 size-full pointer-events-none transition-opacity ease-out transform-gpu backface-hidden"
+        :class="{
+          'opacity-100 duration-500 delay-500': !isAnimationComplete,
+          'opacity-0 duration-350': isAnimationComplete,
+        }"
+      >
+        <p
+          ref="text"
+          class="size-full type-mono-30-70 px-(--app-outer-gutter) py-(--app-header-height) flex flex-col justify-between text-white bg-black/30"
+        >
+          <span class="self-end">A</span>
 
-            <span class="self-start">space</span>
+          <span class="self-start">space</span>
 
-            <span class="self-center">for</span>
+          <span class="self-center">for</span>
 
-            <span class="self-end">creation</span>
-          </p>
+          <span class="self-end">creation</span>
+        </p>
+      </div>
+
+      <div
+        :class="{
+          'bg-cream pointer-events-none': !isAnimationComplete,
+          'bg-white pointer-events-auto delay-250': isAnimationComplete,
+        }"
+        class="absolute inset-0 z-10 size-full flex flex-col justify-center transition-colors duration-750 ease-smooth"
+      >
+        <!-- Carousel navigation buttons -->
+        <div class="only-touch:hidden flex absolute inset-0 z-1 mix-blend-difference text-white">
+          <button
+            v-for="button in ['previous', 'next'] as const"
+            :key="button"
+            class="group/button w-1/2"
+            @click="carousel?.carousel[button]()"
+          >
+            <span class="sr-only">{{ button }}</span>
+
+            <UiCursor>
+              <IconArrow
+                class="transition-all duration-200 ease-smooth"
+                :class="[
+                  {
+                    'opacity-20': button === 'previous' && currentSlideIndex === 0 || currentSlideIndex === block.items.length - 1 && button === 'next',
+                    'group-active/button:-translate-x-1 group-active/button:opacity-60': button === 'previous',
+                    'group-active/button:translate-x-1 group-active/button:opacity-60 rotate-180': button === 'next',
+                  },
+                ]"
+              />
+            </UiCursor>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 grid-rows-[auto_1fr_auto] gap-y-(--app-outer-gutter) w-full max-h-full">
+          <div class="flex flex-col items-center justify-end pt-(--app-header-height)">
+            <h2
+              class="block-carousel__item block-carousel__item--top type-mono-12 md:type-mono-14 text-center"
+              :class="{
+                'is-animation-complete': isAnimationComplete,
+              }"
+            >
+              The Space
+            </h2>
+          </div>
+
+          <div
+            :class="{ 'is-animation-complete': isAnimationComplete }"
+            class="block-carousel__slider size-full overflow-hidden"
+          >
+            <UiCarousel
+              ref="carousel"
+              :items="block.items"
+              :options="{
+                slides: {
+                  perView: 'auto',
+                  spacing: 0,
+                  origin: 'center',
+                },
+                defaultAnimation: {
+                  duration: 750,
+                },
+              }"
+            >
+              <template #item="{ index, item, setSlideClasses }">
+                <div
+                  class="block-carousel__slide-inner size-full px-[calc(var(--app-outer-gutter)_*_0.5)]"
+                  :class="setSlideClasses('block-carousel__slide w-[calc(100%-(calc(var(--app-outer-gutter)*3)))] md:w-[59%]')"
+                >
+                  <MediaImage
+                    v-if="item.image"
+                    :asset="item.image"
+                    sizes="xs:100vw sm:100vw"
+                    :alt="item.caption || item.image.alt || ''"
+                    :lazy="index === 0 ? false : true"
+                    @load="doRetrigger"
+                  />
+                </div>
+              </template>
+            </UiCarousel>
+          </div>
+
+          <div
+            v-if="typeof carouselDetails?.abs === 'number'"
+            class="wrapper pb-(--app-header-height) overflow-hidden"
+          >
+            <div
+              class="block-carousel__item block-carousel__item--bottom type-mono-12 md:type-mono-14 flex flex-col gap-2 items-center"
+              :class="{
+                'is-animation-complete': isAnimationComplete,
+              }"
+            >
+              <p>{{ carouselDetails.abs + 1 }}/{{ block.items.length }}</p>
+
+              <p v-if="block.items[carouselDetails.abs]?.caption">
+                {{ block.items[carouselDetails.abs]?.caption }}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Carousel -->
-    <div class="flex flex-col justify-center min-h-screen overflow-hidden bg-white py-(--app-vertical-rhythm)">
-      <h2 class="type-mono-12 md:type-mono-14 text-center mb-[calc(var(--app-vertical-rhythm)_*_0.5)]">
-        The Space
-      </h2>
-
-      <UiCarousel
-        :slides="slides"
-        :options="{
-          autoplay: false,
-          navigation: slides.length > 1,
-          pagination: true,
+  <!-- Scroll progress bar -->
+  <div
+    class="
+      sticky
+      bottom-0
+      pb-(--app-outer-gutter)
+      z-50
+      -mt-[calc(var(--app-outer-gutter)_+_--spacing(1))]
+      pointer-events-none
+      wrapper
+    "
+  >
+    <div
+      class="
+      w-40
+      h-[2px]
+      mx-auto
+      rounded-full
+      overflow-hidden
+      bg-current/20
+      transition-[scale,color]
+      ease-inOutQuart
+      text-white
+    "
+      :class="{
+        'scale-0 duration-[0.25s,_0.75s]': !isScrollProgressVisible,
+        'scale-100 duration-[0.5s,_0.75s]': isScrollProgressVisible,
+      }"
+    >
+      <div
+        class="
+          h-1
+          mb-(--app-outer-gutter)
+          rounded-full
+          bg-current
+          transition-[scale]
+          duration-[0.25s]
+          ease-out
+          origin-left
+        "
+        :style="{
+          scale: `${scrollProgress} 1`,
         }"
-      >
-        <template #slide="{ slide }">
-          <div
-            class="block-carousel__item"
-            :class="slide.ratio === 'landscape' ? 'aspect-[3/2] w-[calc(100vw-(var(--app-outer-gutter)*3))] md:w-[calc(var(--_grid-column)*9)] h-auto' : 'aspect-[2/3] w-[calc(100vw-(var(--app-outer-gutter)*6))] md:w-[calc(var(--_grid-column)*4)] h-auto'"
-          >
-            <img
-              :src="slide.image"
-              :alt="slide.caption"
-              class="w-full h-full object-cover"
-            >
-          </div>
-        </template>
-
-        <template #caption="{ slide, current }">
-          <div class="wrapper flex gap-x-(--app-inner-gutter) my-[calc(var(--app-vertical-rhythm)_*_0.25)] type-mono-12 md:type-mono-14">
-            <p
-              class="w-1/2 text-right"
-            >
-              {{ current + 1 }}/{{ slides.length }}
-            </p>
-
-            <p
-              v-if="slide.caption"
-              class="w-1/2"
-            >
-              {{ slide.caption }}
-            </p>
-          </div>
-        </template>
-      </UiCarousel>
+      />
     </div>
   </div>
 </template>
 
 <style>
-@reference "@/assets/css/main.css";
-
-.block-carousel {
-  display: grid;
-  grid-auto-rows: minmax(auto, 1fr);
-
-  --_grid-cols: 2;
-  --_grid-max-width: min(100vw, 1920px);
-  /* --_grid-max-width: 100vw; */
-  --_grid-inner: calc(var(--_grid-max-width) - (var(--app-outer-gutter) * 2));
-  --_grid-gaps-total: calc(var(--app-inner-gutter) * (var(--_grid-cols) - 1));
-  --_grid-pure-column: calc((var(--_grid-inner) - var(--_grid-gaps-total)) / var(--_grid-cols));
-  --_grid-column: calc(var(--_grid-pure-column) + var(--app-inner-gutter));
-
-  @variant sm {
-    --_grid-cols: 4;
+.block-carousel__slider {
+  & .block-carousel__slide.is-active + .block-carousel__slide .block-carousel__slide-inner {
+    translate: 50% 0 0;
+    transition: translate 0.75s var(--ease-inOutQuart);
   }
 
-  @variant md {
-    --_grid-cols: 12;
+  & .block-carousel__slide:has(+ .block-carousel__slide.is-active) .block-carousel__slide-inner {
+    translate: -50% 0 0;
+    transition: translate 0.75s var(--ease-inOutQuart);
+  }
+
+  &.is-animation-complete {
+    & .block-carousel__slide.is-active + .block-carousel__slide .block-carousel__slide-inner,
+    & .block-carousel__slide:has(+ .block-carousel__slide.is-active) .block-carousel__slide-inner {
+      translate: 0 0 0;
+    }
   }
 }
 
 .block-carousel__item {
-  transition: translate 0.25s var(--ease-out);
+  --_delay: 0.4s;
+  --_ease: var(--ease-outQuart);
 
-  .is-landscape.slide-active + .is-landscape &,
-  .is-landscape.slide-active + .is-portrait & {
-    translate: calc(var(--app-outer-gutter) / 1) 0;
+  opacity: 0;
+  scale: 1.1;
 
-    @variant md {
-      translate: calc(var(--_grid-column) + (var(--_grid-pure-column) / 2)) 0;
-    }
+  transition:
+    opacity 0.1s var(--ease-out),
+    translate 0s 0.25s,
+    scale 0s 0.25s;
+
+  &.is-animation-complete {
+    opacity: 1;
+    translate: 0 0 0;
+    scale: 1;
+
+    transition:
+      opacity 0.25s var(--_ease) var(--_delay),
+      translate 0.25s var(--_ease) var(--_delay),
+      scale 0.25s var(--_ease) var(--_delay);
   }
+}
 
-  .is-landscape.slide-previous:has(+ .is-landscape) &,
-  .is-portrait.slide-previous:has(+ .is-landscape) & {
-    translate: calc(var(--app-outer-gutter) / -1) 0;
+.block-carousel__item--top {
+  translate: 0 -50% 0;
+}
 
-    @variant md {
-      translate: calc((var(--_grid-column) + (var(--_grid-pure-column) / 2)) * -1) 0;
-    }
-  }
-
-  .is-landscape.slide-previous:has(+ .is-portrait) &,
-  .is-portrait.slide-previous:has(+ .is-portrait) & {
-    translate: calc(var(--app-outer-gutter) * -2.5) 0;
-
-    @variant md {
-      translate: calc(((var(--_grid-column) * 4) - (var(--app-inner-gutter) / 2)) * -1) 0;
-    }
-  }
-
-  .is-portrait.slide-active + .is-landscape &,
-  .is-portrait.slide-active + .is-portrait & {
-    translate: calc(var(--app-outer-gutter) * 2.5) 0;
-
-    @variant md {
-      translate: calc((var(--_grid-column) * 4) - (var(--app-inner-gutter) / 2)) 0;
-    }
-  }
-
-  .slide-next-next & {
-    translate: calc(var(--app-outer-gutter) * 5) 0;
-
-    @variant md {
-      translate: calc((var(--_grid-column) * 8) - (var(--app-inner-gutter) / 2)) 0;
-    }
-  }
-
-  .slide-previous-previous & {
-    translate: calc(var(--app-outer-gutter) * -5) 0;
-
-    @variant md {
-      translate: calc((var(--_grid-column) * -8) - (var(--app-inner-gutter) / 2)) 0;
-    }
-  }
+.block-carousel__item--bottom {
+  translate: 0 50% 0;
 }
 </style>

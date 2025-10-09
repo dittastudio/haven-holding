@@ -14,6 +14,8 @@ interface Props {
 
 const { error } = defineProps<Props>()
 
+console.log('Error:', error)
+
 useHead({
   title:
     error?.statusCode && error?.statusMessage
