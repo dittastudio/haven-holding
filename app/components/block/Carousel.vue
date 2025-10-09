@@ -14,7 +14,6 @@ interface Props {
 
 const { block } = defineProps<Props>()
 
-// Template refs
 const main = useTemplateRef('main')
 const container = useTemplateRef('container')
 const imageMask = useTemplateRef('imageMask')
@@ -22,24 +21,21 @@ const image = useTemplateRef('image')
 const text = useTemplateRef('text')
 const carousel = useTemplateRef<Carousel>('carousel')
 
-// Animation state
 const tl = ref<gsap.core.Timeline | null>(null)
 const isAnimationComplete = ref(false)
 
-// Scroll progress state
 const scrollProgress = ref(0)
 const isScrollProgressVisible = ref(false)
 const isScrollProgressThemeDark = ref(false)
 
-// Reactive triggers for recomputation
-const resizeTrigger = ref(0)
-
-// Carousel computed properties
 const carouselDetails = computed(() => carousel.value?.carousel.details.value)
 const currentSlideIndex = computed(() => carouselDetails.value?.abs ?? 0)
 const carouselSlides = computed(() => carousel.value?.carousel.slider.value?.slides)
 const carouselCurrentSlide = computed(() => carouselSlides.value?.[currentSlideIndex.value])
 const carouselCurrentMedia = computed(() => carouselCurrentSlide.value?.querySelector('img'))
+
+// Reactive trigger for recomputation
+const resizeTrigger = ref(0)
 
 const carouselCurrentProperties = computed(() => {
   // Directly query the slide and media to match original behavior
@@ -73,16 +69,17 @@ const carouselCurrentProperties = computed(() => {
   }
 })
 
-const currentCarouselItem = computed(() => block.items[currentSlideIndex.value] ?? null)
+const currentCarouselItem = computed(() => block.items[currentSlideIndex.value])
 
-// Animation sequences
 const sequenceText = () => {
   const textEl = text.value
+
   if (!textEl) {
     return
   }
 
   const spans = textEl.querySelectorAll('span')
+
   if (!spans.length) {
     return
   }
@@ -128,6 +125,7 @@ const sequenceMedia = () => {
       },
       onEnterBack: () => {
         const currentMedia = carouselCurrentMedia.value
+
         if (!currentMedia) {
           return
         }
@@ -161,6 +159,7 @@ const sequenceMedia = () => {
         lazy: false,
         onComplete: () => {
           const currentMedia = carouselCurrentMedia.value
+
           if (!currentMedia) {
             return
           }
@@ -382,13 +381,9 @@ onUnmounted(() => {
                 'is-animation-complete': isAnimationComplete,
               }"
             >
-              <p>
-                {{ carouselDetails.abs + 1 }}/{{ block.items.length }}
-              </p>
+              <p>{{ carouselDetails.abs + 1 }}/{{ block.items.length }}</p>
 
-              <p
-                v-if="block.items[carouselDetails.abs]?.caption"
-              >
+              <p v-if="block.items[carouselDetails.abs]?.caption">
                 {{ block.items[carouselDetails.abs]?.caption }}
               </p>
             </div>
