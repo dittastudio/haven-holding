@@ -14,82 +14,80 @@ interface Props {
 
 const { block } = defineProps<Props>()
 
+// Template refs
 const main = useTemplateRef('main')
 const container = useTemplateRef('container')
 const imageMask = useTemplateRef('imageMask')
 const image = useTemplateRef('image')
 const text = useTemplateRef('text')
+const carousel = useTemplateRef<Carousel>('carousel')
 
+// Animation state
 const tl = ref<gsap.core.Timeline | null>(null)
+const isAnimationComplete = ref(false)
 
-const retrigger = ref(0)
+// Scroll progress state
+const scrollProgress = ref(0)
+const isScrollProgressVisible = ref(false)
+const isScrollProgressThemeDark = ref(false)
+
+// Reactive triggers for recomputation
 const resizeTrigger = ref(0)
 
-const carousel = useTemplateRef<Carousel>('carousel')
+// Carousel computed properties
 const carouselDetails = computed(() => carousel.value?.carousel.details.value)
 const currentSlideIndex = computed(() => carouselDetails.value?.abs ?? 0)
-
-const carouselCurrentSlide = computed(() => {
-  const slides = carousel.value?.carousel.slider.value?.slides
-  return slides?.[currentSlideIndex.value]
-})
-
+const carouselSlides = computed(() => carousel.value?.carousel.slider.value?.slides)
+const carouselCurrentSlide = computed(() => carouselSlides.value?.[currentSlideIndex.value])
 const carouselCurrentMedia = computed(() => carouselCurrentSlide.value?.querySelector('img'))
 
 const carouselCurrentProperties = computed(() => {
-  const slide = carousel.value?.carousel.slider.value.slides[carouselDetails.value?.abs || 0]
+  // Directly query the slide and media to match original behavior
+  const slide = carousel.value?.carousel.slider.value?.slides[carouselDetails.value?.abs ?? 0]
   const media = slide?.querySelector('img')
+  const containerEl = container.value
 
-  if (!media) {
+  if (!media || !containerEl) {
     return null
   }
 
-  // Include resizeTrigger to force recalculation on window resize
-  const _ = resizeTrigger.value
+  // Reactively depend on resizeTrigger to force recalculation
+  const _trigger = resizeTrigger.value
 
-  const { width, height, top, left } = media.getBoundingClientRect()
-  const containerRect = container.value?.getBoundingClientRect()
+  const mediaRect = media.getBoundingClientRect()
+  const containerRect = containerEl.getBoundingClientRect()
 
-  const containerWidth = containerRect?.width || 0
-  const containerHeight = containerRect?.height || 0
-
-  const relativeTop = top - (containerRect?.top || 0)
-  const relativeLeft = left - (containerRect?.left || 0)
-  const relativeBottom = containerHeight - height - relativeTop
-  const relativeRight = containerWidth - width - relativeLeft
+  const relativeTop = mediaRect.top - containerRect.top
+  const relativeLeft = mediaRect.left - containerRect.left
+  const relativeBottom = containerRect.height - mediaRect.height - relativeTop
+  const relativeRight = containerRect.width - mediaRect.width - relativeLeft
 
   return {
-    retrigger: retrigger.value,
-    width,
-    height,
-    src: media.src,
-    top,
-    left,
+    width: mediaRect.width,
+    height: mediaRect.height,
     relativeTop,
     relativeLeft,
     relativeBottom,
     relativeRight,
-    any: carouselDetails.value?.abs,
+    _trigger,
   }
 })
 
-const currentCarouselItem = computed(() => {
-  const index = currentSlideIndex.value
-  return block.items[index] || null
-})
+const currentCarouselItem = computed(() => block.items[currentSlideIndex.value] ?? null)
 
-const isAnimationComplete = ref(false)
-
+// Animation sequences
 const sequenceText = () => {
-  const spans = text.value?.querySelectorAll('span')
-
-  if (!spans) {
+  const textEl = text.value
+  if (!textEl) {
     return
   }
 
-  const split = SplitText.create(spans, {
-    type: 'chars',
-  })
+  const spans = textEl.querySelectorAll('span')
+  if (!spans.length) {
+    return
+  }
+
+  const split = SplitText.create(spans, { type: 'chars' })
 
   gsap.timeline({
     scrollTrigger: {
@@ -97,14 +95,9 @@ const sequenceText = () => {
       start: 'top top',
       end: '50% top',
       scrub: 0.5,
-      markers: false,
     },
   })
-    .fromTo(
-      text.value,
-      { opacity: 0 },
-      { opacity: 1 },
-    )
+    .fromTo(textEl, { opacity: 0 }, { opacity: 1 })
     .from(split.chars, {
       opacity: 0,
       yPercent: -10,
@@ -112,88 +105,68 @@ const sequenceText = () => {
       rotateY: -20,
       stagger: 0.05,
     })
-    // .to(
-    //   text.value,
-    //   { opacity: 0 },
-    // )
 }
 
 const sequenceMedia = () => {
-  if (!carouselCurrentMedia.value || !carouselCurrentProperties.value) {
+  const media = carouselCurrentMedia.value
+  const properties = carouselCurrentProperties.value
+
+  if (!media || !properties) {
     return
   }
 
-  gsap.set(carouselCurrentMedia.value, { opacity: 0 })
+  gsap.set(media, { opacity: 0 })
 
   tl.value = gsap.timeline({
     scrollTrigger: {
       trigger: main.value,
       start: '50% top',
       end: '50% top',
-      markers: false,
       toggleActions: 'play none none reverse',
-      // scrub: true,
-      // invalidateOnRefresh: true,
       onLeave: () => {
         isAnimationComplete.value = true
       },
       onEnterBack: () => {
-        if (!carouselCurrentMedia.value) {
+        const currentMedia = carouselCurrentMedia.value
+        if (!currentMedia) {
           return
         }
 
-        // gsap.set(carouselCurrentMedia.value, { opacity: 0 })
-        // gsap.set(image.value, { opacity: 1 })
-        // Stops flicker??
-        gsap.to(carouselCurrentMedia.value, { opacity: 1, duration: 0.01 })
+        // Prevent flicker on scroll back
+        gsap.to(currentMedia, { opacity: 1, duration: 0.01 })
         gsap.to(image.value, { opacity: 1, duration: 0.01 })
-
         isAnimationComplete.value = false
       },
     },
   })
     .fromTo(
       imageMask.value,
+      { clipPath: 'inset(0 0 0 0)' },
       {
-        clipPath: 'inset(0 0 0 0)',
-      },
-      {
-        clipPath: () => `
-          inset(
-            ${carouselCurrentProperties.value?.relativeTop || 0}px
-            ${carouselCurrentProperties.value?.relativeRight || 0}px
-            ${carouselCurrentProperties.value?.relativeBottom || 0}px
-            ${carouselCurrentProperties.value?.relativeLeft || 0}px
-          )
-        `,
+        clipPath: () => `inset(${carouselCurrentProperties.value?.relativeTop ?? 0}px ${carouselCurrentProperties.value?.relativeRight ?? 0}px ${carouselCurrentProperties.value?.relativeBottom ?? 0}px ${carouselCurrentProperties.value?.relativeLeft ?? 0}px)`,
         ease: 'power4.inOut',
         duration: 0.75,
       },
     )
     .fromTo(
       image.value,
+      { width: '100%', height: '100%', x: 0, y: 0 },
       {
-        width: '100%',
-        height: '100%',
-        x: 0,
-        y: 0,
-      },
-      {
-        width: () => carouselCurrentProperties.value?.width || 0,
-        height: () => carouselCurrentProperties.value?.height || 0,
-        x: () => carouselCurrentProperties.value?.relativeLeft || 0,
-        y: () => carouselCurrentProperties.value?.relativeTop || 0,
+        width: () => carouselCurrentProperties.value?.width ?? 0,
+        height: () => carouselCurrentProperties.value?.height ?? 0,
+        x: () => carouselCurrentProperties.value?.relativeLeft ?? 0,
+        y: () => carouselCurrentProperties.value?.relativeTop ?? 0,
         ease: 'power4.inOut',
         duration: 0.75,
         lazy: false,
         onComplete: () => {
-          if (!carouselCurrentMedia.value) {
+          const currentMedia = carouselCurrentMedia.value
+          if (!currentMedia) {
             return
           }
 
-          gsap.set(carouselCurrentMedia.value, { opacity: 1 })
+          gsap.set(currentMedia, { opacity: 1 })
           gsap.set(image.value, { opacity: 0 })
-
           isAnimationComplete.value = true
         },
       },
@@ -201,21 +174,14 @@ const sequenceMedia = () => {
     )
 }
 
-const scrollProgress = ref(0)
-const isScrollProgressVisible = ref(false)
-const isScrollProgressThemeDark = ref(false)
-
 const setupScrollProgress = () => {
   ScrollTrigger.create({
     trigger: main.value,
     start: 'top top',
     end: '75% bottom',
-    markers: false,
     scrub: true,
     onUpdate: (self) => {
-      scrollProgress.value = self.progress
-
-      isScrollProgressThemeDark.value = scrollProgress.value > 0.66
+      isScrollProgressThemeDark.value = self.progress > 0.66
     },
     onEnter: () => {
       isScrollProgressVisible.value = true
@@ -237,10 +203,19 @@ const handleResize = async () => {
   resizeTrigger.value++
 }
 
+const requestRefresh = gsap.delayedCall(0.05, () => {
+  tl.value?.invalidate()
+  tl.value?.scrollTrigger?.refresh()
+}).pause()
+
+watch(carouselCurrentProperties, () => {
+  requestRefresh.restart(true)
+}, { flush: 'post' })
+
 onMounted(async () => {
   await wait(100)
 
-  retrigger.value = 1 // Hack to force recompute.
+  resizeTrigger.value = 1 // Hack to force recompute.
 
   window.addEventListener('resize', handleResize)
 
@@ -251,22 +226,10 @@ onMounted(async () => {
 
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize)
+  requestRefresh.kill()
+  tl.value?.kill()
   ScrollTrigger.getAll().forEach(trigger => trigger.kill())
 })
-
-const requestRefresh = gsap.delayedCall(0.05, () => {
-  tl.value?.invalidate()
-  tl.value?.scrollTrigger?.refresh()
-}).pause()
-
-watch(
-  () => carouselCurrentProperties.value,
-  () => requestRefresh.restart(true),
-  {
-    flush: 'post',
-    immediate: false,
-  },
-)
 </script>
 
 <template>
