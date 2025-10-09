@@ -89,6 +89,9 @@ export interface Page {
   hero?: BlockHero[];
   blocks?: (BlockCarousel | BlockHero | BlockMedia | BlockMediaText | BlockNewsletter | BlockText | BlockTextGroup)[];
   seo: Seo[];
+  seo_title: string;
+  seo_description: string;
+  seo_image: StoryblokAsset;
   component: "page";
   _uid: string;
 }

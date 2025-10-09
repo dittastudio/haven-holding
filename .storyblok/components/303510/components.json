@@ -581,7 +581,7 @@
     "display_name": null,
     "description": null,
     "created_at": "2024-09-03T16:04:19.291Z",
-    "updated_at": "2024-10-07T21:39:21.555Z",
+    "updated_at": "2025-10-09T17:29:43.506Z",
     "id": 6247611,
     "schema": {
       "hero": {
@@ -592,7 +592,8 @@
         "restrict_components": true,
         "component_whitelist": [
           "block_hero"
-        ]
+        ],
+        "id": "SFmDfObiRRG2FxcCww5fUw"
       },
       "blocks": {
         "type": "bloks",
@@ -604,15 +605,20 @@
           "a2dd7bb8-b09b-4f23-9ba1-c0ad6aff5716"
         ],
         "key": "body",
-        "pos": 1
+        "pos": 1,
+        "id": "eZVomaY9QfuUlz5rJp_nug"
       },
       "tab-70b828c6-2607-456f-933d-5779ec78b231": {
         "display_name": "SEO",
         "keys": [
-          "seo"
+          "seo",
+          "seo_title",
+          "seo_description",
+          "seo_image"
         ],
         "pos": 2,
-        "type": "tab"
+        "type": "tab",
+        "id": "cLgoxiYHRW-TPVd57HiyMQ"
       },
       "seo": {
         "type": "bloks",
@@ -624,7 +630,33 @@
         ],
         "minimum": 1,
         "maximum": 1,
-        "required": true
+        "required": true,
+        "id": "oncLhFMBTgG__7f5v9WOKQ"
+      },
+      "seo_title": {
+        "type": "text",
+        "pos": 4,
+        "display_name": "Title",
+        "required": true,
+        "id": "RULKFTDpQtOA6KHsssN3Ng"
+      },
+      "seo_description": {
+        "type": "text",
+        "pos": 5,
+        "display_name": "Description",
+        "required": true,
+        "id": "xD3dDe_bTFCaT6W1Cr9GFg"
+      },
+      "seo_image": {
+        "type": "asset",
+        "pos": 6,
+        "display_name": "Image",
+        "description": "For best results, use an image size of 1200px by 630px.",
+        "required": true,
+        "filetypes": [
+          "images"
+        ],
+        "id": "T2o8z4VRRqCE15Nos8YZoA"
       }
     },
     "image": null,
