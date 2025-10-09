@@ -23,13 +23,13 @@ const video = ref<any | null>(null)
 const assetType = computed(() => storyblokAssetType(block.media_desktop?.filename || ''))
 
 watch(isCoverFinished, async () => {
-  if (video.value)
+  if (video.value) {
     await video.value.$el.play()
+  }
 })
 
-// Animation
-const triggerRef = ref<HTMLElement | null>(null)
-const logo = ref<HTMLElement | null>(null)
+const triggerRef = useTemplateRef('triggerRef')
+const logo = useTemplateRef('logo')
 
 const logoWidthUnits = { small: 138, medium: 205, large: 341 }
 
@@ -43,8 +43,9 @@ onMounted(() => {
     const hide = { opacity: 0, visibility: 'hidden' }
     const show = { opacity: 1, visibility: 'visible' }
 
-    if (!header || !logo.value)
+    if (!header || !logo.value) {
       return
+    }
 
     gsap.set(header, hide)
 
@@ -102,8 +103,10 @@ onUnmounted(() => {
   const header = document.querySelector('[data-component="app-header"]')
 
   gsap.set(header, { clearProps: 'all' })
-  if (logo.value)
+
+  if (logo.value) {
     gsap.set(logo.value, { clearProps: 'all' })
+  }
 })
 </script>
 
