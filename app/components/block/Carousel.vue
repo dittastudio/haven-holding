@@ -142,9 +142,11 @@ const sequenceMedia = () => {
           return
         }
 
-        gsap.set(carouselCurrentMedia.value, { opacity: 0 })
+        // gsap.set(carouselCurrentMedia.value, { opacity: 0 })
         // gsap.set(image.value, { opacity: 1 })
-        gsap.to(image.value, { opacity: 1, duration: 0.01 }) // Stops flicker
+        // Stops flicker??
+        gsap.to(carouselCurrentMedia.value, { opacity: 1, duration: 0.01 })
+        gsap.to(image.value, { opacity: 1, duration: 0.01 })
 
         isAnimationComplete.value = false
       },
