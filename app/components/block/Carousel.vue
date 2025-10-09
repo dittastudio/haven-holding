@@ -142,7 +142,7 @@ const sequenceMedia = () => {
           return
         }
 
-        // gsap.set(carouselCurrentMedia.value, { opacity: 0 })
+        gsap.set(carouselCurrentMedia.value, { opacity: 0 })
         // gsap.set(image.value, { opacity: 1 })
         gsap.to(image.value, { opacity: 1, duration: 0.01 }) // Stops flicker
 
@@ -271,7 +271,7 @@ watch(
   <div
     ref="main"
     v-editable="block"
-    class="relative h-[400vh]"
+    class="relative h-[400vh] select-none"
   >
     <!-- <pre class="fixed z-50 top-0 left-0 pointer-events-none">{{ carouselCurrentProperties }}</pre> -->
 
