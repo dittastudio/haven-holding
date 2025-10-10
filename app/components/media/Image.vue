@@ -116,7 +116,7 @@ const imageLoaded = () => {
       :class="{
         'opacity-100': !loaded,
         'opacity-0': loaded,
-        'size-auto max-w-full max-h-full mx-auto': !cover,
+        'size-auto max-w-full max-h-full m-auto': !cover,
         'w-full h-[inherit] object-cover': cover,
       }"
       :src="placeholder"

@@ -102,6 +102,10 @@ onUnmounted(() => {
 
   const header = document.querySelector('[data-component="app-header"]')
 
+  if (!header) {
+    return
+  }
+
   gsap.set(header, { clearProps: 'all' })
 
   if (logo.value) {
@@ -112,6 +116,7 @@ onUnmounted(() => {
 
 <template>
   <div
+    data-component="block-hero"
     class="absolute top-0 right-0 left-0 z-1 pointer-events-none h-[calc((100svh_+_50svh)_+_(var(--app-header-height)_/_2))]"
   >
     <div class="sticky top-0 h-svh flex items-center justify-center">

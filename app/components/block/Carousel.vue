@@ -273,7 +273,7 @@ onUnmounted(() => {
       >
         <p
           ref="text"
-          class="size-full type-mono-30-70 px-(--app-outer-gutter) py-(--app-header-height) flex flex-col justify-between text-white bg-black/30"
+          class="size-full type-sans-30-70 px-(--app-outer-gutter) py-(--app-header-height) flex flex-col justify-between text-white bg-black/30"
         >
           <span class="self-end">A</span>
 
