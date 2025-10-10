@@ -19,6 +19,7 @@ const container = useTemplateRef('container')
 const imageMask = useTemplateRef('imageMask')
 const image = useTemplateRef('image')
 const text = useTemplateRef('text')
+const textBackground = useTemplateRef('textBackground')
 const carousel = useTemplateRef<Carousel>('carousel')
 
 const tl = ref<gsap.core.Timeline | null>(null)
@@ -71,13 +72,11 @@ const carouselCurrentProperties = computed(() => {
 const currentCarouselItem = computed(() => block.items[currentSlideIndex.value])
 
 const sequenceText = () => {
-  const textEl = text.value
-
-  if (!textEl) {
+  if (!text.value) {
     return
   }
 
-  const spans = textEl.querySelectorAll('span')
+  const spans = text.value.querySelectorAll('span')
 
   if (!spans.length) {
     return
@@ -93,7 +92,7 @@ const sequenceText = () => {
       scrub: 0.5,
     },
   })
-    .fromTo(textEl, { opacity: 0 }, { opacity: 1 })
+    .fromTo(textBackground.value, { opacity: 0 }, { opacity: 1 })
     .from(split.chars, {
       opacity: 0,
       yPercent: -10,
@@ -233,28 +232,32 @@ onUnmounted(() => {
   <div
     ref="main"
     v-editable="block"
-    class="relative h-[400vh] select-none"
+    class="relative isolate h-[400vh] select-none"
   >
     <!-- <pre class="fixed z-50 bottom-5 left-5 bg-white/50 backdrop-blur-2xl text-12 p-4 rounded pointer-events-none">{{ carouselCurrentProperties }}</pre> -->
 
     <div
       ref="container"
-      class="sticky inset-0 z-1 w-full h-screen"
+      class="sticky inset-0 w-full h-screen"
     >
-      <!-- XXXXXXXXXX -->
-      <div class="absolute inset-0 z-20 pointer-events-none flex items-center justify-center">
+      <!-- Hero Media -->
+      <div class="absolute inset-0 z-1 pointer-events-none flex items-center justify-center">
         <div
           ref="imageMask"
-          class="absolute inset-0 z-20"
+          class="size-full"
         >
           <div
             ref="image"
-            class="absolute inset-0 z-20 size-full backface-hidden will-change-[width,height]"
+            class="size-full backface-hidden"
           >
             <MediaImage
               v-if="currentCarouselItem?.image"
               :asset="currentCarouselItem.image"
-              sizes="xs:100vw sm:100vw"
+              sizes="
+                xs:100vw
+                sm:100vw
+                md:100vw
+              "
               :alt="currentCarouselItem.caption || currentCarouselItem.image.alt || ''"
               class="block size-full"
               :cover="true"
@@ -264,35 +267,42 @@ onUnmounted(() => {
         </div>
       </div>
 
+      <!-- Hero Text -->
       <div
-        class="absolute inset-0 z-30 size-full pointer-events-none transition-opacity ease-out transform-gpu backface-hidden"
+        class="absolute inset-0 z-2 size-full pointer-events-none transition-opacity ease-out transform-gpu backface-hidden"
         :class="{
           'opacity-100 duration-500 delay-500': !isAnimationComplete,
           'opacity-0 duration-350': isAnimationComplete,
         }"
       >
-        <p
-          ref="text"
-          class="size-full type-sans-30-70 px-(--app-outer-gutter) py-(--app-header-height) flex flex-col justify-between text-white bg-black/30"
+        <div
+          ref="textBackground"
+          class="size-full text-white bg-black/30"
         >
-          <span class="self-end">A</span>
+          <p
+            ref="text"
+            class="h-svh type-sans-30-70 px-(--app-outer-gutter) py-(--app-header-height) flex flex-col justify-between"
+          >
+            <span class="self-end">A</span>
 
-          <span class="self-start">space</span>
+            <span class="self-start">space</span>
 
-          <span class="self-center">for</span>
+            <span class="self-center">for</span>
 
-          <span class="self-end">creation</span>
-        </p>
+            <span class="self-end">creation</span>
+          </p>
+        </div>
       </div>
 
+      <!-- Carousel -->
       <div
         :class="{
           'bg-cream pointer-events-none': !isAnimationComplete,
           'bg-white pointer-events-auto delay-250': isAnimationComplete,
         }"
-        class="absolute inset-0 z-10 size-full flex flex-col justify-center transition-colors duration-750 ease-smooth"
+        class="size-full flex flex-col justify-center transition-colors duration-750 ease-smooth"
       >
-        <!-- Carousel navigation buttons -->
+        <!-- Navigation buttons -->
         <div class="only-touch:hidden flex absolute inset-0 z-1 mix-blend-difference text-white">
           <button
             v-for="button in ['previous', 'next'] as const"
@@ -355,7 +365,13 @@ onUnmounted(() => {
                   <MediaImage
                     v-if="item.image"
                     :asset="item.image"
-                    sizes="xs:100vw sm:100vw"
+                    sizes="
+                      xs:100vw
+                      sm:100vw
+                      md:60vw
+                      lg:60vw
+                      xl:60vw
+                    "
                     :alt="item.caption || item.image.alt || ''"
                     :lazy="index === 0 ? false : true"
                     @load="doRetrigger"
@@ -457,15 +473,16 @@ onUnmounted(() => {
 
 .block-carousel__item {
   --_delay: 0.4s;
+  --_duration: 0.35s;
   --_ease: var(--ease-outQuart);
 
   opacity: 0;
   scale: 1.1;
 
   transition:
-    opacity 0.1s var(--ease-out),
-    translate 0s 0.25s,
-    scale 0s 0.25s;
+    opacity var(--_duration) var(--ease-out),
+    translate var(--_duration) var(--_delay),
+    scale var(--_duration) var(--_delay);
 
   &.is-animation-complete {
     opacity: 1;
@@ -473,9 +490,9 @@ onUnmounted(() => {
     scale: 1;
 
     transition:
-      opacity 0.25s var(--_ease) var(--_delay),
-      translate 0.25s var(--_ease) var(--_delay),
-      scale 0.25s var(--_ease) var(--_delay);
+      opacity var(--_duration) var(--_ease) var(--_delay),
+      translate var(--_duration) var(--_ease) var(--_delay),
+      scale var(--_duration) var(--_ease) var(--_delay);
   }
 }
 
