@@ -409,7 +409,6 @@ onUnmounted(() => {
       sticky
       bottom-0
       pb-(--app-outer-gutter)
-      z-50
       -mt-[calc(var(--app-outer-gutter)_+_--spacing(1))]
       pointer-events-none
       wrapper
