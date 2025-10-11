@@ -47,7 +47,7 @@ const { block } = defineProps<Props>()
         </div>
       </div>
 
-      <div class="block-text-group__bottom type-mono-12 md:type-mono-14 text-center pt-[calc(var(--app-vertical-rhythm)_*_1.5)] md:pt-(--app-vertical-rhythm)">
+      <div class="block-text-group__item type-mono-12 md:type-mono-14 text-center pt-[calc(var(--app-vertical-rhythm)_*_1.5)] md:pt-(--app-vertical-rhythm)">
         <StoryblokText
           v-if="storyblokRichTextContent(block.contact)"
           :content="block.contact"
@@ -83,18 +83,7 @@ const { block } = defineProps<Props>()
   }
 
   & p + p {
-    margin-block-start: 0.5em;
-  }
-}
-
-.block-text-group__bottom {
-  & p a {
-    text-decoration: underline;
-    transition: opacity 0.2s var(--ease-out);
-
-    &:hover {
-      opacity: 0.4;
-    }
+    margin-block-start: 1em;
   }
 }
 </style>

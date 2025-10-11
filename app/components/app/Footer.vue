@@ -26,7 +26,7 @@ const credits = [
   {
     title: 'Interiors',
     name: 'Lineatur',
-    url: 'https://studiolineatur.com',
+    url: 'https://studiolineatur.com/project/haven/',
   },
 ]
 </script>

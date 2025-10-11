@@ -248,7 +248,7 @@ onUnmounted(() => {
         >
           <div
             ref="image"
-            class="size-full backface-hidden"
+            class="size-full transform-gpu backface-hidden"
           >
             <MediaImage
               v-if="currentCarouselItem?.image"
