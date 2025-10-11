@@ -29,6 +29,24 @@ const scrollProgress = ref(0)
 const isScrollProgressVisible = ref(false)
 const isScrollProgressThemeDark = ref(false)
 
+let lockedScrollPosition: number | null = null
+
+const preventScrolling = () => {
+  if (lockedScrollPosition !== null) {
+    window.scrollTo(0, lockedScrollPosition)
+  }
+}
+
+const lockScroll = () => {
+  lockedScrollPosition = window.scrollY
+  window.addEventListener('scroll', preventScrolling, { passive: false })
+}
+
+const unlockScroll = () => {
+  window.removeEventListener('scroll', preventScrolling)
+  lockedScrollPosition = null
+}
+
 const carouselDetails = computed(() => carousel.value?.carousel.details.value)
 const currentSlideIndex = computed(() => carouselDetails.value?.abs ?? 0)
 const carouselSlides = computed(() => carousel.value?.carousel.slider.value?.slides)
@@ -151,6 +169,9 @@ const sequenceMedia = () => {
         ease: 'power4.inOut',
         duration: 0.75,
         lazy: false,
+        onStart: () => {
+          lockScroll()
+        },
         onComplete: () => {
           if (!carouselCurrentMedia.value) {
             return
@@ -158,6 +179,7 @@ const sequenceMedia = () => {
 
           gsap.set(carouselCurrentMedia.value.parentElement, { opacity: 1 })
           gsap.set(image.value, { opacity: 0 })
+          unlockScroll()
         },
       },
       '-=90%',
@@ -191,6 +213,11 @@ const setupScrollProgress = () => {
 
 const doRetrigger = () => {
   reTrigger.value += 1
+
+  // Update locked scroll position on resize if currently locked
+  if (lockedScrollPosition !== null) {
+    lockedScrollPosition = window.scrollY
+  }
 }
 
 const requestRefresh = gsap.delayedCall(0.05, () => {
@@ -222,6 +249,7 @@ onMounted(async () => {
 
 onUnmounted(() => {
   window.removeEventListener('resize', doRetrigger)
+  unlockScroll()
   requestRefresh.kill()
   tl.value?.kill()
   ScrollTrigger.getAll().forEach(trigger => trigger.kill())
@@ -232,7 +260,7 @@ onUnmounted(() => {
   <div
     ref="main"
     v-editable="block"
-    class="relative isolate h-[400vh] select-none"
+    class="relative isolate h-[300vh] select-none"
   >
     <!-- <pre class="fixed z-50 bottom-5 left-5 bg-white/50 backdrop-blur-2xl text-12 p-4 rounded pointer-events-none">{{ carouselCurrentProperties }}</pre> -->
 
