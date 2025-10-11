@@ -1,5 +1,6 @@
 <script generic="T" lang="ts" setup>
 import type { KeenSliderInstance, KeenSliderOptions, TrackDetails } from 'keen-slider'
+import { onKeyStroke, useIntersectionObserver } from '@vueuse/core'
 import { useKeenSlider } from 'keen-slider/vue.es'
 
 export interface Carousel {
@@ -82,6 +83,34 @@ const carousel = {
   next,
   previous,
 }
+
+const isInView = ref(false)
+
+useIntersectionObserver(
+  container,
+  ([entry]) => {
+    if (entry) {
+      isInView.value = entry.isIntersecting
+    }
+  },
+  {
+    threshold: 0.3,
+  },
+)
+
+onKeyStroke('ArrowLeft', (e: KeyboardEvent) => {
+  if (isInView.value) {
+    e.preventDefault()
+    previous()
+  }
+})
+
+onKeyStroke('ArrowRight', (e: KeyboardEvent) => {
+  if (isInView.value) {
+    e.preventDefault()
+    next()
+  }
+})
 
 defineExpose({
   carousel,

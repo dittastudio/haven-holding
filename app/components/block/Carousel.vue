@@ -307,7 +307,7 @@ onUnmounted(() => {
           <button
             v-for="button in ['previous', 'next'] as const"
             :key="button"
-            class="group/button w-1/2"
+            class="group/button w-1/2 outline-none"
             @click="carousel?.carousel[button]()"
           >
             <span class="sr-only">{{ button }}</span>
