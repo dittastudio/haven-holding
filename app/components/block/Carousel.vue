@@ -27,7 +27,6 @@ const isAnimationComplete = ref(false)
 
 const scrollProgress = ref(0)
 const isScrollProgressVisible = ref(false)
-const isScrollProgressThemeDark = ref(false)
 
 let lockedScrollPosition: number | null = null
 
@@ -106,7 +105,7 @@ const sequenceText = () => {
     scrollTrigger: {
       trigger: main.value,
       start: 'top top',
-      end: '50% top',
+      end: '60% top',
       scrub: 0.5,
     },
   })
@@ -130,8 +129,8 @@ const sequenceMedia = () => {
   tl.value = gsap.timeline({
     scrollTrigger: {
       trigger: main.value,
-      start: '50% top',
-      end: '50% top',
+      start: '60% top',
+      end: '60% top',
       toggleActions: 'play none none reverse',
       invalidateOnRefresh: true,
       onLeave: () => {
@@ -190,11 +189,11 @@ const setupScrollProgress = () => {
   ScrollTrigger.create({
     trigger: main.value,
     start: 'top top',
-    end: '75% bottom',
+    end: '85% bottom',
     scrub: true,
+    markers: false,
     onUpdate: (self) => {
       scrollProgress.value = self.progress
-      isScrollProgressThemeDark.value = self.progress > 0.66
     },
     onEnter: () => {
       isScrollProgressVisible.value = true
@@ -214,7 +213,6 @@ const setupScrollProgress = () => {
 const doRetrigger = () => {
   reTrigger.value += 1
 
-  // Update locked scroll position on resize if currently locked
   if (lockedScrollPosition !== null) {
     lockedScrollPosition = window.scrollY
   }
@@ -260,7 +258,7 @@ onUnmounted(() => {
   <div
     ref="main"
     v-editable="block"
-    class="relative isolate h-[300vh] select-none"
+    class="relative isolate h-[400vh] select-none"
   >
     <!-- <pre class="fixed z-50 bottom-5 left-5 bg-white/50 backdrop-blur-2xl text-12 p-4 rounded pointer-events-none">{{ carouselCurrentProperties }}</pre> -->
 
