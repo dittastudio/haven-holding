@@ -23,7 +23,8 @@ const textBackground = useTemplateRef('textBackground')
 const carousel = useTemplateRef<Carousel>('carousel')
 
 const tl = ref<gsap.core.Timeline | null>(null)
-const isAnimationComplete = ref(false)
+const isCarouselAnimation = ref(false)
+const isCarouselAnimationComplete = ref(false)
 
 const scrollProgress = ref(0)
 const isScrollProgressVisible = ref(false)
@@ -134,7 +135,7 @@ const sequenceMedia = () => {
       toggleActions: 'play none none reverse',
       invalidateOnRefresh: true,
       onLeave: () => {
-        isAnimationComplete.value = true
+        isCarouselAnimation.value = true
       },
       onEnterBack: () => {
         if (!carouselCurrentMedia.value) {
@@ -144,7 +145,8 @@ const sequenceMedia = () => {
         gsap.set(carouselCurrentMedia.value.parentElement, { opacity: 0 })
         gsap.set(image.value, { opacity: 1 })
 
-        isAnimationComplete.value = false
+        isCarouselAnimation.value = false
+        isCarouselAnimationComplete.value = false
       },
     },
   })
@@ -179,6 +181,8 @@ const sequenceMedia = () => {
           gsap.set(carouselCurrentMedia.value.parentElement, { opacity: 1 })
           gsap.set(image.value, { opacity: 0 })
           unlockScroll()
+
+          isCarouselAnimationComplete.value = true
         },
       },
       '-=90%',
@@ -297,8 +301,8 @@ onUnmounted(() => {
       <div
         class="absolute inset-0 z-2 size-full pointer-events-none transition-opacity ease-out transform-gpu backface-hidden"
         :class="{
-          'opacity-100 duration-500 delay-500': !isAnimationComplete,
-          'opacity-0 duration-350': isAnimationComplete,
+          'opacity-100 duration-500 delay-500': !isCarouselAnimation,
+          'opacity-0 duration-350': isCarouselAnimation,
         }"
       >
         <div
@@ -323,8 +327,10 @@ onUnmounted(() => {
       <!-- Carousel -->
       <div
         :class="{
-          'bg-cream pointer-events-none': !isAnimationComplete,
-          'bg-white pointer-events-auto delay-250': isAnimationComplete,
+          'bg-cream': !isCarouselAnimation,
+          'bg-white delay-250': isCarouselAnimation,
+          'pointer-events-none': !isCarouselAnimationComplete,
+          'pointer-events-auto': isCarouselAnimationComplete,
         }"
         class="size-full flex flex-col justify-center transition-colors duration-750 ease-smooth"
       >
@@ -358,7 +364,7 @@ onUnmounted(() => {
             <h2
               class="block-carousel__item block-carousel__item--top type-mono-12 md:type-mono-14 text-center"
               :class="{
-                'is-animation-complete': isAnimationComplete,
+                'is-animation-complete': isCarouselAnimation,
               }"
             >
               The Space
@@ -366,7 +372,7 @@ onUnmounted(() => {
           </div>
 
           <div
-            :class="{ 'is-animation-complete': isAnimationComplete }"
+            :class="{ 'is-animation-complete': isCarouselAnimation }"
             class="block-carousel__slider size-full overflow-hidden"
           >
             <UiCarousel
@@ -414,7 +420,7 @@ onUnmounted(() => {
             <div
               class="block-carousel__item block-carousel__item--bottom type-mono-12 md:type-mono-14 flex flex-col gap-2 items-center"
               :class="{
-                'is-animation-complete': isAnimationComplete,
+                'is-animation-complete': isCarouselAnimation,
               }"
             >
               <p>{{ carouselDetails.abs + 1 }}/{{ block.items.length }}</p>
