@@ -138,6 +138,7 @@ const sequenceMedia = () => {
         isCarouselAnimation.value = true
       },
       onEnterBack: () => {
+        unlockScroll()
         if (!carouselCurrentMedia.value) {
           return
         }
@@ -174,13 +175,14 @@ const sequenceMedia = () => {
           lockScroll()
         },
         onComplete: () => {
+          unlockScroll()
+
           if (!carouselCurrentMedia.value) {
             return
           }
 
-          gsap.set(carouselCurrentMedia.value.parentElement, { opacity: 1 })
+          gsap.set(carouselCurrentMedia.value?.parentElement, { opacity: 1 })
           gsap.set(image.value, { opacity: 0 })
-          unlockScroll()
 
           isCarouselAnimationComplete.value = true
         },
