@@ -156,6 +156,7 @@ onUnmounted(() => {
         muted
         playsinline
         :autoplay="isCoverFinished || splashSeen || isDev || storyblokEditor(route.query) ? true : false"
+        :aria-label="block.media_mobile?.alt || block.media_desktop?.alt"
       />
     </div>
   </div>
