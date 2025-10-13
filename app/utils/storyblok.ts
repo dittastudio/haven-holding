@@ -1,4 +1,5 @@
 import type { StoryblokRichtext } from '@@/.storyblok/types/storyblok'
+import type { ImageModifiers } from '@nuxt/image'
 import type { LocationQuery } from 'vue-router'
 
 const storyblokEditor = (search: LocationQuery) => '_storyblok' in search
@@ -24,44 +25,22 @@ const storyblokAssetType = (filename: string): 'image' | 'video' | 'other' => {
   return 'other'
 }
 
-const storyblokImageUrlUpdate = (url: string | null) => {
-  if (!url) {
-    return ''
-  }
-
-  return url.replace('//a.storyblok.com', '//a2.storyblok.com')
-}
+const storyblokImageUrlUpdate = (url: string) => url.replace('//a.storyblok.com', '//a2.storyblok.com')
 
 const storyblokImage = (
   filename: string | null | undefined,
-  options?: App.ImageTransformOptions | undefined,
+  modifiers?: Partial<ImageModifiers> | undefined,
 ): string => {
-  if (!filename?.length)
-    return ''
+  const image = useImage()
 
-  const settings: App.ImageTransformOptions = {
+  const path = image(filename ?? '', {
     width: 0,
     height: 0,
-    smart: false,
-    quality: 80,
-    blur: 0,
-    ...options,
-  }
-
-  const filterProperties: Record<string, string> = {
-    blur: settings.blur && settings.blur > 0 ? `:blur(${settings.blur})` : '',
-    quality: `:quality(${settings.quality})`,
-  }
-
-  const filters: string = Object.values(filterProperties)
-    .map(item => item.trim())
-    .filter(item => item.length)
-    .join('')
-
-  const transforms = `m/${settings.width}x${settings.height}${
-    settings.smart ? '/smart' : ''
-  }/filters${filters}`
-  const path = storyblokImageUrlUpdate(`${filename}/${transforms}`)
+    smart: false, // Must be set to false if focal point is used
+    quality: 90,
+    format: 'webp',
+    ...modifiers,
+  })
 
   return path
 }

@@ -17,8 +17,9 @@ const getBlockBackground = (block: NonNullable<Page['blocks']>[0]) => {
 }
 
 const checkBackgroundMatchesPrevBackground = (index: number) => {
-  if (index === 0)
+  if (index === 0) {
     return false
+  }
 
   const currentBlock = content?.blocks?.[index]
   const prevBlock = content?.blocks?.[index - 1]
@@ -27,14 +28,11 @@ const checkBackgroundMatchesPrevBackground = (index: number) => {
     ? currentBlock.background === prevBlock.background
     : false
 }
-
-// Quick hack to filter out unsupported blocks for now.
-const blocks = content.blocks?.filter(block => block && (block.component !== 'block_carousel' && block.component !== 'block_text_group')) || []
 </script>
 
 <template>
   <section
-    v-for="(block, index) in blocks"
+    v-for="(block, index) in content.blocks"
     :key="block._uid"
     class="app-blocks__item"
     :class="[
@@ -63,6 +61,16 @@ const blocks = content.blocks?.filter(block => block && (block.component !== 'bl
       v-else-if="block.component === 'block_text'"
       :block="block"
     />
+
+    <BlockTextGroup
+      v-else-if="block.component === 'block_text_group'"
+      :block="block"
+    />
+
+    <BlockCarousel
+      v-else-if="block.component === 'block_carousel'"
+      :block="block"
+    />
   </section>
 </template>
 
@@ -77,11 +85,16 @@ const blocks = content.blocks?.filter(block => block && (block.component !== 'bl
 
 .app-blocks__item:not([class*="bg-"]) + .app-blocks__item.bg-offwhite,
 .app-blocks__item.bg-offwhite + .app-blocks__item:not([class*="bg-"]),
-.app-blocks__item--same-background {
+.app-blocks__item--same-background,
+.app-blocks__item:not([class*="bg-"]) + .app-blocks__item:not([class*="bg-"]) {
   padding-block-start: 0;
 }
 
 .app-blocks__item--block_text:first-child {
   padding-block-start: calc(var(--app-vertical-rhythm) * 0.75);
+}
+
+.app-blocks__item--block_carousel {
+  padding-block: 0;
 }
 </style>

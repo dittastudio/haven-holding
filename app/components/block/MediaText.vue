@@ -17,11 +17,12 @@ const assetType = computed(() => storyblokAssetType(block.media?.filename || '')
     class="wrapper"
   >
     <p
+      v-if="block.title"
       class="
-      type-mono-16
-      text-center
-      mb-[calc(var(--app-vertical-rhythm)_/_1.25)]
-      md:mb-[calc(var(--app-vertical-rhythm)_/_1.5)]
+        type-mono-16
+        text-center
+        mb-[calc(var(--app-vertical-rhythm)_/_1.25)]
+        md:mb-[calc(var(--app-vertical-rhythm)_/_1.5)]
     "
     >
       {{ block.title }}

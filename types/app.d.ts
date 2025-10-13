@@ -20,5 +20,6 @@ declare namespace App {
     smart?: boolean
     quality?: number
     blur?: number
+    format?: string
   }
 }
