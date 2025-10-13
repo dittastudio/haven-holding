@@ -513,9 +513,9 @@ onUnmounted(() => {
   scale: 1.1;
 
   transition:
-    opacity var(--_duration) var(--ease-out),
-    translate var(--_duration) var(--_delay),
-    scale var(--_duration) var(--_delay);
+    opacity 0.5s var(--ease-out),
+    translate 0.75s var(--ease-inOutQuart),
+    scale 0s 0.5s;
 
   &.is-animation-complete {
     opacity: 1;
