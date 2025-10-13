@@ -1,21 +1,22 @@
 <script lang="ts" setup>
 import type { StoryblokRichtext } from '@@/.storyblok/types/storyblok'
 import type { StoryblokRichTextNode } from '@storyblok/vue'
-import { NuxtLink } from '#components'
+import { resolveComponent } from 'vue'
 
 const resolvers = {
   [MarkTypes.LINK]: (node: StoryblokRichTextNode<VNode>) => {
     const href = node.attrs?.href
     const linktype = node.attrs?.linktype
 
-    // Add mailto: prefix for email links
-    const to = linktype === 'email' && href
-      ? `mailto:${href}`
-      : storyblokSlug(href)
-
-    return h(NuxtLink, {
-      to,
+    const item = {
+      linktype,
+      email: linktype === 'email' ? href : undefined,
+      cached_url: linktype !== 'email' ? href : undefined,
       target: node.attrs?.target,
+    }
+
+    return h(resolveComponent('StoryblokLink'), {
+      item,
     }, { default: () => node.text ?? '' })
   },
 }
@@ -28,8 +29,6 @@ const { content } = defineProps<Props>()
 </script>
 
 <template>
-  <!-- <pre>{{ content }}</pre> -->
-
   <StoryblokRichText
     v-if="content"
     :doc="content"
