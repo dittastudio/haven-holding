@@ -37,7 +37,7 @@ const storyblokImage = (
     width: 0,
     height: 0,
     smart: false, // Must be set to false if focal point is used
-    quality: 80,
+    quality: 90,
     format: 'webp',
     ...modifiers,
   })

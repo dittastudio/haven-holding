@@ -17,8 +17,9 @@ const getBlockBackground = (block: NonNullable<Page['blocks']>[0]) => {
 }
 
 const checkBackgroundMatchesPrevBackground = (index: number) => {
-  if (index === 0)
+  if (index === 0) {
     return false
+  }
 
   const currentBlock = content?.blocks?.[index]
   const prevBlock = content?.blocks?.[index - 1]
