@@ -11,8 +11,8 @@ import IconLogo from '@/assets/icons/haven-logo-final.svg'
       items-center
       justify-center
       h-(--app-header-height)
-      [html:has(&[data-component='block-hero'])]opacity-0
-      [html:has(&[data-component='block-hero'])]invisible
+      [html:has([data-component='block-hero'])_&]:opacity-0
+      [html:has([data-component='block-hero'])_&]:invisible
     "
   >
     <NuxtLink
