@@ -85,6 +85,20 @@ const imageLoaded = () => {
 
   emit('load', true)
 }
+
+const image = useTemplateRef('image')
+
+onMounted(() => {
+  if (!image.value) {
+    return
+  }
+
+  const { complete, naturalHeight } = image.value
+
+  if (complete && naturalHeight !== 0) {
+    loaded.value = true
+  }
+})
 </script>
 
 <template>
@@ -98,6 +112,7 @@ const imageLoaded = () => {
     ]"
   >
     <img
+      ref="image"
       v-bind="imgAttrs"
       :class="{
         'opacity-0': !loaded,
