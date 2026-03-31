@@ -16,6 +16,10 @@ const getBlockBackground = (block: NonNullable<Page['blocks']>[0]) => {
   return 'background' in block && block.background ? colourBackground[block.background] : ''
 }
 
+const getBlockAnchorId = (block: NonNullable<Page['blocks']>[0]) => {
+  return 'anchor_id' in block && block.anchor_id ? block.anchor_id : undefined
+}
+
 const checkBackgroundMatchesPrevBackground = (index: number) => {
   if (index === 0) {
     return false
@@ -33,6 +37,7 @@ const checkBackgroundMatchesPrevBackground = (index: number) => {
 <template>
   <section
     v-for="(block, index) in content.blocks"
+    :id="getBlockAnchorId(block)"
     :key="block._uid"
     class="app-blocks__item"
     :class="[

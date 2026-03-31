@@ -20,19 +20,28 @@ const assetType = computed(() => storyblokAssetType(block.media?.filename || '')
       class="
         type-mono-16
         text-center
-        mb-[calc(var(--app-vertical-rhythm)_/_1.25)]
-        md:mb-[calc(var(--app-vertical-rhythm)_/_1.5)]
+        mb-[calc(var(--app-vertical-rhythm)/1.25)]
+        md:mb-[calc(var(--app-vertical-rhythm)/1.5)]
       "
     >
       {{ block.title }}
     </p>
 
-    <div class="grid grid-cols-(--app-grid) gap-x-(--app-inner-gutter) gap-y-[calc(var(--app-vertical-rhythm)_/_2)] items-center">
+    <div
+      class="
+        grid
+        grid-cols-(--app-grid)
+        gap-x-(--app-inner-gutter)
+        gap-y-[calc(var(--app-vertical-rhythm)/2)]
+        items-center
+        sm:grid-cols-2
+      "
+    >
       <div
         class="
           col-span-full
           md:col-start-2 md:col-span-5
-          md:-me-[calc(var(--app-inner-gutter)_/_2)]
+          md:-me-[calc(var(--app-inner-gutter)/2)]
           max-md:px-(--app-outer-gutter)
         "
       >

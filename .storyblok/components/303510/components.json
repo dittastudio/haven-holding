@@ -265,7 +265,7 @@
     "display_name": "Newsletter",
     "description": null,
     "created_at": "2024-09-05T00:36:22.346Z",
-    "updated_at": "2025-09-18T11:09:32.386Z",
+    "updated_at": "2026-03-31T12:52:21.545Z",
     "id": 6254680,
     "schema": {
       "background": {
@@ -274,7 +274,8 @@
         "use_uuid": true,
         "source": "internal",
         "datasource_slug": "colours",
-        "default_value": "offwhite"
+        "default_value": "offwhite",
+        "id": "-7eCGyApTUinXjr7-zIdmw"
       },
       "colour": {
         "type": "option",
@@ -282,11 +283,13 @@
         "use_uuid": true,
         "source": "internal",
         "datasource_slug": "colours",
-        "default_value": "offwhite"
+        "default_value": "offwhite",
+        "id": "CVNpE6vjRP64gENg7sTsvg"
       },
       "title": {
         "type": "text",
-        "pos": 2
+        "pos": 2,
+        "id": "kp6bif--SJyF1jMruL2dSA"
       },
       "media": {
         "type": "asset",
@@ -294,7 +297,8 @@
         "filetypes": [
           "images",
           "videos"
-        ]
+        ],
+        "id": "Rn7_mhU0SJ2Azqu_emmsgw"
       },
       "ratio": {
         "type": "option",
@@ -302,7 +306,8 @@
         "use_uuid": true,
         "source": "internal",
         "datasource_slug": "ratio-list",
-        "default_value": "2:3"
+        "default_value": "2:3",
+        "id": "074YVm56Twy5ZFJyaXjaqQ"
       },
       "text": {
         "type": "richtext",
@@ -321,11 +326,18 @@
           "bold",
           "italic",
           "link"
-        ]
+        ],
+        "id": "2p5WSTh0ScWdU_WvoR0KIg"
       },
       "hidden": {
         "type": "boolean",
-        "pos": 6
+        "pos": 6,
+        "id": "3mEdBt-FTCWtRQ8iyGgoMg"
+      },
+      "anchor_id": {
+        "type": "text",
+        "pos": 7,
+        "id": "sTeAk6k9Rw24eTGwre9ewQ"
       }
     },
     "image": null,
@@ -565,7 +577,7 @@
     "display_name": null,
     "description": null,
     "created_at": "2024-09-03T16:04:19.291Z",
-    "updated_at": "2025-10-09T17:29:43.506Z",
+    "updated_at": "2025-10-13T13:39:29.440Z",
     "id": 6247611,
     "schema": {
       "hero": {
@@ -595,7 +607,6 @@
       "tab-70b828c6-2607-456f-933d-5779ec78b231": {
         "display_name": "SEO",
         "keys": [
-          "seo",
           "seo_title",
           "seo_description",
           "seo_image"
@@ -603,19 +614,6 @@
         "pos": 2,
         "type": "tab",
         "id": "cLgoxiYHRW-TPVd57HiyMQ"
-      },
-      "seo": {
-        "type": "bloks",
-        "pos": 3,
-        "restrict_type": "",
-        "restrict_components": true,
-        "component_whitelist": [
-          "seo"
-        ],
-        "minimum": 1,
-        "maximum": 1,
-        "required": true,
-        "id": "oncLhFMBTgG__7f5v9WOKQ"
       },
       "seo_title": {
         "type": "text",

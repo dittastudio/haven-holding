@@ -47,6 +47,7 @@ export interface BlockNewsletter {
   ratio?: number | string;
   text?: StoryblokRichtext;
   hidden?: boolean;
+  anchor_id?: string;
   component: "block_newsletter";
   _uid: string;
 }
@@ -87,7 +88,6 @@ export interface LinkList {
 export interface Page {
   hero?: BlockHero[];
   blocks?: (BlockCarousel | BlockHero | BlockMedia | BlockMediaText | BlockNewsletter | BlockText | BlockTextGroup)[];
-  seo: Seo[];
   seo_title: string;
   seo_description: string;
   seo_image: StoryblokAsset;
@@ -125,3 +125,5 @@ export interface TextItem {
   component: "text_item";
   _uid: string;
 }
+
+export type ContentType = Page | Settings;
