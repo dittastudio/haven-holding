@@ -34,7 +34,6 @@ const assetType = computed(() => storyblokAssetType(block.media?.filename || '')
         gap-x-(--app-inner-gutter)
         gap-y-[calc(var(--app-vertical-rhythm)/2)]
         items-center
-        sm:grid-cols-2
       "
     >
       <div
@@ -73,7 +72,7 @@ const assetType = computed(() => storyblokAssetType(block.media?.filename || '')
           lg:ps-0
           flex
           flex-col
-          gap-[calc(var(--app-vertical-rhythm)_/_2)]
+          gap-[calc(var(--app-vertical-rhythm)/2)]
         "
       >
         <div class="[&_p]:type-sans-20 [&_p]:text-pretty [&_p+p]:mt-[1lh]">
